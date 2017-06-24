@@ -1,3 +1,12 @@
+---
+title: Ktor Web Framework Overview
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: Getting-Started-IDEA-Gradle.html
+summary: Get up and running with IntelliJ IDEA and Gradle
+---
+
 # Getting started with Ktor using Intellij IDEA and Gradle
 
 This tutorial will guide you from the most basic setup to a full featured setup you can use to start developing your app.

@@ -1,3 +1,12 @@
+---
+title: Ktor Web Framework Overview
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: Getting-Started.html
+summary: Understand the bare minimum of what a Ktor Application is 
+---
+
 ## Creating a Ktor Application
 
 This tutorial will guide you through the steps on how to create a simple self-hosted Ktor Application that responds to HTTP requests with `Hello, World!`. 

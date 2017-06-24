@@ -1,0 +1,22 @@
+## Topnav single links
+## if you want to list an external url, use external_url instead of url. the theme will apply a different link base.
+topnav:
+- title: Topnav
+  items:
+    - title: News
+      url: /news
+
+#Topnav dropdowns
+topnav_dropdowns:
+- title: Topnav dropdowns
+  folders:
+    - title: Links
+      folderitems:
+        - title: Source Code
+          external_url: https://github.com/kotlin/ktor
+        - title: Documentation Source
+          external_url: https://github.com/ktorio/ktorio.github.io
+        - title: Kotlin Site
+          external_url: https://kotlinlang.org
+        - title: JetBrains Site
+          external_url: https://jetbrains.com
