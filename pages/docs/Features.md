@@ -1,3 +1,12 @@
+---
+title: Ktor Web Framework Overview
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: Getting-Started.html
+summary: Features provide key functionality to your application using a plugin model 
+---
+
 ## Features
 
 A Ktor application typically consists of a series of [Features](Features). You can think of features as functionality 

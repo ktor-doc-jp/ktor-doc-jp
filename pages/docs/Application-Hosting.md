@@ -44,7 +44,7 @@ Running hosted applications in a development environment such as IntelliJ IDEA, 
   * Jetty: use `org.jetbrains.ktor.jetty.DevelopmentHost` 
 
     
-![Main Class](resources/run-configuration-development-host.png)    
+![Main Class](../../images/docs/run-configuration-development-host.png)    
     
 3. Specify the Module to be used
  

@@ -21,6 +21,7 @@ These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and 
 repositories need to be added to our build script. 
 
 Maven:
+
 ```maven
 <repository>
     <id>bintray-kotlin-ktor</id>
@@ -30,6 +31,7 @@ Maven:
 ```
 
 Gradle:
+
 ```gradle
     maven { url  "http://dl.bintray.com/kotlin/ktor" }
 ```
@@ -61,7 +63,7 @@ fun main(args: Array<String>) {
 
 Given that the entry point to our application is a the standard Kotlin `main` function, we can simply run it and have our server start, listening on the designated port. 
 
-![Output](resources/hello-world-output.png)
+![Output](../../images/docs/hello-world-output.png)
 
 
 ### Next Steps

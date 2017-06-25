@@ -17,6 +17,7 @@ This tutorial will guide you from the most basic setup to a full featured setup 
 Check this in IDEA at:  File -> Settings -> Plugins
 
 ## Start a Project
+
 1.  File -> New -> Project
 2.  Select Gradle and under Additional Libraries and Frameworks, check Java and Kotlin (Java).  Confirm that Project SDK is completed and click Next.
 3.  Enter a GroupId: Example  
