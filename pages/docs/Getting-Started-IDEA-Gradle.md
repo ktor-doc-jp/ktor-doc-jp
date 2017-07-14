@@ -51,7 +51,7 @@ group 'Example'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.1.2-2'
+    ext.kotlin_version = '{{site.kotlin_version}}'
 
     repositories {
         mavenCentral()
@@ -84,17 +84,39 @@ so we will need to add the following to the repositories block:
    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
 ``` 
 
-Go to [https://bintray.com/kotlin/ktor/ktor] and determine the latest version of ktor.  In this case it is 0.3.2.  
+Coroutines are still experimental feature in Kotlin programming language, so we will need to tell compiler we
+are okay with using them to avoid warnings:
+
+```groovy
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+```
+
+Go to [https://bintray.com/kotlin/ktor/ktor] and determine the latest version of ktor.  In this case it is `{{site.ktor_version}}`.  
 Then we will designate this as an extra property in the buildscript block like:
 
 ```groovy
-ext.ktor_version = '0.3.2'
+ext.ktor_version = '{{site.ktor_version}}'
 ```
 
 Then we will add a dependency for ktor-netty using the ktor_version property we created. (This includes the ktor-core.)
 
 ```groovy
 compile "org.jetbrains.ktor:ktor-netty:$ktor_version"
+```
+
+We also need to tell Kotlin compiler to generate bytecode compatible with Java 8:
+
+```groovy
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
 ```
 
 When you are done the build.gradle file should look like:
@@ -104,8 +126,8 @@ group 'Example'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.1.2-2'
-    ext.ktor_version = '0.3.2'
+    ext.kotlin_version = '{{site.kotlin_version}}'
+    ext.ktor_version = '{{site.ktor_version}}'
 
     repositories {
         mavenCentral()
@@ -119,6 +141,18 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
 
 repositories {
     mavenCentral()

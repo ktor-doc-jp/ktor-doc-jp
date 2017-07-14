@@ -19,22 +19,7 @@ only need to include `ktor-netty` (`ktor-core` which is required for any Ktor ap
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right 
 repositories need to be added to our build script. 
-
-Maven:
-
-```xml
-<repository>
-    <id>bintray-kotlin-ktor</id>
-    <name>bintray</name>
-    <url>http://dl.bintray.com/kotlin/ktor</url>
-</repository>
-```
-
-Gradle:
-
-```groovy
-    maven { url  "http://dl.bintray.com/kotlin/ktor" }
-```
+See how to [setup gradle file](getting-started-IDEA-Gradle.html#set-up-the-gradle-build-file) 
 
 ### Creating a self-hosted Application 
 
