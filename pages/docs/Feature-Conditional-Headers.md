@@ -1,3 +1,12 @@
+---
+title: Conditional Headers
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: features/conditional-headers.html
+summary: 
+---
+
 ConditionalHeaders feature adds ability to avoid sending content if client already has same content. It does so by
 checking `ETag` or `LastModified` properties of the `Resource` or `FinalContent` being sent and comparing these 
 properties to what client indicates it is having. If conditions allow it entire content is not sent and 

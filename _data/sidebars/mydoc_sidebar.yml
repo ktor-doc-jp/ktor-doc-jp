@@ -23,26 +23,38 @@ entries:
     output: web, pdf
     folderitems:
 
-    - title: Geting started
-      url: /Getting-Started.html
+    - title: Geting Started
+      url: /getting-started.html
       output: web, pdf
 
 
-    - title: Getting Started with IntelliJ IDEA
-      url: /Getting-Started-IDEA-Gradle.html
+    - title: Using IntelliJ IDEA
+      url: /getting-started-IDEA-Gradle.html
       output: web, pdf
 
 
-  - title: Application Interface
+  - title: Application
     output: web, pdf
     folderitems:
 
-    - title: Understanding the Application Interface
-      url: /Application.html
+    - title: Application Interface
+      url: /application/index.html
       output: web, pdf
 
-    - title: Application Structure
-      url: /Application-Structure.html
+    - title: Application Configuration
+      url: /application/configuration.html
+      output: web, pdf
+
+    - title: Application Hosting
+      url: /application/hosting.html
+      output: web, pdf
+
+    - title: Application Lifecycle
+      url: /application/lifecycle.html
+      output: web, pdf
+
+    - title: Testing Applications
+      url: /application/testing.html
       output: web, pdf
 
   - title: Features
@@ -50,16 +62,57 @@ entries:
     folderitems:
 
     - title: Understanding Features
-      url: /Features.html
+      url: /features/index.html
+      output: web, pdf
+
+    - title: Routing
+      url: /features/routing.html
+      output: web, pdf
+
+    - title: Static Content
+      url: /features/static-content.html
+      output: web, pdf
+
+    - title: Status Pages
+      url: /features/status-pages.html
+      output: web, pdf
+
+    - title: Sessions
+      url: /features/sessions.html
+      output: web, pdf
+
+    - title: CORS
+      url: /features/cors.html
       output: web, pdf
 
     - title: Authentication
-      url: /Feature-Authentication.html
+      url: /features/authentication.html
       output: web, pdf
 
     - title: Compression
-      url: /Feature-Compression.html
+      url: /features/compression.html
       output: web, pdf
+
+    - title: Conditional Header
+      url: /features/conditional-headers.html
+      output: web, pdf
+
+    - title: File Mapping
+      url: /features/file-mapping.html
+      output: web, pdf
+
+    - title: HEAD Response
+      url: /features/automatic-head.html
+      output: web, pdf
+
+    - title: HSTS Support
+      url: /features/hsts.html
+      output: web, pdf
+
+    - title: Partial Content
+      url: /features/partial-content.html
+      output: web, pdf
+
 
 
   - title: Special layouts

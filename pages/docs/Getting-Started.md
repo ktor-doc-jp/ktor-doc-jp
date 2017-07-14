@@ -3,7 +3,7 @@ title: Getting Started
 keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: Getting-Started.html
+permalink: getting-started.html
 summary: Understand the bare minimum of what a Ktor Application is 
 ---
 
@@ -14,7 +14,7 @@ This tutorial will guide you through the steps on how to create a simple self-ho
 
 ### Including the right dependencies
 
-Ktor is split up into several groups of modules, allowing us to include only the functionality that we need. For a list of these modules please see [Artifacts](Artifacts). In our case we
+Ktor is split up into several groups of modules, allowing us to include only the functionality that we need. For a list of these modules please see [Artifacts](artifacts). In our case we
 only need to include `ktor-netty` (`ktor-core` which is required for any Ktor application is included transitively on including the former).  
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right 
@@ -22,7 +22,7 @@ repositories need to be added to our build script.
 
 Maven:
 
-```maven
+```xml
 <repository>
     <id>bintray-kotlin-ktor</id>
     <name>bintray</name>
@@ -32,7 +32,7 @@ Maven:
 
 Gradle:
 
-```gradle
+```groovy
     maven { url  "http://dl.bintray.com/kotlin/ktor" }
 ```
 
@@ -68,6 +68,6 @@ Given that the entry point to our application is a the standard Kotlin `main` fu
 
 ### Next Steps
 
-This was the simplest example of getting a self-hosted Ktor application up and running. Next steps will be to understand the [Application](Application) object as well as [Features](Features).
+This was the simplest example of getting a self-hosted Ktor application up and running. Next steps will be to understand the [Application](application) object as well as [Features](Features).
 
-For a more detailed Getting Started example see [Getting Started with IDEA and Gradle](Getting-Started-IDEA-Gradle.md)
+For a more detailed Getting Started example see [Getting Started with IDEA and Gradle](getting-started-IDEA-Gradle.md)

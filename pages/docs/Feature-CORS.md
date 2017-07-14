@@ -1,4 +1,11 @@
-## CORS
+---
+title: CORS
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: features/cors.html
+summary:  
+---
 
 Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).
 
@@ -6,15 +13,18 @@ Ktor by default provides an interceptor for implementing proper support for Cros
 
 ### Basic
 First of all, install the CORS feature into your application.
-```
+
+```kotlin
 fun Application.main() {
   ...
   install(CORS)
   ...
 }
 ```
+
 The default configuration to the CORS feature handles only `GET`, `POST` and `HEAD` HTTP methods and the following headers:
-```
+
+```kotlin
   HttpHeaders.CacheControl
   HttpHeaders.ContentLanguage
   HttpHeaders.ContentType
@@ -22,16 +32,17 @@ The default configuration to the CORS feature handles only `GET`, `POST` and `HE
   HttpHeaders.LastModified
   HttpHeaders.Pragma
 ```
+
 You can customize those values and more, to learn how, take a look at the Advanced section below.
 
 ### Advanced
 
  - source code:  [here](https://github.com/Kotlin/ktor/blob/master/ktor-core/src/org/jetbrains/ktor/features/CORS.kt)
-  - tests :  [here](https://github.com/Kotlin/ktor/blob/master/ktor-core-tests/test/org/jetbrains/ktor/tests/http/CORSTest.kt)
+ - tests :  [here](https://github.com/Kotlin/ktor/blob/master/ktor-core-tests/test/org/jetbrains/ktor/tests/http/CORSTest.kt)
 
 Here is an advanced example that demonstrates most of CORS-related API functions
 
-```
+```kotlin
 fun Application.main() {
   ...
   install(CORS)
@@ -50,7 +61,9 @@ fun Application.main() {
   ...
 }
 ```
+
 ### Configs
+
 - method("HTTP_METHOD") : Includes this method to the white list of Http methods to use CORS.
 - header : Includes this header to the white list of headers to use CORS.
 - anyHost() : Allows any host to access the resources

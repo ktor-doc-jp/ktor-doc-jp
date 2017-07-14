@@ -3,18 +3,15 @@ title: Features
 keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: Getting-Started.html
+permalink: features/index.html
 summary: Features provide key functionality to your application using a plugin model 
 ---
 
-## Features
-
-A Ktor application typically consists of a series of [Features](Features). You can think of features as functionality 
+A Ktor application typically consists of a series of features. You can think of features as functionality 
 that is injected into the request and response pipeline. Usually an application would have a series of features such as `DefaultHeaders` which add headers to every outgoing
 response, `Routing` which allows us to define routes to handle requests, etc.
 
-A feature is "installed" into the [Application](Application) using the `install` function
-
+A feature is "installed" into the [Application](/application) using the `install` function
 
 ```kotlin
 fun Application.main() {
@@ -56,22 +53,21 @@ Ktor comes with a number of ready-made features that can be installed into your 
 
 #### Application Features
 
-* [Routing](Feature-Routing): attaches code to specific path/query/method/header and extract parameters from placeholders
-* [Sessions](Feature-Sessions): stores and retrieves additional information attached to client session
-* [Transform](Feature-Transform): transforms response content on the fly and utilise unified mechanism to build a response
-* [Authentication](Feature-Authentication): authenticates client using Basic, Digest, Form, OAuth (1a & 2)
-* [Status Pages](Feature-Status-Pages): sends custom content for specific status responses such as 404 Not Found
-* [File type mapping](Feature-File-Mapping): maps file extension to mime type for static file serving
-* [Static content](Feature-Static-Content): serves streams of data from local file system with full asynchronous support
+* [Routing](routing): attaches code to specific path/query/method/header and extract parameters from placeholders
+* [Sessions](sessions): stores and retrieves additional information attached to client session
+* [Authentication](authentication): authenticates client using Basic, Digest, Form, OAuth (1a & 2)
+* [Status Pages](status-pages): sends custom content for specific status responses such as 404 Not Found
+* [File type mapping](file-mapping): maps file extension to mime type for static file serving
+* [Static content](static-content): serves streams of data from local file system with full asynchronous support
 
 #### HTTP transport features
 
-* [Compression](Feature-Compression): enables gzip/deflate compression when client accepts it
-* [Conditional Headers](Feature-Conditional-Headers): sends 304 Not Modified response when if-modified-since/etag indicate content is the same
-* [Partial Content](Feature-Partial-Content): sends partial content for streaming ranges, like in video streams
-* [HEAD response](Feature-Head-Response): responds to HEAD requests by running through pipeline and dropping response body
-* [CORS](Feature-CORS): verifies and sends headers according to cross-origin resource sharing control
-* [HSTS and https redirect](Feature-HSTS): supports strict transport security
+* [Compression](compression): enables gzip/deflate compression when client accepts it
+* [Conditional Headers](conditional-headers): sends 304 Not Modified response when if-modified-since/etag indicate content is the same
+* [Partial Content](partial-content): sends partial content for streaming ranges, like in video streams
+* [HEAD response](head-response): responds to HEAD requests by running through pipeline and dropping response body
+* [CORS](cors): verifies and sends headers according to cross-origin resource sharing control
+* [HSTS and https redirect](hsts): supports strict transport security
 
 ### Custom features
 

@@ -1,4 +1,11 @@
-### Testing applications
+---
+title: Testing Applications 
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: application/testing.html
+summary: 
+---
 
 * Add `ktor-test-host` dependency to `test` scope 
 * Create a JUnit test class and a test function

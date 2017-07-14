@@ -1,4 +1,11 @@
-## Application
+---
+title: Application
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: application/index.html
+summary: 
+---
 
 An `Application` instance is the main unit of a Ktor Application. When a request comes in (a request can be HTTP, HTTP/2 or Socket requests), it is converted to an `ApplicationCall` and goes through a pipeline which is owned by the `Application`. The pipeline
 consists of one or more interceptors that are previously installed, providing certain functionality such as routing, compression, etc.
@@ -8,7 +15,7 @@ and outgoing response. In addition to these, it also provides some useful functi
 asynchronously, `ApplicationCall` also represents the logical execution context with `Attributes` to pass data between various parts of the pipeline.
 
 Installing interceptor into pipeline is the primary method to alter the processing of an `ApplicationCall`.
-Nearly all Ktor [Features](Features) are interceptors that perform various operations in different phases of
+Nearly all Ktor [features](/features) are interceptors that perform various operations in different phases of
 the application call processing. 
 
 ```kotlin
@@ -20,11 +27,11 @@ the application call processing.
 The code above installs an interceptor into the `Call` phase of an `ApplicationCall` processing, and responds with plain text
 when the request is asking for a root page.  
 
-This is just an example and usually URI's are not handled in this way, as there is a [routing](Feature-Routing) facility that does this
- and and more. Also, as mentioned previously, defining interceptor is usually done using [Features](Feature) using an `install` function.
+This is just an example and usually URI's are not handled in this way, as there is a [routing](/features/Routing) facility that does this
+ and and more. Also, as mentioned previously, defining interceptor is usually done using [features](/features) using an `install` function.
    
 Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
 can potentially execute asynchronously.
  
-See advanced topic [Pipeline](Advanced-Pipeline) for more information on the mechanics of processing `ApplicationCall`s 
+See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s 
 

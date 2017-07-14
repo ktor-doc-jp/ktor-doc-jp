@@ -3,17 +3,17 @@ title: Using IntelliJ IDEA and Gradle
 keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: Getting-Started-IDEA-Gradle.html
+permalink: getting-started-IDEA-Gradle.html
 summary: Get up and running with IntelliJ IDEA and Gradle
 ---
-
-# Getting started with Ktor using Intellij IDEA and Gradle
 
 This tutorial will guide you from the most basic setup to a full featured setup you can use to start developing your app.
 
 ## Prerequisites
+
 1.  The most recent version of Intellij IDEA
 2.  Kotlin and Gradle plugins enabled (They should be by default.)
+
 Check this in IDEA at:  File -> Settings -> Plugins
 
 ## Start a Project
@@ -28,6 +28,7 @@ and click Next
 and Project location: a/path/on/your/filesystem   
 and click Finish
 6.  Wait a few seconds for Gradle to run and you should see a project structure like the following (with a few other files and directories):
+
 ```
 Example 
   src
@@ -45,7 +46,7 @@ Example
 ## Set up the Gradle build file
 View the build.gradle file.  Initially, it will look like this:
 
-```
+```groovy
 group 'Example'
 version '1.0-SNAPSHOT'
 
@@ -75,24 +76,30 @@ dependencies {
 }
 ```
 
-2.  The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx 
+The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx 
 so we will need to add the following to the repositories block:     
-   ```
+   
+```groovy
    maven { url  "http://dl.bintray.com/kotlin/ktor" }
    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
-   ``` 
+``` 
 
-3. Go to [https://bintray.com/kotlin/ktor/ktor] and determine the latest version of ktor.  In this case it is 0.3.2.  
+Go to [https://bintray.com/kotlin/ktor/ktor] and determine the latest version of ktor.  In this case it is 0.3.2.  
 Then we will designate this as an extra property in the buildscript block like:
-```
+
+```groovy
 ext.ktor_version = '0.3.2'
 ```
-4.  Then we will add a dependency for ktor-netty using the ktor_version property we created. (This includes the ktor-core.)
-```
+
+Then we will add a dependency for ktor-netty using the ktor_version property we created. (This includes the ktor-core.)
+
+```groovy
 compile "org.jetbrains.ktor:ktor-netty:$ktor_version"
 ```
-5.  When you are done the build.gradle file should look like:
-```
+
+When you are done the build.gradle file should look like:
+
+```groovy
 group 'Example'
 version '1.0-SNAPSHOT'
 
@@ -125,7 +132,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
-6.  Gradle will run automatically and pull in these dependencies.
+
+Gradle will run automatically and pull in these dependencies.
+
 ## Create the App
 
 Select the src/main/kotlin directory and create a new package.  We will call it blog.
@@ -134,7 +143,7 @@ Select that directory and create a new kotlin file under it named BlogApp
 
 Copy and paste in the most basic setup for an app so that it looks like:
 
-```
+```kotlin
 package blog
 
 /**
@@ -157,6 +166,7 @@ fun main(args: Array<String>) {
     }.start(wait = true)
 }
 ```
+
 Now you can Run 'blog.BlogAppKt'  
 
 This will start the Netty web server.
@@ -164,14 +174,14 @@ In your browser enter the url:  localhost:8080
 And you should see your example blog plage.
 
 ### Improve the app with the Application object
+
 The setup above has a lot of nested blocks and is not the best for starting to 
 add functionality to your app.  We can improve it by using the Application object 
 and referring to that from an embeddedServer call in the main function.  
 
 Change your code in BlogApp.kt to the following to try this:
 
-
-```
+```kotlin
 package blog
 
 /**
@@ -202,11 +212,12 @@ fun main(args: Array<String>) {
 ```
 
 ### Extract out Configuration Data
+
 Although we can designate some application configuration data in the main function embeddedServer call, we can provide more flexibility for future deployments and changes by extracting this out to a separate configuration file.  In the src/main/resources directory we will create a new text file named application.conf with the following content:
-```
+
+```json
 ktor {
     deployment {
-        environment = development
         port = 8080
     }
 
@@ -215,10 +226,12 @@ ktor {
     }
 }
 ```
+
 Then we delete the main function from BlogApp.kt and change fun Application.module() to fun Application.main().  However, if we run the application now it will fail with an error message like "Top-level function 'main' not found in package blog."  Our Application.main() function is now a function extension and does not qualify as a top-level main function.   
 
 This requires us to indicate a new main class as IDEA will no longer be able to find it automatically.  In build.gradle we add:
-```
+
+```groovy
 apply plugin: 'application'
 
 mainClassName = 'org.jetbrains.ktor.netty.DevelopmentHost'
@@ -232,22 +245,25 @@ Now when we run the new configuration, the application will start again.
 
 ## Remove the logger warning messages and set up logging
 Each time you run the app you will see the following text in the Run pane:
+
 ```
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
+
 We can set up logging to remove these warning messages and get a better idea of what is happening with the app.
 
 Add the following to the gradle dependencies:
     
-```
+```groovy
     compile "ch.qos.logback:logback-classic:1.2.1"
 ```
     
 Run the app and you should now see the logging messages in the Run pane of IDEA.
 However, these logging messages are not as helpful as they could be.  To get a better configuration for logging, create a text file named logback.xml file in the  src/main/resources directory and put the following xml configuation in it:
-```
+
+```xml
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

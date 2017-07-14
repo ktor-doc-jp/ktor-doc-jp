@@ -1,6 +1,15 @@
+---
+title: Routing
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: features/routing.html
+summary:  
+---
+
 Routing is a feature that is installed into an Application to simplify and structure of URI handling.
 
-```
+```kotlin
     application.install(Routing) {
         get("/") {
             call.respondText("Hello, World!")
@@ -48,12 +57,13 @@ method(HttpMethod.Get) { // matches GET verb
 Route resolution algorithms goes through nodes recursively discarding subtrees where selector didn't match.
 
 Builder functions:
-* `route(path)` – adds path segments matcher(s), see below about [paths](#Path)
+
+* `route(path)` – adds path segments matcher(s), see below about [paths](#path)
 * `method(verb)` – adds HTTP method matcher.
 * `param(name, value)` – adds matcher for specific value of query parameter
 * `param(name)` – adds matcher that checks existence of query parameter and captures its value
 * `optionalParam(name)` – adds matcher that captures value of query parameter if it exists
-* `header(name, value)` – adds matcher that for a specific value of HTTP header, see below about [quality](#Quality)
+* `header(name, value)` – adds matcher that for a specific value of HTTP header, see below about [quality](#quality)
 
 ### Path
 
@@ -64,7 +74,8 @@ Building routing tree by hand would be very inconvenient, thus there is `route` 
 tree. First, it is split by path segments by the `'/'` delimiter. Each segment generates a nested routing node.
 
 These two variants are equivalent:
-```
+
+```kotlin
 route("/foo/bar") { … } // (1)
 
 route("/foo") {
@@ -75,11 +86,13 @@ route("/foo") {
 ##### Parameters
 Path can also contain _parameters_ that match specific path segment and capture its value into `parameters` properties
 of an application call:
-```
+
+```kotlin
 get("/user/{login}") {
    val login = call.parameters["login"]
 }
 ```
+
 When user agent requests `/user/john` using GET method, this route is matched and `parameters` property
 will have `"login"` key with value `"john"`.
 
@@ -95,7 +108,7 @@ Parameters and path segments can be optional, or capture entire reminder of URI.
  
 Examples:
 
-```
+```kotlin
 get("/user/{login}/{fullname?}") { … } 
 get("/resources/{path...} { … } 
 ```
@@ -105,7 +118,8 @@ get("/resources/{path...} { … }
 It is not unlikely that several routes can match to the same HTTP request.
 
 One example is matching `Accept` HTTP header which can have multiple values with specified priority (quality).
-```
+
+```kotlin
 header("Accept", "text/plain") { … }
 header("Accept", "text/html") { … }
 ```
@@ -118,7 +132,8 @@ because wildcard has lower quality.
 
 Another example is `https://twitter.com/kotlin` and `https://twitter.com/settings`. 
 This can be implemented like this:
-```
+
+```kotlin
 get("/{user}") { … }
 get("/settings") { … }
 ```
@@ -131,7 +146,7 @@ When routing node is selected, routing system builds special pipeline to execute
 This pipeline consists of handler(s) for the selected node and any interceptors installed into nodes that
 constitutes path from root to the selected node in order from top to bottom.
 
-```
+```kotlin
 route("/portal") {
    route("articles") { … }
    route("admin") {

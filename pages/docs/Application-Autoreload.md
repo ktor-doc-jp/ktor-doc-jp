@@ -1,3 +1,12 @@
+---
+title: Automatic Reload
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: application/autoreload.html
+summary: 
+---
+
 During development it is important to have fast feedback loop cycle. 
 Often, restarting server would take quite some time, so Ktor provides basic auto-reload facility that
 reloads just an Application. To enable this feature, add `autoreload` and `watch` keys to `ktor.deployment` 
@@ -6,7 +15,7 @@ configuration.
 `autoreload` – Feature is enabled when this value is `true`
 `watch` - Array of module names that should be automatically reloaded.
 
-```
+```kotlin
 ktor {
     deployment {
         port = 8080

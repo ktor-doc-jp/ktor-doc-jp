@@ -1,4 +1,11 @@
-## Artifacts
+---
+title: Artifacts
+keywords: Home Page
+tags: [overview]
+sidebar: mydoc_sidebar
+permalink: artifacts.html
+summary:  
+---
 
 Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. The typical Ktor application would require
 `ktor-core` and a corresponding host depending on whether it's self-hosted or using an Application Server. 
@@ -7,6 +14,7 @@ All artifacts in Ktor belong to `org.jetbrains.ktor` group. You can check what i
  on [Bintray](https://bintray.com/kotlin/ktor)
     
 Ktor is split into several groups of modules:
+
 * `ktor-core` is a core package where most of the application API and implementation is located. 
 * `ktor-hosts` contains modules that support hosting Ktor Application in different hosts: Netty, Jetty, Tomcat, and 
 generic servlet. It also contains TestHost for setting up application tests without starting real host.
