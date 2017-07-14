@@ -80,6 +80,10 @@ entries:
       url: /features/routing.html
       output: web, pdf
 
+    - title: Locations
+      url: /features/locations.html
+      output: web, pdf
+
     - title: Static Content
       url: /features/static-content.html
       output: web, pdf

@@ -54,6 +54,7 @@ Ktor comes with a number of ready-made features that can be installed into your 
 #### Application Features
 
 * [Routing](routing): attaches code to specific path/query/method/header and extract parameters from placeholders
+* [Locations](locations): provides round-trip bindings of URLs to data classes
 * [Sessions](sessions): stores and retrieves additional information attached to client session
 * [Authentication](authentication): authenticates client using Basic, Digest, Form, OAuth (1a & 2)
 * [Status Pages](status-pages): sends custom content for specific status responses such as 404 Not Found
