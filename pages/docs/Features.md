@@ -59,6 +59,7 @@ Ktor comes with a number of ready-made features that can be installed into your 
 * [Status Pages](status-pages): sends custom content for specific status responses such as 404 Not Found
 * [File type mapping](file-mapping): maps file extension to mime type for static file serving
 * [Static content](static-content): serves streams of data from local file system with full asynchronous support
+* [FreeMarker](freemarker): provides support for Freemarker templates
 
 #### HTTP transport features
 
