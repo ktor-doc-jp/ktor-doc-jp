@@ -3,8 +3,14 @@ layout: default
 ---
 <div class="post-header">
 {% if page.logo == true %}
-<img src="https://github.com/Kotlin/ktor/wiki/resources/ktor.png" alt="Ktor" style="width:600px; max-width:100%;">
-<p/>
+    <p>
+    <img src="https://github.com/Kotlin/ktor/wiki/resources/ktor.png" alt="Ktor" style="width:600px; max-width:100%;"/>
+    </p>
+    <p>
+    <a href="https://bintray.com/kotlin/ktor/ktor/_latestVersion"><img src="https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg"></a>
+    <a href="https://teamcity.jetbrains.com/viewType.html?buildTypeId=KotlinTools_Ktor_Build&branch_KotlinTools_Ktor=%3Cdefault%3E&tab=buildTypeStatusDiv"><img src="https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/KotlinTools_Ktor_Build.svg"></a>
+    <a href="http://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat"></a>
+    </p>
 {% else %}
 <h1 class="post-title-main">{{ page.title }}
    {% if site.github_editme_path %}
