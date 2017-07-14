@@ -34,7 +34,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: '{{ "search.json" }}',
-                                searchResultTemplate: '<li><a href="{url | remove: "/"}" title="{{page.title | replace: "\'", "\"}}">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url }" title="{{page.title | replace: "\'", "\"}}">{title}</a></li>',
                                 noResultsText: '{{site.data.strings.search_no_results_text}}',
                                 limit: 10,
                                 fuzzy: true,
@@ -58,9 +58,9 @@
                 {% if item.external_url %}
                 <li><a href="{{item.external_url}}" target="_blank">{{item.title}}</a></li>
                 {% elsif page.url contains item.url %}
-                <li class="active"><a href="{{item.url | remove: "/"}}">{{item.title}}</a></li>
+                <li class="active"><a href="{{item.url }}">{{item.title}}</a></li>
                 {% else %}
-                <li><a href="{{item.url | remove: "/"}}">{{item.title}}</a></li>
+                <li><a href="{{item.url }}">{{item.title}}</a></li>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
@@ -77,7 +77,7 @@
                         {% elsif page.url contains folderitem.url %}
                         <li class="dropdownActive"><a href="{{folderitem.url |  remove: "/"}}">{{folderitem.title}}</a></li>
                         {% else %}
-                        <li><a href="{{folderitem.url | remove: "/"}}">{{folderitem.title}}</a></li>
+                        <li><a href="{{folderitem.url }}">{{folderitem.title}}</a></li>
                         {% endif %}
                         {% endfor %}
                     </ul>
