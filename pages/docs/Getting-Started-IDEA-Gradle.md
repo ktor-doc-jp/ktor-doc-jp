@@ -1,5 +1,5 @@
 ---
-title: Ktor Web Framework Overview
+title: Using IntelliJ IDEA and Gradle
 keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
