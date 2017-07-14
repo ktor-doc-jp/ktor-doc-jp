@@ -21,7 +21,7 @@ dig into the different areas. A recommended tour however would be:
 * [Getting Started](getting-started)
 * [Understanding the Application interface](application)
 * [Features](features)
-* [Hosting Options](hosting)
+* [Hosting Options](application/hosting)
 * [Structuring Applications](/application/structure)
 * [Testing Applications](/application/testing)
 
