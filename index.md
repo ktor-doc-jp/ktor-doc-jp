@@ -8,7 +8,7 @@ logo: true
 summary: 
 ---
 
-Ktor is a framework for quickly creating web applications in Kotlin programming language with minimal effort.
+Ktor is a framework for quickly creating web applications in [Kotlin programming language](https://kotlinlang.org/) with minimal effort.
 
 This wiki provides a complete reference to the Ktor application structure, programing interface and 
 how to approach particular tasks.
