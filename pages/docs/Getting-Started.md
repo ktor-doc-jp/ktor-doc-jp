@@ -55,4 +55,4 @@ Given that the entry point to our application is a the standard Kotlin `main` fu
 
 This was the simplest example of getting a self-hosted Ktor application up and running. Next steps will be to understand the [Application](application) object as well as [Features](Features).
 
-For a more detailed Getting Started example see [Getting Started with IDEA and Gradle](getting-started-IDEA-Gradle.md)
+For a more detailed Getting Started example see [Getting Started with IDEA and Gradle](getting-started-IDEA-Gradle)
