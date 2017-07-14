@@ -7,7 +7,8 @@ permalink: features/status-pages.html
 summary:  
 ---
 
-The StatusPages [Feature](Features) allows Ktor applications to respond appropriately to any failure state. This feature is installed using the standard application configuration:
+The `StatusPages` feature allows Ktor applications to respond appropriately to any failure state. 
+This feature is installed using the standard application configuration:
 
 ```kotlin
 fun Application.main() {

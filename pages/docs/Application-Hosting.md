@@ -54,13 +54,12 @@ Running hosted applications in a development environment such as IntelliJ IDEA, 
 Once the configuration is saved, you can now run your application for development/debug purposes from inside IntelliJ IDEA, without having to deploy to a container or setup 
 any application servers.
 
-
 See also: [Configuration](configuration)
 
 ### Use automatic reloading
 
 Ktor can automatically reload application when changes to class files are detected, i.e. when you build the Application.
-Enable this feature by adding `autoreload` configuration to `application.conf`:
+Enable this feature by adding `watch` configuration to `application.conf`:
 
 ```json
 ktor {
@@ -73,4 +72,4 @@ ktor {
 }
 ```
 
-See also: [Automatic Reload](/application/autoreload)
+Check [Automatic Reloading](/application/autoreload) article for more details.

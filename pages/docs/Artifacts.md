@@ -7,11 +7,13 @@ permalink: artifacts.html
 summary:  
 ---
 
-Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. The typical Ktor application would require
-`ktor-core` and a corresponding host depending on whether it's self-hosted or using an Application Server. 
+Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. 
+The typical Ktor application would require `ktor-core` and a corresponding host depending on whether it's self-hosted
+ or using an Application Server. 
 
-All artifacts in Ktor belong to `org.jetbrains.ktor` group. You can check what is the latest version
- on [Bintray](https://bintray.com/kotlin/ktor)
+All artifacts in Ktor belong to `org.jetbrains.ktor` group and hosted on [Bintray](https://bintray.com/kotlin/ktor)
+
+[![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg)](https://bintray.com/kotlin/ktor/ktor/_latestVersion)
     
 Ktor is split into several groups of modules:
 

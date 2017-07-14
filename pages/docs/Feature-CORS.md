@@ -9,7 +9,8 @@ summary:
 
 Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).
 
-"Cross-Origin Resource Sharing (CORS) is a specification that enables truly open access across domain-boundaries. If you serve public content, please consider using CORS to open it up for universal JavaScript / browser access." - http://enable-cors.org/
+> Cross-Origin Resource Sharing (CORS) is a specification that enables truly open access across domain-boundaries. If you serve public content, please consider using CORS to open it up for universal JavaScript / browser access. 
+*From [enable-cors.org](http://enable-cors.org/)*
 
 ### Basic
 First of all, install the CORS feature into your application.
@@ -32,8 +33,6 @@ The default configuration to the CORS feature handles only `GET`, `POST` and `HE
   HttpHeaders.LastModified
   HttpHeaders.Pragma
 ```
-
-You can customize those values and more, to learn how, take a look at the Advanced section below.
 
 ### Advanced
 
@@ -64,9 +63,9 @@ fun Application.main() {
 
 ### Configs
 
-- method("HTTP_METHOD") : Includes this method to the white list of Http methods to use CORS.
-- header : Includes this header to the white list of headers to use CORS.
-- anyHost() : Allows any host to access the resources
-- host("hostname") : Allows only the specified host to use CORS, it can have the port number, a list of subDomains or the supported schemes.
-- allowCredentials : Includes AccessControlAllowCredentials header in the response
-- maxAge: Includes AccessControlMaxAge header in the response with the given max age
+- `method("HTTP_METHOD")` : Includes this method to the white list of Http methods to use CORS.
+- `header("header-name")` : Includes this header to the white list of headers to use CORS.
+- `anyHost()` : Allows any host to access the resources
+- `host("hostname")` : Allows only the specified host to use CORS, it can have the port number, a list of subDomains or the supported schemes.
+- `allowCredentials` : Includes AccessControlAllowCredentials header in the response
+- `maxAge`: Includes AccessControlMaxAge header in the response with the given max age

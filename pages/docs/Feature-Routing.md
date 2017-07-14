@@ -7,7 +7,7 @@ permalink: features/routing.html
 summary:  
 ---
 
-Routing is a feature that is installed into an Application to simplify and structure of URI handling.
+Routing is a feature that is installed into an Application to simplify and structure page requests handling.
 
 ```kotlin
     application.install(Routing) {
@@ -120,8 +120,8 @@ It is not unlikely that several routes can match to the same HTTP request.
 One example is matching `Accept` HTTP header which can have multiple values with specified priority (quality).
 
 ```kotlin
-header("Accept", "text/plain") { … }
-header("Accept", "text/html") { … }
+accept(ContentType.Text.Plain) { … }
+accept(ContentType.Application.Json) { … }
 ```
 
 Routing matching algorithm not only checks if particular HTTP request matches specific path in a routing tree,
@@ -130,7 +130,12 @@ Given header routes above, and request header `Accept: text/plain; q=0.5, text/h
 it has higher value for the quality (default is 1.0), and header `Accept: text/plain, text/*` will match `text/plain`
 because wildcard has lower quality. 
 
-Another example is `https://twitter.com/kotlin` and `https://twitter.com/settings`. 
+Another example is making short urls to named entities, e.g. users, and still being able to prefer specific pages like "settings". 
+An example would be 
+
+* `https://twitter.com/kotlin` – displays user "kotlin" 
+* `https://twitter.com/settings` - displays settings page
+
 This can be implemented like this:
 
 ```kotlin
@@ -166,7 +171,7 @@ loading user from the database in `/user/{id}` section and placing it into call'
 
 ### Extensibility
   
-Core contains a number of basic selectors to match method, path, headers and query parameters, but
+`ktor-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
 one can easily add own selectors to fit in even more complex logic. Implement `RouteSelector` and create
 a builder function similar to built-in. 
 
