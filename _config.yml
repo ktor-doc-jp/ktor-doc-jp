@@ -3,16 +3,16 @@ repository: ktorio/ktorio.github.io
 output: web
 # this property is useful for conditional filtering of content that is separate from the PDF.
 
-topnav_title: Ktor Web Framework
+topnav_title: ktor
 # this appears on the top navigation bar next to the home button
 
-site_title: Ktor Web Framework
+site_title: Ktor
 # this appears in the html browser tab for the site title (seen mostly by search engines, not users)
 
 company_name: JetBrains
 # this appears in the footer
 
-github_editme_path: ktorio/ktorio.github.io/blob/gh-pages/
+github_editme_path: ktorio/ktorio.github.io/blob/master/
 # if you're using Github, provide the basepath to the branch you've created for reviews, following the sample here. if not, leave this value blank.
 
 disqus_shortname: ktorio-github-io
@@ -32,7 +32,7 @@ exclude:
   - .gitignore
 # these are the files and directories that jekyll will exclude from the build
 
-feedback_subject_line: Ktor Web Framework Feedback
+feedback_subject_line: Ktor Feedback
 
 feedback_email: hadi@jetbrains.com
 # used as a contact email for the Feedback link in the top navigation bar
@@ -100,7 +100,7 @@ defaults:
 sidebars:
 - docs_sidebar
 
-description: "Ktor Web Framework"
+description: "Ktor"
 # the description is used in the feed.xml file
 
 # needed for sitemap.xml file only

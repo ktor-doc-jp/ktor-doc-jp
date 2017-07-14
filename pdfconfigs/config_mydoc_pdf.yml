@@ -4,7 +4,7 @@ baseurl: "/docs-pdf"
 port: 4010
 output: pdf
 product: mydoc
-print_title: Ktor Web Framework Documentation
+print_title: Ktor Documentation
 print_subtitle: version 1.0
 output: pdf
 defaults:
