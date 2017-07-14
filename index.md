@@ -1,13 +1,12 @@
 ---
-title: Ktor Web Framework Overview
+title: Overview
 keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: index.html
+logo: true
 summary: 
 ---
-
-<img src="https://github.com/Kotlin/ktor/wiki/resources/ktor.png" alt="Ktor" width="600" style="max-width:100%;">
 
 Ktor is a framework for quickly creating web applications in Kotlin programming language with minimal effort.
 

@@ -1,9 +1,18 @@
 ---
 layout: default
 ---
+{% if page.logo == true %}
+<img src="https://github.com/Kotlin/ktor/wiki/resources/ktor.png" alt="Ktor" style="width:600px; max-width:100%;">
+{% endif %}
 
 <div class="post-header">
-   <h1 class="post-title-main">{{ page.title }}</h1>
+   <h1 class="post-title-main">{{ page.title }}
+       {% if site.github_editme_path %}
+
+       <a target="_blank" class="gh-btn" href="https://github.com/{{site.github_editme_path}}{% unless page.url contains " index.html" %}pages/{% endunless %}{{page.folder}}{{page.url | remove: ".html" | append: ".md"}}" role="button">
+       <i class="fa fa-github"></i> Edit</a>
+       {% endif %}
+   </h1>
 </div>
 
 {% if page.simple_map == true %}
@@ -38,12 +47,6 @@ layout: default
     {% include toc.html %}
     {% endunless %}
 
-
-    {% if site.github_editme_path %}
-
-    <a target="_blank" href="https://github.com/{{site.github_editme_path}}{% unless page.url contains "index.html" %}pages/{% endunless %}{{page.folder}}{{page.url | remove: ".html" | append: ".md"}}" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
-
-    {% endif %}
 
   {{content}}
 
