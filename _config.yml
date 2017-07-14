@@ -36,8 +36,8 @@ exclude:
   - .gitignore
 # these are the files and directories that jekyll will exclude from the build
 
+feedback_disable: true
 feedback_subject_line: Ktor Feedback
-
 feedback_email: hadi@jetbrains.com
 # used as a contact email for the Feedback link in the top navigation bar
 
