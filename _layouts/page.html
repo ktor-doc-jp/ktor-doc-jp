@@ -15,7 +15,7 @@ layout: default
 {% else %}
 <h1 class="post-title-main">{{ page.title }}
    {% if site.github_editme_path %}
-   <a target="_blank" class="gh-btn" href="https://github.com/{{site.github_editme_path}}{% unless page.url contains " index.html" %}pages/{% endunless %}{{page.folder}}{{page.url | remove: ".html" | append: ".md"}}" role="button">
+   <a target="_blank" class="gh-btn" href="https://github.com/{{site.github_editme_path}}{{ page.path }}" role="button">
    <i class="fa fa-github"></i> Edit</a>
    {% endif %}
 </h1>
