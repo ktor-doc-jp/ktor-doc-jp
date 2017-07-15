@@ -2,14 +2,14 @@
 title: News
 sidebar:
 keywords: news, blog, updates, release notes, announcements
-permalink: news.html
+permalink: news/index.html
 toc: false
 folder: news
 ---
 <div class="home">
 
     <div class="post-list">
-        {% for post in site.posts limit:10 %}
+        {% for post in site.news limit:10 %}
 
 
     <h2><a class="post-link" href="{{ post.url  }}">{{ post.title }}</a></h2>
@@ -23,10 +23,10 @@ folder: news
 
         {% endfor %}
 
-        <p><a href="feed.xml" class="btn btn-primary navbar-btn cursorNorm" role="button">RSS Subscribe{{tag}}</a></p>
+        <p><a href="/feed.xml" class="btn btn-primary navbar-btn cursorNorm" role="button">RSS Subscribe{{tag}}</a></p>
 
 <hr />
-        <p>See more posts from the <a href="news_archive.html">News Archive</a>. </p>
+        <p>See more posts from the <a href="/news/archive.html">News Archive</a>. </p>
 
     </div>
 </div>

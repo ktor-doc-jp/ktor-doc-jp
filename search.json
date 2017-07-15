@@ -14,11 +14,11 @@ search: exclude
 "url": "{{ page.url }}",
 "summary": "{{page.summary | strip }}"
 }
-{% unless forloop.last and site.posts.size < 1 %},{% endunless %}
+{% unless forloop.last and site.news.size < 1 %},{% endunless %}
 {% endunless %}
 {% endfor %}
 
-{% for post in site.posts %}
+{% for post in site.news %}
 
 {
 "title": "{{ post.title | escape }}",
