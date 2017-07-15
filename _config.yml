@@ -65,6 +65,13 @@ kramdown:
 collections:
   tooltips:
     output: false
+
+  drafts:
+    output: true
+
+  news:
+    output: true
+
 # collections are declared here. this renders the content in _tooltips and processes it, but doesn't output it as actual files in the output unless you change output to true
 
 defaults:
@@ -91,13 +98,22 @@ defaults:
   -
     scope:
       path: ""
-      type: "posts"
+      type: "news"
     values:
       layout: "post"
       comments: true
       search: true
       sidebar: home_sidebar
       topnav: topnav
+
+  -
+    scope:
+      path: ""
+      type: "drafts"
+    values:
+      layout: "page"
+      sidebar: home_sidebar
+      summary: This page is a *draft*.
 
 # these are defaults used for the frontmatter for these file types
 
