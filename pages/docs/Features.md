@@ -100,6 +100,7 @@ concurrent environment.
 `Feature` companion object conforms to Ktor API and wires things together.
  
 Feature can be installed with the standard `install` function:
+
 ```kotlin
 fun Application.main() {
     install(CustomFeature) { // Install a custom feature
