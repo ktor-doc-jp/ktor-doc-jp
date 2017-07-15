@@ -1,9 +1,9 @@
 ---
-title: Pipeline
+title: Hosts
 keywords: Home Page
 tags: [advanced]
 sidebar: mydoc_sidebar
-permalink: advanced/pipeline.html
+permalink: advanced/hosts.html
 summary: This page is a placeholder  
 ---
 

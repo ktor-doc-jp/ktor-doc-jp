@@ -1,7 +1,7 @@
 ---
 title: Application Structure
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/structure.html
 summary: 

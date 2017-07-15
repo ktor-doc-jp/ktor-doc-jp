@@ -1,10 +1,9 @@
 ---
 title: Locations
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/locations.html
-summary:  
+summary: This page is a placeholder  
 ---
 
-> This is a placeholder page

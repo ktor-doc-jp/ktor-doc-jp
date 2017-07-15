@@ -1,7 +1,7 @@
 ---
 title: Application
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/index.html
 summary: 

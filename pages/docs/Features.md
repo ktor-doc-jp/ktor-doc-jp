@@ -1,7 +1,7 @@
 ---
 title: Features
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/index.html
 summary: Features provide key functionality to your application using a plugin model 
@@ -64,6 +64,7 @@ Ktor comes with a number of ready-made features that can be installed into your 
 
 #### HTTP transport features
 
+* [DefaultHeaders](default-headers): provides default headers with each HTTP response such as Date and Server
 * [Compression](compression): enables gzip/deflate compression when client accepts it
 * [Conditional Headers](conditional-headers): sends 304 Not Modified response when if-modified-since/etag indicate content is the same
 * [Partial Content](partial-content): sends partial content for streaming ranges, like in video streams
@@ -73,40 +74,5 @@ Ktor comes with a number of ready-made features that can be installed into your 
 
 ### Custom features
 
-You can develop your own features and reuse them across your Ktor applications, or share with the community. Typical 
-feature has the following structure:
-
-```kotlin
-class CustomFeature(configuration: Configuration) {
-    val prop = configuration.prop // get snapshot of config
-    
-    class Configuration {
-       var prop = "value" // mutable property
-    }
-
-    companion object Feature : ApplicationFeature<ApplicationCallPipeline, CustomFeature.Configuration, CustomFeature> {
-       // feature unique key
-       override val key = AttributeKey<CustomHeader>("CustomFeature")
-       override fun install(pipeline: ApplicationCallPipeline, configure: Configuration.() -> Unit): CustomFeature {
-           // installation script       
-       }
-    }
-}
-```
-
-`CustomFeature` here is a feature instance class, which should be immutable to avoid unintended side-effects in a highly
-concurrent environment. 
-`Configuration` instance is handed to the user installation script and allows for feature configuration. 
-`Feature` companion object conforms to Ktor API and wires things together.
- 
-Feature can be installed with the standard `install` function:
-
-```kotlin
-fun Application.main() {
-    install(CustomFeature) { // Install a custom feature
-        prop = "Hello" // configuration script
-    }
-}
-```
-
-See complete example in a [custom feature sample](https://github.com/Kotlin/ktor/blob/master/ktor-samples/ktor-samples-custom-feature/src/org/jetbrains/ktor/samples/feature/CustomHeader.kt)
+You can develop your own features and reuse them across your Ktor applications. 
+Refer to [Advanced Features](/advanced/features) for more information.

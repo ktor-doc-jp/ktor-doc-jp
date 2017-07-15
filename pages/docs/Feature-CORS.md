@@ -1,7 +1,7 @@
 ---
 title: CORS
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/cors.html
 summary:  
@@ -61,7 +61,7 @@ fun Application.main() {
 }
 ```
 
-### Configs
+### Configuration
 
 - `method("HTTP_METHOD")` : Includes this method to the white list of Http methods to use CORS.
 - `header("header-name")` : Includes this header to the white list of headers to use CORS.

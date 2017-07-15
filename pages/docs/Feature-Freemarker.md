@@ -1,7 +1,7 @@
 ---
 title: Freemarker Templates
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/freemarker.html
 summary:  

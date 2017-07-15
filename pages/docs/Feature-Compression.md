@@ -1,7 +1,7 @@
 ---
 title: Compression
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/compression.html
 summary:  

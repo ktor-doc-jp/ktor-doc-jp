@@ -1,13 +1,11 @@
 ---
 title: How To
 keywords: Home Page
-tags: [overview]
+tags: [howto]
 sidebar: mydoc_sidebar
 permalink: howto/index.html
-summary:  
+summary: This page is a placeholder  
 ---
-
-> This is a placeholder page
 
 How to …
 

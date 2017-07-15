@@ -1,10 +1,9 @@
 ---
 title: Authentication
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/authentication.html
-summary:  
+summary: This page is a placeholder  
 ---
 
-> This is a placeholder page

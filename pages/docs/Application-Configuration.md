@@ -1,12 +1,10 @@
 ---
 title: Application Configuration
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/configuration.html
-summary: 
+summary: This page is a placeholder  
 ---
-
-> This is a placeholder page
 
 (Describe how to configure application, add custom config options, integrate with other configuration systems)

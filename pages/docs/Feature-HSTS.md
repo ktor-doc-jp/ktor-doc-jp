@@ -1,10 +1,9 @@
 ---
 title: HSTS
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/hsts.html
-summary:  
+summary: This page is a placeholder  
 ---
 
-> This is a placeholder page

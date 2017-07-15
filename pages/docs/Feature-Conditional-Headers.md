@@ -1,7 +1,7 @@
 ---
 title: Conditional Headers
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/conditional-headers.html
 summary: 

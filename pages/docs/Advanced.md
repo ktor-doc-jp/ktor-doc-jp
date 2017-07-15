@@ -1,13 +1,11 @@
 ---
 title: Advanced
 keywords: Home Page
-tags: [overview]
+tags: [advanced]
 sidebar: mydoc_sidebar
 permalink: advanced/index.html
-summary:  
+summary: This page is a placeholder  
 ---
-
-> This is a placeholder page
 
 (Various advanced topics about extending ktor, develop features, contribute)
 

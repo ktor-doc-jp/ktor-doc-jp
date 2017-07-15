@@ -1,7 +1,7 @@
 ---
 title: Automatic Reload
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/autoreload.html
 summary: 

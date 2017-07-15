@@ -1,10 +1,9 @@
 ---
 title: Head Response
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/automatic-head.html
-summary:  
+permalink: features/head-response.html
+summary: This page is a placeholder  
 ---
 
-> This is a placeholder page

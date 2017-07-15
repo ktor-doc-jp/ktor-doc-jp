@@ -1,12 +1,10 @@
 ---
 title: Application Lifecycle
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/lifecycle.html
-summary: 
+summary: This page is a placeholder  
 ---
-
-> This is a placeholder page
 
 (Describe application and host start, stop and configuration, call processing)

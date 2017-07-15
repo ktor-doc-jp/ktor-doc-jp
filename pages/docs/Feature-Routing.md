@@ -1,7 +1,7 @@
 ---
 title: Routing
 keywords: Home Page
-tags: [overview]
+tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/routing.html
 summary:  

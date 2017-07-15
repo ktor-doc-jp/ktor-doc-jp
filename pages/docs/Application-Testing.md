@@ -1,7 +1,7 @@
 ---
 title: Testing Applications 
 keywords: Home Page
-tags: [overview]
+tags: [application]
 sidebar: mydoc_sidebar
 permalink: application/testing.html
 summary: 

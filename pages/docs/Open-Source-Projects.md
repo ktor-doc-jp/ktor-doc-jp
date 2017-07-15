@@ -4,10 +4,8 @@ keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: open-source-projects.html
-summary: 
+summary: This page is a placeholder  
 ---
-
-> This is a placeholder page
 
 (List of Open Source projects)
 
