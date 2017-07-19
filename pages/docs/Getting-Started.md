@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: getting-started.html
-summary: Understand the bare minimum of what a Ktor Application is 
+summary: Describes the bare minimum of what a Ktor Application is 
 ---
 
 ## Creating a Ktor Application

@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/freemarker.html
-summary:  
+summary: Adds support for Freemarker templates
 ---
 
 Ktor includes support for [FreeMarker](http://freemarker.org/) templates through the FreeMarker

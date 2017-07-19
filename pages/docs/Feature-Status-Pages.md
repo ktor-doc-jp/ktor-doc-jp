@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/status-pages.html
-summary:  
+summary: Provides easy-to-use facility to handle exceptions and customized status pages
 ---
 
 The `StatusPages` feature allows Ktor applications to respond appropriately to any failure state. 

@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/autoheadresponse.html
-summary:   
+summary: Automatically handles HEAD responses using application's GET routes
 ---
 
 ## Description

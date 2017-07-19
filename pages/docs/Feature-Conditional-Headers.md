@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/conditional-headers.html
-summary: 
+summary: Adds support for conditional headers like LastModified and ETag and issues 304 Not Modified when appropriate
 ---
 
 ConditionalHeaders feature adds ability to avoid sending content if client already has same content. It does so by

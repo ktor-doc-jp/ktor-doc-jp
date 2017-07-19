@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: getting-started-IDEA-Gradle.html
-summary: Get up and running with IntelliJ IDEA and Gradle
+summary: Explains how to get up and running with IntelliJ IDEA and Gradle
 ---
 
 This tutorial will guide you from the most basic setup to a full featured setup you can use to start developing your app.

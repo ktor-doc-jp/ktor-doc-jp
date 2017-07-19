@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/routing.html
-summary:  
+summary: Provides support for structured handling of HTTP requests
 ---
 
 Routing is a feature that is installed into an Application to simplify and structure page requests handling.

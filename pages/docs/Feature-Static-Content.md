@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/static-content.html
-summary:   
+summary: Provides useful functions for static content routes   
 ---
 
 ## Specifying static content

@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/index.html
-summary: Features provide key functionality to your application using a plugin model 
+summary: Features provide functionality to your application using a plugin model 
 ---
 
 A Ktor application typically consists of a series of features. You can think of features as functionality 

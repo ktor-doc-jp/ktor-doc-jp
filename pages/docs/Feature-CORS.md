@@ -4,7 +4,7 @@ keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: features/cors.html
-summary:  
+summary:  Adds support for Cross-Origin Resource Sharing (CORS) headers
 ---
 
 Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).
