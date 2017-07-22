@@ -21,13 +21,13 @@ class CustomFeature(configuration: Configuration) {
     // implement ApplicationFeature in a companion object
     companion object Feature : ApplicationFeature<ApplicationCallPipeline, CustomFeature.Configuration, CustomFeature> {
        // create unique key for the feature
-       override val key = AttributeKey<CustomHeader>("CustomFeature")
+       override val key = AttributeKey<CustomFeature>("CustomFeature")
        
        // implement installation script
        override fun install(pipeline: ApplicationCallPipeline, configure: Configuration.() -> Unit): CustomFeature {
            
            // run configuration script
-           val configuration = CustomFeature.Configuration.apply(configure)
+           val configuration = CustomFeature.Configuration().apply(configure)
            
            // create a feature 
            val feature = CustomFeature(configuration)
