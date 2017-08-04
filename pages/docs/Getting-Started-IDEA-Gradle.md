@@ -180,9 +180,6 @@ Copy and paste in the most basic setup for an app so that it looks like:
 ```kotlin
 package blog
 
-/**
- * Created by You on 5/30/2017.
- */
 import org.jetbrains.ktor.netty.*
 import org.jetbrains.ktor.routing.*
 import org.jetbrains.ktor.application.*
@@ -218,9 +215,6 @@ Change your code in BlogApp.kt to the following to try this:
 ```kotlin
 package blog
 
-/**
- * Created by You on 5/30/2017.
- */
 import org.jetbrains.ktor.netty.*
 import org.jetbrains.ktor.routing.*
 import org.jetbrains.ktor.application.*
