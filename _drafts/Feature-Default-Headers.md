@@ -32,3 +32,18 @@ fun Application.main() {
   ...
 }
 ```
+
+* default `Server` header can be overriden by specifying your custom header:
+
+```kotlin
+fun Application.main() {
+  ...
+  install(DefaultHeaders) {
+    header(HttpHeaders.Server, "Konstructor") 
+  }
+  ...
+}
+```
+
+* default `Date` header cannot be overriden. If you need it, do not install `DefaultHeaders` feature and instead 
+intercept call manually 
