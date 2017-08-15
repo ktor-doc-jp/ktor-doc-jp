@@ -29,7 +29,13 @@ entries:
 
 
     - title: Using IntelliJ IDEA
-      url: /getting-started-IDEA-Gradle.html
+      url: /getting-started-idea.html
+      output: web, pdf
+    - title: Using Gradle
+      url: /getting-started-gradle.html
+      output: web, pdf
+    - title: Using Maven
+      url: /getting-started-maven.html
       output: web, pdf
 
     - title: Artifacts
@@ -117,7 +123,7 @@ entries:
       output: web, pdf
 
     - title: HEAD Response
-      url: /features/automatic-head.html
+      url: /features/autoheadresponse.html
       output: web, pdf
 
     - title: HSTS Support

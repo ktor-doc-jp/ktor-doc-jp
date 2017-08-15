@@ -34,3 +34,9 @@ generic servlet. It also contains TestHost for setting up application tests with
   * `ktor-server-sessions` adds ability to use stateful sessions stored on a server
   * `ktor-websockets` provides support for Websockets
   
+
+See instructions for setting up a project with
+
+* [Maven](getting-started-maven)
+* [Gradle](getting-started-gradle)
+

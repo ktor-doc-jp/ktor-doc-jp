@@ -1,6 +1,5 @@
 ---
 title: Getting Started
-keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: getting-started.html
@@ -10,7 +9,7 @@ summary: Describes the bare minimum of what a Ktor Application is
 ## Creating a Ktor Application
 
 This tutorial will guide you through the steps on how to create a simple self-hosted Ktor Application that responds to HTTP requests with `Hello, World!`. 
- Ktor applications can be built using common build systems such [as Maven](https://kotlinlang.org/docs/reference/using-maven.html) or [Gradle](https://kotlinlang.org/docs/reference/using-gradle.html).
+ Ktor applications can be built using common build systems such as [Maven](https://kotlinlang.org/docs/reference/using-maven.html) or [Gradle](https://kotlinlang.org/docs/reference/using-gradle.html).
 
 ### Including the right dependencies
 
@@ -19,7 +18,11 @@ only need to include `ktor-netty` (`ktor-core` which is required for any Ktor ap
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right 
 repositories need to be added to our build script. 
-See how to [setup gradle file](getting-started-IDEA-Gradle.html#set-up-the-gradle-build-file) 
+
+For more detailed guide on setting up build files see
+
+* [Getting Started with Gradle](getting-started-gradle)
+* [Getting Started with Maven](getting-started-maven)
 
 ### Creating a self-hosted Application 
 
@@ -53,6 +56,7 @@ Given that the entry point to our application is a the standard Kotlin `main` fu
 
 ### Next Steps
 
-This was the simplest example of getting a self-hosted Ktor application up and running. Next steps will be to understand the [Application](application) object as well as [Features](features).
+This was the simplest example of getting a self-hosted Ktor application up and running. 
+Next steps will be to understand the [Application](application) object as well as [Features](features).
 
-For a more detailed Getting Started example see [Getting Started with IDEA and Gradle](getting-started-IDEA-Gradle)
+For a more detailed guide to using IntelliJ IDEA see [Getting Started with IDEA](getting-started-idea)
