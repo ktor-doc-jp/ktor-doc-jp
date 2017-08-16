@@ -35,6 +35,13 @@ Once we've defined the routes, we start the server by calling `server.start`, pa
 of the application to block.  
 
 ```kotlin
+import org.jetbrains.ktor.application.*
+import org.jetbrains.ktor.host.*
+import org.jetbrains.ktor.http.*
+import org.jetbrains.ktor.netty.*
+import org.jetbrains.ktor.response.*
+import org.jetbrains.ktor.routing.*
+
 fun main(args: Array<String>) {
     val server = embeddedServer(Netty, 8080) {
         routing {
