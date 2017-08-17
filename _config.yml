@@ -38,7 +38,7 @@ exclude:
 
 feedback_disable: true
 feedback_subject_line: Ktor Feedback
-feedback_email: hadi@jetbrains.com
+feedback_email: ktor@jetbrains.com
 # used as a contact email for the Feedback link in the top navigation bar
 
 # feedback_disable: true
