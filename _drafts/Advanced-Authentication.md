@@ -1,10 +1,10 @@
 ---
-title: Authentication
+title: Advanced Authentication
 tags: [advanced]
 permalink: drafts/advanced/authentication.html
 ---
 
-Required: [Advanced Pipeline](advanced/pipeline)
+Prerequisite reading: [Advanced Pipeline](advanced/pipeline)
 
 `Authentication` feature creates an `AuthenticationPipeline` which is executed right after `Infrastructure` phase
 in call pipeline. All authentication protocols like basic, digest, oauth are implemented as interceptors on AuthenticationPipeline.

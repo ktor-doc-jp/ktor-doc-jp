@@ -45,5 +45,5 @@ fun Application.main() {
 }
 ```
 
-* default `Date` header cannot be overriden. If you need it, do not install `DefaultHeaders` feature and instead 
-intercept call manually 
+* default `Date` header cannot be overriden. If you need to override it, do not install `DefaultHeaders` feature and instead 
+intercept the call manually 

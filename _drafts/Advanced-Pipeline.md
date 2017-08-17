@@ -1,5 +1,5 @@
 ---
-title: Pipeline
+title: Advanced Pipeline
 tags: [advanced]
 permalink: drafts/advanced/pipeline.html
 ---

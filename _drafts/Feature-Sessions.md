@@ -27,7 +27,7 @@ the cookie is deserialized back into `MySession` and is available to server code
 ```kotlin
 application.routing {
     get("/") {
-        val mySession: MySession? = call.sessions.get<MySession>()
+        val mySession = call.sessions.get<MySession>()
     }
 }
 ```
