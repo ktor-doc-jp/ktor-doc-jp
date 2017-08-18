@@ -40,29 +40,28 @@ dependencies {
 
 ## Add Ktor dependencies and configure build settings
 
-The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx 
+The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx
 so we will need to add the following to the repositories block:     
-   
+
 ```groovy
-   maven { url  "http://dl.bintray.com/kotlin/ktor" }
-   maven { url "https://dl.bintray.com/kotlin/kotlinx" }
-``` 
+ maven { url  "http://dl.bintray.com/kotlin/ktor" }
+ maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+```
 
 Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.  In this case it is `{{site.ktor_version}}`.  
-Then we will designate this as an extra property in the buildscript block like:
+Then we will designate this as an extra property in the `buildscript` block like:
 
 ```groovy
 ext.ktor_version = '{{site.ktor_version}}'
 ```
 
 Now we add `ktor-core` module using `ktor_version` we specified
- 
+
 ```groovy
 compile "org.jetbrains.ktor:ktor-core:$ktor_version"
 ```
 
-Coroutines are still experimental feature in Kotlin programming language, so we will need to tell compiler we
-are okay with using them to avoid warnings:
+Coroutines are still an experimental feature in Kotlin, so we will need to tell the compiler that we are okay with using them to avoid warnings:
 
 ```groovy
 kotlin {
@@ -85,11 +84,11 @@ compileTestKotlin {
 
 ## Choose your host and configure it
 
-Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat. 
+Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat.
 This example shows how to configure Ktor with Netty. For other hosts see [artifacts](artifacts.html) for list of
 available modules.
 
-We will add a dependency for ktor-netty using the ktor_version property we created. 
+We will add a dependency for ktor-netty using the ktor_version property we created.
 This module provides Netty as a web server and all the required code to run Ktor application on top of it
 
 ```groovy
@@ -150,7 +149,7 @@ You can now run Gradle to fetch dependencies and verify everything is set up cor
 
 ## Configure logging
 
-Ktor uses [SLF4J](https://www.slf4j.org/) for logging. If you don't add a logging provider, you will see the 
+Ktor uses [SLF4J](https://www.slf4j.org/) for logging. If you don't add a logging provider, you will see the
 following message when you run your application:
 
 ```
@@ -162,11 +161,11 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 We can set up logging to remove these warning messages and get a better idea of what is happening with the app.
 
 Add the following to the gradle dependencies:
-    
+
 ```groovy
-    compile "ch.qos.logback:logback-classic:1.2.1"
+compile "ch.qos.logback:logback-classic:1.2.1"
 ```
-    
+
 Run the app and you should now see the logging messages in the Run pane of IDEA.
 However, these logging messages are not as helpful as they could be.  To get a better configuration for logging, create a text file named logback.xml file in the `src/main/resources` directory and put the following xml configuation in it:
 
@@ -191,8 +190,7 @@ However, these logging messages are not as helpful as they could be.  To get a b
 Stop the app, run it again, and go to localhost:8080 in your browser and now in the IDEA run pane, you should see a log message like:
 
 ```
-    2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
+2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
 ```
-    
-To understand how to change the `logback.xml` configuration file to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
 
+To understand how to change the `logback.xml` configuration file to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
