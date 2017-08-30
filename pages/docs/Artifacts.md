@@ -13,7 +13,7 @@ The typical Ktor application would require `ktor-core` and a corresponding host 
 
 All artifacts in Ktor belong to `org.jetbrains.ktor` group and hosted on [Bintray](https://bintray.com/kotlin/ktor)
 
-[![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg)](https://bintray.com/kotlin/ktor/ktor/_latestVersion)
+[![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}})](https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}})
     
 Ktor is split into several groups of modules:
 
