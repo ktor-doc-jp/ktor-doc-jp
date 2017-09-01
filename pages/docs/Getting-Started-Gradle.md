@@ -2,7 +2,7 @@
 title: Using Gradle
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: getting-started-gradle.html
+permalink: /getting-started-gradle.html
 summary: Explains how to get up and running with Gradle
 ---
 

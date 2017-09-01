@@ -3,7 +3,7 @@ title: Compression
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/compression.html
+permalink: /features/compression.html
 summary: Adds support for HTTP compression facilities
 ---
 

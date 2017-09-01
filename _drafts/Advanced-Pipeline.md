@@ -1,7 +1,7 @@
 ---
 title: Advanced Pipeline
 tags: [advanced]
-permalink: drafts/advanced/pipeline.html
+permalink: /drafts/advanced/pipeline.html
 ---
 
 Pipeline is a sequence of blocks(lambdas) that are called one after another, with the ability to extend the list

@@ -1,7 +1,7 @@
 ---
 title: Sessions
 tags: [feature]
-permalink: drafts/features/sessions.html
+permalink: /drafts/features/sessions.html
 ---
 
 Sessions are means of establishing conversational context into otherwise stateless HTTP nature. 

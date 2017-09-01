@@ -3,7 +3,7 @@ title: Automatic Reload
 keywords: Home Page
 tags: [application]
 sidebar: mydoc_sidebar
-permalink: application/autoreload.html
+permalink: /application/autoreload.html
 summary: 
 ---
 

@@ -3,7 +3,7 @@ title: Testing Applications
 keywords: Home Page
 tags: [application]
 sidebar: mydoc_sidebar
-permalink: application/testing.html
+permalink: /application/testing.html
 summary: 
 ---
 

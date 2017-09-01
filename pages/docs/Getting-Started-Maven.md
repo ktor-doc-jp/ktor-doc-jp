@@ -2,7 +2,7 @@
 title: Using Maven
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: getting-started-maven.html
+permalink: /getting-started-maven.html
 summary: Explains how to get up and running with Maven
 ---
 

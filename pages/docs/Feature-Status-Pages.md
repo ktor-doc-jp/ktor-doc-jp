@@ -3,7 +3,7 @@ title: Status Pages
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/status-pages.html
+permalink: /features/status-pages.html
 summary: Provides easy-to-use facility to handle exceptions and customized status pages
 ---
 

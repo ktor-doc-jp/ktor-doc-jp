@@ -3,7 +3,7 @@ title: Application
 keywords: Home Page
 tags: [application]
 sidebar: mydoc_sidebar
-permalink: application/index.html
+permalink: /application/index.html
 summary: 
 ---
 

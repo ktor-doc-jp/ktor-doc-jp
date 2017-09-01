@@ -2,7 +2,7 @@
 title: Getting Started
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: getting-started.html
+permalink: /getting-started.html
 summary: Describes the bare minimum of what a Ktor Application is
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Default Headers
 tags: [feature]
-permalink: drafts/features/default-headers.html
+permalink: /drafts/features/default-headers.html
 ---
 
 This feature adds default set of headers to HTTP responses. List of headers is customizable, and `Date` header is cached

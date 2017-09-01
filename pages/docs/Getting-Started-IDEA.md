@@ -2,7 +2,7 @@
 title: Using IntelliJ IDEA 
 tags: [overview]
 sidebar: mydoc_sidebar
-permalink: getting-started-idea.html
+permalink: /getting-started-idea.html
 summary: Explains how to get up and running with IntelliJ IDEA
 ---
 

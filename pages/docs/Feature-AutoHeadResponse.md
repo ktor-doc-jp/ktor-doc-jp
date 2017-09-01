@@ -3,7 +3,7 @@ title: Auto Head Response
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/autoheadresponse.html
+permalink: /features/autoheadresponse.html
 summary: Automatically handles HEAD responses using application's GET routes
 ---
 

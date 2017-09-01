@@ -3,7 +3,7 @@ title: Routing
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/routing.html
+permalink: /features/routing.html
 summary: Provides support for structured handling of HTTP requests
 ---
 

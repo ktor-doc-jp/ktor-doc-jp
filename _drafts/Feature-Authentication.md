@@ -1,7 +1,7 @@
 ---
 title: Authentication
 tags: [feature]
-permalink: drafts/features/authentication.html
+permalink: /drafts/features/authentication.html
 ---
 
 Authentication feature provides support for various authentication methods used for web applications. It has pluggable

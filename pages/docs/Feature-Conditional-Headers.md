@@ -3,7 +3,7 @@ title: Conditional Headers
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/conditional-headers.html
+permalink: /features/conditional-headers.html
 summary: Adds support for conditional headers like LastModified and ETag and issues 304 Not Modified when appropriate
 ---
 

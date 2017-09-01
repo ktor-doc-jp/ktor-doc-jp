@@ -1,7 +1,7 @@
 ---
 title: HSTS
 tags: [feature]
-permalink: drafts/features/hsts.html
+permalink: /drafts/features/hsts.html
 ---
 
 This feature will add required _HTTP Strict Transport Security_ headers to the request according to the [RFC 6797](https://tools.ietf.org/html/rfc6797).

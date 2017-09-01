@@ -3,7 +3,7 @@ title: CORS
 keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
-permalink: features/cors.html
+permalink: /features/cors.html
 summary:  Adds support for Cross-Origin Resource Sharing (CORS) headers
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Advanced Authentication
 tags: [advanced]
-permalink: drafts/advanced/authentication.html
+permalink: /drafts/advanced/authentication.html
 ---
 
 Prerequisite reading: [Advanced Pipeline](advanced/pipeline)

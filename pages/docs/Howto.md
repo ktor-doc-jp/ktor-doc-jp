@@ -3,7 +3,7 @@ title: How To
 keywords: Home Page
 tags: [howto]
 sidebar: mydoc_sidebar
-permalink: howto/index.html
+permalink: /howto/index.html
 summary: This page is a placeholder  
 ---
 
