@@ -107,30 +107,31 @@ Examples:
 
 ```kotlin
 get("/user/{login}/{fullname?}") { … } 
-get("/resources/{path...}") { … } 
+get("/resources/{path...") { … } 
 ```
 
 ### Quality
 
 It is not unlikely that several routes can match to the same HTTP request.
 
-One example is matching `Accept` HTTP header which can have multiple values with specified priority (quality).
+One example is matching on the `Accept` HTTP header which can have multiple values with specified priority (quality).
 
 ```kotlin
 accept(ContentType.Text.Plain) { … }
-accept(ContentType.Application.Json) { … }
+accept(ContentType.Text.Html) { … }
 ```
 
-Routing matching algorithm not only checks if particular HTTP request matches specific path in a routing tree,
-but also calculates quality of the match and select routing node with the best quality. 
-Given header routes above, and request header `Accept: text/plain; q=0.5, text/html` will match `text/html` because 
-it has higher value for the quality (default is 1.0), and header `Accept: text/plain, text/*` will match `text/plain`
-because wildcard has lower quality. 
+The routing matching algorithm not only checks if a particular HTTP request matches specific path in a routing tree, but
+also calculates the quality of the match and selects the routing node with the best quality.  Given the routes above,
+which match on the Accept header, and given the request header `Accept: text/plain; q=0.5, text/html` will match
+`text/html` because the quality factor in the HTTP header indicates a higher priority for`text/plain` (default is 1.0).
 
-Another example is making short urls to named entities, e.g. users, and still being able to prefer specific pages like "settings". 
-An example would be 
+The Header `Accept: text/plain, text/*` will match `text/plain`. Wildcard matches are considered less specific than direct matches, therefore the routing matching algorithm will consider them to have a lower quality.
 
-* `https://twitter.com/kotlin` – displays user "kotlin" 
+Another example is making short urls to named entities, e.g. users, and still being able to prefer specific pages like 
+"settings".  An example would be 
+
+* `https://twitter.com/kotlin` – displays user "kotlin"
 * `https://twitter.com/settings` - displays settings page
 
 This can be implemented like this:
@@ -139,8 +140,8 @@ This can be implemented like this:
 get("/{user}") { … }
 get("/settings") { … }
 ```
-Similarly, parameter has lower quality than a constant string, so that even if `/settings` matches both,
-second route will be selected.  
+The parameter is considered to have a lower quality than a constant string, so that even if `/settings` matches both,
+the second route will be selected.  
 
 ### Interception
 
