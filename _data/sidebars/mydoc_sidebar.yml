@@ -37,6 +37,9 @@ entries:
     - title: Using Maven
       url: /getting-started-maven.html
       output: web, pdf
+    - title: Using Docker
+      url: /getting-started-docker.html
+      output: web, pdf
 
     - title: Artifacts
       url: /artifacts.html
@@ -156,6 +159,10 @@ entries:
 
     - title: Pipeline
       url: /advanced/pipeline.html
+      output: web, pdf
+
+    - title: Configuring HTTP/2
+      url: /advanced/http2.html
       output: web, pdf
 
 #

@@ -1,6 +1,5 @@
 ---
 title: Advanced
-keywords: Home Page
 tags: [advanced]
 sidebar: mydoc_sidebar
 permalink: /advanced/index.html

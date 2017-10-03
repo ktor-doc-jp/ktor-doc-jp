@@ -1,6 +1,5 @@
 ---
 title: Conditional Headers
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/conditional-headers.html

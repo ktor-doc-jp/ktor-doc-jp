@@ -1,6 +1,5 @@
 ---
 title: How To
-keywords: Home Page
 tags: [howto]
 sidebar: mydoc_sidebar
 permalink: /howto/index.html

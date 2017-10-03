@@ -1,6 +1,5 @@
 ---
 title: Application Lifecycle
-keywords: Home Page
 tags: [application]
 sidebar: mydoc_sidebar
 permalink: /application/lifecycle.html

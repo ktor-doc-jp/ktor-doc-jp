@@ -1,6 +1,5 @@
 ---
 title: Authentication
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/authentication.html

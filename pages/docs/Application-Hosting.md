@@ -1,6 +1,5 @@
 ---
 title: Application Hosting
-keywords: Home Page
 tags: [application]
 sidebar: mydoc_sidebar
 permalink: /application/hosting.html

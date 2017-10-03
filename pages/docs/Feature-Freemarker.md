@@ -1,6 +1,5 @@
 ---
 title: Freemarker Templates
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/freemarker.html

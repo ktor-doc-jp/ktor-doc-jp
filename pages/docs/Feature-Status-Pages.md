@@ -1,6 +1,5 @@
 ---
 title: Status Pages
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/status-pages.html

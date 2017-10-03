@@ -1,6 +1,5 @@
 ---
 title: Overview
-keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: /index.html

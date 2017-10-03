@@ -1,6 +1,5 @@
 ---
 title: CORS
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/cors.html

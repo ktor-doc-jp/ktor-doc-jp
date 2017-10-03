@@ -1,6 +1,5 @@
 ---
 title: Hosts
-keywords: Home Page
 tags: [advanced]
 sidebar: mydoc_sidebar
 permalink: /advanced/hosts.html

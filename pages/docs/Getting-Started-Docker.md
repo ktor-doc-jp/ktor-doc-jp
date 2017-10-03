@@ -1,7 +1,8 @@
 ---
 title: Using Docker
 tags: [overview]
-permalink: /drafts/getting-started-docker.html
+sidebar: mydoc_sidebar
+permalink: /getting-started-docker.html
 summary: Explains how to get up and running with Docker
 ---
 

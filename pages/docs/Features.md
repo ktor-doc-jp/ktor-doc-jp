@@ -1,6 +1,5 @@
 ---
 title: Features
-keywords: Home Page
 tags: [feature]
 sidebar: mydoc_sidebar
 permalink: /features/index.html

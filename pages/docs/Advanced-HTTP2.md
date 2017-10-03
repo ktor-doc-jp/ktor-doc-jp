@@ -1,7 +1,8 @@
 ---
-title: Configuring HTTP2
+title: Configuring HTTP/2
 tags: [overview]
-permalink: /drafts/getting-started-http2.html
+sidebar: mydoc_sidebar
+permalink: /advanced/http2.html
 summary: Explains how to configure HTTP/2 support in different application hosts
 ---
 
@@ -147,9 +148,9 @@ Once all dependencies provided Ktor will enable HTTP/2 support on SSL port.
 ### Tomcat and other servlet containers
 
 Similar to Netty, to get HTTP/2 working in Tomcat you need native openssl bindings. Unfortunately original 
-Tomcat's tcnative is not well compatible with netty's one.
+Tomcat's tcnative is not well compatible with Netty's one.
 This is why you need slightly different binaries (you can get it here http://tomcat.apache.org/native-doc/ or you can 
-try netty's tcnative however you'll have to guess which exact version is compatible with your specific tomcat version)
+try Netty's tcnative however you'll have to guess which exact version is compatible with your specific Tomcat version)
 
 If you are deploying your ktor application as a war package into the server (servlet container) then you have to 
 configure your host tomcat server properly:

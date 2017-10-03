@@ -1,6 +1,5 @@
 ---
 title: Artifacts
-keywords: Home Page
 tags: [overview]
 sidebar: mydoc_sidebar
 permalink: /artifacts.html
