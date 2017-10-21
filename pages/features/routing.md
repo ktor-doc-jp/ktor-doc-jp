@@ -107,7 +107,7 @@ Examples:
 
 ```kotlin
 get("/user/{login}/{fullname?}") { … } 
-get("/resources/{path...} { … } 
+get("/resources/{path...}") { … } 
 ```
 
 ### Quality
