@@ -32,6 +32,6 @@ using the `call.respond()` method:
 ```kotlin
     get("/{...}") {
         val user = User("user name", "user@example.com")
-        call.respond(FreemarkerContent("index.ftl", mapOf("user" to user), "e"))
+        call.respond(FreeMarkerContent("index.ftl", mapOf("user" to user), "e"))
     }
 ```
