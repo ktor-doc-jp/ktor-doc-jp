@@ -1,7 +1,5 @@
 ---
 title: How To
-tags: [howto]
-sidebar: mydoc_sidebar
 permalink: /howto/index.html
 summary: This page is a placeholder  
 ---

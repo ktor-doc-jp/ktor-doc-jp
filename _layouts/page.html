@@ -1,79 +1,29 @@
 ---
 layout: default
 ---
-<div class="post-header">
-{% if page.logo == true %}
-    <p>
-    <img src="images/docs/ktor.png" alt="Ktor" style="width:600px; max-width:100%;"/>
-    </p>
-    <p>
-    <a href="https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub"><img src="http://jb.gg/badges/official.svg"></a>
-    <a href="https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}}"><img src="https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}}"></a>
-    <a href="https://teamcity.jetbrains.com/viewType.html?buildTypeId=KotlinTools_Ktor_Build&branch_KotlinTools_Ktor=%3Cdefault%3E&tab=buildTypeStatusDiv"><img src="https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/KotlinTools_Ktor_Build.svg"></a>
-    <a href="http://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/github/license/Kotlin/ktor.svg"></a>
-    <a href="https://github.com/Kotlin/ktor"><img src="https://img.shields.io/github/stars/kotlin/ktor.svg?style=social&label=Star"></a>
-    </p>
-{% else %}
-<h1 class="post-title-main">{{ page.title }}
-   {% if site.github_editme_path %}
-   <a target="_blank" class="gh-btn" href="https://github.com/{{site.github_editme_path}}{{ page.path }}" role="button">
-   <i class="fa fa-github"></i> Edit</a>
-   {% endif %}
-</h1>
-{% endif %}
-</div>
 
-{% if page.simple_map == true %}
-
-<script>
-    $(document).ready ( function(){
-        $('.box{{page.box_number}}').addClass('active');
-    });
-</script>
-
-{% include custom/{{page.map_name}}.html %}
-
-{% elsif page.complex_map == true %}
-
-<script>
-    $(document).ready ( function(){
-        $('.modalButton{{page.box_number}}').addClass('active');
-    });
-</script>
-
-{% include custom/{{page.map_name}}.html %}
-
-{% endif %}
-
-<div class="post-content">
-
-   {% if page.summary %}
-    <div class="summary">{{page.summary}}</div>
-   {% endif %}
-
-    {% unless page.toc == false %}
-    {% include toc.html %}
-    {% endunless %}
+{% include header.html %}
 
 
-  {{content}}
-
-    <div class="tags">
-        {% if page.tags != null %}
-        <b>Tags: </b>
-        {% assign projectTags = site.data.tags.allowed-tags %}
-        {% for tag in page.tags %}
-        {% if projectTags contains tag %}
-        <a href="{{ "tag_" | append: tag | append: ".html" }}" class="btn btn-default navbar-btn cursorNorm" role="button">{{page.tagName}}{{tag}}</a>
+<div class="doc-wrapper">
+    <div class="container">
+        {% if page.caption != null %}
+        <div id="doc-header" class="doc-header text-center">
+            <h1 class="doc-title">{{page.caption}}</h1>
+            <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
+        </div>
         {% endif %}
-        {% endfor %}
-        {% endif %}
+        <div class="doc-body">
+            <div class="doc-content">
+                {{ content }}
+            </div>
+            <div class="doc-sidebar">
+                <nav id="doc-nav">
+                    <ul id="doc-menu" class="nav doc-menu hidden-xs" data-spy="affix">
+                        {% include category-nav.html %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-
-{% include disqus.html %}
-
 </div>
-
-{{site.data.alerts.hr_shaded}}
-
-{% include footer.html %}

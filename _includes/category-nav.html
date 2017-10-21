@@ -1,0 +1,9 @@
+{% if page.section != null %}
+{% for other in site.pages %}
+{% if other.section == page.section and other.section != other.title %}
+<li>
+    <a href="{{ other.url | prepend: site.baseurl }}">{{ other.title }}</a>
+</li>
+{% endif %}
+{% endfor %}
+{% endif %}

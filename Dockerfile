@@ -1,26 +1,22 @@
-FROM ruby:2.1
-MAINTAINER mrafayaleem@gmail.com
+FROM starefossen/ruby-node:2-6-alpine
 
-RUN apt-get clean \
-  && mv /var/lib/apt/lists /var/lib/apt/lists.broke \
-  && mkdir -p /var/lib/apt/lists/partial
+ENV GITHUB_GEM_VERSION 160
+ENV JSON_GEM_VERSION 1.8.6
 
-RUN apt-get update
+RUN apk --update add --virtual build_deps \
+    build-base ruby-dev libc-dev linux-headers \
+  && gem install --verbose --no-document \
+    json:${JSON_GEM_VERSION} \
+    github-pages:${GITHUB_GEM_VERSION} \
+    jekyll-github-metadata \
+    minitest \
+  && apk del build_deps \
+  && apk add git \
+  && mkdir -p /usr/src/app \
+  && rm -rf /usr/lib/ruby/gems/*/cache/*.gem
 
-RUN apt-get install -y \
-    node \
-    python-pygments \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/
+WORKDIR /usr/src/app
 
-WORKDIR /tmp
-ADD Gemfile /tmp/
-ADD Gemfile.lock /tmp/
-RUN bundle install
-
-VOLUME /src
 EXPOSE 4000
-
-WORKDIR /src
 ENTRYPOINT ["jekyll"]
-
+#CMD jekyll serve -d /_site --watch --force_polling -H 0.0.0.0 -P 4000

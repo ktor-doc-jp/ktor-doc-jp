@@ -1,0 +1,32 @@
+{% for section in site.data.sections.sections %}
+{% if section.title == page.section %}
+{% assign section-title = section.title %}
+{% assign section-icon = section.icon %}
+{% assign section-color = section.color %}
+{% assign section-url = section.url %}
+{% endif %}
+{% endfor %}
+
+<header id="header" class="header">
+    <div class="container">
+        <div class="branding">
+            <h1 class="logo">
+                <span aria-hidden="true" class="icon icon_{{ section-icon }}"></span>
+                <span class="text-highlight">{{ page.section }}</span>
+                {% if page.section != page.title %}
+                <span class="text-bold">{{ page.title }}</span>
+                {% endif %}
+            </h1>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="{{ "/index.html" | prepend: site.baseurl }}">Home</a></li>
+            {% if page.section == page.title %}
+                <li>{{ page.section }}</li>
+            {% else %}
+                {% if page.section != null %}
+                <li><a href="{{ section-url | prepend: site.baseurl }}">{{ page.section }}</a></li>
+                {% endif %}
+            {% endif %}
+        </ol>
+    </div>
+</header>
