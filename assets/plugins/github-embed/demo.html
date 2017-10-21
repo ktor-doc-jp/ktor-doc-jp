@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>github-embed demo</title>
+    <link rel="stylesheet" type="text/css" href="github-embed.css">
+    <style>
+    body {
+        font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+        font-size: 12px;
+    }
+    
+    div {
+      height: 500px;
+    }
+    
+    #settings-object {
+      margin-bottom: 2rem;
+    }
+    </style>
+  </head>
+  <body>
+    <h2>Embedded via settings object</h2>
+    <div id="settings-object"></div>
+    
+    <h2>Embedded via remote settings file</h2>
+    <div id="settings-remote"></div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+  <script src="github-embed.min.js"></script>
+  <script>
+    githubEmbed('#settings-object', {
+    	"owner": "finom",
+        "repo": "github-embed",
+        "ref": "gh-pages",
+    	"embed": [{
+    		"path": "demo.html"
+    	}, {
+    		"path": "README.md"
+    	}]
+    });
+    githubEmbed('#settings-remote', 'https://github.com/finom/github-embed/blob/master/.gh-embed.json');
+  </script>
+</html>

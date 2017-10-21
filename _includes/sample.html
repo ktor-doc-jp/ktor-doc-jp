@@ -1,0 +1,20 @@
+{% assign split_paths = include.paths | split: "," %}
+<div id="embed" style="height:800px;"></div>
+<script>
+    githubEmbed('#embed', {
+        "owner": "ktorio",
+        "repo": "ktor",
+        "ref": "develop",
+        "embed": [
+    {% for item in split_paths %}
+    {% assign file_name = item | split: "/" | last %}
+    {
+                "type": "kt",
+                "label": "{{file_name}}",
+                "path": "{{item}}"
+            }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+
+    ]
+    });
+</script>

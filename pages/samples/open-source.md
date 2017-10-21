@@ -1,8 +1,8 @@
 ---
-title: Open Source Projects
+title: Open Source
 section: Samples
 permalink: /samples/open-source.html
-caption: Projects for Inspiration and Copy/Paste  
+caption: Explore Open Source Projects  
 ---
 
 * Contribute your project!
