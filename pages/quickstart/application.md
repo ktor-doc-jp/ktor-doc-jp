@@ -24,10 +24,10 @@ For more detailed guide on setting up build files with different build systems s
 
 ### Creating a self-hosted Application
 
-Ktor allows applications to be hosted under Application Server such as Tomcat, or embedded host, using Jetty or Netty.
+Ktor allows applications to be running with Application Server such as Tomcat, or as an embedded application, using Jetty or Netty.
 In this tutorial we're going to see how to self-host using Netty.
 
-We begin by creating an `embeddedServer`, passing in the host factory as the first argument, the port as the second argument and the actual application code as the fourth argument (third argument is the host which is 0.0.0.0 by default).
+We begin by creating an `embeddedServer`, passing in the engine factory as the first argument, the port as the second argument and the actual application code as the fourth argument (third argument is the host which is 0.0.0.0 by default).
 The code below defines a single route that responds to the `GET` verb on the url `/` with the text `Hello, world!`
 
 Once we've defined the routes, we start the server by calling `server.start`, passing as argument a boolean to indicate whether we want the main thread
@@ -35,11 +35,11 @@ of the application to block.
 
 ```kotlin
 import io.ktor.application.*
-import io.ktor.host.*
 import io.ktor.http.*
-import io.ktor.netty.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
 fun main(args: Array<String>) {
     val server = embeddedServer(Netty, 8080) {
@@ -67,6 +67,6 @@ A recommended tour to continue learning Ktor on the server would be:
 
 * [What is an Application?](/servers/application)
 * [Features](/features)
-* [Hosting Options](/servers/hosting)
+* [Engines Options](/servers/hosting)
 * [Application Structure](/servers/structure)
 * [Testing](/servers/testing)

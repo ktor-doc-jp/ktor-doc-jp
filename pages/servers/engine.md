@@ -2,14 +2,14 @@
 title: Running
 caption: Running Server Application 
 section: Servers
-permalink: /servers/hosting.html
+permalink: /servers/engine.html
 ---
 
 Ktor applications can be self-hosted or hosted in an Application Server. This section shows to how host Ktor applications externally.
 
-### Hosting an application in an external host
+### Running an application in an external host
 
-When you need to host a Ktor application in an independently maintained host (for instance Tomcat), you will need an `application.conf` file
+When you need to run a Ktor application in an independently maintained host (for instance Tomcat), you will need an `application.conf` file
 to tell Ktor how to start your application. 
 
 #### Defining the configuration
@@ -37,14 +37,14 @@ file your `Application.main` function is contained in.
 
 ### Running the application from inside the IDE
 
-Running hosted applications in a development environment such as IntelliJ IDEA, is supported by using development hosts. 
+Running applications in a development environment such as IntelliJ IDEA, is supported by using development engines. 
 
 ##### IntelliJ IDEA 
 
 1. Create a new Run Configuration using "Application" as template
-2. For the main class use one of the following hosts
-  * Netty: use `io.ktor.netty.DevelopmentHost` 
-  * Jetty: use `io.ktor.jetty.DevelopmentHost` 
+2. For the main class use one of the following engines
+  * Netty: use `io.ktor.server.netty.DevelopmentEngine` 
+  * Jetty: use `io.ktor.server.jetty.DevelopmentEngine` 
 ![Main Class](../../images/docs/run-configuration-development-host.png)    
 3. Specify the Module to be used
 4. Save the Configuration by giving it a name

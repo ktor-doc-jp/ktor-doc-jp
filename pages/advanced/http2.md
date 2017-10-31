@@ -1,19 +1,19 @@
 ---
 title: HTTP/2
-caption: Configure HTTP/2 in Different Application Hosts
+caption: Configure HTTP/2 in Different Application Engines
 section: Advanced
 permalink: /advanced/http2.html
 ---
 
 [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2) is a modern binary duplex multiplexing protocol designed as a replacement for HTTP/1.x.
 
-Jetty, Netty and Tomcat hosts provide HTTP/2 implementations which Ktor can use. However there are significant differences 
-and every host requires additional configuration. Once your host is configured properly ktor HTTP/2 support get activated automatically.
+Jetty, Netty and Tomcat engines provide HTTP/2 implementations which Ktor can use. However there are significant differences 
+and every engine requires additional configuration. Once your host is configured properly ktor HTTP/2 support get activated automatically.
 
 Key requirements:
 
 * SSL certificate (could be self-signed)
-* ALPN implementation suitable for particular host (see corresponding sections for Netty, Jetty and Tomcat)
+* ALPN implementation suitable for particular engine (see corresponding sections for Netty, Jetty and Tomcat)
 * HTTP/2 compliant browsers (all major browsers do support it since the end of 2015 according to [caniuse.com](http://caniuse.com/#search=http2))
 
 ## SSL certificate
@@ -55,10 +55,10 @@ ktor {
 ## ALPN implementation
 
 HTTP/2 requires ALPN ([Application-Layer Protocol Negotiation](https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation) ) 
-to be enabled. Unfortunately JDK's TLS implementation doesn't have support for ALPN so your application host should be configured properly. 
+to be enabled. Unfortunately JDK's TLS implementation doesn't have support for ALPN so your application engine should be configured properly. 
 The first option is to use external ALPN implementation that needs to be added to the boot classpath.
 The other option is to use OpenSSL native bindings and precompiled native binaries. Both approaches are error-prone 
-and require extra attention when being configured. Also every particular host could support only one of these methods.
+and require extra attention when being configured. Also every particular engine could support only one of these methods.
 
 ### Jetty
 
@@ -152,7 +152,7 @@ This is why you need slightly different binaries (you can get it here http://tom
 try Netty's tcnative however you'll have to guess which exact version is compatible with your specific Tomcat version)
 
 If you are deploying your ktor application as a war package into the server (servlet container) then you have to 
-configure your host tomcat server properly:
+configure your Tomcat server properly:
 
 * <https://tomcat.apache.org/tomcat-8.5-doc/config/http.html#HTTP/2_Support>
 * <https://tomcat.apache.org/tomcat-8.5-doc/config/http2.html>

@@ -168,7 +168,7 @@ loading user from the database in `/user/{id}` section and placing it into call'
 
 ### Extensibility
   
-`ktor-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
+`ktor-server-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
 one can easily add own selectors to fit in even more complex logic. Implement `RouteSelector` and create
 a builder function similar to built-in. 
 

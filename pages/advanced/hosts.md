@@ -1,8 +1,8 @@
 ---
-title: Hosts
+title: Engines
 section: Advanced
-permalink: /advanced/hosts.html
-caption: Custom Hosts and How to Make One  
+permalink: /advanced/engines.html
+caption: Custom Engines and How to Make One  
 ---
 
 

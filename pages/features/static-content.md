@@ -73,12 +73,12 @@ We can also define sub-routes, i.e. `/static/themes` for instance
 ### Handling Errors
 
 If the requested content is not found, a `FileNotFoundException` is thrown. It should be handled in `StatusPages` with the `exception` handler 
-to produce a corresponding `404 Not Found`, otherwise it propagates to the host and causes 500 Internal Server Error. 
+to produce a corresponding `404 Not Found`, otherwise it propagates to the engine and causes 500 Internal Server Error. 
 
 ### Customising Content Types
 
 When files are served, the content type is determined from the file extension, using `ContentType.defaultForFile(file)`. The data corresponding
-to each file type is obtained from the `mimelist.csv` resource file which is located in `ktor-core`. 
+to each file type is obtained from the `mimelist.csv` resource file which is located in `ktor-server-core`. 
 
 ### Under the covers
 

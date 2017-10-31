@@ -105,12 +105,12 @@ Then we will designate this as an extra property in the properties block like th
     </properties>
 ```
 
-Now we add `ktor-core` module using `ktor.version` we specified
+Now we add `ktor-server-core` module using `ktor.version` we specified
  
 ```xml
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-core</artifactId>
+            <artifactId>ktor-server-core</artifactId>
             <version>${ktor.version}</version>
         </dependency>
 ```
@@ -133,10 +133,10 @@ are okay with using them to avoid warnings. We also need to tell Kotlin compiler
                 </configuration>
 ```
 
-### Choose your host and configure it
+### Choose your engine and configure it
 
 Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat. 
-This example shows how to configure Ktor with Netty. For other hosts see [artifacts](artifacts.html) for list of
+This example shows how to configure Ktor with Netty. For other engines see [artifacts](artifacts.html) for list of
 available modules.
 
 We will add a dependency for `ktor-server-netty` using the ktor_version property we created. 

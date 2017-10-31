@@ -27,7 +27,7 @@ For now watch keys are just strings that are matched with `contains` against cla
 application, such as a jar name or a project directory name. 
 These classes are then loaded with special `ClassLoader` that is recycled when change is detected.
 
-_Note:_ `ktor-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
+_Note:_ `ktor-server-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
 don't expect it to be reload automatically. It can't work because core classes are loaded before auto-reload machinery kicks in. 
 The exclusion can potentially be smaller, but it's hard to analyse all the transitive closure of types loaded during
 startup.

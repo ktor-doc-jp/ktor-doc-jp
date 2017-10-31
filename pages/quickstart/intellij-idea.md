@@ -57,12 +57,12 @@ Copy and paste in the most basic setup for an app so that it looks like:
 ```kotlin
 package blog
 
-import io.ktor.netty.*
-import io.ktor.routing.*
 import io.ktor.application.*
-import io.ktor.host.*
 import io.ktor.http.*
 import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
 fun main(args: Array<String>) {
     embeddedServer(Netty, 8080) {
@@ -92,13 +92,13 @@ Change your code in BlogApp.kt to the following to try this:
 ```kotlin
 package blog
 
-import io.ktor.netty.*
-import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.host.*
 import io.ktor.http.*
 import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
 fun Application.module() {
     install(DefaultHeaders)
@@ -138,10 +138,10 @@ This requires us to indicate a new main class as IDEA will no longer be able to 
 ```groovy
 apply plugin: 'application'
 
-mainClassName = 'io.ktor.netty.DevelopmentHost'
+mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
 ```
 
 And then go to Run -> Edit Configurations -> select the blog.BlogAppKt configuration and change its Main class to:
-io.ktor.netty.DevelopmentHost
+`io.ktor.server.netty.DevelopmentEngine`
 
 Now when we run the new configuration, the application will start again.
