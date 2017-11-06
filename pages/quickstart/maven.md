@@ -90,6 +90,10 @@ so we will need to add the following to the repositories block:
             <url>http://dl.bintray.com/kotlin/ktor</url>
         </repository>
         <repository>
+            <id>kotlinx</id>
+            <url>http://dl.bintray.com/kotlin/kotlinx</url>
+        </repository>
+        <repository>
             <id>jcenter</id>
             <url>http://jcenter.bintray.com</url>
         </repository>
@@ -241,6 +245,10 @@ When you are done the pom.xml file should look like:
         <repository>
             <id>ktor</id>
             <url>http://dl.bintray.com/kotlin/ktor</url>
+        </repository>
+        <repository>
+            <id>kotlinx</id>
+            <url>http://dl.bintray.com/kotlin/kotlinx</url>
         </repository>
         <repository>
             <id>jcenter</id>
