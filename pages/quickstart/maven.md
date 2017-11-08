@@ -140,7 +140,7 @@ are okay with using them to avoid warnings. We also need to tell Kotlin compiler
 ### Choose your engine and configure it
 
 Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat. 
-This example shows how to configure Ktor with Netty. For other engines see [artifacts](artifacts.html) for list of
+This example shows how to configure Ktor with Netty. For other engines see [artifacts](/artifacts.html) for list of
 available modules.
 
 We will add a dependency for `ktor-server-netty` using the ktor_version property we created. 
