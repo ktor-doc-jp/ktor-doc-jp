@@ -27,7 +27,7 @@ The exception configuration can provide simple interception patterns for calls t
 ```kotlin
 install(StatusPages){
     exception<Throwable> { cause ->
-        call.response.status(HttpStatusCode.InternalServerError)
+        call.respond(HttpStatusCode.InternalServerError)
     }
 }
 ```
@@ -37,10 +37,10 @@ More specific responses can allow for more complex user interactions.
 ```kotlin
 install(StatusPages){
     exception<AuthenticationException> { cause ->
-        call.response.status(HttpStatusCode.Unauthorized)
+        call.respond(HttpStatusCode.Unauthorized)
     }
     exception<AuthorizationException> { cause ->
-        call.response.status(HttpStatusCode.Forbidden)
+        call.respond(HttpStatusCode.Forbidden)
     }
 ```
 
