@@ -32,12 +32,11 @@ In addition to folders, we can also include specific files using `file`, which c
 ```kotlin
     routing {
         static("static") {
-                    files("css")
-                    files("js")
-                    file("image.png")
-                    file("random.txt", "image.png")
-                    default("index.html")
-                }
+            files("css")
+            files("js")
+            file("image.png")
+            file("random.txt", "image.png")
+            default("index.html")
         }
     }
 ```
@@ -69,6 +68,21 @@ We can also define sub-routes, i.e. `/static/themes` for instance
         }
     }
 ```
+
+### Serving embedded resources
+
+If you embed your static content as resources into your application, you can serve them right from there using `resource` and `resources` 
+functions:
+
+```kotlin
+    static("static") {
+        resources("css")
+        resource("favicon.ico")
+    }
+```
+
+There is also `defaultResource` similar to `default` for serving default page for a folder, 
+and `staticBasePackage` similar to `staticRootFolder` for specifying base resource package for static content. 
 
 ### Handling Errors
 
