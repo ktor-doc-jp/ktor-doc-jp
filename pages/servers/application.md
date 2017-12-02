@@ -12,7 +12,7 @@ The `ApplicationCall` provides access to two main properties `ApplicationRequest
 and outgoing response. In addition to these, it also provides some useful functions to help response to client requests. Given that pipelines can be executed
 asynchronously, `ApplicationCall` also represents the logical execution context with `Attributes` to pass data between various parts of the pipeline.
 
-Installing interceptor into pipeline is the primary method to alter the processing of an `ApplicationCall`.
+Installing an interceptor into the pipeline is the primary method to alter the processing of an `ApplicationCall`.
 Nearly all Ktor [features](/features) are interceptors that perform various operations in different phases of
 the application call processing. 
 
