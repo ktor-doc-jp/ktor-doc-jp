@@ -25,7 +25,7 @@ the application call processing.
 The code above installs an interceptor into the `Call` phase of an `ApplicationCall` processing, and responds with plain text
 when the request is asking for a root page.  
 
-This is just an example and usually page requests are not handled in this way, as there is a [routing](/features/Routing) facility that does this
+This is just an example and usually page requests are not handled in this way, as there is a [routing](/features/routing) facility that does this
  and more. Also, as mentioned previously, defining interceptor is usually done using [features](/features) with an `install` function.
    
 Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
