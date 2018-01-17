@@ -57,4 +57,4 @@ fun Application.main() {
 }
 ```
 
-See complete example in a [custom feature sample](https://github.com/ktorio/ktor/blob/master/ktor-samples/ktor-samples-custom-feature/src/org/jetbrains/ktor/samples/feature/CustomHeader.kt)
+See complete example in a [custom feature sample](https://github.com/ktorio/ktor/blob/master/ktor-samples/ktor-samples-custom-feature/src/io/ktor/samples/feature/CustomHeader.kt)
