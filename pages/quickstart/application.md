@@ -11,7 +11,7 @@ Ktor applications can be built using common build systems such as [Maven](https:
 ### Including the right dependencies
 
 Ktor is split up into several groups of modules, allowing us to include only the functionality that we need. 
-For a list of these modules, please see [Artifacts](artifacts). 
+For a list of these modules, please see [Artifacts](/artifacts).
 In our case we only need to include `ktor-server-netty`.  
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right
