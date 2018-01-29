@@ -7,8 +7,8 @@ title: Ktor
 description: "Ktor"
 url: http://ktor.io
 
-ktor_version: 0.9.0
-kotlin_version: 1.1.51
+ktor_version: 0.9.1
+kotlin_version: 1.2.21
 
 # if you're using Github, provide the basepath to the branch you've created for reviews, following the sample here. if not, leave this value blank.
 github_editme_path: ktorio/ktorio.github.io/edit/master/
