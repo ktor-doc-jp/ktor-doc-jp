@@ -15,7 +15,11 @@ layout: default
         {% endif %}
         <div class="doc-body">
             <div class="doc-content">
+                {% if page.status == 'todo' %}
+                Coming soon...
+                {% else %}
                 {{ content }}
+                {% endif %}
             </div>
             <div class="doc-sidebar">
                 <nav id="doc-nav">
