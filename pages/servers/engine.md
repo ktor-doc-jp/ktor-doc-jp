@@ -70,4 +70,4 @@ ktor {
 }
 ```
 
-Check [Automatic Reloading](/application/autoreload) article for more details.
+Check [Automatic Reloading](/servers/autoreload.html) article for more details.
