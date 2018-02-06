@@ -116,7 +116,7 @@ There is a [list of available core configurations](#available-config) in this do
 You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
 {: .note.tip}
 
-There is a [intelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you might want to install. 
+There is a [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you might want to install. 
 {: .note.tip}
 
 ## Command Line

@@ -11,7 +11,7 @@ layout: default
             <div class="doc-content">
                 {% if page.caption != null %}
                 <div id="doc-header" class="doc-header">
-                    <h1 class="doc-title">{{page.caption}}</h1>
+                    <h1 class="doc-title" id="">{{page.caption}}</h1>
                     <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
                     {% if page.status != 'todo' %}
                     <p>{% include estimated-read-time.html %}</p>

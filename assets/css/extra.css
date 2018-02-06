@@ -122,3 +122,14 @@ a.anchored-heading:before {
 a.anchored-heading:hover:before {
     visibility: visible;
 }
+
+.doc-content img {
+    max-width: 100%;
+}
+
+.doc-content .hint-section {
+    color: #663308;
+    background: #f7ecb5;
+    border-radius: 1em;
+    padding: 1em;
+}
