@@ -3,6 +3,285 @@ title: Authentication
 caption: Authenticating Clients  
 section: Features
 permalink: /features/authentication.html
-status: todo
+subsection_tag: Authentication
 ---
 
+Ktor supports authentication out of the box as a plugable standard feature.
+
+It support mechanisms to read [Credentials](https://en.wikipedia.org/wiki/Credential),
+and to authenticate [Principals](https://en.wikipedia.org/wiki/Principal_(computer_security)). It can be used
+in some cases along [sessions feature](/features/sessions.html) to keep login information between requests.
+
+It defines two stages as part of its Pipeline: `RequestAuthentication` and `CheckAuthentication`.
+
+## Basic Usage
+
+Configuring server or route (any ApplicationCallPipeline), with the `authentication` feature:
+
+```kotlin
+authentication {
+    basicAuthentication("ktor") { credentials ->
+        if (credentials.name == credentials.password) {
+            UserIdPrincipal(credentials.name)
+        } else {
+            null
+        }
+    }
+}
+```
+
+Obtaining the generated Principal information inside your handler (handler won't be executed if a configured authentication fails):
+
+```kotlin
+val principal = call.authentication.principal<UserIdPrincipal>()
+```
+
+## User credential input
+
+### HTTP Basic Authentication and Form Authentication
+
+Ktor supports two methods of authentication with user and raw password as credentials.
+
+```kotlin
+fun AuthenticationPipeline.basicAuthentication(realm: String, validate: suspend (UserPasswordCredential) -> Principal?)
+fun AuthenticationPipeline.formAuthentication(
+    userParamName: String = "user",
+    passwordParamName: String = "password",
+    challenge: FormAuthChallenge = FormAuthChallenge.Unauthorized,
+    validate: suspend (UserPasswordCredential) -> Principal?
+)
+```
+
+Both authentication methods have a `validate` mandatory callback must generate a Principal from given a `UserPasswordCredential`
+or null on invalid credentials. That callback is marked as *suspend*, so you can validate credentials in an asynchronous fashion.
+
+You can use several strategies for validating:
+
+#### Manual credential validation
+
+Since there is a validate callback for authentication, you can just put your code there.
+So you can do things like checking the password against a constant, or composing several validation mechanisms.
+
+```kotlin
+authentication {
+    basicAuthentication("ktor") { credentials ->
+        if (credentials.password == "${credentials.name}123") UserIdPrincipal(credentials.name) else null
+    }
+}
+```
+
+#### Validating using UserHashedTableAuth
+
+There is a class that handle hashed passwords in-memory to authenticate `UserPasswordCredential`.
+You can populate it from constants at code or from another source. You can use predefined digest functions
+or your own.
+
+**Instantiating:**
+
+```kotlin
+val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"), mapOf(
+    "test" to decodeBase64("VltM4nfheqcJSyH887H+4NEOm2tDuKCl83p5axYXlF0=") // sha256 for "test"
+))
+```
+
+**Configuring server/routes:**
+
+```kotlin
+authentication {
+    basicAuthentication("ktor") { credentials -> userTable.authenticate(credentials) }
+}
+```
+
+**Security:**
+
+The idea here is that you are not storing the actual password but a hash, so even if your data source is leaked,
+passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
+it is possible to  do brute-force attacks. You can append (instead of prepend) long salt values and to do multiple hash
+stages or do key derivate functions to increase security and make brute-force attacks non-viable.
+You can also enforce or encourage strong passwords when creating users.
+ 
+#### LDAP Validation
+
+Ktor supports LDAP for credential verification in a separate artifact `ktor-auth-ldap`.
+
+**In your buildscript:**
+
+```groovy
+compile "io.ktor:ktor-auth-ldap:$ktor_version"
+```
+
+**Configuring:**
+
+````kotlin
+authentication {
+    basicAuthentication("realm") { credential ->
+        ldapAuthenticate(credential, "ldap://$localhost:${ldapServer.port}", "uid=%s,ou=system")
+    }
+}
+````
+
+Optionally you can define an additional validation check:
+````kotlin
+authentication {
+    basicAuthentication("realm") { credential ->
+        ldapAuthenticate(credentials, "ldap://localhost:389", "cn=%s ou=users") {
+            if (it.name == it.password) {
+                UserIdPrincipal(it.name)
+            } else null
+        }
+    }
+}
+````
+
+You can see [advanced examples in tests](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt).
+
+Note: Bear in mind that current LDAP this implementation is synchronous.
+
+### HTTP Digest Authentication
+
+Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication). But the API is slightly different:
+
+```kotlin
+fun AuthenticationPipeline.digestAuthentication(
+    realm: String = "ktor",
+    digestAlgorithm: String = "MD5",
+    digesterProvider: (String) -> MessageDigest = { MessageDigest.getInstance(it) },
+    userNameRealmPasswordDigestProvider: suspend (userName: String, realm: String) -> ByteArray?
+)
+```
+
+Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
+returning the HA1 digest. In the case of MD5: MD5("$username:$realm:$password"). The idea is that you can store
+passwords already hashed. And just return the expected hash for a specific user or null if the user doesn't exists.
+The callback is suspend so you can retrieve or compute the expected hash asynchronously.
+
+## Authenticating APIs using JWT
+
+Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating json-encoded payloads.
+It is useful to create stateless authenticated API in a standard way with client libraries in a myriad of languages.
+
+Ktor will handle `Authorization: Bearer <JWT-TOKEN>` 
+
+Ktor has a couple of classes to use the JWT Payload as Credential or as Principal.
+
+```kotlin
+class JWTCredential(val payload: Payload) : Credential
+class JWTPrincipal(val payload: Payload) : Principal
+```
+
+**In your buildscript:**
+
+```groovy
+compile "io.ktor:ktor-auth-jwt:$ktor_version"
+```
+
+**Configuring server/routes:**
+
+JWT and JWK each have their own method with slightly different parameters. 
+Both require the `realm` parameter, which is used in the WWW-Authenticate response header.
+
+Using a verifier and a validator:
+
+The verifier will use the secret to verify the signature to trust the source.
+You can also check the payload within `validate` callback to ensure everything is right and to produce a Principal
+
+```kotlin
+fun AuthenticationPipeline.jwtAuthentication(jwtVerifier: JWTVerifier, realm: String, validate: (JWTCredential) -> Principal?)
+```
+
+```kotlin
+val jwtSecret = "secret"
+val jwtRealm = "ktor jwt auth test"
+val jwtVerifier = JWT.require(Algorithm.HMAC256(jwtSecret))
+    .withAudience(audience)
+    .withIssuer(issuer)
+    .build()
+
+authentication {
+    jwtAuthentication(jwtVerifier, jwtRealm) { credentials ->
+        if (credentials.payload.audience.contains(audience)) JWTPrincipal(credentials.payload) else null
+    }
+}
+```
+
+Using a JWK provider:
+
+```kotlin
+fun AuthenticationPipeline.jwtAuthentication(jwkProvider: JwkProvider, issuer: String, realm: String, validate: (JWTCredential) -> Principal?)
+```
+
+```kotlin
+val jwkIssuer = "https://jwt-provider-domain/"
+val jwkRealm = "ktor jwt auth test"
+val jwkProvider = JwkProviderBuilder(jwkIssuer)
+            .cached(10, 24, TimeUnit.HOURS)
+            .rateLimited(10, 1, TimeUnit.MINUTES)
+            .build()
+authentication {
+    jwtAuthentication(jwkProvider, jwkIssuer, jwkRealm) { credentials ->
+        if (credentials.payload.audience.contains(audience)) JWTPrincipal(credentials.payload) else null
+    }
+}
+```
+
+## OAuth
+
+OAuth defines a mechanism for authentication using external providers like google or facebook safely.
+You can read more about oauth [here](https://oauth.net/)
+Ktor has a feature to work with oauth 1a and 2.0
+
+A simplified oauth 2.0 workflow:
+* The client is redirected to an authorize url for the specified provider (google, facebook, twitter, github...).
+  specifying the `clientId` and a valid redirection url.
+* Once the login is correct, the provider generates an auth token using a `clientSecret` associated to that `clientId`.
+* Then the client is redirected to a valid previously agreed application url with an auth token that is signed with the `clientSecret`.
+* Ktor's oauth feature verifies that token and generates a Principal `OAuthAccessTokenResponse`.
+* With the auth token, you can request for example the user's email or id depending on the provider.
+
+### Basic usage
+
+```kotlin
+val loginProviders = listOf(
+    OAuthServerSettings.OAuth2ServerSettings(
+            name = "github",
+            authorizeUrl = "https://github.com/login/oauth/authorize",
+            accessTokenUrl = "https://github.com/login/oauth/access_token",
+            clientId = "***",
+            clientSecret = "***"
+    )
+)
+
+@Location("/login/{type?}") class login(val type: String = "")
+
+location<login>() {
+    authentication {
+        oauthAtLocation<login>(client, exec.asCoroutineDispatcher(),
+                providerLookup = { loginProviders[it.type] },
+                urlProvider = { _, p -> redirectUrl(login(p.name), false) })
+    }
+
+    param("error") {
+        handle {
+            call.loginFailedPage(call.parameters.getAll("error").orEmpty())
+        }
+    }
+
+    handle {
+        val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+        if (principal != null) {
+            call.loggedInSuccessResponse(principal)
+        } else {
+            call.loginPage()
+        }
+    }
+}
+```
+
+Depending on the Oauth version, you will get a different Principal
+
+```kotlin
+sealed class OAuthAccessTokenResponse : Principal {
+    data class OAuth1a(val token: String, val tokenSecret: String, val extraParameters: Parameters = Parameters.Empty) : OAuthAccessTokenResponse()
+    data class OAuth2(val accessToken: String, val tokenType: String, val expiresIn: Long, val refreshToken: String?, val extraParameters: Parameters = Parameters.Empty) : OAuthAccessTokenResponse()
+}
+```
