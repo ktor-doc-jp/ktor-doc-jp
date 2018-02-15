@@ -151,9 +151,17 @@ fun AuthenticationPipeline.digestAuthentication(
 ```
 
 Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
-returning the HA1 digest. In the case of MD5: MD5("$username:$realm:$password"). The idea is that you can store
-passwords already hashed. And just return the expected hash for a specific user or null if the user doesn't exists.
+returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
+The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
+And just return the expected hash for a specific user or null if the user doesn't exists.
 The callback is suspend so you can retrieve or compute the expected hash asynchronously.
+
+`HA1` (`H(A1)`) comes from [RFC 2069 (An Extension to HTTP: Digest Access Authentication)](https://tools.ietf.org/html/rfc2069)  
+```
+HA1=MD5(username:realm:password)
+HA2=MD5(method:digestURI)
+response=MD5(HA1:nonce:HA2)
+```
 
 ## Authenticating APIs using JWT
 
