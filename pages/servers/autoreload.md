@@ -9,6 +9,9 @@ During development it is important to have fast feedback loop cycle.
 Often, restarting server would take quite some time, so Ktor provides basic auto-reload facility that
 reloads just an Application.
 
+**Performance Note:** There is a performance penalty when using autoreloading. So keep in mind that you shouldn't use
+it on production or when doing benchmarks.
+
 **Table of contents:**
 
 * [Using embeddedServer](#embedded-server)
