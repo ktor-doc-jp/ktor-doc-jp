@@ -20,10 +20,30 @@ In this tutorial we will use Gradle [shadow plugin](https://github.com/johnrenge
 compilation output and all required dependencies into a single JAR file, and append a manifest to tell Java which
 function to run first. 
 
-First, you need to apply it in your `build.gradle` file:
+First, you need to add the shadow plugin dependency in your `build.gradle` file:
+
+```groovy 
+buildscript {
+    ...
+    repositories {
+        ...
+        maven {
+          url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        ...
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+    }
+
+}
+```
+
+And after that, you have to apply it, along the application plugin.
 
 ```groovy
 apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: 'application'
 ``` 
 
 Then, specify main class so it knows what to run when you will tell java inside docker image to run your jar:
