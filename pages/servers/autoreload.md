@@ -14,20 +14,33 @@ it on production or when doing benchmarks.
 
 **Table of contents:**
 
+* [Basics](#basics)
 * [Using embeddedServer](#embedded-server)
 * [Using configuration file](#configuration-file)
 * [Example](#example)
+* [Recompiling automatically on source changes](#recompiling)
+
+<a id="basics"></a>
+## Basics
+
+Either when using embeddedServer or a configuration file, you will have to provide a list of watch substrings
+that should match the classloaders you want to watch.
+
+So for example, a typical example of class loader when using gradle could be:
+`/Users/user/projects/ktor-exercises/solutions/exercise4/build/classes/kotlin/main`
+
+In this case you can use the `solutions/exercise4` string when watching, so it will match that classloader.
 
 <a id="embedded-server"></a>
 ## Using embeddedServer
 
 When using a custom main using `embeddedServer`, you can use the default parameter `watchPaths` to provide
-a list of packages that will be watched and reloaded.
+a list of subpaths that will be watched and reloaded.
 
 `fun main(args: Array<String>) {
     embeddedServer(
         Netty,
-        watchPaths = listOf("io.ktor.exercise.autoreload"),
+        watchPaths = listOf("solutions/exercise4"),
         port = 8080,
         module = Application::mymodule
     ).apply { start(wait = true) 
@@ -56,7 +69,7 @@ To fix this error, you just have to extract your lambda body to an Application e
 Code that **won't** work:
 ```
 fun main(args: Array<String>) {
-    embeddedServer(Netty, watchPaths = listOf("io.ktor.exercise0"), port = 8080) { // ERROR! Module function provided as lambda cannot be unlinked for reload
+    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080) { // ERROR! Module function provided as lambda cannot be unlinked for reload
         routing {
             get("/") {
                 call.respondText("Hello World!")
@@ -69,7 +82,7 @@ fun main(args: Array<String>) {
 Code that will work:
 ```
 fun main(args: Array<String>) {
-    embeddedServer(Netty, watchPaths = listOf("io.ktor.exercise0"), port = 8080, module = Application::mymodule).start(true) // GOOD!, it will work
+    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080, module = Application::mymodule).start(true) // GOOD!, it will work
 }
 
 fun Application.mymodule() {
@@ -134,7 +147,7 @@ import io.ktor.server.netty.*
 // Exposed as: `static void io.ktor.exercise.autoreload.MainKt.main(String[] args)`
 fun main(args: Array<String>) {
     //io.ktor.server.netty.main(args) // Manually using Netty's DevelopmentEngine
-    embeddedServer(Netty, watchPaths = listOf("io.ktor.exercise.autoreload"), port = 8080, module = Application::module).apply { start(wait = true) 
+    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080, module = Application::module).apply { start(wait = true) 
 }
 
 // Exposed as: `static void io.ktor.exercise.autoreload.MainKt.module(Application receiver)`
@@ -152,7 +165,7 @@ fun Application.module() {
 ktor {
     deployment {
         port = 8080
-        watch = [ io.ktor.exercise.autoreload ]
+        watch = [ solutions/exercise4 ]
     }
 
     application {
@@ -161,12 +174,16 @@ ktor {
 }
 ```
 
-As you can see, you specify a list of jvm packages (in this case just `io.ktor.exercise.autoreload`), that should
-be reloaded upon modification.
+As you can see, you specify a list of strings to match the classloaders you want to watch (in this case just `solutions/exercise4`),
+that should be reloaded upon modification.
 
-Using gradle, you can run `gradle compile` in another terminal to trigger the compilation.
-While using intelliJ you can run `Build -> Build Project` to trigger a recompilation while running.
+## Recompiling automatically on source changes
 
-Try changing the respodText String, trigger a compilation and run a new request in your browser to the see the changes.
+Since Autoreload feature just detect changes on class files, you have to compile the application by yourself.
+You can do it using intelliJ IDEA with `Build -> Build Project` while running.
 
-Note that it is also possible to watch for sources using gradle, and automatically trigger a Kotlin compilation. 
+But you can also use gradle to automatically detect source changes and compile it for you. So you can just open
+other terminal in your project folder and run: `gradle -t build`. It will compile the application, and after doing so
+it will be listening for additional source changes and recompiling when necessary.
+
+You can then use other terminal to run the application with `gradle run`.
