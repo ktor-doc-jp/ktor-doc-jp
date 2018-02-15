@@ -47,7 +47,7 @@ class Configuration : BaseApplicationEngine.Configuration() {
 
 ```kotlin
 class Configuration : BaseApplicationEngine.Configuration() {
-    var configureServer: Server.() -> Unit = {}
+    var configureServer: Server.() -> Unit = {} // Property to provide a lambda that will be called during Jetty server initialization with the server instance as argument.
 }
 ```
 
@@ -55,7 +55,7 @@ class Configuration : BaseApplicationEngine.Configuration() {
 
 ```kotlin
 class Configuration : BaseApplicationEngine.Configuration() {
-    var connectionIdleTimeoutSeconds: Int = 45
+    var connectionIdleTimeoutSeconds: Int = 45 // Number of seconds that the server will keep HTTP IDLE connections open. A connection is IDLE if there are no active requests running.
 }
     
 ```
@@ -64,7 +64,7 @@ class Configuration : BaseApplicationEngine.Configuration() {
 
 ```kotlin
 class Configuration : BaseApplicationEngine.Configuration() {
-    var configureTomcat: Tomcat.() -> Unit = {}
+    var configureTomcat: Tomcat.() -> Unit = {} // Property to provide a lambda that will be called during Tomcat server initialization with the server instance as argument.
 }
 ```
 
@@ -97,10 +97,10 @@ Or with a custom `applicationEngineEnvironment`:
 
 ```kotlin
 embeddedServer(Netty, applicationEngineEnvironment {
-    this.log = LoggerFactory.getLogger("ktor.application")
-    this.config = HoconApplicationConfig(ConfigFactory.load()) // Provide a Hocon config file
+    log = LoggerFactory.getLogger("ktor.application")
+    config = HoconApplicationConfig(ConfigFactory.load()) // Provide a Hocon config file
 
-    this.module {
+    module {
         routing {
             get("/") {
                 call.respondText("HELLO")
@@ -109,8 +109,8 @@ embeddedServer(Netty, applicationEngineEnvironment {
     }
 
     connector {
-        this.port = 8080
-        this.host = "127.0.0.1"
+        port = 8080
+        host = "127.0.0.1"
     }
 }).start(true)
 ```
