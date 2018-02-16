@@ -6,7 +6,7 @@ permalink: /features/authentication.html
 subsection_tag: Authentication
 ---
 
-Ktor supports authentication out of the box as a plugable standard feature.
+Ktor supports authentication out of the box as a pluggable standard feature.
 
 It support mechanisms to read [Credentials](https://en.wikipedia.org/wiki/Credential),
 and to authenticate [Principals](https://en.wikipedia.org/wiki/Principal_(computer_security)). It can be used
@@ -40,7 +40,7 @@ val principal = call.authentication.principal<UserIdPrincipal>()
 
 ### HTTP Basic Authentication and Form Authentication
 
-Ktor supports two methods of authentication with user and raw password as credentials.
+Ktor supports two methods of authentication with the user and raw password as credentials.
 
 ```kotlin
 fun AuthenticationPipeline.basicAuthentication(realm: String, validate: suspend (UserPasswordCredential) -> Principal?)
@@ -52,15 +52,15 @@ fun AuthenticationPipeline.formAuthentication(
 )
 ```
 
-Both authentication methods have a `validate` mandatory callback must generate a Principal from given a `UserPasswordCredential`
-or null on invalid credentials. That callback is marked as *suspend*, so you can validate credentials in an asynchronous fashion.
+Both authentication methods have a mandatory `validate` callback and must generate a Principal from given a `UserPasswordCredential`
+or null for invalid credentials. That callback is marked as *suspended*, so that you can validate credentials in an asynchronous fashion.
 
 You can use several strategies for validating:
 
 #### Manual credential validation
 
 Since there is a validate callback for authentication, you can just put your code there.
-So you can do things like checking the password against a constant, or composing several validation mechanisms.
+So you can do things like checking the password against a constant or composing several validation mechanisms.
 
 ```kotlin
 authentication {
@@ -72,8 +72,8 @@ authentication {
 
 #### Validating using UserHashedTableAuth
 
-There is a class that handle hashed passwords in-memory to authenticate `UserPasswordCredential`.
-You can populate it from constants at code or from another source. You can use predefined digest functions
+There is a class that handles hashed passwords in-memory to authenticate `UserPasswordCredential`.
+You can populate it from constants in code or from another source. You can use predefined digest functions
 or your own.
 
 **Instantiating:**
@@ -95,8 +95,8 @@ authentication {
 **Security:**
 
 The idea here is that you are not storing the actual password but a hash, so even if your data source is leaked,
-passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
-it is possible to  do brute-force attacks. You can append (instead of prepend) long salt values and to do multiple hash
+the passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
+it is possible to do brute-force attacks. You can append (instead of prepend) long salt values and do multiple hash
 stages or do key derivate functions to increase security and make brute-force attacks non-viable.
 You can also enforce or encourage strong passwords when creating users.
  
@@ -104,7 +104,7 @@ You can also enforce or encourage strong passwords when creating users.
 
 Ktor supports LDAP for credential verification in a separate artifact `ktor-auth-ldap`.
 
-**In your buildscript:**
+**In your build script:**
 
 ```groovy
 compile "io.ktor:ktor-auth-ldap:$ktor_version"
@@ -153,8 +153,8 @@ fun AuthenticationPipeline.digestAuthentication(
 Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
 returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
 The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
-And just return the expected hash for a specific user or null if the user doesn't exists.
-The callback is suspend so you can retrieve or compute the expected hash asynchronously.
+And just return the expected hash for a specific user, or null if the user doesn't exist.
+The callback is suspended so you can retrieve or compute the expected hash asynchronously.
 
 `HA1` (`H(A1)`) comes from [RFC 2069 (An Extension to HTTP: Digest Access Authentication)](https://tools.ietf.org/html/rfc2069)  
 ```
@@ -177,7 +177,7 @@ class JWTCredential(val payload: Payload) : Credential
 class JWTPrincipal(val payload: Payload) : Principal
 ```
 
-**In your buildscript:**
+**In your build script:**
 
 ```groovy
 compile "io.ktor:ktor-auth-jwt:$ktor_version"
@@ -234,17 +234,17 @@ authentication {
 
 ## OAuth
 
-OAuth defines a mechanism for authentication using external providers like google or facebook safely.
-You can read more about oauth [here](https://oauth.net/)
-Ktor has a feature to work with oauth 1a and 2.0
+OAuth defines a mechanism for authentication using external providers like Google or Facebook safely.
+You can read more about OAuth [here](https://oauth.net/)
+Ktor has a feature to work with OAuth 1a and 2.0
 
-A simplified oauth 2.0 workflow:
-* The client is redirected to an authorize url for the specified provider (google, facebook, twitter, github...).
+A simplified OAuth 2.0 workflow:
+* The client is redirected to an authorize URL for the specified provider (Google, Facebook, Twitter, Github...).
   specifying the `clientId` and a valid redirection url.
-* Once the login is correct, the provider generates an auth token using a `clientSecret` associated to that `clientId`.
-* Then the client is redirected to a valid previously agreed application url with an auth token that is signed with the `clientSecret`.
-* Ktor's oauth feature verifies that token and generates a Principal `OAuthAccessTokenResponse`.
-* With the auth token, you can request for example the user's email or id depending on the provider.
+* Once the login is correct, the provider generates an auth token using a `clientSecret` associated with that `clientId`.
+* Then the client is redirected to a valid, previously agreed upon, application URL with an auth token that is signed with the `clientSecret`.
+* Ktor's OAuth feature verifies the token and generates a Principal `OAuthAccessTokenResponse`.
+* With the auth token, you can request, for example, the user's email or id depending on the provider.
 
 ### Basic usage
 
@@ -285,7 +285,7 @@ location<login>() {
 }
 ```
 
-Depending on the Oauth version, you will get a different Principal
+Depending on the OAuth version, you will get a different Principal
 
 ```kotlin
 sealed class OAuthAccessTokenResponse : Principal {
