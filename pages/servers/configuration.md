@@ -20,8 +20,9 @@ This format is similar to JSON, but it is optimized to be read and written by hu
 <a id="embedded-server"></a>
 ## Configuring embeddedServer
 
-`embeddedServer` includes an optional parameter `configure` specific per factory where you can set a generic
-or a specific configuration. Any configuration has these common fields available to set:
+`embeddedServer` includes an optional parameter `configure` that allows you to set the associated configuration
+to the ApplicationEngineFactory specified in the first parameter. All the configurations will have some
+common properties that you can set:
 
 ```kotlin
 open class Configuration {
