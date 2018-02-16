@@ -1,0 +1,4 @@
+{% assign page_words = page.content | number_of_words %}
+<p>
+    <em style="color:grey; font-size: 0.8em;">Estimated reading time: {{ page_words | divided_by: 220.0 | round }} minutes</em>
+</p>
