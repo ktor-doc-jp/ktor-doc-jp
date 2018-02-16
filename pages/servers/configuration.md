@@ -5,10 +5,10 @@ section: Servers
 permalink: /servers/configuration.html
 ---
 
-Ktor uses kotlin lambdas for configuring the application and when using embeddedServer.
+Ktor uses Kotlin lambdas to configure the application and when using embeddedServer.
 
-And uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md) format for its configuration file.
-This format is similar to JSON, but optimized for being read and written by humans. And supports things like environment variable substitution.
+It uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md) format for the configuration file.
+This format is similar to JSON, but it is optimized to be read and written by humans. It supports things like environment variable substitution.
 
 **Table of contents:**
 
@@ -20,8 +20,8 @@ This format is similar to JSON, but optimized for being read and written by huma
 <a id="embedded-server"></a>
 ## Configuring embeddedServer
 
-`embeddedServer` includes an optional parameter `configure` specific per factory where you can set generic
-and specific configuration. Any configuration will have these common available fields to set:
+`embeddedServer` includes an optional parameter `configure` specific per factory where you can set a generic
+or a specific configuration. Any configuration has these common fields available to set:
 
 ```kotlin
 open class Configuration {
@@ -71,8 +71,8 @@ class Configuration : BaseApplicationEngine.Configuration() {
 <a id="accessing-config"></a>
 ## Accessing the configuration
 
-When using a `DevelopmentEngine` (instead of an `embeddedServer`), the HOCON file is loaded,
-and you access to its configurations.
+If you are using a `DevelopmentEngine` (instead of an `embeddedServer`), the HOCON file is loaded,
+and you are able to access to its configuration properties.
 
 You can also define arbitrary property paths to configure your application.
 
@@ -80,13 +80,13 @@ You can also define arbitrary property paths to configure your application.
 val port: String = application.environment.config.propertyOrNull("ktor.deployment.port")?.getString() ?: "80"
 ```
 
-It is possible to access the HOCON `application.conf` configuration too using with a custom main with commandLineEnvironment:
+It is possible to access the HOCON `application.conf` configuration too, by using a custom main with commandLineEnvironment:
 
 ```kotlin
 embeddedServer(Netty, commandLineEnvironment(args + arrayOf("-port=8080"))).start(true)
 ```
 
-Or by redirecting to the specific `DevelopmentEngine.main`:
+Or by redirecting it to the specific `DevelopmentEngine.main`:
 
 ```kotlin
 val moduleName = Application::module.javaMethod!!.let { "${it.declaringClass.name}.${it.name}" }
@@ -115,7 +115,7 @@ embeddedServer(Netty, applicationEngineEnvironment {
 }).start(true)
 ```
 
-You can also access the configuration by manually loading the default config file `application.conf`:
+You can also access the configuration properties by manually loading the default config file `application.conf`:
 
 ```kotlin
 val config = HoconApplicationConfig(ConfigFactory.load())
@@ -128,7 +128,7 @@ When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master
 (any `DevelopmentEngine` main) there are several switches and configuration parameters you can use to configure
 your application module.
 
-**Switch** refers to arguments that you pass to the application, so yo can for example change the host by:
+**Switch** refers to arguments that you pass to the application, so you can, for example, change the host by:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
@@ -169,14 +169,14 @@ Required when SSL port is defined:
 |                 | `ktor.security.ssl.keyStorePassword`   | `null`           | Password for the SSL key store |
 |                 | `ktor.security.ssl.privateKeyPassword` | `null`           | Password for the SSL private key |
 
-You can use `-P:` to specify parameters that doesn't have a specific switch. For example:
+You can use `-P:` to specify parameters that don't have a specific switch. For example:
 `-P:ktor.deployment.callGroupSize=7`
 
 <a id="custom"></a>
 ## Custom configuration systems
 
-Ktor provides an interface that you can implement for its configuration available at `application.environment.config`.
-You can construct and set the configuration inside an `applicationEngineEnvironment`.
+Ktor provides an interface that you can implement the configuration in, available at `application.environment.config`.
+You can construct and set the configuration properties inside an `applicationEngineEnvironment`.
 
 ```kotlin
 interface ApplicationConfig {
@@ -194,7 +194,7 @@ interface ApplicationConfigValue {
 class ApplicationConfigurationException(message: String) : Exception(message)
 ```
 
-Ktor provides two implementations. One based in a map (`MapApplicationConfig`), and other based in HOCON (`HoconApplicationConfig`).
+Ktor provides two implementations. One based on a map (`MapApplicationConfig`), and other based in HOCON (`HoconApplicationConfig`).
 
-You can create and compose config implementations and set them at `applicationEngineEnvironment` so it is available to all the
+You can create and compose config implementations and set them at `applicationEngineEnvironment`, so it is available to all of the
 application components.
