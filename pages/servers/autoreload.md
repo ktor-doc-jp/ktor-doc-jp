@@ -5,12 +5,12 @@ section: Servers
 permalink: /servers/autoreload.html
 ---
 
-During development it is important to have fast feedback loop cycle. 
-Often, restarting server would take quite some time, so Ktor provides basic auto-reload facility that
+During development, it is important to have a fast feedback loop cycle. 
+Often, restarting the server can take some time, so Ktor provides a basic auto-reload facility that
 reloads just an Application.
 
-**Performance Note:** There is a performance penalty when using autoreloading. So keep in mind that you shouldn't use
-it on production or when doing benchmarks.
+**Performance Note:** There is a performance penalty when using auto-reloading. So keep in mind that you should not use
+it in production or when doing benchmarks.
 
 **Table of contents:**
 
@@ -23,13 +23,13 @@ it on production or when doing benchmarks.
 <a id="basics"></a>
 ## Basics
 
-Either when using embeddedServer or a configuration file, you will have to provide a list of watch substrings
+Both when using the embeddedServer or a configuration file, you will have to provide a list of watch substrings
 that should match the classloaders you want to watch.
 
 So for example, a typical example of class loader when using gradle could be:
 `/Users/user/projects/ktor-exercises/solutions/exercise4/build/classes/kotlin/main`
 
-In this case you can use the `solutions/exercise4` string when watching, so it will match that classloader.
+In this case, you can use the `solutions/exercise4` string when watching, so it will match that classloader.
 
 <a id="embedded-server"></a>
 ## Using embeddedServer
@@ -46,7 +46,7 @@ a list of subpaths that will be watched and reloaded.
     ).apply { start(wait = true) 
 }`
 
-Note that here you shouldn't use a lambda to configure the server, but to provide a method reference to your
+Note that here you should not use a lambda to configure the server, but to provide a method reference to your
 Application module.
 
 ```
@@ -59,7 +59,7 @@ fun Application.mymodule() {
 }
 ```
 
-If yoy try to use a lambda instead of a method reference, you will get the following error:
+If you try to use a lambda instead of a method reference, you will get the following error:
 ```
 Exception in thread "main" java.lang.RuntimeException: Module function provided as lambda cannot be unlinked for reload
 ```
@@ -102,7 +102,7 @@ from the command line or hosted within another server:
 
 To enable this feature, add `watch` keys to `ktor.deployment` configuration. 
 
-`watch` - Array of class path entries that should be watched and automatically reloaded.
+`watch` - Array of classpath entries that should be watched and automatically reloaded.
 
 ```
 ktor {
@@ -115,13 +115,13 @@ ktor {
 }
 ```
 
-For now watch keys are just strings that are matched with `contains` against classpath entries of the loaded 
+For now watch keys are just strings that are matched with `contains`, against the classpath entries in the loaded 
 application, such as a jar name or a project directory name. 
-These classes are then loaded with special `ClassLoader` that is recycled when change is detected.
+These classes are then loaded with a special `ClassLoader` that is recycled when a change is detected.
 
 **Note:** `ktor-server-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
-don't expect it to be reload automatically. It can't work because core classes are loaded before auto-reload machinery kicks in. 
-The exclusion can potentially be smaller, but it's hard to analyse all the transitive closure of types loaded during
+don't expect it to be reloaded automatically. It cannot work because core classes are loaded before the auto-reload kicks in. 
+The exclusion can potentially be smaller, but it is hard to analyze all the transitive closure of types loaded during
 startup.
 
 <a id="example"></a>
@@ -129,9 +129,9 @@ startup.
 
 Consider the following example:
 
-You can run the application by either a `build.gradle` or directly within your IDE.
-Executing the main method in the example file, or by executing : `io.ktor.server.netty.DevelopmentEngine.main`.
-DevelopmentEngine by using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
+You can run the application by using either a `build.gradle` or directly within your IDE.
+Executing the main method in the example file, or by executing: `io.ktor.server.netty.DevelopmentEngine.main`.
+DevelopmentEngine using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
 
 `Main.kt`:
 ```kotlin
@@ -174,16 +174,15 @@ ktor {
 }
 ```
 
-As you can see, you specify a list of strings to match the classloaders you want to watch (in this case just `solutions/exercise4`),
-that should be reloaded upon modification.
+As you can see, you need to specify a list of strings to match the classloaders you want to watch (in this case just `solutions/exercise4`), which should then be reloaded upon modification.
 
 ## Recompiling automatically on source changes
 
-Since Autoreload feature just detect changes on class files, you have to compile the application by yourself.
-You can do it using intelliJ IDEA with `Build -> Build Project` while running.
+Since the Autoreload feature only detects changes in class files, you have to compile the application by yourself.
+You can do it using IntelliJ IDEA with `Build -> Build Project` while running.
 
-But you can also use gradle to automatically detect source changes and compile it for you. So you can just open
-other terminal in your project folder and run: `gradle -t build`. It will compile the application, and after doing so
-it will be listening for additional source changes and recompiling when necessary.
+However, you can also use gradle to automatically detect source changes and compile it for you. So you can just open
+another terminal in your project folder and run: `gradle -t build`. It will compile the application, and after doing so,
+it will listen for additional source changes and recompile when necessary.
 
-You can then use other terminal to run the application with `gradle run`.
+You can then use another terminal to run the application with `gradle run`.
