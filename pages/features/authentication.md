@@ -53,7 +53,7 @@ fun AuthenticationPipeline.formAuthentication(
 ```
 
 Both authentication methods have a mandatory `validate` callback and must generate a Principal from given a `UserPasswordCredential`
-or null for invalid credentials. That callback is marked as *suspended*, so that you can validate credentials in an asynchronous fashion.
+or null for invalid credentials. That callback is marked as *suspending*, so that you can validate credentials in an asynchronous fashion.
 
 You can use several strategies for validating:
 
@@ -154,7 +154,7 @@ Instead of providing a verifier, you have to provide a `userNameRealmPasswordDig
 returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
 The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
 And just return the expected hash for a specific user, or null if the user doesn't exist.
-The callback is suspended so you can retrieve or compute the expected hash asynchronously.
+The callback is suspendable so you can retrieve or compute the expected hash asynchronously.
 
 `HA1` (`H(A1)`) comes from [RFC 2069 (An Extension to HTTP: Digest Access Authentication)](https://tools.ietf.org/html/rfc2069)  
 ```
