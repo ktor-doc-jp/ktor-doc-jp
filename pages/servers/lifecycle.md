@@ -7,10 +7,10 @@ caption: What Happens in a Server?
 
 {% include estimated-read-time.html %}
 
-Ktor is designed to be flexible and extensible. It is composited
-by simple small pieces, but if you don't know what's happening it is like a black box.
+Ktor is designed to be flexible and extensible. It is composed
+of small simple pieces, but if you don't know what's happening then it is like a black box.
 
-In this section you will discover what is Ktor doing behind the hoods and will know more
+In this section you will discover what Ktor is doing under the hood and you will learn more
 about its generic infrastructure. 
 
 **Table of contents:**
@@ -35,10 +35,10 @@ You can run a Ktor application in several ways:
 
 **[`ApplicationEngineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/src/io/ktor/server/engine/ApplicationEngineEnvironment.kt):**
 
-At the beginning this immutable environment has to be built;
+To begin with, this immutable environment has to be built;
 with a classLoader, a logger, a [configuration](/servers/configuration.html),
 a monitor that acts as an event bus for application events,
-and a set of connectors, modules that will form the application and [watchPaths](/servers/autoreload.html).
+and a set of connectors and modules, that will form the application and [watchPaths](/servers/autoreload.html).
 
 You can build it using `ApplicationEngineEnvironmentBuilder`,
 and handy DSL functions `applicationEngineEnvironment`, `commandLineEnvironment` among others.
@@ -51,17 +51,17 @@ Netty, Jetty, CIO or Tomcat.
 The application engine is the class in charge of running the application,
 it has a specific **configuration**, an associated **environment** and can be `start`ed and `stop`ped.
 
-When you start a specific application engine, it will use all the configuration
-provided to listen, by properly using the specified engine, to the right ports, hosts,
-using SSL, certificates and so on, with the specified workers.
+When you start a specific application engine, it will use the configuration
+provided to listen, to the right ports and hosts,
+by using SSL, certificates and so on, with the specified workers.
 
-Connectors will be used for listening to http/https to specific hosts and ports.
+Connectors will be used for listening to specific http/https hosts and ports.
 While the `Application` pipeline will be used to handle the requests. 
 
 **[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/Application.kt)** : Pipeline:
 
 It is created by the `ApplicationEngineEnvironment` and it is initially empty.
-It is a pipeline without subject that has `ApplicationCall` as context.
+It is a pipeline without a subject that has `ApplicationCall` as the context.
 Each specified module will be called to configure this application when the
 environment is created.
 
@@ -69,14 +69,14 @@ environment is created.
 
 When you run your own main method and call the `embeddedServer` function,
 you provide a specific `ApplicationEngineFactory` and
-a `ApplicationEngineEnvironment` is created or provided.
+an `ApplicationEngineEnvironment` is then created or provided.
 
 ### DevelopmentEngine
 
-Ktor define one `DevelopmentEngine` class per each supported server engine.
+Ktor defines one `DevelopmentEngine` class, per each supported server engine.
 This class defines a `main` method that can be executed to run the application.
 By using `commandLineEnvironment` it will load the [HOCON `application.conf`](/servers/configuration.html)
-file from your resources and will use extra arguments, to determine which modules to install
+file from your resources and will use extra arguments to determine which modules to install
 and how to configure the server. 
 
 Those classes are normally declared in `CommandLine.kt` source files.
@@ -89,15 +89,15 @@ Those classes are normally declared in `CommandLine.kt` source files.
 ### [TestApplicationEngine](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-test-host/src/io/ktor/server/testing/TestApplicationEngine.kt)
 
 For testing, Ktor defines a `TestApplicationEngine` and `withTestApplication` handy method,
-that will allow to test your application modules, pipeline and other features without
+that will allow you to test your application modules, pipeline, and other features without
 actually starting any server or mocking any facility.
 It will use an in-memory configuration `MapApplicationConfig("ktor.deployment.environment" to "test")`
-that you can use to determine if running in a test environment.
+that you can use to determine if it is to run in a test environment.
 
 ## Monitor events
 
-Associated to the environment, there is a monitor instance that Ktor uses to rais application events.
-You can use it to subscribe to events. For example you can subscribe to a stop application event
+Associated with the environment is a monitor instance that Ktor uses to raise application events.
+You can use it to subscribe to events. For example, you can subscribe to a stop application event
 to shutdown specific services or finalize some resources.
 
 A list of [Ktor defined events](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/ApplicationEnvironment.kt):  
@@ -114,12 +114,12 @@ val ApplicationStopped = EventDefinition<Application>()
 
 Ktor defines pipelines for asynchronous extensible computations. Pipelines are used all over Ktor.
 
-All the pipelines have associated a **subject** type, a **context** type, and a list of **phases**
-with **interceptors** associated to them as well as **attributes** that act as a small typed object container.
+All the pipelines have an associated **subject** type, **context** type, and a list of **phases**
+with **interceptors** associated to them. As well as, **attributes** that act as a small typed object container.
 
-Phases are ordered and can be defined to be executed, after or before another phase or at the end.
+Phases are ordered and can be defined to be executed, after or before another phase, or at the end.
 
-Each pipeline has an ordered list of phase contexts for that instance that contains a set of
+Each pipeline has an ordered list of phase contexts for that instance, that contain a set of
 interceptors per phase.
 
 So for example:
@@ -132,10 +132,10 @@ So for example:
         * Interceptor3
         * Interceptor4
 
-The idea here is that each interceptor for a specific phase do not depend on other interceptors
-on the same phase, but can depend on interceptors from previous phases.
+The idea here is that each interceptor for a specific phase does not depend on other interceptors
+on the same phase, but on interceptors from previous phases.
 
-When executing a pipeline, all the registered interceptors will be executed in the order defined by phases.
+When executing a pipeline, all the registered interceptors will be executed in the order defined by the phases.
 
 ### [ApplicationCallPipeline](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/ApplicationCallPipeline.kt)
 
@@ -146,13 +146,13 @@ The `Application` instance is a `ApplicationCallPipeline`.
 So when the server's application engine handles a HTTP request, it will execute the `Application`
 pipeline.
 
-Th context class `ApplicationCall` contains the application, the `request`, the `response`,
-and `attributes` and `parameters`.
+The context class `ApplicationCall` contains the application, the `request`, the `response`,
+and the `attributes` and `parameters`.
 
-In the end, application modules, will end registering interceptors
+In the end, the application modules, will end registering interceptors
 for specific phases for the Application pipeline, to process the `request` and emitting a `response`.  
 
-The ApplicationCallPipeline defines the following builtin phases for its pipeline:
+The ApplicationCallPipeline defines the following built-in phases for its pipeline:
 
 ```kotlin
 val Infrastructure = PipelinePhase("Infrastructure") // Phase for setting up infrastructure for processing a call
@@ -168,7 +168,7 @@ It has access to the pipeline and it can register interceptors and do all kind o
 
 ## Routing
 
-To illustrate how features and a pipeline tree works together, let's have a look about how routing works.
+To illustrate how features and a pipeline tree work together, let's have a look at how routing works.
 
 Routing, like other features, is normally installed like this:
 
@@ -176,12 +176,12 @@ Routing, like other features, is normally installed like this:
 install(Routing) { }
 ```
 
-But there is a convenience method for registering and start using it that also installs it once if already registered:
+But there is a convenient method to register and start using it, that also installs it once if it is already registered:
 
 ```kotlin
 routing { }
 ```
 
 Routing is defined as a tree, where each node is a Route that is also a separate instance of an ApplicationCallPipeline.
-So when the root routing node is executed, it wil execute its own pipeline. And will stop executing things once
+So when the root routing node is executed, it will execute its own pipeline. And will stop executing things once
 the route has been processed.
