@@ -8,7 +8,7 @@ caption: Http Client
 * TOC
 {:toc}
 
-In addition to HTTP server, Ktor also supports flexible asynchronous HTTP Clients.
+In addition to the HTTP server, Ktor also supports flexible asynchronous HTTP Clients.
 
 ## Basic Usage
 
@@ -16,9 +16,9 @@ The basic usage is super simple. You just have to instantiate an `HttpClient` in
 specifying an engine, for example `Apache` (`ktor-client-apache`), `Jetty` (`ktor-client-jetty`)
 or `CIO` (`ktor-client-cio`).
 
-And then you can start making requests. It is possible to customize the request a lot and
-to stream the response, but also you can just call a convenience `HttpClient.get` extension method
-that will directly get an specified type (for example String).  
+Then you can start making requests. It is possible to customize the request a lot and
+to stream the response, but you can also just call a convenience `HttpClient.get` extension method
+that will get an specified type directly (for example String).  
 
 ```kotlin
 val client = HttpClient(Apache)
@@ -30,7 +30,7 @@ val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
 ### The `call` method
 
 The HttpClient `call` method, returns an `HttpClientCall` and allows you to perform
-untyped simple requests.
+simple untyped requests.
 
 You can read the content by using `response: HttpResponse`.
 More information about [receiving content using HttpResponse here](#HttpResponse). 
@@ -45,8 +45,8 @@ println(call.response.readText())
 ### The `request` method
 
 In addition to call, there is a .request method for performing a typed request,
-[receiving a specific type](#receive) like String, a HttpResponse, or an arbitrary class.
-You have to specify the url, and the method when building the request. 
+[receiving a specific type](#receive) like String, HttpResponse, or an arbitrary class.
+You have to specify the URL, and the method when building the request. 
 
 ```kotlin
 val call = client.request<String> {
@@ -58,7 +58,7 @@ val call = client.request<String> {
 ### `post` and `get` methods
 
 Similar to request there are several extension methods to perform requests
-with the specific most common http verbs GET and POST.
+with the specific more common HTTP verbs GET and POST.
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
@@ -66,8 +66,8 @@ val text = client.post<String>("http://127.0.0.1:8080/")
 
 ### Specifying a body for requests
 
-By default, for POST and PUT requests, you can set to the `body` property
-of a `HttpRequestBuilder` any sub-instance of `OutgoingContent`
+By default, for POST and PUT requests, you can set the `body` property
+of a `HttpRequestBuilder` to any sub-instance of `OutgoingContent`
 as well as String instances.
 
 ```kotlin
@@ -83,11 +83,11 @@ client.post<Unit> {
 }
 ```
 
-If you install `JsonFeature`, and set content type to `application/json`
-you can use arbitrary instances and those will be serialized as JSON.
+If you install `JsonFeature`, and set the content type to `application/json`
+you can use arbitrary instances, and they will be serialized as JSON.
 
 **Note:** Remember that your classes must be top level to be recognized by Gson.
-If you put a class to be serialized inside a function, it will send a null.
+If you put a class you want to be serialized inside a function, it will send a null.
 
 ```kotlin
 data class HelloWorld(val hello: String) // Must be top level
@@ -168,8 +168,8 @@ val setCookie: List<Cookie> = response.setCookie()
 
 ## Configuring the request with `HttpRequestBuilder`
 
-When calling request methods, you can provide a lambda for building the request
-parameters like the url, the http method (verb), the body or the headers.
+When calling request methods, you can provide a lambda to build the request
+parameters like the URL, the HTTP method (verb), the body, or the headers.
 The HttpRequestBuilder looks like this:
 
 
@@ -187,8 +187,8 @@ class HttpRequestBuilder : HttpMessageBuilder {
 
 ## Http Client Features
 
-Similar to the server, Ktor supports features on the client. And works the same:
-there is a pipeline for client http requests and features can intercept them.
+Similar to the server, Ktor supports features on the client. It also works the same:
+there is a pipeline for client HTTP requests and features can intercept them.
 
 ### BasicAuth
 
@@ -203,11 +203,11 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-**Note:** To use this feature, you need to include `ktor-client-auth-basic` artifact.
+**Note:** To use this feature, you need to include the `ktor-client-auth-basic` artifact.
 
 ### HttpCookies
 
-Feature to keep cookies between calls or to do requests with some cookies pre-set.
+There is a feature to keep cookies between calls or to make requests with some cookies pre-set.
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -237,7 +237,7 @@ val client = HttpClient(HttpClientEngine) {
 Processes the request content as plain text of a specified charset by
 `defaultCharset`, note that the default charset is the JVM's charset that
 could be different between systems.
-Also will process the response content as plain text too.
+Also it will process the response content as plain text too.
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -250,7 +250,7 @@ val client = HttpClient(HttpClientEngine) {
 ### JsonFeature
 
 Processes the request and the response payload as JSON, serializing
-and de-serializing using a specific `serializer: JsonSerializer`.
+and de-serializing them using a specific `serializer: JsonSerializer`.
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -265,7 +265,7 @@ val client = HttpClient(HttpClientEngine) {
 <a id="engines"></a>
 ## Supported engines and configuration
 
-Ktor HttpClient allow to configure the parameters of the engine by calling `Engine.config { }`.
+Ktor HttpClient lets you to configure the parameters of the engine by calling `Engine.config { }`.
 
 ### Common
 
@@ -279,13 +279,13 @@ val client = HttpClient(MyHttpEngine.config {
 ```
 
 * The `dispatcher` property is the `CoroutineDispatcher` used when processing client requests.
-* While the `sslContext` is a java's [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
-allowing to set custom keys, trust manager or custom source for secure random data.
+* While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
+allowing you to set custom keys, trust manager or custom source for secure random data.
 
 ### Apache
 
-Apache is the most configurable http client at this point.
-It is the only that has support for following redirects and allows you to configure timeouts,
+Apache is the most configurable HTTP client at this point.
+It is the only one that supports following redirects and allows you to configure timeouts,
 proxies among other things supported by `org.apache.httpcomponents:httpasyncclient`.
 
 * Artifact `io.ktor:ktor-client-apache:$ktor_version`.
@@ -313,7 +313,7 @@ val client = HttpClient(Apache.config {
 
 ### CIO
 
-CIO just have the common configuration properties.
+CIO only has the common configuration properties.
 
 * Artifact `io.ktor:ktor-client-cio:$ktor_version`.
 * No additional transitive dependencies.
@@ -321,7 +321,7 @@ CIO just have the common configuration properties.
 
 ### Jetty
 
-Jetty provides an additional `sslContextFactory` available for configuring.
+Jetty provides an additional `sslContextFactory` for configuring.
 
 * Artifact `io.ktor:ktor-client-jetty:$ktor_version`
 * Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`
