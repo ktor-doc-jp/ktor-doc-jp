@@ -185,23 +185,6 @@ class HttpRequestBuilder : HttpMessageBuilder {
 }
 ```
 
-## Supported clients
-
-### Apache
-
-Artifact `io.ktor:ktor-client-apache:$ktor_version`
-Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`
-
-### Jetty
-
-Artifact `io.ktor:ktor-client-jetty:$ktor_version`
-Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`
-
-### CIO (Coroutine I/O)
-
-Artifact `io.ktor:ktor-client-cio:$ktor_version`
-No additional transitive dependencies.
-
 ## Http Client Features
 
 Similar to the server, Ktor supports features on the client. And works the same:
@@ -279,7 +262,8 @@ val client = HttpClient(HttpClientEngine) {
 
 **Note:** To use this feature, you need to include `ktor-client-json` artifact.
 
-## Configuring engines
+<a id="engines"></a>
+## Supported engines and configuration
 
 Ktor HttpClient allow to configure the parameters of the engine by calling `Engine.config { }`.
 
@@ -304,6 +288,10 @@ Apache is the most configurable http client at this point.
 It is the only that has support for following redirects and allows you to configure timeouts,
 proxies among other things supported by `org.apache.httpcomponents:httpasyncclient`.
 
+* Artifact `io.ktor:ktor-client-apache:$ktor_version`.
+* Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
+* Supports HTTP/1.1 and HTTP/2.
+
 ```kotlin
 val client = HttpClient(Apache.config {
     followRedirects = true  // Follow http Location redirects - default false
@@ -327,9 +315,17 @@ val client = HttpClient(Apache.config {
 
 CIO just have the common configuration properties.
 
+* Artifact `io.ktor:ktor-client-cio:$ktor_version`.
+* No additional transitive dependencies.
+* Only supports HTTP/1.x for now.
+
 ### Jetty
 
 Jetty provides an additional `sslContextFactory` available for configuring.
+
+* Artifact `io.ktor:ktor-client-jetty:$ktor_version`
+* Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`
+* Just supports HTTP/2 for now.
 
 ```kotlin
 fun test() {
