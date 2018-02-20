@@ -13,16 +13,26 @@ In addition to the HTTP server, Ktor also supports flexible asynchronous HTTP Cl
 ## Basic Usage
 
 The basic usage is super simple. You just have to instantiate an `HttpClient` instance,
-specifying an engine, for example `Apache` (`ktor-client-apache`), `Jetty` (`ktor-client-jetty`)
-or `CIO` (`ktor-client-cio`).
+specifying an engine, for example [`Apache`](#apache), [`Jetty`](#jetty)
+or [`CIO`](#cio).
 
 Then you can start making requests. It is possible to customize the request a lot and
-to stream the response, but you can also just call a convenience `HttpClient.get` extension method
-that will get an specified type directly (for example String).  
+to stream the request and response payloads , but you can also just call a convenience
+extension method like `HttpClient.get` that will perform a `GET` request and will receive
+an specified type directly (for example `String`).  
+
+Perform a `GET` request fully reading a `String`:
 
 ```kotlin
 val client = HttpClient(Apache)
 val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
+```
+
+Perform a `GET` request fully reading a `ByteArray`:
+
+```kotlin
+val client = HttpClient(Apache)
+val bytes = client.call("http://127.0.0.1:8080/").response.readBytes()
 ```
 
 ## Complete Usage
@@ -44,7 +54,7 @@ println(call.response.readText())
 
 ### The `request` method
 
-In addition to call, there is a .request method for performing a typed request,
+In addition to call, there is a `request` method for performing a typed request,
 [receiving a specific type](#receive) like String, HttpResponse, or an arbitrary class.
 You have to specify the URL, and the method when building the request. 
 
@@ -58,7 +68,7 @@ val call = client.request<String> {
 ### `post` and `get` methods
 
 Similar to request there are several extension methods to perform requests
-with the specific more common HTTP verbs GET and POST.
+with the specific more common HTTP verbs `GET` and `POST`.
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
@@ -66,7 +76,7 @@ val text = client.post<String>("http://127.0.0.1:8080/")
 
 ### Specifying a body for requests
 
-By default, for POST and PUT requests, you can set the `body` property
+By default, for `POST` and `PUT` requests, you can set the `body` property
 of a `HttpRequestBuilder` to any sub-instance of `OutgoingContent`
 as well as String instances.
 
@@ -260,7 +270,11 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-**Note:** To use this feature, you need to include `ktor-client-json` artifact.
+**Note:** To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
+
+## Concurrent requests
+
+Depending on the async launcher and the dispatcher 
 
 <a id="engines"></a>
 ## Supported engines and configuration
@@ -282,6 +296,7 @@ val client = HttpClient(MyHttpEngine.config {
 * While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
 allowing you to set custom keys, trust manager or custom source for secure random data.
 
+<a id="apache"></a>
 ### Apache
 
 Apache is the most configurable HTTP client at this point.
@@ -311,6 +326,7 @@ val client = HttpClient(Apache.config {
 })
 ```
 
+<a id="cio"></a>
 ### CIO
 
 CIO only has the common configuration properties.
@@ -319,6 +335,7 @@ CIO only has the common configuration properties.
 * No additional transitive dependencies.
 * Only supports HTTP/1.x for now.
 
+<a id="jetty"></a>
 ### Jetty
 
 Jetty provides an additional `sslContextFactory` for configuring.

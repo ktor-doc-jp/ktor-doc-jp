@@ -5,4 +5,4 @@ permalink: /clients/index.html
 caption: Client Applications 
 ---
 
-This section is under construction.
+* [Http Client](/clients/http-client.html)
