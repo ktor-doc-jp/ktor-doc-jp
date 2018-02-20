@@ -272,10 +272,6 @@ val client = HttpClient(HttpClientEngine) {
 
 **Note:** To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 
-## Concurrent requests
-
-Depending on the async launcher and the dispatcher 
-
 <a id="engines"></a>
 ## Supported engines and configuration
 
@@ -351,6 +347,45 @@ fun test() {
     })
 }
 ```
+
+## Concurrent requests
+
+Remember that requests are asynchronous, but when performing a requests, the API is suspending
+and your block will be suspended until done. If you want to perform several requests at once
+in the same block, you can use `launch` or `async` functions and later get the results.
+For example:
+
+**Sequential requests:**
+
+```kotlin
+suspend fun mySuspendFunc() {
+    val client = HttpClient(Apache)
+    
+    // Get the content of an URL.
+    val bytes1 = client.call("https://127.0.0.1:8080/a").response.readBytes() // Suspension point.
+    
+    // Once the previous request is done, get the content of an URL.
+    val bytes2 = client.call("https://127.0.0.1:8080/b").response.readBytes() // Suspension point.
+}
+```
+
+**Parallel requests:**
+
+```kotlin
+suspend fun mySuspendFunc() {
+    val client = HttpClient(Apache)
+    
+    // Start two requests asynchronously.
+    val req1 = async { client.call("https://127.0.0.1:8080/a").response.readBytes() }
+    val req2 = async { client.call("https://127.0.0.1:8080/b").response.readBytes() }
+    
+    // Get the request contents without blocking threads, but suspending the function until both
+    // requests are done.
+    val bytes1 = req1.await() // Suspension point.
+    val bytes2 = req2.await() // Suspension point.
+}
+```
+
 
 ## Client Pipeline Phases
 
