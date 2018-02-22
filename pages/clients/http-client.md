@@ -305,7 +305,7 @@ proxies among other things supported by `org.apache.httpcomponents:httpasyncclie
 
 ```kotlin
 val client = HttpClient(Apache.config {
-    followRedirects = true  // Follow http Location redirects - default false
+    followRedirects = true  // Follow http Location redirects - default false. It uses the default number of redirects defined by Apache's HttpClient that is 50.
     
     // For timeouts: 0 means infinite, while negative value mean to use the system's default value
     socketTimeout = 10_000  // Max time between TCP packets - default 10 seconds
@@ -325,11 +325,26 @@ val client = HttpClient(Apache.config {
 <a id="cio"></a>
 ### CIO
 
-CIO only has the common configuration properties.
+CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
 
 * Artifact `io.ktor:ktor-client-cio:$ktor_version`.
 * No additional transitive dependencies.
 * Only supports HTTP/1.x for now.
+
+```kotlin
+fun test() {
+    HttpClient(CIO.config { 
+        maxConnectionsCount = 1000 // Maximum number of socket connections.
+        endpointConfig = EndpointConfig().apply {
+            maxConnectionsPerRoute = 100 // Maximum number of requests for a specific endpoint route.
+            pipelineMaxSize = 20 // Max number of opened endpoints.
+            keepAliveTime = 5000 // Max number of milliseconds to keep each connection alive.
+            connectTimeout = 5000 // Number of milliseconds to wait trying to connect to the server.
+            connectRetryAttempts = 5 // Maximum number of attempts for retrying a connection.
+        }
+    })
+}
+```
 
 <a id="jetty"></a>
 ### Jetty
@@ -351,7 +366,7 @@ fun test() {
 ## Concurrent requests
 
 Remember that requests are asynchronous, but when performing a requests, the API is suspending
-and your block will be suspended until done. If you want to perform several requests at once
+and your function will be suspended until done. If you want to perform several requests at once
 in the same block, you can use `launch` or `async` functions and later get the results.
 For example:
 
@@ -386,8 +401,9 @@ suspend fun mySuspendFunc() {
 }
 ```
 
-
 ## Client Pipeline Phases
+
+### HttpRequestPipeline
 
 ```kotlin
 /**
@@ -403,11 +419,21 @@ companion object Phases {
 }
 ```
 
+### HttpResponsePipeline
+
+```kotlin
+companion object Phases {
+    val Receive = PipelinePhase("Receive") // The earliest phase that happens before any other
+    val Parse = PipelinePhase("Parse") // Decode response body
+    val Transform = PipelinePhase("Transform") // Transform response body to expected format
+    val State = PipelinePhase("State") // Use this phase to store request shared state
+    val After = PipelinePhase("After") // Latest response pipeline phase
+}
+```
+
 ## Examples
 
 ### Interchanging JSON: Ktor server / Ktor client
-
-
 
 ```kotlin
 fun main(args: Array<String>) {
