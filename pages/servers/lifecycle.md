@@ -5,8 +5,6 @@ permalink: /servers/lifecycle.html
 caption: What Happens in a Server?  
 ---
 
-{% include estimated-read-time.html %}
-
 Ktor is designed to be flexible and extensible. It is composed
 of small simple pieces, but if you don't know what's happening then it is like a black box.
 

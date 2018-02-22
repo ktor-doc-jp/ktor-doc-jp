@@ -1,4 +1,5 @@
 {% assign page_words = page.content | number_of_words %}
+{% assign page_ert = page_words | divided_by: 200.0 | ceil %}
 <p>
-    <em style="color:grey; font-size: 0.8em;">Estimated reading time: {{ page_words | divided_by: 220.0 | round }} minutes</em>
+    <em style="color:grey; font-size: 0.8em;">Estimated reading time: {{ page_ert }} {% if page_ert == 1 %}minute{% else %}minutes{% endif %}</em>
 </p>

@@ -11,6 +11,9 @@ layout: default
         <div id="doc-header" class="doc-header text-center">
             <h1 class="doc-title">{{page.caption}}</h1>
             <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
+            {% if page.status != 'todo' %}
+            <p>{% include estimated-read-time.html %}</p>
+            {% endif %}
         </div>
         {% endif %}
         <div class="doc-body">
