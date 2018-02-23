@@ -1,0 +1,26 @@
+.styled-table {
+    width: 100%;
+}
+
+.styled-table td, .styled-table th {
+    padding: 0.4em 0.4em;
+    border: 1px solid #8A40A7;
+}
+
+.styled-table td code {
+    white-space: nowrap;
+}
+
+.styled-table th {
+    background: #8A40A7;
+    color: white;
+}
+
+code.highlighter-rouge {
+    background: #f9f2f4 !important;
+    color: #8A40A7 !important;
+    font-size: 90% !important;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
+    padding: 2px 4px !important;
+    border-radius: 4px !important;
+}

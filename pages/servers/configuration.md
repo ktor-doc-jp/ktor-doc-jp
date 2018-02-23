@@ -5,20 +5,18 @@ section: Servers
 permalink: /servers/configuration.html
 ---
 
-Ktor uses Kotlin lambdas to configure the application and when using embeddedServer.
+Ktor uses lambdas to configure the application and when using embeddedServer.
 
 It uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md) format for the configuration file.
-This format is similar to JSON, but it is optimized to be read and written by humans. It supports things like environment variable substitution.
+This format is similar to JSON, but it is optimized to be read and written by humans. And it supports additional features like environment variable substitution.
 
 **Table of contents:**
 
-* [Configuring embeddedServer](#embedded-server)
-* [Accessing the configuration](#accessing-config)
-* [Command Line](#command-line)
-* [Custom configuration systems](#custom)
+* TOC
+{:toc}
 
-<a id="embedded-server"></a>
 ## Configuring embeddedServer
+{: #embedded-server}
 
 `embeddedServer` includes an optional parameter `configure` that allows you to set the associated configuration
 to the ApplicationEngineFactory specified in the first parameter. All the configurations will have some
@@ -69,8 +67,8 @@ class Configuration : BaseApplicationEngine.Configuration() {
 }
 ```
 
-<a id="accessing-config"></a>
 ## Accessing the configuration
+{: #accessing-config}
 
 If you are using a `DevelopmentEngine` (instead of an `embeddedServer`), the HOCON file is loaded,
 and you are able to access to its configuration properties.
@@ -122,8 +120,8 @@ You can also access the configuration properties by manually loading the default
 val config = HoconApplicationConfig(ConfigFactory.load())
 ``` 
 
-<a id="command-line"></a>
 ## Command Line
+{: #command-line}
 
 When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/src/io/ktor/server/engine/CommandLine.kt)
 (any `DevelopmentEngine` main) there are several switches and configuration parameters you can use to configure
@@ -145,20 +143,18 @@ ktor {
 
 ### Available configuration parameters:
 
-| Switch          | Description |
-|-----------------|:------------|
-| `-jar=`         | Path to JAR file |
-| `-config=`      | Path to config file (instead of `application.conf` from resources) |
-
-| Switch          | Parameter path                         | Default             | Description |
-|-----------------|:---------------------------------------|:--------------------|:------------|
-| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`           | Binded host |
-| `-port=`        | `ktor.deployment.port`                 | `80`                | Binded port |
-| `-watch=`       | `ktor.deployment.watch`                | `[]`                | Package paths to watch for reloading |
-|                 | `ktor.application.id`                  | `Application`       | Application Identifier used for logging |
-|                 | `ktor.deployment.callGroupSize`        | parallelism         | Event group size running application code |
-|                 | `ktor.deployment.connectionGroupSize`  | parallelism / 2 + 1 | Event group size accepting connections |
-|                 | `ktor.deployment.workerGroupSize`      | parallelism / 2 + 1 | Event group size for processing connections, parsing messages and doing engine's internal work |
+| Switch          | Parameter path                         | Default               | Description |
+|-----------------|:---------------------------------------|:----------------------|:------------|
+| `-jar=`         |                                        |                       | Path to JAR file |
+| `-config=`      |                                        |                       | Path to config file (instead of `application.conf` from resources) |
+| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`             | Binded host |
+| `-port=`        | `ktor.deployment.port`                 | `80`                  | Binded port |
+| `-watch=`       | `ktor.deployment.watch`                | `[]`                  | Package paths to watch for reloading |
+|                 | `ktor.application.id`                  | `Application`         | Application Identifier used for logging |
+|                 | `ktor.deployment.callGroupSize`        | `parallelism`         | Event group size running application code |
+|                 | `ktor.deployment.connectionGroupSize`  | `parallelism / 2 + 1` | Event group size accepting connections |
+|                 | `ktor.deployment.workerGroupSize`      | `parallelism / 2 + 1` | Event group size for processing connections, parsing messages and doing engine's internal work |
+{: .styled-table}
 
 Required when SSL port is defined:
 
@@ -169,12 +165,13 @@ Required when SSL port is defined:
 |                 | `ktor.security.ssl.keyAlias`           | `mykey`          | Alias for the SSL key store |
 |                 | `ktor.security.ssl.keyStorePassword`   | `null`           | Password for the SSL key store |
 |                 | `ktor.security.ssl.privateKeyPassword` | `null`           | Password for the SSL private key |
+{: .styled-table}
 
 You can use `-P:` to specify parameters that don't have a specific switch. For example:
-`-P:ktor.deployment.callGroupSize=7`
+`-P:ktor.deployment.callGroupSize=7`.
 
-<a id="custom"></a>
 ## Custom configuration systems
+{: #custom}
 
 Ktor provides an interface that you can implement the configuration in, available at `application.environment.config`.
 You can construct and set the configuration properties inside an `applicationEngineEnvironment`.
