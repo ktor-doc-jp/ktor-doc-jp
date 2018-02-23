@@ -14,6 +14,11 @@ in some cases along [sessions feature](/features/sessions.html) to keep login in
 
 It defines two stages as part of its Pipeline: `RequestAuthentication` and `CheckAuthentication`.
 
+**Table of contents:**
+
+* TOC
+{:toc}
+
 ## Basic Usage
 
 Configuring server or route (any ApplicationCallPipeline), with the `authentication` feature:
@@ -135,7 +140,7 @@ authentication {
 
 You can see [advanced examples in tests](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt).
 
-Note: Bear in mind that current LDAP this implementation is synchronous.
+Note: Bear in mind that current LDAP implementation is synchronous.
 
 ### HTTP Digest Authentication
 

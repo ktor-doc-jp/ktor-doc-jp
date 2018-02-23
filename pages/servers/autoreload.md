@@ -14,14 +14,11 @@ it in production or when doing benchmarks.
 
 **Table of contents:**
 
-* [Basics](#basics)
-* [Using embeddedServer](#embedded-server)
-* [Using configuration file](#configuration-file)
-* [Example](#example)
-* [Recompiling automatically on source changes](#recompiling)
+* TOC
+{:toc}
 
-<a id="basics"></a>
 ## Basics
+{: #basics}
 
 Both when using the embeddedServer or a configuration file, you will have to provide a list of watch substrings
 that should match the classloaders you want to watch.
@@ -31,8 +28,8 @@ So for example, a typical example of class loader when using gradle could be:
 
 In this case, you can use the `solutions/exercise4` string when watching, so it will match that classloader.
 
-<a id="embedded-server"></a>
 ## Using embeddedServer
+{: #embedded-server}
 
 When using a custom main using `embeddedServer`, you can use the default parameter `watchPaths` to provide
 a list of subpaths that will be watched and reloaded.
@@ -94,8 +91,8 @@ fun Application.mymodule() {
 }
 ```
 
-<a id="configuration-file"></a>
 ## Using configuration file
+{: #configuration-file}
 
 When using a configuration file, for example with a [`DevelopmentEngine`](/servers/engine.html) to either run
 from the command line or hosted within another server: 
@@ -124,8 +121,8 @@ don't expect it to be reloaded automatically. It cannot work because core classe
 The exclusion can potentially be smaller, but it is hard to analyze all the transitive closure of types loaded during
 startup.
 
-<a id="example"></a>
 ## Example
+{: #example}
 
 Consider the following example:
 
