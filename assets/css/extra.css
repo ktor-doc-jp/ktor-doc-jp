@@ -30,3 +30,9 @@ code.highlighter-rouge {
     padding: 0.8em 1.6em;
     border-radius: 1em;
 }
+
+.compact {
+    max-height: 120px;
+    overflow: auto;
+    margin: 0.5em 0 1em 0;
+}
