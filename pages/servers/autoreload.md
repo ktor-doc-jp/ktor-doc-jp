@@ -11,6 +11,7 @@ reloads just an Application.
 
 **Performance Note:** There is a performance penalty when using auto-reloading. So keep in mind that you should not use
 it in production or when doing benchmarks.
+{: .note}
 
 **Table of contents:**
 
