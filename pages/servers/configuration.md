@@ -22,6 +22,9 @@ and to configure the server engine when using `embeddedServer`.
 ## The HOCON file
 {: #hocon-file}
 
+This is the preferred way for configuring Ktor applications, since it allows you
+to easily change the configuration without recompiling your application.
+
 When Ktor is started using a `DevelopmentEngine`, or by calling the `commandLineEnvironment`,
 it tries to load a HOCON file called `application.conf` from the application resources.
 You can change the location of the file using [command line arguments](#command-line).
@@ -99,6 +102,9 @@ youkube {
 
 There is a [list of available core configurations](#available-config) in this document.
 
+**TIP:** You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
+{: .note}
+
 ## Command Line
 {: #command-line}
 
@@ -107,9 +113,9 @@ When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master
 your application module.
 
 If you start the application from the command line with `-config anotherfile.conf`, it will
-load the config file from the specific local file instead.
+load the config file from the specific local file instead of from the resources.
 
-Using switches, you can, for example, override the binded port defined by:
+Using switches, you can, for example, override the binded port defined by executing:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
@@ -117,6 +123,9 @@ There is a [list of available command line switches](#available-config) in this 
 
 ## Configuring the embeddedServer
 {: #embedded-server}
+
+embeddedServer is a simple way to start a Ktor application. You provide your own main function,
+and being more explicit, it is easier to understand what happens exactly.
 
 `embeddedServer` includes an optional parameter `configure` that allows you to set the configuration for the
 engine specified in the first parameter.
@@ -207,14 +216,21 @@ embeddedServer(Tomcat, configure = {
 }.start(true)
 ```
 
+Those are the official engines developed for Ktor, but it is also possible to [create
+your own engines](/advanced/engines.html) and to provide custom configurations for them. 
+{: .note}
+
 ## Available configuration parameters
 {: #available-config}
 
-**Switch** refers to arguments that you pass to the application, so you can, for example, change the binded port by:
+There is a list of properties that Ktor understand out of the box and that you can
+pass from the command line or the HOCON file. 
+
+**Switch** refers to command line arguments that you pass to the application, so you can, for example, change the binded port by:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
-**Parameter paths** are paths inside the HOCON `application.conf` file:
+**Parameter paths** are paths inside the `application.conf` file:
 
 ```
 ktor.deployment.port = 8080
