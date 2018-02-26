@@ -16,8 +16,6 @@ about its generic infrastructure.
 * TOC
 {:toc}
 
-# Server 
-
 ## Entry points
 
 You can run a Ktor application in several ways:
