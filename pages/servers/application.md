@@ -6,7 +6,7 @@ caption: What is an Application?
 ---
 
 A Ktor Server Application is a custom program listening to one or more ports using a [server engine](#engines),
-composed by [modules](#modules) with the application login, that install [features](#features), like routing,
+composed by [modules](#modules) with the application logic, that install [features](#features), like routing,
 sessions, compression, etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
 
 **Table of contents:**
