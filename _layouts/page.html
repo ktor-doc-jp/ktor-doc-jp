@@ -7,17 +7,17 @@ layout: default
 
 <div class="doc-wrapper">
     <div class="container">
-        {% if page.caption != null %}
-        <div id="doc-header" class="doc-header text-center">
-            <h1 class="doc-title">{{page.caption}}</h1>
-            <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
-            {% if page.status != 'todo' %}
-            <p>{% include estimated-read-time.html %}</p>
-            {% endif %}
-        </div>
-        {% endif %}
         <div class="doc-body">
             <div class="doc-content">
+                {% if page.caption != null %}
+                <div id="doc-header" class="doc-header">
+                    <h1 class="doc-title">{{page.caption}}</h1>
+                    <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
+                    {% if page.status != 'todo' %}
+                    <p>{% include estimated-read-time.html %}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
                 {% if page.status == 'todo' %}
                 Coming soon...
                 {% else %}
@@ -26,7 +26,7 @@ layout: default
             </div>
             <div class="doc-sidebar">
                 <nav id="doc-nav">
-                    <ul id="doc-menu" class="nav doc-menu hidden-xs" data-spy="affix">
+                    <ul id="doc-menu" class="nav doc-menu hidden-xs" data-spy="affix" style="margin-top:2em;">
                         {% include category-nav.html %}
                     </ul>
                 </nav>
