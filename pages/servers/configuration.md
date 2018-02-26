@@ -328,11 +328,6 @@ You can also access the configuration properties by manually loading the default
 val config = HoconApplicationConfig(ConfigFactory.load())
 ``` 
 
-**Note:** Bear in mind that when using `application.environment.config` you are accessing the HOCON document,
-so switches from the command line are not included there.
-{: .note} 
-
-
 ## Custom configuration systems
 {: #custom}
 
