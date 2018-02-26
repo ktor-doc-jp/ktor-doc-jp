@@ -33,3 +33,42 @@ can potentially execute asynchronously.
  
 See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s 
 
+## Modules
+{: #modules}
+
+Ktor defines the concept of *module*. A module is just a function receiving the `Application`
+class that is in charge of configuring the server, registering routes, handling requests...
+
+You have to specify the modules to load when the server starts in [the `application.conf` file](/servers/configuration.html#hocon-file).
+
+A simple module would look like this:
+
+**Main.kt:**
+{: .filename}
+
+```kotlin
+package com.example.myapp
+
+fun Application.mymodule() {
+    routing {
+        get("/") {
+            call.respondText("Hello World!")
+        }
+    }
+}
+```
+
+Modules are referenced by its fully qualified name: the fully qualified name of the class, and the method name
+separated by a dot.
+
+So for the example, the module's fully qualified name would be:
+
+```
+com.example.myapp.MainKt.mymodule
+```
+
+Note that `mymodule` is an extension method of the class `Application` (where `Application` is the *receiver*).
+Since it is defined as a top-level function, Kotlin creates a JVM class called `FileNameKt`,
+and adds the extension method as a static method with the received as its first parameter.
+So the class name in this case is `MainKt` and the method `static public void mymodule(Application app)`.
+{: .note}

@@ -7,6 +7,7 @@ permalink: /servers/configuration.html
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
 format as external configuration file.
+In this file you can configure things like the port to listen to, or the [modules](/servers/application.html#modules) to be load.
 This format is similar to JSON, but it is optimized to be read and written by humans,
 and supports additional features like environment variable substitution.
 
@@ -21,16 +22,15 @@ and to configure the server engine when using `embeddedServer`.
 ## The HOCON file
 {: #hocon-file}
 
-Ktor requires you to specify which module or modules does it have to load
-when starting the server.
+When Ktor is started using a `DevelopmentEngine`, or by calling the `commandLineEnvironment`,
+it tries to load a HOCON file called `application.conf` from the application resources.
+You can change the location of the file using [command line arguments](#command-line).
 
-When using HOCON, you define the initial modules with `ktor.application.modules`.
+Ktor only requires you to specify which [module or modules](/servers/application.html#modules)
+do you want it to load when starting the server using `ktor.application.modules` property.
+All the other properties are optional.
 
-Modules are just functions that receive an `Application` and configure the server:
-registering routes, handling requests...
-{: .note}
-
-A typical, simple HOCON file for Ktor would look like this:
+A typical, simple HOCON file for Ktor (`application.conf`) would look like this:
 
 ```kotlin
 ktor {
@@ -106,7 +106,10 @@ When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master
 (any `DevelopmentEngine` main) there are several switches and configuration parameters you can use to configure
 your application module.
 
-Using switches, you can, for example, change the binded port by:
+If you start the application from the command line with `-config anotherfile.conf`, it will
+load the config file from the specific local file instead.
+
+Using switches, you can, for example, override the binded port defined by:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
