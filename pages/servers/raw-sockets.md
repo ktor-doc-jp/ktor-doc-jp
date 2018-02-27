@@ -5,8 +5,8 @@ permalink: /servers/raw-sockets.html
 caption: Raw Sockets  
 ---
 
-In addition to HTTP handling for the server and the client, Ktor supports raw sockets
-with a suspending API.
+In addition to HTTP handling for the [server](/servers/application.html) and the [client](/clients/http-client.html), Ktor supports client and server, TCP and UDP raw sockets.
+It exposes a suspending API that uses NIO under the hoods.
 
 **Table of contents:**
 
@@ -16,17 +16,31 @@ with a suspending API.
 ## Sockets
 
 This functionality is exposed through the `io.ktor:ktor-network:$ktor_version` artifact.
+{: .note.artifact }
 
-In order to create sockets, either server or client sockets, you have to instantiate an `ActorSelectorManager`.
-Then use: `aSocket(selector).tcp()` for tcp, and `aSocket(selector).udp()` for udp sockets. 
+In order to create sockets, either server or client sockets, you have to use the `aSocket` builder,
+with an optional `ActorSelectorManager`: `aSocket(selector)` or just `aSocket()`.
+
+Then use:
+
+* `val socketBuilder = aSocket().tcp()` for a builder using TCP sockets
+* `val socketBuilder = aSocket().udp()` for a builder using UDP sockets
+
+This returns a `SocketBuilder` that can be used to:
  
+* `val serverSocket = aSocket().tcp().bind(address)` to listen to an address (for servers)
+* `val clientSocket = aSocket().tcp().connect(address)` to connect to an address (for clients)
+ 
+If you need to control the dispatcher used by the sockets, you can instantiate a selector,
+that uses, for example, a cached thread pool:
 ```kotlin
 val exec = Executors.newCachedThreadPool()
 val selector = ActorSelectorManager(exec.asCoroutineDispatcher())
 val tcpSocketBuilder = aSocket(selector).tcp()
 ```
 
-In order to read from, or to write to the socket, you have to open read/write channels:
+Once you have a `socket` open by either [binding](#server) or [connecting](#client) the builder,
+you can read from or to write to the socket, by opening read/write channels:
 
 ```kotlin
 val input : ByteReadChannel  = socket.openReadChannel()
@@ -35,7 +49,8 @@ val output: ByteWriteChannel = socket.openWriteChannel(autoFlush = true)
 
 You can read the KDoc for [ByteReadChannel](https://github.com/Kotlin/kotlinx.coroutines/blob/master/core/kotlinx-coroutines-io/src/main/kotlin/kotlinx/coroutines/experimental/io/ByteReadChannel.kt)
 and [ByteWriteChannel](https://github.com/Kotlin/kotlinx.coroutines/blob/master/core/kotlinx-coroutines-io/src/main/kotlin/kotlinx/coroutines/experimental/io/ByteWriteChannel.kt)
-for further information.
+for further information on available methods.
+{: .note}
 
 ## Server
 
@@ -46,34 +61,38 @@ a `ServerSocket`:
 val server = aSocket(selector).tcp().bind(InetSocketAddress("127.0.0.1", 2323))
 ```
 
-The server socket have an `accept` method to get the connected connections:
+The server socket has an `accept` method that returns, one at a time, 
+a connected socket for each incoming connection pending in the *backlog*:
 
 ```kotlin
 val socket = server.accept()
 ```
 
-**Note:** If you want to support multiple clients at once, remember to call `launch { }` to prevent
+If you want to support multiple clients at once, remember to call `launch { }` to prevent
 suspending the function that is accepting the sockets.
 {: .note}
 
-**Simple echo server:**
+*Simple Echo Server*:
 
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val exec = Executors.newCachedThreadPool()
-        val selector = ActorSelectorManager(exec.asCoroutineDispatcher())
-        val server = aSocket(selector).tcp().bind(InetSocketAddress("127.0.0.1", 2323))
+        val server = aSocket().tcp().bind(InetSocketAddress("127.0.0.1", 2323))
         println("Started echo telnet server at ${server.localAddress}")
+        
         while (true) {
             val socket = server.accept()
+            
             launch {
                 println("Socket accepted: ${socket.remoteAddress}")
+                
                 val input = socket.openReadChannel()
                 val output = socket.openWriteChannel(autoFlush = true)
+                
                 try {
                     while (true) {
                         val line = input.readASCIILine()
+                        
                         println("${socket.remoteAddress}: $line")
                         output.writeBytes("$line\r\n")
                     }
@@ -86,14 +105,29 @@ fun main(args: Array<String>) {
     }
 }
 ```
+{: .compact}
 
-Then you can connect to it using telnet and start typing.
+Then you can connect to it using *telnet* and start typing:
 
 ```
 telnet 127.0.0.1 2323
 ```
 
-Each line –every time you press the return key–, it should reply with your line:
+For each line that you type (you have to press the return key), the server will reply
+with the same line:
+
+
+```
+Trying 127.0.0.1...
+Connected to 127.0.0.1
+Escape character is '^]'.
+
+Hello
+Hello
+World
+World
+|
+``` 
 
 ## Client
 
@@ -101,20 +135,19 @@ When creating a socket client, you have to `connect` to a specific `SocketAddres
 a `Socket`:
 
 ```kotlin
-val socket = aSocket(selector).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
+val socket = aSocket().tcp().connect(InetSocketAddress("127.0.0.1", 2323))
 ```
 
-**Simple client connecting to echo server:**
+*Simple Client Connecting to an Echo Server:*
 
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val exec = Executors.newCachedThreadPool()
-        val selector = ActorSelectorManager(exec.asCoroutineDispatcher())
-        val socket = aSocket(selector).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
+        val socket = aSocket().tcp().connect(InetSocketAddress("127.0.0.1", 2323))
         val input = socket.openReadChannel()
         val output = socket.openWriteChannel(autoFlush = true)
-        socket.writeBytes("hello\r\n")
+
+        output.writeBytes("hello\r\n")
         val response = input.readASCIILine()
         println("Server said: '$response'")
     }
