@@ -17,7 +17,7 @@
 }
 
 code.highlighter-rouge {
-    background: #f4f2f9 !important;
+    background: transparent !important;
     color: #4A40A7 !important;
     font-size: 90% !important;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
@@ -26,13 +26,50 @@ code.highlighter-rouge {
 }
 
 .note {
-    background: #f9f2f4;
-    padding: 0.8em 1.6em;
-    border-radius: 1em;
+    background: #ecedfb;
+    padding: 1.0em 1.8em;
+    border-left: 4px solid #8944A5;
+}
+
+.note:before {
+    content: "NOTE";
+    color: #c1a9d0;
+    display: block;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6em;
+    font-size: 0.9em;
+}
+
+.note.tip:before {
+    content: "TIP";
 }
 
 .compact {
+    position: relative;
     max-height: 120px;
-    overflow: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: 0.5em 0 1em 0;
+    cursor: pointer;
+    transition: max-height 0.5s;
+}
+
+.compact:after {
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:40px;
+    width:100%;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    visibility: visible;
+}
+
+.compact.expand {
+    max-height: 2000px !important;
+    transition: max-height 0.5s;
+}
+
+.compact.expand:after {
+    visibility: hidden;
 }

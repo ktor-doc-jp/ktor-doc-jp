@@ -102,8 +102,8 @@ youkube {
 
 There is a [list of available core configurations](#available-config) in this document.
 
-**TIP:** You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
-{: .note}
+You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
+{: .note.tip}
 
 ## Command Line
 {: #command-line}
