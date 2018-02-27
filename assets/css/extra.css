@@ -22,13 +22,15 @@ code.highlighter-rouge {
     font-size: 90% !important;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
     padding: 2px 4px !important;
-    border-radius: 4px !important;
+    /*border-radius: 4px !important;*/
+    border-radius: 0 !important;
 }
 
 .note {
     background: #ecedfb;
     padding: 1.0em 1.8em;
     border-left: 4px solid #8944A5;
+    color: #082d46;
 }
 
 .note:before {
@@ -40,9 +42,9 @@ code.highlighter-rouge {
     font-size: 0.9em;
 }
 
-.note.tip:before {
-    content: "TIP";
-}
+.note.tip:before { content: "TIP"; }
+.note.artifact:before { content: "ARTIFACT"; }
+.note.api:before { content: "API"; }
 
 .compact {
     position: relative;
@@ -73,3 +75,16 @@ code.highlighter-rouge {
 .compact.expand:after {
     visibility: hidden;
 }
+
+pre.highlight {
+    border-radius: 0;
+    border: none;
+    border-left: 4px solid #eee;
+}
+
+/* COLORS: */
+
+.body-orange .note {
+    border-color: orange;
+}
+
