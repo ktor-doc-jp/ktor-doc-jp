@@ -5,37 +5,54 @@ permalink: /clients/http-client.html
 caption: Http Client 
 ---
 
+{::options toc_levels="1..2" /}
+
+In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
+This client support several [configurable engines](#engines), and has its own set of [features](#features).
+
+The main functionality is exposed through the `io.ktor:ktor-client-core:$ktor_version` artifact.
+And each engine, is provided in [separate artifacts](#engines).
+{: .note.artifact }
+
+**Table of contents:**
+
 * TOC
 {:toc}
 
-In addition to the HTTP server, Ktor also supports flexible asynchronous HTTP Clients.
+## Simple requests
 
-## Basic Usage
-
-The basic usage is super simple. You just have to instantiate an `HttpClient` instance,
+The basic usage is *super* simple: you just have to instantiate an `HttpClient` instance,
 specifying an engine, for example [`Apache`](#apache), [`Jetty`](#jetty)
-or [`CIO`](#cio).
+or [`CIO`](#cio), and start making requests using one of the many convenient methods available.
 
-Then you can start making requests. It is possible to customize the request a lot and
-to stream the request and response payloads , but you can also just call a convenience
-extension method like `HttpClient.get` that will perform a `GET` request and will receive
-an specified type directly (for example `String`).  
-
-Perform a `GET` request fully reading a `String`:
+First you need to instantiate the client:   
 
 ```kotlin
 val client = HttpClient(Apache)
+```
+
+Then, to perform a `GET` request fully reading a `String`:
+
+```kotlin
 val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-Perform a `GET` request fully reading a `ByteArray`:
+And in the case you are interested in the raw bits, you can read a `ByteArray`:
 
 ```kotlin
-val client = HttpClient(Apache)
-val bytes = client.call("http://127.0.0.1:8080/").response.readBytes()
+val bytes: ByteArray = client.call("http://127.0.0.1:8080/").response.readBytes()
 ```
 
-## Complete Usage
+It is possible to customize the request a lot and
+to stream the request and response payloads , but you can also just call a convenience
+extension method like `HttpClient.get` that will perform a `GET` request and will receive
+an specified type directly (for example `String`).
+{: .note}
+
+## Advanced requests
+
+We cannot live only from *get* requests, and Ktor allows you to build complex
+requests with any of the HTTP verbs, and process responses in many flexible ways.
 
 ### The `call` method
 
@@ -65,7 +82,7 @@ val call = client.request<String> {
 }
 ```
 
-### `post` and `get` methods
+### The `post` and `get` methods
 
 Similar to request there are several extension methods to perform requests
 with the specific more common HTTP verbs `GET` and `POST`.
@@ -74,30 +91,32 @@ with the specific more common HTTP verbs `GET` and `POST`.
 val text = client.post<String>("http://127.0.0.1:8080/")
 ```
 
+The `HttpClient` class only offers the basic functionality, and all the methods for building requests are exposed as extensions.\\
+You can check the standard available [HttpClient build extension methods](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/builders.kt).
+{: .note.api}
+
 ### Specifying a body for requests
 
-By default, for `POST` and `PUT` requests, you can set the `body` property
-of a `HttpRequestBuilder` to any sub-instance of `OutgoingContent`
-as well as String instances.
+By default, for `POST` and `PUT` requests, you can set the `body` property:
 
 ```kotlin
 client.post<Unit> {
     url(URL("http://127.0.0.1:8080/"))
-    body = "HELLO WORLD!"
-    //body = TextContent("HELLO WORLD!", ContentType.Text.Plain)
-    //body = ByteArrayContent("HELLO WORLD!".toByteArray(Charsets.UTF_8))
-    //body = LocalFileContent(File("build.gradle"))
-    //body = JarFileContent(File("myjar.jar"), "test.txt", ContentType.fromFileExtension("txt").first())
-    //body = URIFileContent(URL("https://en.wikipedia.org/wiki/Main_Page"))
-
+    body = // ...
 }
 ```
 
-If you install `JsonFeature`, and set the content type to `application/json`
-you can use arbitrary instances, and they will be serialized as JSON.
+The `body` property of the `HttpRequestBuilder`, can be a subtype of `OutgoingContent` as well as a `String` instance:
 
-**Note:** Remember that your classes must be top level to be recognized by Gson.
-If you put a class you want to be serialized inside a function, it will send a null.
+* `body = "HELLO WORLD!"`
+* `body = TextContent("HELLO WORLD!", ContentType.Text.Plain)`
+* `body = ByteArrayContent("HELLO WORLD!".toByteArray(Charsets.UTF_8))`
+* `body = LocalFileContent(File("build.gradle"))`
+* `body = JarFileContent(File("myjar.jar"), "test.txt", ContentType.fromFileExtension("txt").first())`
+* `body = URIFileContent(URL("https://en.wikipedia.org/wiki/Main_Page"))`
+
+If you install `JsonFeature`, and set the content type to `application/json`
+you can use arbitrary instances, and they will be serialized as JSON:
 
 ```kotlin
 data class HelloWorld(val hello: String) // Must be top level
@@ -118,9 +137,14 @@ client.post<Unit> {
     body = HelloWorld(hello = "world")
 }
 ```
+{: .compact}
 
-<a id="receive"></a>
+Remember that your classes must be top level to be recognized by `Gson`. \\
+If you put a class that you are going to serialize inside a function, the feature will send a *null*.
+{: .note}
+
 ### Receiving the body of a response
+{: #receive}
 
 By default you can use `HttpResponse` or `String` as possible types for typed
 HttpClient requests. So for example:
@@ -130,26 +154,24 @@ val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
 val response = client.get<HttpResponse>("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-If JsonFeature is configured and the server returns the `Content-Type: application/json`,
+If *JsonFeature* is configured, and the server returns the header `Content-Type: application/json`,
 you can also specify a class for deserializing it.
 
 ```kotlin
 val helloWorld = client.get<HelloWorld>("http://127.0.0.1:8080/")
 ```
 
-<a id="HttpResponse"></a>
 #### The `HttpResponse` class
+{: #HttpResponse }
 
 From an `HttpResponse`, you can get the response content easily:
  
-```kotlin
-val bytes: ByteArray = response.readBytes()
-val text: String = response.readText()
-val readChannel = response.receive<ByteReadChannel>()
-val multiPart = response.receive<MultiPartData>()
-val inputStream = response.receive<InputStream>() // This is synchronous!
-response.discardRemaining()
-```
+* `val bytes: ByteArray = response.readBytes()`
+* `val text: String = response.readText()`
+* `val readChannel = response.receive<ByteReadChannel>()`
+* `val multiPart = response.receive<MultiPartData>()`
+* `val inputStream = response.receive<InputStream>()` *Remember that InputStream API is synchronous!*
+* `response.discardRemaining()`
 
 You can also get additional response information (status, headers, internal state...):
 
@@ -174,7 +196,8 @@ val expires: Date? = response.expires()
 val vary: List<String>? = response.vary()
 val contentLength: Int? = response.contentLength()
 val setCookie: List<Cookie> = response.setCookie()
-````
+```
+{: .compact }
 
 ## Configuring the request with `HttpRequestBuilder`
 
@@ -196,6 +219,7 @@ class HttpRequestBuilder : HttpMessageBuilder {
 ```
 
 ## Http Client Features
+{: #features}
 
 Similar to the server, Ktor supports features on the client. It also works the same:
 there is a pipeline for client HTTP requests and features can intercept them.
@@ -213,7 +237,8 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-**Note:** To use this feature, you need to include the `ktor-client-auth-basic` artifact.
+To use this feature, you need to include the `ktor-client-auth-basic` artifact.
+{: .note.artifact }
 
 ### HttpCookies
 
@@ -270,14 +295,13 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-**Note:** To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
+To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
+{: .note.artifact }
 
-<a id="engines"></a>
 ## Supported engines and configuration
+{: #engines}
 
 Ktor HttpClient lets you to configure the parameters of the engine by calling `Engine.config { }`.
-
-### Common
 
 Every engine config has two common properties that can be set:
 
@@ -292,8 +316,8 @@ val client = HttpClient(MyHttpEngine.config {
 * While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
 allowing you to set custom keys, trust manager or custom source for secure random data.
 
-<a id="apache"></a>
 ### Apache
+{: #apache}
 
 Apache is the most configurable HTTP client at this point.
 It is the only one that supports following redirects and allows you to configure timeouts,
@@ -321,6 +345,7 @@ val client = HttpClient(Apache.config {
     }
 })
 ```
+{: .compact}
 
 <a id="cio"></a>
 ### CIO
@@ -345,6 +370,7 @@ fun test() {
     })
 }
 ```
+{: .compact}
 
 <a id="jetty"></a>
 ### Jetty
@@ -370,7 +396,7 @@ and your function will be suspended until done. If you want to perform several r
 in the same block, you can use `launch` or `async` functions and later get the results.
 For example:
 
-**Sequential requests:**
+*Sequential requests:*
 
 ```kotlin
 suspend fun mySuspendFunc() {
@@ -384,7 +410,7 @@ suspend fun mySuspendFunc() {
 }
 ```
 
-**Parallel requests:**
+*Parallel requests:*
 
 ```kotlin
 suspend fun mySuspendFunc() {
@@ -433,7 +459,7 @@ companion object Phases {
 
 ## Examples
 
-### Interchanging JSON: Ktor server / Ktor client
+*Interchanging JSON: Ktor server / Ktor client*:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -486,3 +512,4 @@ fun Application.mymodule() {
     }
 }
 ```
+{: .compact}
