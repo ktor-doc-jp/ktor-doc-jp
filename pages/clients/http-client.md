@@ -49,7 +49,7 @@ extension method like `HttpClient.get` that will perform a `GET` request and wil
 an specified type directly (for example `String`).
 {: .note}
 
-## Advanced requests
+## Custom requests
 
 We cannot live only from *get* requests, and Ktor allows you to build complex
 requests with any of the HTTP verbs, and process responses in many flexible ways.
@@ -91,11 +91,27 @@ with the specific more common HTTP verbs `GET` and `POST`.
 val text = client.post<String>("http://127.0.0.1:8080/")
 ```
 
+When calling request methods, you can provide a lambda to build the request
+parameters like the URL, the HTTP method (verb), the body, or the headers.
+The HttpRequestBuilder looks like this:
+
+```kotlin
+class HttpRequestBuilder : HttpMessageBuilder {
+    val url: URLBuilder
+    var method: HttpMethod
+    val headers: HeadersBuilder
+    var body: Any = EmptyContent
+    val executionContext: CompletableDeferred<Unit>
+    fun headers(block: HeadersBuilder.() -> Unit)
+    fun url(block: URLBuilder.(URLBuilder) -> Unit)
+}
+```
+
 The `HttpClient` class only offers the basic functionality, and all the methods for building requests are exposed as extensions.\\
 You can check the standard available [HttpClient build extension methods](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/builders.kt).
 {: .note.api}
 
-### Specifying a body for requests
+## Specifying a body for requests
 
 By default, for `POST` and `PUT` requests, you can set the `body` property:
 
@@ -106,7 +122,7 @@ client.post<Unit> {
 }
 ```
 
-The `body` property of the `HttpRequestBuilder`, can be a subtype of `OutgoingContent` as well as a `String` instance:
+The `HttpRequestBuilder.body` property, can be a subtype of `OutgoingContent` as well as a `String` instance:
 
 * `body = "HELLO WORLD!"`
 * `body = TextContent("HELLO WORLD!", ContentType.Text.Plain)`
@@ -139,11 +155,11 @@ client.post<Unit> {
 ```
 {: .compact}
 
-Remember that your classes must be top level to be recognized by `Gson`. \\
-If you put a class that you are going to serialize inside a function, the feature will send a *null*.
+Remember that your classes must be *top level* to be recognized by `Gson`. \\
+If you try to send a class that is inside a function, the feature will send a *null*.
 {: .note}
 
-### Receiving the body of a response
+## Receiving the body of a response
 {: #receive}
 
 By default you can use `HttpResponse` or `String` as possible types for typed
@@ -173,60 +189,39 @@ From an `HttpResponse`, you can get the response content easily:
 * `val inputStream = response.receive<InputStream>()` *Remember that InputStream API is synchronous!*
 * `response.discardRemaining()`
 
-You can also get additional response information (status, headers, internal state...):
+You can also get the additional response information such as its status, headers, internal state, etc.:
 
-```kotlin
-// Basic
-val status: HttpStatusCode = response.status
-val headers: Headers = response.headers
+*Basic*:
 
-// Advanced
-val call: HttpClientCall = response.call
-val version: HttpProtocolVersion = response.version
-val requestTime: Date = response.requestTime 
-val responseTime: Date = response.responseTime
-val executionContext: Job = response.executionContext
+* `val status: HttpStatusCode = response.status`
+* `val headers: Headers = response.headers`
 
-// Extensions for headers:
-val contentType: ContentType? = response.contentType()
-val charset: Charset? = response.charset()
-val lastModified: Date? = response.lastModified()
-val etag: String? = response.etag()
-val expires: Date? = response.expires()
-val vary: List<String>? = response.vary()
-val contentLength: Int? = response.contentLength()
-val setCookie: List<Cookie> = response.setCookie()
-```
-{: .compact }
+*Advanced*:
+* `val call: HttpClientCall = response.call`
+* `val version: HttpProtocolVersion = response.version`
+* `val requestTime: Date = response.requestTime`
+* `val responseTime: Date = response.responseTime`
+* `val executionContext: Job = response.executionContext`
 
-## Configuring the request with `HttpRequestBuilder`
+*Extensions for headers*:
+* `val contentType: ContentType? = response.contentType()`
+* `val charset: Charset? = response.charset()`
+* `val lastModified: Date? = response.lastModified()`
+* `val etag: String? = response.etag()`
+* `val expires: Date? = response.expires()`
+* `val vary: List<String>? = response.vary()`
+* `val contentLength: Int? = response.contentLength()`
+* `val setCookie: List<Cookie> = response.setCookie()`
 
-When calling request methods, you can provide a lambda to build the request
-parameters like the URL, the HTTP method (verb), the body, or the headers.
-The HttpRequestBuilder looks like this:
-
-
-```kotlin
-class HttpRequestBuilder : HttpMessageBuilder {
-    val url: URLBuilder
-    var method: HttpMethod
-    val headers: HeadersBuilder
-    var body: Any = EmptyContent
-    val executionContext: CompletableDeferred<Unit>
-    fun headers(block: HeadersBuilder.() -> Unit)
-    fun url(block: URLBuilder.(URLBuilder) -> Unit)
-}
-```
-
-## Http Client Features
+## Features
 {: #features}
 
-Similar to the server, Ktor supports features on the client. It also works the same:
-there is a pipeline for client HTTP requests and features can intercept them.
+Similar to the server, Ktor supports features on the client. And it has the same design:
+there is a pipeline for client HTTP requests, and there are interceptors and installable features.
 
 ### BasicAuth
 
-Feature to send an `Authorization: Basic` with the specified credentials.
+This feature sends an `Authorization: Basic` with the specified credentials:
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -242,7 +237,7 @@ To use this feature, you need to include the `ktor-client-auth-basic` artifact.
 
 ### HttpCookies
 
-There is a feature to keep cookies between calls or to make requests with some cookies pre-set.
+This feature keeps cookies between calls or forces specific cookies:
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -259,7 +254,7 @@ client.cookies("mydomain.com")
 
 ### HttpIgnoreBody
 
-Discards the body of the response.
+This feature discards the body of the response:
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -269,9 +264,7 @@ val client = HttpClient(HttpClientEngine) {
 
 ### HttpPlainText
 
-Processes the request content as plain text of a specified charset by
-`defaultCharset`, note that the default charset is the JVM's charset that
-could be different between systems.
+This feature processes the request content as plain text of a specified charset by `defaultCharset`.
 Also it will process the response content as plain text too.
 
 ```kotlin
@@ -281,6 +274,10 @@ val client = HttpClient(HttpClientEngine) {
     }
 }
 ```
+
+Bear in mind that the default charset is the JVM's charset that could be different between systems.
+So it is recommended to specify the default charset.
+{: .note}
 
 ### JsonFeature
 
@@ -298,12 +295,25 @@ val client = HttpClient(HttpClientEngine) {
 To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 {: .note.artifact }
 
-## Supported engines and configuration
+### Creating Custom Features
+
+If you want to create features, you can use the [standard features](https://github.com/ktorio/ktor/tree/master/ktor-client/ktor-client-core/src/io/ktor/client/features) as reference.
+
+You can also check the [HttpRequestPipeline.Phases](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/HttpRequestPipeline.kt)
+and [HttpResponsePipeline.Phases](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/response/HttpResponsePipeline.kt)
+to understand the interception points available.
+{: .note.tip}
+
+## Supported engines
 {: #engines}
 
 Ktor HttpClient lets you to configure the parameters of the engine by calling `Engine.config { }`.
 
 Every engine config has two common properties that can be set:
+
+* The `dispatcher` property is the `CoroutineDispatcher` used when processing client requests.
+* While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
+allowing you to set custom keys, trust manager or custom source for secure random data.
 
 ```kotlin
 val client = HttpClient(MyHttpEngine.config {
@@ -311,10 +321,6 @@ val client = HttpClient(MyHttpEngine.config {
     sslContext = SSLContext.getDefault()
 })
 ```
-
-* The `dispatcher` property is the `CoroutineDispatcher` used when processing client requests.
-* While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
-allowing you to set custom keys, trust manager or custom source for secure random data.
 
 ### Apache
 {: #apache}
@@ -326,6 +332,8 @@ proxies among other things supported by `org.apache.httpcomponents:httpasyncclie
 * Artifact `io.ktor:ktor-client-apache:$ktor_version`.
 * Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
 * Supports HTTP/1.1 and HTTP/2.
+
+A sample configuration would look like:
 
 ```kotlin
 val client = HttpClient(Apache.config {
@@ -347,8 +355,8 @@ val client = HttpClient(Apache.config {
 ```
 {: .compact}
 
-<a id="cio"></a>
 ### CIO
+{: #cio}
 
 CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
 
@@ -356,24 +364,24 @@ CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
 * No additional transitive dependencies.
 * Only supports HTTP/1.x for now.
 
+A sample configuration would look like:
+
 ```kotlin
-fun test() {
-    HttpClient(CIO.config { 
-        maxConnectionsCount = 1000 // Maximum number of socket connections.
-        endpointConfig = EndpointConfig().apply {
-            maxConnectionsPerRoute = 100 // Maximum number of requests for a specific endpoint route.
-            pipelineMaxSize = 20 // Max number of opened endpoints.
-            keepAliveTime = 5000 // Max number of milliseconds to keep each connection alive.
-            connectTimeout = 5000 // Number of milliseconds to wait trying to connect to the server.
-            connectRetryAttempts = 5 // Maximum number of attempts for retrying a connection.
-        }
-    })
-}
+val client = HttpClient(CIO.config { 
+    maxConnectionsCount = 1000 // Maximum number of socket connections.
+    endpointConfig = EndpointConfig().apply {
+        maxConnectionsPerRoute = 100 // Maximum number of requests for a specific endpoint route.
+        pipelineMaxSize = 20 // Max number of opened endpoints.
+        keepAliveTime = 5000 // Max number of milliseconds to keep each connection alive.
+        connectTimeout = 5000 // Number of milliseconds to wait trying to connect to the server.
+        connectRetryAttempts = 5 // Maximum number of attempts for retrying a connection.
+    }
+})
 ```
 {: .compact}
 
-<a id="jetty"></a>
 ### Jetty
+{: .jetty}
 
 Jetty provides an additional `sslContextFactory` for configuring.
 
@@ -381,15 +389,15 @@ Jetty provides an additional `sslContextFactory` for configuring.
 * Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`
 * Just supports HTTP/2 for now.
 
+A sample configuration would look like:
+
 ```kotlin
-fun test() {
-    HttpClient(Jetty.config { 
-        sslContextFactory = SslContextFactory()
-    })
-}
+val client = HttpClient(Jetty.config { 
+    sslContextFactory = SslContextFactory()
+})
 ```
 
-## Concurrent requests
+## Concurrency
 
 Remember that requests are asynchronous, but when performing a requests, the API is suspending
 and your function will be suspended until done. If you want to perform several requests at once
@@ -399,7 +407,7 @@ For example:
 *Sequential requests:*
 
 ```kotlin
-suspend fun mySuspendFunc() {
+suspend fun sequentialRequests() {
     val client = HttpClient(Apache)
     
     // Get the content of an URL.
@@ -413,7 +421,7 @@ suspend fun mySuspendFunc() {
 *Parallel requests:*
 
 ```kotlin
-suspend fun mySuspendFunc() {
+suspend fun parallelRequests() {
     val client = HttpClient(Apache)
     
     // Start two requests asynchronously.
@@ -424,36 +432,6 @@ suspend fun mySuspendFunc() {
     // requests are done.
     val bytes1 = req1.await() // Suspension point.
     val bytes2 = req2.await() // Suspension point.
-}
-```
-
-## Client Pipeline Phases
-
-### HttpRequestPipeline
-
-```kotlin
-/**
- * All interceptors accept payload as [subject] and try to convert it to [OutgoingContent]
- * Last phase should proceed with [HttpClientCall]
- */
-companion object Phases {
-    val Before = PipelinePhase("Before") // The earliest phase that happens before any other
-    val State = PipelinePhase("State") // Use this phase to modify request with shared state
-    val Transform = PipelinePhase("Transform") // Transform request body to supported render format
-    val Render = PipelinePhase("Render") // Encode request body to [OutgoingContent]
-    val Send = PipelinePhase("Send") // Send request to remote server
-}
-```
-
-### HttpResponsePipeline
-
-```kotlin
-companion object Phases {
-    val Receive = PipelinePhase("Receive") // The earliest phase that happens before any other
-    val Parse = PipelinePhase("Parse") // Decode response body
-    val Transform = PipelinePhase("Transform") // Transform response body to expected format
-    val State = PipelinePhase("State") // Use this phase to store request shared state
-    val After = PipelinePhase("After") // Latest response pipeline phase
 }
 ```
 
