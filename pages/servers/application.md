@@ -88,7 +88,7 @@ fun Application.mymodule() {
 ```
 
 Modules are referenced by its fully qualified name: the fully qualified name of the class and the method name,
-separated by a dot.
+separated by a dot (`.`).
 
 So for the example, the module's fully qualified name would be:
 
