@@ -45,6 +45,7 @@ code.highlighter-rouge {
 .note.tip:before { content: "TIP"; }
 .note.artifact:before { content: "ARTIFACT"; }
 .note.api:before { content: "API"; }
+.note.performance:before { content: "PERFORMANCE NOTE"; font-weight: bold; }
 
 .compact {
     position: relative;
@@ -53,7 +54,6 @@ code.highlighter-rouge {
     text-overflow: ellipsis;
     margin: 0.5em 0 1em 0;
     cursor: pointer;
-    transition: max-height 0.5s;
 }
 
 .compact:after {
@@ -69,8 +69,12 @@ code.highlighter-rouge {
 
 .compact.expand {
     max-height: 2000px !important;
-    transition: max-height 0.5s;
 }
+
+/* TRANSITION (performance impact) */
+/*
+.compact, .compact.expand { transition: max-height 0.5s; }
+*/
 
 .compact.expand:after {
     visibility: hidden;
