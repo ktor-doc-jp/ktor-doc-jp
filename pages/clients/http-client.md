@@ -113,7 +113,7 @@ You can check the standard available [HttpClient build extension methods](https:
 
 ## Specifying a body for requests
 
-By default, for `POST` and `PUT` requests, you can set the `body` property:
+For `POST` and `PUT` requests, you can set the `body` property:
 
 ```kotlin
 client.post<Unit> {
