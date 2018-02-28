@@ -45,8 +45,8 @@ val bytes: ByteArray = client.call("http://127.0.0.1:8080/").response.readBytes(
 
 It is possible to customize the request a lot and
 to stream the request and response payloads , but you can also just call a convenience
-extension method like `HttpClient.get` that will perform a `GET` request and will receive
-an specified type directly (for example `String`).
+extension method like `HttpClient.get` to do a `GET` request to receive
+the specified type directly (for example `String`).
 {: .note}
 
 ## Custom requests
@@ -60,7 +60,7 @@ The HttpClient `call` method, returns an `HttpClientCall` and allows you to perf
 simple untyped requests.
 
 You can read the content by using `response: HttpResponse`.
-More information about [receiving content using HttpResponse here](#HttpResponse). 
+For further information, check the [receiving content using HttpResponse](#HttpResponse) section. 
 
 ```kotlin
 val call = client.call("http://127.0.0.1:8080/") {
@@ -84,8 +84,8 @@ val call = client.request<String> {
 
 ### The `post` and `get` methods
 
-Similar to request there are several extension methods to perform requests
-with the specific more common HTTP verbs `GET` and `POST`.
+Similar to `request`, there are several extension methods to perform requests
+with the most common HTTP verbs: `GET` and `POST`.
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
@@ -122,7 +122,7 @@ client.post<Unit> {
 }
 ```
 
-The `HttpRequestBuilder.body` property, can be a subtype of `OutgoingContent` as well as a `String` instance:
+The `HttpRequestBuilder.body` property can be a subtype of `OutgoingContent` as well as a `String` instance:
 
 * `body = "HELLO WORLD!"`
 * `body = TextContent("HELLO WORLD!", ContentType.Text.Plain)`
@@ -131,11 +131,11 @@ The `HttpRequestBuilder.body` property, can be a subtype of `OutgoingContent` as
 * `body = JarFileContent(File("myjar.jar"), "test.txt", ContentType.fromFileExtension("txt").first())`
 * `body = URIFileContent(URL("https://en.wikipedia.org/wiki/Main_Page"))`
 
-If you install `JsonFeature`, and set the content type to `application/json`
-you can use arbitrary instances, and they will be serialized as JSON:
+If you install the *JsonFeature*, and set the content type to `application/json`
+you can use arbitrary instances as the `body`, and they will be serialized as JSON:
 
 ```kotlin
-data class HelloWorld(val hello: String) // Must be top level
+data class HelloWorld(val hello: String)
 
 val client = HttpClient(Apache) {
     install(JsonFeature) {
@@ -235,6 +235,9 @@ val client = HttpClient(HttpClientEngine) {
 To use this feature, you need to include the `ktor-client-auth-basic` artifact.
 {: .note.artifact }
 
+This feature implements the IETF's [RFC 7617](https://tools.ietf.org/html/rfc7617).
+{: .note}
+
 ### HttpCookies
 
 This feature keeps cookies between calls or forces specific cookies:
@@ -262,6 +265,10 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
+Use this if you are only interested in the response headers, and you cannot use the HEAD verb.
+This will use less memory, and will execute faster.
+{: .note}
+
 ### HttpPlainText
 
 This feature processes the request content as plain text of a specified charset by `defaultCharset`.
@@ -275,8 +282,8 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-Bear in mind that the default charset is the JVM's charset that could be different between systems.
-So it is recommended to specify the default charset.
+Bear in mind that the default charset is the JVM's charset that could be different between systems. \\
+That's why it is recommended to specify the default charset.
 {: .note}
 
 ### JsonFeature
@@ -307,13 +314,13 @@ to understand the interception points available.
 ## Supported engines
 {: #engines}
 
-Ktor HttpClient lets you to configure the parameters of the engine by calling `Engine.config { }`.
+Ktor HttpClient lets you to configure the parameters of each engine by calling `Engine.config { }`.
 
 Every engine config has two common properties that can be set:
 
 * The `dispatcher` property is the `CoroutineDispatcher` used when processing client requests.
-* While the `sslContext` is from Java [`SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
-allowing you to set custom keys, trust manager or custom source for secure random data.
+* The `sslContext` is a [`javax.net.ssl.SSLContext`](https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html)
+allowing you to set custom keys, a trust manager or custom source for secure random data.
 
 ```kotlin
 val client = HttpClient(MyHttpEngine.config {
@@ -325,13 +332,9 @@ val client = HttpClient(MyHttpEngine.config {
 ### Apache
 {: #apache}
 
-Apache is the most configurable HTTP client at this point.
+Apache is the most configurable HTTP client at this point. It supports HTTP/1.1 and HTTP/2.
 It is the only one that supports following redirects and allows you to configure timeouts,
 proxies among other things supported by `org.apache.httpcomponents:httpasyncclient`.
-
-* Artifact `io.ktor:ktor-client-apache:$ktor_version`.
-* Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
-* Supports HTTP/1.1 and HTTP/2.
 
 A sample configuration would look like:
 
@@ -355,14 +358,18 @@ val client = HttpClient(Apache.config {
 ```
 {: .compact}
 
+
+Artifact `io.ktor:ktor-client-apache:$ktor_version`.\\
+Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
+{: .note.artifact }
+
 ### CIO
 {: #cio}
 
-CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
+CIO (Coroutine-based I/O) is a Ktor implementation with no additional dependencies and fully asynchronous.
+It only supports HTTP/1.x for now.
 
-* Artifact `io.ktor:ktor-client-cio:$ktor_version`.
-* No additional transitive dependencies.
-* Only supports HTTP/1.x for now.
+CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
 
 A sample configuration would look like:
 
@@ -380,14 +387,14 @@ val client = HttpClient(CIO.config {
 ```
 {: .compact}
 
+Artifact `io.ktor:ktor-client-cio:$ktor_version`.\\
+No additional transitive dependencies.
+{: .note.artifact }
+
 ### Jetty
 {: .jetty}
 
-Jetty provides an additional `sslContextFactory` for configuring.
-
-* Artifact `io.ktor:ktor-client-jetty:$ktor_version`
-* Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`
-* Just supports HTTP/2 for now.
+Jetty provides an additional `sslContextFactory` for configuring. It just supports HTTP/2 for now.
 
 A sample configuration would look like:
 
@@ -396,6 +403,10 @@ val client = HttpClient(Jetty.config {
     sslContextFactory = SslContextFactory()
 })
 ```
+
+Artifact `io.ktor:ktor-client-jetty:$ktor_version`. \\
+Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`.
+{: .note.artifact }
 
 ## Concurrency
 
@@ -491,3 +502,6 @@ fun Application.mymodule() {
 }
 ```
 {: .compact}
+
+You can check the [ktor-samples](https://github.com/ktorio/ktor-samples) and [ktor-exercises](https://github.com/ktorio/ktor-exercises) repositories for samples and exercises.
+{: .note }
