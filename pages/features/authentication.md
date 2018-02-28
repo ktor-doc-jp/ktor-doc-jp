@@ -6,22 +6,25 @@ permalink: /features/authentication.html
 subsection_tag: Authentication
 ---
 
+{::options toc_levels="1..2" /}
+
 Ktor supports authentication out of the box as a pluggable standard feature.
+It support mechanisms to read *credentials*, and to authenticate *principals*.
 
-It support mechanisms to read [Credentials](https://en.wikipedia.org/wiki/Credential),
-and to authenticate [Principals](https://en.wikipedia.org/wiki/Principal_(computer_security)). It can be used
-in some cases along [sessions feature](/features/sessions.html) to keep login information between requests.
-
-It defines two stages as part of its Pipeline: `RequestAuthentication` and `CheckAuthentication`.
+It can be used in some cases along the [sessions feature](/features/sessions.html)
+to keep the login information between requests.
 
 **Table of contents:**
 
 * TOC
 {:toc}
 
-## Basic Usage
+## Basic usage
 
-Configuring server or route (any ApplicationCallPipeline), with the `authentication` feature:
+You can install this feature as normal
+In addition to `install(Authentication)`, Ktor provides a shorter convenient method called `authentication`,
+both available to any `ApplicationCallPipeline`, including `Application` and `Route` among others.
+Using its DSL, it allows you to configure the authentication mechanisms available:
 
 ```kotlin
 authentication {
@@ -35,15 +38,20 @@ authentication {
 }
 ```
 
-Obtaining the generated Principal information inside your handler (handler won't be executed if a configured authentication fails):
+You can get the generated `Principal` instance inside your handler with:
 
 ```kotlin
-val principal = call.authentication.principal<UserIdPrincipal>()
+val principal: UserIdPrincipal? = call.authentication.principal<UserIdPrincipal>()
 ```
 
-## User credential input
+You have to specify a generic type that *must* match the generated Principal.
+It will return null in the case you provide another type. 
+{: .note}
 
-### HTTP Basic Authentication and Form Authentication
+The handler won't be executed if the configured authentication fails, by returning null as the principal.
+{: .note}
+
+## Basic Authentication and Form Authentication
 
 Ktor supports two methods of authentication with the user and raw password as credentials.
 
@@ -62,7 +70,7 @@ or null for invalid credentials. That callback is marked as *suspending*, so tha
 
 You can use several strategies for validating:
 
-#### Manual credential validation
+### Manual credential validation
 
 Since there is a validate callback for authentication, you can just put your code there.
 So you can do things like checking the password against a constant or composing several validation mechanisms.
@@ -75,13 +83,13 @@ authentication {
 }
 ```
 
-#### Validating using UserHashedTableAuth
+### Validating using UserHashedTableAuth
 
 There is a class that handles hashed passwords in-memory to authenticate `UserPasswordCredential`.
 You can populate it from constants in code or from another source. You can use predefined digest functions
 or your own.
 
-**Instantiating:**
+*Instantiating:*
 
 ```kotlin
 val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"), mapOf(
@@ -89,7 +97,7 @@ val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"),
 ))
 ```
 
-**Configuring server/routes:**
+*Configuring server/routes:*
 
 ```kotlin
 authentication {
@@ -97,7 +105,7 @@ authentication {
 }
 ```
 
-**Security:**
+*Security:*
 
 The idea here is that you are not storing the actual password but a hash, so even if your data source is leaked,
 the passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
@@ -105,28 +113,28 @@ it is possible to do brute-force attacks. You can append (instead of prepend) lo
 stages or do key derivate functions to increase security and make brute-force attacks non-viable.
 You can also enforce or encourage strong passwords when creating users.
  
-#### LDAP Validation
+### LDAP Validation
 
 Ktor supports LDAP for credential verification in a separate artifact `ktor-auth-ldap`.
 
-**In your build script:**
+*In your build script:*
 
 ```groovy
 compile "io.ktor:ktor-auth-ldap:$ktor_version"
 ```
 
-**Configuring:**
+*Configuring:*
 
-````kotlin
+```kotlin
 authentication {
     basicAuthentication("realm") { credential ->
         ldapAuthenticate(credential, "ldap://$localhost:${ldapServer.port}", "uid=%s,ou=system")
     }
 }
-````
+```
 
 Optionally you can define an additional validation check:
-````kotlin
+```kotlin
 authentication {
     basicAuthentication("realm") { credential ->
         ldapAuthenticate(credentials, "ldap://localhost:389", "cn=%s ou=users") {
@@ -136,15 +144,15 @@ authentication {
         }
     }
 }
-````
+```
 
 You can see [advanced examples in tests](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt).
 
 Note: Bear in mind that current LDAP implementation is synchronous.
 
-### HTTP Digest Authentication
+## Digest Authentication
 
-Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication). But the API is slightly different:
+Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication). But the API is slightly different than the Basic and Form authentication mechanisms:
 
 ```kotlin
 fun AuthenticationPipeline.digestAuthentication(
@@ -158,15 +166,37 @@ fun AuthenticationPipeline.digestAuthentication(
 Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
 returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
 The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
-And just return the expected hash for a specific user, or null if the user doesn't exist.
+And just return the expected hash for a specific user, or *null* if the user do not exist.
 The callback is suspendable so you can retrieve or compute the expected hash asynchronously.
 
+```kotlin
+authentication {
+    val myRealm = "MyRealm"
+    val usersInMyRealmToHA1: Map<String, ByteArray> = mapOf(
+        // pass="test", HA1=MD5("test:MyRealm:pass")="fb12475e62dedc5c2744d98eb73b8877"
+        "test" to hex("fb12475e62dedc5c2744d98eb73b8877")
+    )
+
+    digestAuthentication(realm = myRealm) { userName, realm ->
+        if (realm == myRealm) {
+            // null if it doesn't exist
+            usersInMyRealmToHA1[userName]
+        } else {
+            // null if the realm doesn't match
+            null
+        }
+    }
+}
+```
+
+<div markdown="1" class="note">
 `HA1` (`H(A1)`) comes from [RFC 2069 (An Extension to HTTP: Digest Access Authentication)](https://tools.ietf.org/html/rfc2069)  
 ```
 HA1=MD5(username:realm:password)
 HA2=MD5(method:digestURI)
 response=MD5(HA1:nonce:HA2)
 ```
+</div>
 
 ## Authenticating APIs using JWT
 
@@ -182,13 +212,13 @@ class JWTCredential(val payload: Payload) : Credential
 class JWTPrincipal(val payload: Payload) : Principal
 ```
 
-**In your build script:**
+*In your build script:*
 
 ```groovy
 compile "io.ktor:ktor-auth-jwt:$ktor_version"
 ```
 
-**Configuring server/routes:**
+*Configuring server/routes:*
 
 JWT and JWK each have their own method with slightly different parameters. 
 Both require the `realm` parameter, which is used in the WWW-Authenticate response header.
@@ -289,6 +319,7 @@ location<login>() {
     }
 }
 ```
+{: .compact}
 
 Depending on the OAuth version, you will get a different Principal
 
@@ -298,3 +329,7 @@ sealed class OAuthAccessTokenResponse : Principal {
     data class OAuth2(val accessToken: String, val tokenType: String, val expiresIn: Long, val refreshToken: String?, val extraParameters: Parameters = Parameters.Empty) : OAuthAccessTokenResponse()
 }
 ```
+
+## Advanced
+
+It defines two stages as part of its Pipeline: `RequestAuthentication` and `CheckAuthentication`.
