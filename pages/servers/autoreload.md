@@ -7,47 +7,45 @@ permalink: /servers/autoreload.html
 
 During development, it is important to have a fast feedback loop cycle. 
 Often, restarting the server can take some time, so Ktor provides a basic auto-reload facility that
-reloads just an Application.
+reloads your Application classes.
 
-**Performance Note:** There is a performance penalty when using auto-reloading. So keep in mind that you should not use
+There is a performance penalty when using auto-reloading. So keep in mind that you should not use
 it in production or when doing benchmarks.
-{: .note}
+{: .note.performance}
 
 **Table of contents:**
 
 * TOC
 {:toc}
 
-## Basics
+## Automatic reloading on class changes
 {: #basics}
 
-Both when using the embeddedServer or a configuration file, you will have to provide a list of watch substrings
+In both cases, when using the [embeddedServer](#embedded-server) or a [configuration file](#configuration-file), you will have to provide a list of watch substrings
 that should match the classloaders you want to watch.
 
-So for example, a typical example of class loader when using gradle could be:
+So for example, a typical class loader when using gradle would look like: \\
 `/Users/user/projects/ktor-exercises/solutions/exercise4/build/classes/kotlin/main`
 
-In this case, you can use the `solutions/exercise4` string when watching, so it will match that classloader.
+In this case, you can use the `solutions/exercise4` string or just `exercise4` when watching, so it will match that classloader.
 
 ## Using embeddedServer
 {: #embedded-server}
 
-When using a custom main using `embeddedServer`, you can use the default parameter `watchPaths` to provide
-a list of subpaths that will be watched and reloaded.
+When using a custom main and `embeddedServer`,
+you can use the optional parameter `watchPaths` to provide
+a list of sub-paths that will be watched and reloaded.
 
-`fun main(args: Array<String>) {
+```kotlin
+fun main(args: Array<String>) {
     embeddedServer(
         Netty,
         watchPaths = listOf("solutions/exercise4"),
         port = 8080,
         module = Application::mymodule
     ).apply { start(wait = true) 
-}`
+}
 
-Note that here you should not use a lambda to configure the server, but to provide a method reference to your
-Application module.
-
-```
 fun Application.mymodule() {
     routing {
         get("/plain") {
@@ -56,6 +54,12 @@ fun Application.mymodule() {
     }
 }
 ```
+{: .compact}
+
+When using `watchPaths` you should *not* use a lambda to configure the server, but to provide a method reference to your
+Application module.
+{: .note}
+
 
 If you try to use a lambda instead of a method reference, you will get the following error:
 ```
@@ -64,10 +68,11 @@ Exception in thread "main" java.lang.RuntimeException: Module function provided 
 
 To fix this error, you just have to extract your lambda body to an Application extension method (module) just like this:
 
-Code that **won't** work:
-```
+Code that *won't* work:
+```kotlin
 fun main(args: Array<String>) {
-    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080) { // ERROR! Module function provided as lambda cannot be unlinked for reload
+    // ERROR! Module function provided as lambda cannot be unlinked for reload
+    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080) {
         routing {
             get("/") {
                 call.respondText("Hello World!")
@@ -76,13 +81,19 @@ fun main(args: Array<String>) {
     }.start(true)
 }
 ```
+{: .compact}
 
 Code that will work:
-```
+```kotlin
 fun main(args: Array<String>) {
-    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080, module = Application::mymodule).start(true) // GOOD!, it will work
+    embeddedServer(
+        Netty, watchPaths = listOf("solutions/exercise4"), port = 8080,
+        // GOOD!, it will work 
+        module = Application::mymodule
+    ).start(true)
 }
 
+// Body extracted to a function acting as a module
 fun Application.mymodule() {
     routing {
         get("/") {
@@ -91,12 +102,13 @@ fun Application.mymodule() {
     }
 }
 ```
+{: .compact}
 
-## Using configuration file
+## Using the `application.conf`
 {: #configuration-file}
 
 When using a configuration file, for example with a [`DevelopmentEngine`](/servers/engine.html) to either run
-from the command line or hosted within another server: 
+from the command line or hosted within a server container: 
 
 To enable this feature, add `watch` keys to `ktor.deployment` configuration. 
 
@@ -117,10 +129,24 @@ For now watch keys are just strings that are matched with `contains`, against th
 application, such as a jar name or a project directory name. 
 These classes are then loaded with a special `ClassLoader` that is recycled when a change is detected.
 
-**Note:** `ktor-server-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
+`ktor-server-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
 don't expect it to be reloaded automatically. It cannot work because core classes are loaded before the auto-reload kicks in. 
 The exclusion can potentially be smaller, but it is hard to analyze all the transitive closure of types loaded during
 startup.
+{: .note}
+
+## Recompiling automatically on source changes
+
+Since the Autoreload feature only detects changes in class files, you have to compile the application by yourself.
+You can do it using IntelliJ IDEA with `Build -> Build Project` while running.
+
+However, you can also use gradle to automatically detect source changes and compile it for you. You can just open
+another terminal in your project folder and run: `gradle -t build`.
+
+It will compile the application, and after doing so,
+it will listen for additional source changes and recompile when necessary. And thus, triggering Automatic class reloading.
+
+You can then use another terminal to run the application with `gradle run`.
 
 ## Example
 {: #example}
@@ -145,7 +171,10 @@ import io.ktor.server.netty.*
 // Exposed as: `static void io.ktor.exercise.autoreload.MainKt.main(String[] args)`
 fun main(args: Array<String>) {
     //io.ktor.server.netty.main(args) // Manually using Netty's DevelopmentEngine
-    embeddedServer(Netty, watchPaths = listOf("solutions/exercise4"), port = 8080, module = Application::module).apply { start(wait = true) 
+    embeddedServer(
+        Netty, watchPaths = listOf("solutions/exercise4"), port = 8080,
+        module = Application::module
+    ).apply { start(wait = true) 
 }
 
 // Exposed as: `static void io.ktor.exercise.autoreload.MainKt.module(Application receiver)`
@@ -157,6 +186,7 @@ fun Application.module() {
     }
 }
 ```
+{: .compact}
 
 `application.conf`:
 ```kotlin
@@ -171,16 +201,6 @@ ktor {
     }
 }
 ```
+{: .compact}
 
-As you can see, you need to specify a list of strings to match the classloaders you want to watch (in this case just `solutions/exercise4`), which should then be reloaded upon modification.
-
-## Recompiling automatically on source changes
-
-Since the Autoreload feature only detects changes in class files, you have to compile the application by yourself.
-You can do it using IntelliJ IDEA with `Build -> Build Project` while running.
-
-However, you can also use gradle to automatically detect source changes and compile it for you. So you can just open
-another terminal in your project folder and run: `gradle -t build`. It will compile the application, and after doing so,
-it will listen for additional source changes and recompile when necessary.
-
-You can then use another terminal to run the application with `gradle run`.
+As you can see, you need to specify a list of strings to match the classloaders you want to watch –in this case only `solutions/exercise4`– which should then be reloaded upon modification.
