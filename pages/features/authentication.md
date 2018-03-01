@@ -167,7 +167,8 @@ Instead of providing a verifier, you have to provide a `userNameRealmPasswordDig
 returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
 The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
 And just return the expected hash for a specific user, or *null* if the user do not exist.
-The callback is suspendable so you can retrieve or compute the expected hash asynchronously.
+The callback is suspendable so you can retrieve or compute the expected hash asynchronously,
+for example from disk or from a database.
 
 ```kotlin
 authentication {
@@ -178,25 +179,24 @@ authentication {
     )
 
     digestAuthentication(realm = myRealm) { userName, realm ->
-        if (realm == myRealm) {
-            // null if it doesn't exist
-            usersInMyRealmToHA1[userName]
-        } else {
-            // null if the realm doesn't match
-            null
-        }
+        usersInMyRealmToHA1[userName]
     }
 }
 ```
 
-<div markdown="1" class="note">
+<div markdown="1" class="note" style="margin-bottom:1em;">
 `HA1` (`H(A1)`) comes from [RFC 2069 (An Extension to HTTP: Digest Access Authentication)](https://tools.ietf.org/html/rfc2069)  
 ```
-HA1=MD5(username:realm:password)
+HA1=MD5(username:realm:password) <-- You usually store this.
 HA2=MD5(method:digestURI)
-response=MD5(HA1:nonce:HA2)
+response=MD5(HA1:nonce:HA2) <-- The client and the server sends and checks this.
 ```
 </div>
+
+While `realm` is guaranteed to be the `realm` passed to the `digestAuthentication` function and it is passed just for convenience,
+`userName` *can* be any value, so take this into account and remember to escape and or validate it, when using that value
+for accessing the file system, accessing databases, storing it, generating HTML, etc.
+{: .security.note}
 
 ## Authenticating APIs using JWT
 
