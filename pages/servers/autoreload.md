@@ -81,7 +81,7 @@ fun main(args: Array<String>) {
     }.start(true)
 }
 ```
-{: .compact}
+{: .compact.error }
 
 Code that will work:
 ```kotlin
@@ -102,7 +102,7 @@ fun Application.mymodule() {
     }
 }
 ```
-{: .compact}
+{: .compact.success }
 
 ## Using the `application.conf`
 {: #configuration-file}

@@ -93,3 +93,10 @@ pre.highlight {
     border-color: orange;
 }
 
+.error .highlight {
+    background: #fffafa;
+}
+
+.success .highlight {
+    background: #fafffa;
+}

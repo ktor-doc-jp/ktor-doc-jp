@@ -21,7 +21,12 @@ to keep the login information between requests.
 
 ## Basic usage
 
-You can install this feature as normal
+Ktor defines two concepts: credentials and principals.
+
+* A principal is something that can be authenticated: an user, a computer, a group, etc.
+* A credential is an object that represent a set of properties for the server to authenticate a principal:
+  a couple of user/password, an API key and a authenticated payload signature, etc.
+
 In addition to `install(Authentication)`, Ktor provides a shorter convenient method called `authentication`,
 both available to any `ApplicationCallPipeline`, including `Application` and `Route` among others.
 Using its DSL, it allows you to configure the authentication mechanisms available:
@@ -53,10 +58,15 @@ The handler won't be executed if the configured authentication fails, by returni
 
 ## Basic Authentication and Form Authentication
 
-Ktor supports two methods of authentication with the user and raw password as credentials.
+Ktor supports two methods of authentication with the user and raw password as credentials:
+`basicAuthentication` and `formAuthentication`.
 
 ```kotlin
-fun AuthenticationPipeline.basicAuthentication(realm: String, validate: suspend (UserPasswordCredential) -> Principal?)
+fun AuthenticationPipeline.basicAuthentication(
+    realm: String,
+    validate: suspend (UserPasswordCredential) -> Principal?
+)
+
 fun AuthenticationPipeline.formAuthentication(
     userParamName: String = "user",
     passwordParamName: String = "password",
@@ -70,10 +80,11 @@ or null for invalid credentials. That callback is marked as *suspending*, so tha
 
 You can use several strategies for validating:
 
-### Manual credential validation
+### Strategy: Manual credential validation
 
 Since there is a validate callback for authentication, you can just put your code there.
-So you can do things like checking the password against a constant or composing several validation mechanisms.
+So you can do things like checking the password against a constant, authenticating using a database
+or composing several validation mechanisms.
 
 ```kotlin
 authentication {
@@ -83,7 +94,12 @@ authentication {
 }
 ```
 
-### Validating using UserHashedTableAuth
+Remember that both: the `name` and the `password` from the credentials are arbitrary values.
+Remember to escape and/or validate them when accessing with those values to the file system, a database,
+when storing them, generating HTML with its content, etc.
+{: .security.note }
+
+### Strategy: Validating using UserHashedTableAuth
 
 There is a class that handles hashed passwords in-memory to authenticate `UserPasswordCredential`.
 You can populate it from constants in code or from another source. You can use predefined digest functions
@@ -105,25 +121,17 @@ authentication {
 }
 ```
 
-*Security:*
-
 The idea here is that you are not storing the actual password but a hash, so even if your data source is leaked,
 the passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
 it is possible to do brute-force attacks. You can append (instead of prepend) long salt values and do multiple hash
 stages or do key derivate functions to increase security and make brute-force attacks non-viable.
 You can also enforce or encourage strong passwords when creating users.
+{: .security.note}
  
-### LDAP Validation
+### Strategy: LDAP Validation
 
-Ktor supports LDAP for credential verification in a separate artifact `ktor-auth-ldap`.
-
-*In your build script:*
-
-```groovy
-compile "io.ktor:ktor-auth-ldap:$ktor_version"
-```
-
-*Configuring:*
+Ktor supports LDAP (Lightweight Directory Access Protocol)
+for credential authentication.
 
 ```kotlin
 authentication {
@@ -140,15 +148,21 @@ authentication {
         ldapAuthenticate(credentials, "ldap://localhost:389", "cn=%s ou=users") {
             if (it.name == it.password) {
                 UserIdPrincipal(it.name)
-            } else null
+            } else {
+                null
+            }
         }
     }
 }
 ```
 
-You can see [advanced examples in tests](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt).
+You can see [advanced examples for LDAP authentication](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt) in the Ktor's tests.
 
-Note: Bear in mind that current LDAP implementation is synchronous.
+In order to use this feature, you have to add the `io.ktor:ktor-auth-ldap:$ktor_version` dependency to your buildscript.
+{: .artifact.note }
+
+Bear in mind that current LDAP implementation is synchronous.
+{: .performance.note}
 
 ## Digest Authentication
 
@@ -201,11 +215,12 @@ for accessing the file system, accessing databases, storing it, generating HTML,
 ## Authenticating APIs using JWT
 
 Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating json-encoded payloads.
-It is useful to create stateless authenticated API in a standard way with client libraries in a myriad of languages.
+It is useful to create stateless authenticated APIs in a standard way, since there are client libraries for it
+in a myriad of languages.
 
-Ktor will handle `Authorization: Bearer <JWT-TOKEN>` 
+This feature will handle `Authorization: Bearer <JWT-TOKEN>`.
 
-Ktor has a couple of classes to use the JWT Payload as Credential or as Principal.
+Ktor has a couple of classes to use the JWT Payload as `Credential` or as `Principal`.
 
 ```kotlin
 class JWTCredential(val payload: Payload) : Credential
@@ -281,7 +296,7 @@ A simplified OAuth 2.0 workflow:
 * Ktor's OAuth feature verifies the token and generates a Principal `OAuthAccessTokenResponse`.
 * With the auth token, you can request, for example, the user's email or id depending on the provider.
 
-### Basic usage
+*Example*:
 
 ```kotlin
 val loginProviders = listOf(
@@ -325,11 +340,23 @@ Depending on the OAuth version, you will get a different Principal
 
 ```kotlin
 sealed class OAuthAccessTokenResponse : Principal {
-    data class OAuth1a(val token: String, val tokenSecret: String, val extraParameters: Parameters = Parameters.Empty) : OAuthAccessTokenResponse()
-    data class OAuth2(val accessToken: String, val tokenType: String, val expiresIn: Long, val refreshToken: String?, val extraParameters: Parameters = Parameters.Empty) : OAuthAccessTokenResponse()
+    data class OAuth1a(
+        val token: String, val tokenSecret: String,
+        val extraParameters: Parameters = Parameters.Empty
+    ) : OAuthAccessTokenResponse()
+
+    data class OAuth2(
+        val accessToken: String, val tokenType: String,
+        val expiresIn: Long, val refreshToken: String?,
+        val extraParameters: Parameters = Parameters.Empty
+    ) : OAuthAccessTokenResponse()
 }
 ```
 
 ## Advanced
 
-It defines two stages as part of its Pipeline: `RequestAuthentication` and `CheckAuthentication`.
+If you want to create custom authentication strategies,
+you can check the [Authentication feature](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/src/io/ktor/auth) as reference.
+
+It defines two stages as part of its [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/src/io/ktor/auth/AuthenticationPipeline.kt): `RequestAuthentication` and `CheckAuthentication`.
+{: .note}
