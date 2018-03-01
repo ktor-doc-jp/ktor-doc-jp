@@ -220,17 +220,14 @@ in a myriad of languages.
 
 This feature will handle `Authorization: Bearer <JWT-TOKEN>`.
 
+In order to use this authentication method, you need to include the `io.ktor:ktor-auth-jwt:$ktor_version` artifact.
+{: .artifact.note}
+
 Ktor has a couple of classes to use the JWT Payload as `Credential` or as `Principal`.
 
 ```kotlin
 class JWTCredential(val payload: Payload) : Credential
 class JWTPrincipal(val payload: Payload) : Principal
-```
-
-*In your build script:*
-
-```groovy
-compile "io.ktor:ktor-auth-jwt:$ktor_version"
 ```
 
 *Configuring server/routes:*
@@ -285,7 +282,7 @@ authentication {
 ## OAuth
 
 OAuth defines a mechanism for authentication using external providers like Google or Facebook safely.
-You can read more about OAuth [here](https://oauth.net/)
+You can read more about [OAuth](https://oauth.net/).
 Ktor has a feature to work with OAuth 1a and 2.0
 
 A simplified OAuth 2.0 workflow:
@@ -358,5 +355,5 @@ sealed class OAuthAccessTokenResponse : Principal {
 If you want to create custom authentication strategies,
 you can check the [Authentication feature](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/src/io/ktor/auth) as reference.
 
-It defines two stages as part of its [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/src/io/ktor/auth/AuthenticationPipeline.kt): `RequestAuthentication` and `CheckAuthentication`.
+The authentication feature defines two stages as part of its [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/src/io/ktor/auth/AuthenticationPipeline.kt): `RequestAuthentication` and `CheckAuthentication`.
 {: .note}
