@@ -5,9 +5,13 @@ permalink: /servers/application.html
 caption: What is an Application? 
 ---
 
-A Ktor Server Application is a custom program listening to one or more ports using a [server engine](#engines),
+A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),
 composed by [modules](#modules) with the application logic, that install [features](#features), like routing,
 sessions, compression, etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
+
+Ktor also exposes functionality lo [handle raw sockets](/servers/raw-sockets.html), but not as part of the Application and
+its pipeline.
+{: .note}
 
 **Table of contents:**
 
@@ -24,6 +28,9 @@ compression, etc. that ends handling the request.
 
 Normally, a Ktor program configures the Application pipeline through [modules](#modules)
 that [install and configure features](#features).
+
+You can read further information about the pipeline, in the [lifecycle](/servers/lifecycle.html) section.
+{: .note}
 
 ## ApplicationCall
 
@@ -61,6 +68,7 @@ Ktor includes some standard features, but you can add your own or other features
 You can install features in any pipeline, like the application itself, or specific routes.
 
 You can read more about [features](/features/index.html) in its dedicated page.
+{: .note}
 
 ## Modules
 {: #modules}

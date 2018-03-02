@@ -6,10 +6,11 @@ permalink: /servers/configuration.html
 ---
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
-format as external configuration file.
-In this file you can configure things like the port to listen to, or the [modules](/servers/application.html#modules) to be load.
-This format is similar to JSON, but it is optimized to be read and written by humans,
-and supports additional features like environment variable substitution.
+format as external configuration file. In this file you can configure things like the port to listen to,
+or the [modules](/servers/application.html#modules) to be load. This format is similar to JSON,
+but it is optimized to be read and written by humans, and supports additional
+features like environment variable substitution.
+In this case, you configure the server engine to use with the `mainClassName` pointing to a particular `DevelopmentEngine`.
 
 Ktor also uses a set of lambdas with a typed DSL (Domain Specific Language) to configure the application,
 and to configure the server engine when using `embeddedServer`.
@@ -28,6 +29,16 @@ to easily change the configuration without recompiling your application.
 When Ktor is started using a `DevelopmentEngine`, or by calling the `commandLineEnvironment`,
 it tries to load a HOCON file called `application.conf` from the application resources.
 You can change the location of the file using [command line arguments](#command-line).
+
+<div markdown="1" class="note" style="margin-bottom: 1em;">
+Available development engines that you can use as `mainClassName`:
+
+* `io.ktor.server.cio.DevelopmentEngine`
+* `io.ktor.server.tomcat.DevelopmentEngine`
+* `io.ktor.server.jetty.DevelopmentEngine`
+* `io.ktor.server.netty.DevelopmentEngine`
+
+</div>
 
 Ktor only requires you to specify which [module or modules](/servers/application.html#modules)
 do you want it to load when starting the server using `ktor.application.modules` property.
