@@ -100,3 +100,25 @@ pre.highlight {
 .success .highlight {
     background: #fafffa;
 }
+
+a.anchored-heading {
+    color: black;
+}
+
+a.anchored-heading:hover {
+    color: black;
+    text-decoration: none;
+}
+
+a.anchored-heading:before {
+    content: '#';
+    float: left;
+    position: relative;
+    margin-left: -1em;
+    color: #aaa;
+    visibility: hidden;
+}
+
+a.anchored-heading:hover:before {
+    visibility: visible;
+}
