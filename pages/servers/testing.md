@@ -39,7 +39,7 @@ See full example of application testing in [ktor-samples-testable](https://githu
 // ...
 dependencies {
     // ...
-    testCompile "ktor.io:ktor-server-test-host:$ktor_version"
+    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
 }
 ```
 
