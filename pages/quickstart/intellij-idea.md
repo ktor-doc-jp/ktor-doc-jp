@@ -19,12 +19,12 @@ Check this in IDEA at:  _**File -> Settings -> Plugins**_
 1.  **_File -> New -> Project_**
 2.  Select Gradle and under Additional Libraries and Frameworks, check Java and Kotlin (Java).  Confirm that Project SDK is completed and click Next.
 3.  Enter a GroupId: **Example**  
-and ArtifactId: **Example**  
-and click Next
+    and ArtifactId: **Example**  
+    and click Next
 4.  Check the checkboxes for "_Use auto-import_", "_Create directories for empty content roots automatically_", and "_Create separate module per source set_".  Confirm the Use default gradle wrapper radio button is selected and that Gradle JVM is populated and click Next.
 5.  Complete Project name: **Example**  
-and Project location: _a/path/on/your/filesystem_   
-and click Finish
+    and Project location: _a/path/on/your/filesystem_   
+    and click Finish
 6.  Wait a few seconds for Gradle to run and you should see a project structure like the following (with a few other files and directories):
 
 ```
@@ -41,10 +41,11 @@ Example
   build.gradle
 ```
 
-For more detailed guide on setting up build files see
+You will have to include `compile "io.ktor:ktor-server-netty:$ktor_version"`
+in your `build.gradle`'s `dependencies` block, for the classes in the example to be available.
 
-* [Getting Started with Gradle](/quickstart/gradle)
-* [Getting Started with Maven](/quickstart/maven)
+For a more detailed guide on setting up build the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/gradle) section. 
+{: .note}
 
 ### Create the App
 
@@ -119,7 +120,7 @@ fun main(args: Array<String>) {
 
 Although we can designate some application configuration data in the main function embeddedServer call, we can provide more flexibility for future deployments and changes by extracting this out to a separate configuration file.  In the `src/main/resources` directory we will create a new text file named `application.conf` with the following content:
 
-```json
+```kotlin
 ktor {
     deployment {
         port = 8080
