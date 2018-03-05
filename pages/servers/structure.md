@@ -51,6 +51,31 @@ fun main(args: Array<String>) {
 }
 ```
 
+{::comment}
 ## Deployment and `application.conf`
 
 Once you want to deploy your server. 
+{:/comment}
+
+## Health checks
+
+Depending on your application, you might want to create a health check in different ways.
+The easiest way would be to enable an endpoint like `/health_check` that returns
+something like HTTP 200 `OK`, while optionally verifying your dependant services.
+That's up to you.
+
+You can also use the [StatusPages feature](/features/status-pages.html) to handle exceptions.
+
+```kotlin
+install(StatusPages){
+    exception<Throwable> { cause ->
+        call.respond(HttpStatusCode.InternalServerError)
+    }
+}
+routing {
+    get("/health_check") {
+        // Check databases/other services.
+        call.respondText("OK")
+    }
+}
+```
