@@ -340,7 +340,32 @@ You can also access the configuration properties by manually loading the default
 
 ```kotlin
 val config = HoconApplicationConfig(ConfigFactory.load())
-``` 
+```
+
+## Using environment variables
+
+For *HOCON*, if you want to configure some parameters using environment variables,
+you can use environment substitution using `${ENV}` syntax. For example:
+
+```groovy
+ktor {
+    deployment {
+        port = ${PORT}
+    }
+}
+```
+
+This will look for a PORT environment variable, and if not found an exception will be thrown:
+
+```
+Exception in thread "main" com.typesafe.config.ConfigException$UnresolvedSubstitution: application.conf @ file:/path/to/application.conf: 3: Could not resolve substitution to a value: ${PORT}
+```
+
+If you are using `embeddedServer` you can still use `System.getenv` from Java. For example:
+
+```kotlin
+val port = System.getenv("PORT")?.toInt() ?: 8080
+```
 
 ## Custom configuration systems
 {: #custom}
