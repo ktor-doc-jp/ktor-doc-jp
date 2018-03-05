@@ -44,7 +44,7 @@ Example
 You will have to include `compile "io.ktor:ktor-server-netty:$ktor_version"`
 in your `build.gradle`'s `dependencies` block, for the classes in the example to be available.
 
-For a more detailed guide on setting up build the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/gradle) section. 
+For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/gradle) section. 
 {: .note}
 
 ### Create the App
