@@ -129,6 +129,7 @@ You can also enforce or encourage strong passwords when creating users.
 {: .security.note}
  
 ### Strategy: LDAP Validation
+{:#ldap}
 
 Ktor supports LDAP (Lightweight Directory Access Protocol)
 for credential authentication.
@@ -213,6 +214,7 @@ for accessing the file system, accessing databases, storing it, generating HTML,
 {: .security.note}
 
 ## Authenticating APIs using JWT
+{:#jwt}
 
 Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating json-encoded payloads.
 It is useful to create stateless authenticated APIs in a standard way, since there are client libraries for it
