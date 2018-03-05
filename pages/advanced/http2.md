@@ -51,6 +51,7 @@ ktor {
     }
 }
 ```
+{:.compact}
 
 ## ALPN implementation
 
@@ -62,8 +63,8 @@ and require extra attention when being configured. Also every particular engine 
 
 ### Jetty
 
-Jetty supports ALPN extension for JDK so to get it working you have to add extra-dependency to java **boot classpath**. 
-It is very important to add it to **boot** classpath, as adding it to regular classpath doesn't work.
+Jetty supports ALPN extension for JDK so to get it working you have to add extra-dependency to java *boot classpath*. 
+It is very important to add it to *boot* classpath, as adding it to regular classpath doesn't work.
 The other issue is that exact dependency version depends on JDK version. For example for JDK 8u144 alpn boot 8.1.11.v20170118 
 should be used (see https://www.eclipse.org/jetty/documentation/9.4.x/alpn-chapter.html#alpn-versions for full compatibility list).
 
@@ -98,6 +99,7 @@ In Maven you could use `maven-dependency-plugin` (goal `copy-dependencies`) or `
     </plugins>
 </build>
 ```
+{: .compact}
 
 If all of the above is done properly Jetty will log that ssl, alpn and h2 are enabled:
 
@@ -139,6 +141,7 @@ and then  native implementation (statically linked BoringSSL library, a fork of 
         <classifier>${tc.native.classifier}</classifier>
     </dependency>
 ```
+{: .compact}
 
 where `tc.native.classifier` should be one of the following: `linux-x86_64`, `osx-x86_64` or `windows-x86_64`.
 
@@ -158,6 +161,3 @@ configure your Tomcat server properly:
 * <https://tomcat.apache.org/tomcat-8.5-doc/config/http2.html>
 * <https://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html>
 * <http://tomcat.apache.org/native-doc/>
-
-
-
