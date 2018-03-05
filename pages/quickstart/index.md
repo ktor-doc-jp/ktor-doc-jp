@@ -41,9 +41,53 @@ This section asumes basic knowledge about gradle. If you have never used gradle,
 gradle.org provides [several guides](https://guides.gradle.org/building-java-applications/) for you to start.
 {: .note}
 
-You can set-up a simple Ktor application using gradle. It is pretty easy:
+You can set-up a simple Ktor application using gradle like this:
 
 ![](/pages/quickstart/1/ktor_build_gradle.png)
+
+Text version:
+```groovy
+group 'Example'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.2.30'
+    ext.ktor_version = '0.9.1'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'MainKt'
+
+sourceCompatibility = 1.8
+compileKotlin { kotlinOptions.jvmTarget = "1.8" }
+compileTestKotlin { kotlinOptions.jvmTarget = "1.8" }
+
+kotlin { experimental { coroutines "enable" } }
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "ch.qos.logback:logback-classic:1.2.1"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+```
+{: .compact}
 
 Since Ktor is not 1.0 yet, we have custom maven repositories for distributing our early preview artifacts.
 You have to set up a couple of repositories as shown below, so your tools can find ktor artifacts and dependencies.
@@ -69,7 +113,32 @@ A simple hello world in Ktor would look like this:
 4. Actual routes: In this case it will handle a *GET request* for the path `/demo`, and will reply with a `HELLO WORLD!` message.
 5. Actually *starts the server* and wait for connections.
 
-## Testing your application
+Text version:
+```kotlin
+import io.ktor.application.*
+import io.ktor.http.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+
+fun main(args: Array<String>) {
+    val server = embeddedServer(Netty, port = 8080) {
+        routing {
+            get("/") {
+                call.respondText("Hello World!", ContentType.Text.Plain)
+            }
+            get("/demo") {
+                call.respondText("HELLO WORLD!")
+            }
+        }
+    }
+    server.start(wait = true)
+}
+```
+{: .compact}
+
+## Accessing your application
 
 Since you have a main method, you can just execute it with your IDE. That will open a http server,
 listening at [http://127.0.0.1:8080](http://127.0.0.1:8080/) You can try opening it with your favorite web browser.
