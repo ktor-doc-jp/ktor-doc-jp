@@ -59,7 +59,7 @@ specific feature documentation.
 
 ## Hello World
 
-**A simple hello world in Ktor would look like this:**
+A simple hello world in Ktor would look like this:
 
 ![](/pages/quickstart/1/ktor_hello_world_main.png)
 
