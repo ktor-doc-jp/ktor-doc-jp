@@ -343,6 +343,7 @@ val config = HoconApplicationConfig(ConfigFactory.load())
 ```
 
 ## Using environment variables
+{: #environment-variables}
 
 For *HOCON*, if you want to configure some parameters using environment variables,
 you can use environment substitution using `${ENV}` syntax. For example:
