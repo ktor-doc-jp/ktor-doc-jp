@@ -63,7 +63,7 @@ See also: [Configuration](configuration)
 Ktor can automatically reload application when changes to class files are detected, i.e. when you build the Application.
 Enable this feature by adding `watch` configuration to `application.conf`:
 
-```json
+```groovy
 ktor {
     deployment {
         port = 8080
