@@ -133,3 +133,12 @@ a.anchored-heading:hover:before {
     border-radius: 1em;
     padding: 1em;
 }
+
+h1 a.anchored-heading {
+    color: inherit;
+}
+
+h1 a.anchored-heading:hover {
+    color: inherit;
+    text-decoration: none;
+}
