@@ -1,6 +1,6 @@
 ---
 title: FAQ
-caption: Frequent Asked Questions 
+caption: Frequently Asked Questions 
 section: Servers
 permalink: /servers/faq.html
 ---
