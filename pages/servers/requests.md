@@ -49,7 +49,8 @@ val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
 
 You can also access the information about the connection point (either local, or original
-if under a proxy, and the proxy sent header information):
+if under a proxy (if `XForwardedHeadersSupport` feature is installed),
+and the proxy sent header information):
 
 ```kotlin
 val local : RequestConnectionPoint = request.local  // local information 
@@ -69,7 +70,7 @@ interface RequestConnectionPoint {
     val host: String
     val uri: String
     val method: HttpMethod
-    val remoteHost: String
+    val remoteHost: String // The client IP (normal if or the one from `X-Forwarded-For`)
 }
 ```
 
