@@ -17,10 +17,10 @@
     SimpleJekyllSearch.init({
         searchInput: document.getElementById('search-input'),
         resultsContainer: document.getElementById('search-results-container'),
-        dataSource: '{{ "/search.json" | prepend: site.baseurl }}',
-        searchResultTemplate: '<li><a href="{url}" title="{title}">{section}: {caption}</a></li>',
+        json: '{{ "/search.json" | prepend: site.baseurl }}',
+        searchResultTemplate: '<li><a href="{url}" title="{title}"><span style="color:#777;">{section}:</span> {caption}</a></li>',
         noResultsText: '{{site.data.search.no_results_text}}',
         limit: 10,
-        fuzzy: true,
+        fuzzy: false
     })
 </script>
