@@ -7,8 +7,9 @@ permalink: /features/hsts.html
 
 This feature will add required _HTTP Strict Transport Security_ headers to the request according to the [RFC 6797](https://tools.ietf.org/html/rfc6797).
 
-Please note, that HSTS policy headers are ignored over insecure HTTP connection. For HSTS to take effect it should be
-served over secure (https) connection. 
+HSTS policy headers are ignored over insecure HTTP connection. For HSTS to take effect it should be
+served over secure (https) connection.
+{: .note} 
 
 When browser receives HSTS policy headers, it will no longer attempt to connect to the server with insecure connections 
 for the given period of time. 
