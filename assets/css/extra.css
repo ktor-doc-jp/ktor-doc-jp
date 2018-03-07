@@ -151,12 +151,19 @@ h1 a.anchored-heading:hover {
 .search-results-inline-container .search-results {
     background: white;
     position: absolute;
-    border: 1px solid #aaa;
+    border: 1px solid #f0f0f0;
     width: 100%;
     padding: 4px 8px;
+    border-top: none;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
 
 .search-results-inline-container .search-results li {
+}
+
+.search-results-inline-container .search-results li a {
+    color: #203060;
 }
 
 .search-results-inline-container .search-results:empty {
