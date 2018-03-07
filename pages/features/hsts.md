@@ -1,6 +1,7 @@
 ---
 title: HSTS
 caption: Enable HTTP Strict Transport Security
+keywords: hsts https ssl secure
 section: Features
 permalink: /features/hsts.html
 ---
