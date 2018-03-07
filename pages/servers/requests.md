@@ -39,6 +39,7 @@ intercept(ApplicationCallPipeline.Call) {
 ```
 
 ## Properties of the `ApplicationRequest` interface
+{: #properties}
 
 As part of the request, you can get access to its internal context:
 
@@ -126,6 +127,7 @@ val isMultipart: Boolean = request.isMultipart() // Content-Type matches Multipa
 ```
 
 ## Receiving the payload of the request
+{: #receiving}
 
 `POST`, `PUT` and `PATCH` requests has an associated payload.
 That payload is usually encoded.
@@ -153,12 +155,31 @@ val obj: InputStream = call.receiveStream() // NOTE this is synchronous
 val obj: MultiPartData = ApplicationCall.receiveMultipart()
 ```
 
-To parse a normal form, you can use `receiveParameters`:
+To parse a form urlencoded or with multipart, you can use `receiveParameters`:
 
 ```kotlin
 val post: Parameters = call.receiveParameters()
 ```
 
-## Receiving custom objects and JSON support
+## Receiving custom objects, ContentNegotiation and JSON
+{: #receiving-content-negotitation}
 
-*TODO*
+In order to receive custom objects from the payload,
+you have to use the `ContentNegotiation` feature.
+This is useful for example to receive and send JSON payloads in REST APIs.  
+
+```kotlin
+install(ContentNegotiation) {
+    gson {
+        setDateFormat(DateFormat.LONG)
+        setPrettyPrinting()
+    }
+}
+```
+
+In the case you configure the ContentNegotiation to use gson,
+you will need to include the `ktor-gson` artifact:
+
+```kotlin
+compile "io.ktor:ktor-gson:$ktor_version"
+```
