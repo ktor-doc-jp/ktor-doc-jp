@@ -149,16 +149,16 @@ val obj: T? = call.receiveOrNull<T>()
 And it provide some convenience methods for common types:
 
 ```kotlin
-val obj: ByteReadChannel = call.receiveChannel()
-val obj: String = call.receiveText()
-val obj: InputStream = call.receiveStream() // NOTE this is synchronous
-val obj: MultiPartData = ApplicationCall.receiveMultipart()
+val channel: ByteReadChannel = call.receiveChannel()
+val text: String = call.receiveText()
+val inputStream: InputStream = call.receiveStream() // NOTE this is synchronous
+val multipart: MultiPartData = ApplicationCall.receiveMultipart()
 ```
 
 To parse a form urlencoded or with multipart, you can use `receiveParameters`:
 
 ```kotlin
-val post: Parameters = call.receiveParameters()
+val postParameters: Parameters = call.receiveParameters()
 ```
 
 ## Receiving custom objects, ContentNegotiation and JSON
@@ -183,3 +183,18 @@ you will need to include the `ktor-gson` artifact:
 ```kotlin
 compile "io.ktor:ktor-gson:$ktor_version"
 ```
+
+Then you can do, as an example:
+
+```kotlin
+data class HelloWorld(val hello: String)
+
+routing {
+    post("/route") {
+        val helloWorld = call.receive<HelloWorld>()
+    }
+}
+```
+
+Remember that your classes must be defined top level (outside any other class or function) to be recognized by Gson. 
+{: .note}
