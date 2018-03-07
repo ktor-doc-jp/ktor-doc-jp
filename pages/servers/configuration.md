@@ -1,6 +1,7 @@
 ---
 title: Configuration
-caption: Configuring the Server   
+caption: Configuring the Server
+keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables
 section: Servers
 permalink: /servers/configuration.html
 ---
