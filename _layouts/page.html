@@ -4,11 +4,14 @@ layout: default
 
 {% include header.html %}
 
-
 <div class="doc-wrapper">
     <div class="container">
         <div class="doc-body">
             <div class="doc-content">
+                <div class="page-inline-search" style="margin-bottom:8px;">
+                {% include home/search.html inline="true" %}
+                </div>
+
                 {% if page.caption != null %}
                 <div id="doc-header" class="doc-header">
                     <h1 class="doc-title" id="">{{page.caption}}</h1>

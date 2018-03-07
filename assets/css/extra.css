@@ -142,3 +142,23 @@ h1 a.anchored-heading:hover {
     color: inherit;
     text-decoration: none;
 }
+
+.search-results-inline-container {
+    margin-right: 1em;
+    position: relative;
+}
+
+.search-results-inline-container .search-results {
+    background: white;
+    position: absolute;
+    border: 1px solid #aaa;
+    width: 100%;
+    padding: 4px 8px;
+}
+
+.search-results-inline-container .search-results li {
+}
+
+.search-results-inline-container .search-results:empty {
+    display: none;
+}
