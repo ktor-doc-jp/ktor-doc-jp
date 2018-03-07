@@ -3,6 +3,7 @@ title: HttpsRedirect
 caption: Redirect HTTP requests to HTTPS 
 section: Features
 permalink: /features/https-redirect.html
+keywords: https ssl
 feature:
  - artifact: ktor-server-core
  - fqname: io.ktor.features.HttpsRedirect

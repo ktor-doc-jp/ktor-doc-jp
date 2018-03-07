@@ -1,7 +1,7 @@
 ---
 title: Configuration
 caption: Configuring the Server
-keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables ports application modules ssl host bind
+keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName
 section: Servers
 permalink: /servers/configuration.html
 ---
