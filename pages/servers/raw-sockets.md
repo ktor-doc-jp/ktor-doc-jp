@@ -1,8 +1,8 @@
 ---
 title: Sockets
+caption: Raw Sockets  
 section: Servers
 permalink: /servers/raw-sockets.html
-caption: Raw Sockets  
 ---
 
 In addition to HTTP handling for the [server](/servers/application.html) and the [client](/clients/http-client.html), Ktor supports client and server, TCP and UDP raw sockets.
