@@ -54,7 +54,7 @@ and the proxy sent header information):
 
 ```kotlin
 val local : RequestConnectionPoint = request.local  // local information 
-val origin: RequestConnectionPoint = request.origin // might use proxy headers
+val origin: RequestConnectionPoint = request.origin // local / using proxy headers if `XForwardedHeadersSupport` installed (RFC 7239 https://tools.ietf.org/html/rfc7239)
 val uri: String = request.uri // Short cut for `origin.uri`
 val document: String = request.document() // The last component after '/' of the uri
 val path: String = request.path() // The uri without the query string
@@ -64,13 +64,13 @@ val port: Int = request.port() // Port of request
 
 ```kotlin
 interface RequestConnectionPoint {
-    val scheme: String
+    val scheme: String // HTTP/HTTPS: The provided protocol (local) or `X-Forwarded-Proto`
     val version: String
     val port: Int
-    val host: String
+    val host: String // The provided host (local) or `X-Forwarded-Host`
     val uri: String
     val method: HttpMethod
-    val remoteHost: String // The client IP (normal if or the one from `X-Forwarded-For`)
+    val remoteHost: String // The client IP (the direct ip for `local`, or the redirected one `X-Forwarded-For`)
 }
 ```
 
