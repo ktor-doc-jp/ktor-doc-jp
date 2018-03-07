@@ -34,7 +34,7 @@ You can read further information about the pipeline, in the [lifecycle](/servers
 
 ## ApplicationCall
 
-The `ApplicationCall` provides access to two main properties `ApplicationRequest` and `ApplicationResponse`.
+The `ApplicationCall` provides access to two main properties [`ApplicationRequest`](/servers/requests.html) and [`ApplicationResponse`](/servers/responses.html).
 As their names indicate, they correspond to the incoming request and outgoing response. In addition to these,
 it also provides an `ApplicationEnvironment`, and some useful functions to help response to client requests.
 Given that pipelines can be executed asynchronously, `ApplicationCall` also represents the logical execution
