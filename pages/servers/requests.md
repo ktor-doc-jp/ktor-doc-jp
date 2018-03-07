@@ -152,7 +152,7 @@ And it provide some convenience methods for common types:
 val channel: ByteReadChannel = call.receiveChannel()
 val text: String = call.receiveText()
 val inputStream: InputStream = call.receiveStream() // NOTE this is synchronous
-val multipart: MultiPartData = ApplicationCall.receiveMultipart()
+val multipart: MultiPartData = call.receiveMultipart()
 ```
 
 To parse a form urlencoded or with multipart, you can use `receiveParameters`:
