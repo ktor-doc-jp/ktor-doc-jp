@@ -7,14 +7,14 @@ permalink: /servers/faq.html
 
 In this section we provide answers to the frequent questions you ask us.
 
+Can't find an answer for your question? Head over our #ktor [Kotlin Slack](http://slack.kotlinlang.org/){: target="_blank"} channel,
+and we will try to help you!
+{: .note}
+
 **Table of contents:**
 
 * TOC
 {:toc}
-
-Can't find an answer for your question? Head over our #ktor [Kotlin Slack](http://slack.kotlinlang.org/){: target="_blank"} channel,
-and we will try to help you!
-{: .note}
 
 #### Q. Ktor imports are not being resolved. Imports are in red.
 {: #ktor-artifact }
