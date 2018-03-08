@@ -12,4 +12,12 @@ $(document).ready(function() {
             .html(heading.html())
         );
     });
+    $(".note").filter("[id]")
+        .each(function() {
+            $(this).addClass('anchored-note')
+        })
+        .click(function() {
+            document.location.hash = $(this).attr('id');
+        })
+    ;
 });

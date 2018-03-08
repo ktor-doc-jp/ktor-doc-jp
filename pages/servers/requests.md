@@ -162,6 +162,12 @@ To parse a form urlencoded or with multipart, you can use `receiveParameters`:
 val postParameters: Parameters = call.receiveParameters()
 ```
 
+All the receive methods consume the payload sent by the client.
+They won't throw an exception if you call them several times,
+but subsequent receives will be executed with an empty payload.
+So for example, `receiveText` would return an empty string starting with the second call.
+{: .note #receiving-several-times}
+
 ## Receiving custom objects, ContentNegotiation and JSON
 {: #receiving-content-negotitation}
 

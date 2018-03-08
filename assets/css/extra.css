@@ -110,7 +110,7 @@ a.anchored-heading:hover {
     text-decoration: none;
 }
 
-a.anchored-heading:before {
+a.anchored-heading:before, .anchored-note:before {
     content: '#';
     float: left;
     position: relative;
@@ -119,7 +119,7 @@ a.anchored-heading:before {
     visibility: hidden;
 }
 
-a.anchored-heading:hover:before {
+a.anchored-heading:hover:before, .anchored-note:hover:before {
     visibility: visible;
 }
 
