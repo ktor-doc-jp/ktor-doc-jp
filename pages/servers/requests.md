@@ -204,4 +204,4 @@ routing {
 ```
 
 Remember that your classes must be defined top level (outside any other class or function) to be recognized by Gson. 
-{: .note}
+{: .note #receiving-gson-top-level}
