@@ -20,6 +20,11 @@
         json: '{{ "/search.json" | prepend: site.baseurl }}',
         searchResultTemplate: '<li><a href="{url}" title="{title}"><span style="color:#777;">{section}:</span> {caption}</a></li>',
         noResultsText: '{{site.data.search.no_results_text}}',
+        sortMiddleware: function(a, b) {
+            var astr = String(a.section) + "-" + String(a.caption);
+            var bstr = String(b.section) + "-" + String(b.caption);
+            return astr.localeCompare(bstr)
+        },
         limit: 10,
         fuzzy: false
     })

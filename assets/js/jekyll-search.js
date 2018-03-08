@@ -2,6 +2,8 @@
   * Simple-Jekyll-Search v1.6.0 (https://github.com/christian-fei/Simple-Jekyll-Search)
   * Copyright 2015-2017, Christian Fei
   * Licensed under the MIT License.
+  *
+  * Modified to support the sortMiddleware option.
   */
 
 (function(){
@@ -191,6 +193,7 @@
         opt.fuzzy = _opt.fuzzy || false
         opt.limit = _opt.limit || 10
         opt.searchStrategy = _opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
+        opt.sort = _opt.sort || (function(a, b) { return 0; });
     }
 
     function findMatches(data, crit, strategy, opt) {
@@ -295,6 +298,7 @@
             json: [],
             searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
             templateMiddleware: function () {},
+            sortMiddleware: function(a, b) { return 0; },
             noResultsText: 'No results found',
             limit: 10,
             fuzzy: false,
@@ -329,7 +333,8 @@
 
             _$Repository_4.setOptions({
                 fuzzy: options.fuzzy,
-                limit: options.limit
+                limit: options.limit,
+                sort: options.sortMiddleware
             })
 
             if (_$utils_9.isJSON(options.json)) {
@@ -392,8 +397,9 @@
             if (len === 0) {
                 return appendToResultsContainer(options.noResultsText)
             }
+            var sortedResults = results.sort(opt.sort);
             for (var i = 0; i < len; i++) {
-                appendToResultsContainer(_$Templater_7.compile(results[i]))
+                appendToResultsContainer(_$Templater_7.compile(sortedResults[i]))
             }
         }
 
