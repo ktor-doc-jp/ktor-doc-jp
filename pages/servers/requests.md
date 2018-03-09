@@ -7,7 +7,9 @@ permalink: /servers/requests.html
 
 When handling routes, or directly intercepting the pipeline, you
 get a context with an [ApplicationCall](/servers/application.html#applicationcall).
-That `call` contains a property called `requests` that includes information about the request.
+That `call` contains a property called `request` that includes information about the request.
+
+Also the call itself has some useful convenience properties and methods that rely on the request.
 
 **Table of contents:**
 
@@ -41,7 +43,7 @@ intercept(ApplicationCallPipeline.Call) {
 ## Properties of the `ApplicationRequest` interface
 {: #properties}
 
-As part of the request, you can get access to its internal context:
+As part of the `request`, you can get access to its internal context:
 
 ```kotlin
 val call: ApplicationCall = request.call
@@ -52,15 +54,13 @@ You can also access the information about the connection point (either local, or
 if under a proxy (if `XForwardedHeadersSupport` feature is installed),
 and the proxy sent header information):
 
-```kotlin
-val local : RequestConnectionPoint = request.local  // local information 
-val origin: RequestConnectionPoint = request.origin // local / using proxy headers if `XForwardedHeadersSupport` installed (RFC 7239 https://tools.ietf.org/html/rfc7239)
-val uri: String = request.uri // Short cut for `origin.uri`
-val document: String = request.document() // The last component after '/' of the uri
-val path: String = request.path() // The uri without the query string
-val host: String? = request.host() // The host part without the port 
-val port: Int = request.port() // Port of request
-```
+* `val local : RequestConnectionPoint = request.local` - local information 
+* `val origin: RequestConnectionPoint = request.origin` - local / using proxy headers if `XForwardedHeadersSupport` installed (RFC 7239 https://tools.ietf.org/html/rfc7239)
+* `val uri: String = request.uri` - Short cut for `origin.uri`
+* `val document: String = request.document()` - The last component after '/' of the uri
+* `val path: String = request.path()` - The uri without the query string
+* `val host: String? = request.host()` - The host part without the port 
+* `val port: Int = request.port()` - Port of request
 
 ```kotlin
 interface RequestConnectionPoint {
@@ -76,56 +76,47 @@ interface RequestConnectionPoint {
 
 You can access the `HttpMethod` and the `httpVersion` used for the request:
 
-```kotlin
-val httpMethod: HttpMethod = request.httpMethod
-val httpVersion: String = request.httpVersion
-```
+* `val httpMethod: HttpMethod = request.httpMethod`
+* `val httpVersion: String = request.httpVersion`
 
 If you need to access the query parameters `?param1=value&param2=value` as a collection,
 you can use `queryParameters`. The same happens with `headers: Headers`. Both types
 implement the `StringValues` interface where each key can have a list of Strings associated.
 
-```kotlin
-val queryParameters: Parameters = request.queryParameters
-val queryString: String = request.queryString()
-val headers: Headers = request.headers
+* `val queryParameters: Parameters = request.queryParameters`
+* `val queryString: String = request.queryString()`
+* `val headers: Headers = request.headers`
 
-val param1: String? = request.queryParameters["param1"]
-val repeatedParam: List<String>? = request.queryParameters.getAll("repeatedParam")
-// ...
-```
+* `val param1: String? = request.queryParameters["param1"]`
+* `val repeatedParam: List<String>? = request.queryParameters.getAll("repeatedParam")`
 
 There is a `cookies` property to access the `Cookie` headers sent by the client,
 just as if it was a collection:
 
-```kotlin
-val cookies: RequestCookies = request.cookies
-val mycookie: String? = request.cookies["mycookie"]
-```
+* `val cookies: RequestCookies = request.cookies`
+* `val mycookie: String? = request.cookies["mycookie"]`
 
 And several convenience methods to access headers:
 
-```kotlin
-val header: String? = request.header("HeaderName")
-val contentType: ContentType = request.contentType() // Parsed Content-Tpe 
-val contentCharset: Charset? = request.contentCharset() // Content-Type JVM charset
-val authorization: String? = request.authorization() // Authorization header
-val location: String? = request.location() // Location header
-val accept: String? = request.accept() // Accept header
-val acceptItems: List<HeaderValue> = request.acceptItems() // Parsed items of Accept header
-val acceptEncoding: String? = request.acceptEncoding() // Accept-Encoding header
-val acceptEncodingItems: List<HeaderValue> = request.acceptEncodingItems() // Parsed items of Accept-Encoding header
-val acceptLanguage: String? = request.acceptLanguage() // Accept-Language header
-val acceptLanguageItems: List<HeaderValue> = request.acceptLanguageItems() // Parsed Accept-Language items
-val acceptCharset: String? = request.acceptCharset() // Accept-Charset header
-val acceptCharsetItems: List<HeaderValue> = request.acceptCharsetItems() // Parsed Accept-Charset items
-val userAgent: String? = request.userAgent() // User-Agent header
-val cacheControl: String? = request.cacheControl() // Cache-Control header
-val ranges: RangesSpecifier? = request.ranges() // Parsed Ranges header
+* `val header: String? = request.header("HeaderName")`
+* `val contentType: ContentType = request.contentType()` - Parsed Content-Tpe 
+* `val contentCharset: Charset? = request.contentCharset()` - Content-Type JVM charset
+* `val authorization: String? = request.authorization()` - Authorization header
+* `val location: String? = request.location()` - Location header
+* `val accept: String? = request.accept()` - Accept header
+* `val acceptItems: List<HeaderValue> = request.acceptItems()` - Parsed items of Accept header
+* `val acceptEncoding: String? = request.acceptEncoding()` - Accept-Encoding header
+* `val acceptEncodingItems: List<HeaderValue> = request.acceptEncodingItems()` - Parsed items of Accept-Encoding header
+* `val acceptLanguage: String? = request.acceptLanguage()` - Accept-Language header
+* `val acceptLanguageItems: List<HeaderValue> = request.acceptLanguageItems()` - Parsed Accept-Language items
+* `val acceptCharset: String? = request.acceptCharset()` - Accept-Charset header
+* `val acceptCharsetItems: List<HeaderValue> = request.acceptCharsetItems()` - Parsed Accept-Charset items
+* `val userAgent: String? = request.userAgent()` - User-Agent header
+* `val cacheControl: String? = request.cacheControl()` - Cache-Control header
+* `val ranges: RangesSpecifier? = request.ranges()` - Parsed Ranges header
 
-val isChunked: Boolean = request.isChunked() // Transfer-Encoding: chunked
-val isMultipart: Boolean = request.isMultipart() // Content-Type matches Multipart
-```
+* `val isChunked: Boolean = request.isChunked()` - Transfer-Encoding: chunked
+* `val isMultipart: Boolean = request.isMultipart()` - Content-Type matches Multipart
 
 ## Receiving the payload of the request
 {: #receiving}
@@ -136,25 +127,19 @@ That payload is usually encoded.
 To access the raw bits of the payload, you can use `receiveChannel`, but it is
 directly part of the `call` instead of `call.request`:
 
-```kotlin
-val channel: ByteReadChannel = call.receiveChannel()
-```
+* `val channel: ByteReadChannel = call.receiveChannel()`
 
 The call also supports receiving generic objects:
 
-```kotlin
-val obj: T = call.receive<T>()
-val obj: T? = call.receiveOrNull<T>()
-```
+* `val obj: T = call.receive<T>()`
+* `val obj: T? = call.receiveOrNull<T>()`
 
 And it provide some convenience methods for common types:
 
-```kotlin
-val channel: ByteReadChannel = call.receiveChannel()
-val text: String = call.receiveText()
-val inputStream: InputStream = call.receiveStream() // NOTE this is synchronous
-val multipart: MultiPartData = call.receiveMultipart()
-```
+* `val channel: ByteReadChannel = call.receiveChannel()`
+* `val text: String = call.receiveText()`
+* `val inputStream: InputStream = call.receiveStream()` - NOTE that the InputStream API is synchronous and will block
+* `val multipart: MultiPartData = call.receiveMultipart()`
 
 To parse a form urlencoded or with multipart, you can use `receiveParameters`:
 
