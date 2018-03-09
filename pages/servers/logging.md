@@ -1,7 +1,7 @@
 ---
 title: Logging
 caption: Logging in Ktor
-section: Features
+section: Servers
 permalink: /servers/logging.html
 status: todo
 ---
