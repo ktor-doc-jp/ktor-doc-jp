@@ -4,6 +4,9 @@ caption: Enable HTTP Strict Transport Security
 keywords: hsts https ssl secure
 section: Features
 permalink: /features/hsts.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.HSTS
 ---
 
 This feature will add required _HTTP Strict Transport Security_ headers to the request according to the [RFC 6797](https://tools.ietf.org/html/rfc6797).

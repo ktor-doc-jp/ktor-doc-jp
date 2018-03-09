@@ -3,6 +3,9 @@ title: Compression
 caption: Enable HTTP Compression Facilities
 section: Features
 permalink: /features/compression.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.Compression
 ---
 
 Compression feature adds ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce

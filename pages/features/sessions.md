@@ -3,6 +3,9 @@ title: Sessions
 caption: Handle Conversations with Sessions
 section: Features
 permalink: /features/sessions.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.sessions.Sessions
 ---
 
 Sessions are means of establishing conversational context into otherwise stateless HTTP nature. 

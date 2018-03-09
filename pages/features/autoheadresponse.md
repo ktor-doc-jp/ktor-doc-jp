@@ -3,6 +3,9 @@ title: Auto Head Response
 caption: Enable Automatic HEAD Responses
 section: Features
 permalink: /features/autoheadresponse.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.AutoHeadResponse
 ---
 
 Ktor can automatically provide responses to `HEAD` requests for existing routes that have the `GET` verb defined. 

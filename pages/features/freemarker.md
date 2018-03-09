@@ -3,6 +3,9 @@ title: Freemarker
 caption: Using Freemarker Templates
 section: Features
 permalink: /features/freemarker.html
+feature:
+    artifact: io.ktor:ktor-freemarker:$ktor_version
+    class: io.ktor.freemarker.FreeMarker
 ---
 
 Ktor includes support for [FreeMarker](http://freemarker.org/) templates through the FreeMarker

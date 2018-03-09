@@ -3,6 +3,9 @@ title: Static Content
 caption: Serving Static Content   
 section: Features
 permalink: /features/static-content.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.routing.Routing
 ---
 
 Ktor has built-in support for serving static content. This can come in useful when wanting to serve style sheets, scripts, images, etc. 

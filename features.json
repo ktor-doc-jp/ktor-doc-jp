@@ -1,0 +1,16 @@
+---
+title: features
+layout: none
+search: exclude
+---
+
+[
+{% for page in site.pages %}{% if page.feature != null %}
+{
+"title": "{{ page.title | escape }}",
+"caption": "{{ page.caption | escape }}",
+"artifact": "{{ page.feature.artifact | escape }}",
+"class": "{{ page.feature.class | escape }}",
+"documentation": "{{ page.url | absolute_url }}"
+},{%endif%}{% endfor %} {}
+]

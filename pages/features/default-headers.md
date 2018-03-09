@@ -3,6 +3,9 @@ title: Default Headers
 caption: Send Headers Automatically
 section: Features
 permalink: /features/default-headers.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.DefaultHeaders
 ---
 
 This feature adds default set of headers to HTTP responses. List of headers is customizable, and `Date` header is cached

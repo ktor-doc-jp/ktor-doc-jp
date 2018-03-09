@@ -4,6 +4,9 @@ caption: Authenticating Clients
 section: Features
 permalink: /features/authentication.html
 subsection_tag: Authentication
+feature:
+    artifact: io.ktor:ktor-auth:$ktor_version
+    class: io.ktor.auth.Authentication
 ---
 
 {::options toc_levels="1..2" /}

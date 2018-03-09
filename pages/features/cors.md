@@ -3,6 +3,9 @@ title: CORS
 caption: Enable Cross-Origin Resource Sharing (CORS) 
 section: Features
 permalink: /features/cors.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.CORS
 ---
 
 Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).

@@ -3,6 +3,9 @@ title: Conditional Headers
 caption: Easy '304 Not Modified' Responses
 section: Features
 permalink: /features/conditional-headers.html
+feature:
+    artifact: io.ktor:ktor-server-core:$ktor_version
+    class: io.ktor.features.ConditionalHeaders
 ---
 
 ConditionalHeaders feature adds ability to avoid sending content if client already has same content. It does so by
