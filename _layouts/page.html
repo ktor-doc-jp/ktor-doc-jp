@@ -7,6 +7,13 @@ layout: default
 <div class="doc-wrapper">
     <div class="container">
         <div class="doc-body">
+            <div class="doc-sidebar" style="position: absolute; display: inline-block;">
+                <nav id="doc-nav">
+                    <ul id="doc-menu" class="nav doc-menu hidden-xs">
+                        {% include category-nav.html %}
+                    </ul>
+                </nav>
+            </div>
             <div class="doc-content">
                 {% include home/search.html inline="true" %}
 
@@ -24,13 +31,6 @@ layout: default
                 {% else %}
                 {{ content }}
                 {% endif %}
-            </div>
-            <div class="doc-sidebar">
-                <nav id="doc-nav">
-                    <ul id="doc-menu" class="nav doc-menu hidden-xs" data-spy="affix" style="margin-top:2em;">
-                        {% include category-nav.html %}
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
