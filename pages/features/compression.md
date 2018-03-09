@@ -15,6 +15,8 @@ size of the response.
 install(Compression)
 ```
 
+{% include feature/feature.html %}
+
 ### Configuration
 
 When configuration block is omitted, the default configuration is used. It includes

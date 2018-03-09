@@ -8,3 +8,6 @@ feature:
     class: io.ktor.features.CachingHeaders
 status: todo
 ---
+
+{% include feature/feature.html %}
+

@@ -22,6 +22,8 @@ to keep the login information between requests.
 * TOC
 {:toc}
 
+{% include feature/feature.html %}
+
 ## Basic usage
 
 Ktor defines two concepts: credentials and principals.

@@ -15,6 +15,8 @@ https counterpart before processing the call.
 By default the redirection is a `301 Moved Permanently`,
 but can be configured to be a `302 Found` redirect.
 
+{% include feature/feature.html %}
+
 ### Usage
 
 ```kotlin

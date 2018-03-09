@@ -10,6 +10,8 @@ feature:
 
 Ktor has built-in support for serving static content. This can come in useful when wanting to serve style sheets, scripts, images, etc. 
 
+{% include feature/feature.html %}
+
 ### Specifying Files and Folders
 
 Using the `static` function we can tell Ktor that we want certain URIs to be treated as static contents and also define where the contents resides. All content is relative to the current working directory. 

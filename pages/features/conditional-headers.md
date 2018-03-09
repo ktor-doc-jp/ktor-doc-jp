@@ -17,6 +17,8 @@ properties to what client indicates it is having. If conditions allow it entire 
 install(ConditionalHeaders)
 ```
 
+{% include feature/feature.html %}
+
 ### Configuration
 
 This feature doesn't have any configuration object, but configuration script is executed if present.

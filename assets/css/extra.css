@@ -47,6 +47,9 @@ code.highlighter-rouge {
 .note.api:before { content: "API"; }
 .note.performance:before { content: "PERFORMANCE NOTE"; font-weight: bold; }
 .note.security:before { content: "SECURITY NOTE"; font-weight: bold; }
+.note.artifact-small {
+    font-size: 0.8em;
+}
 
 .compact {
     position: relative;

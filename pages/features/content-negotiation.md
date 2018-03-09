@@ -9,4 +9,5 @@ feature:
 status: todo
 ---
 
+{% include feature/feature.html %}
 

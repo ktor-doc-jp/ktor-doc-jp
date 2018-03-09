@@ -10,6 +10,8 @@ feature:
 
 Ktor can automatically provide responses to `HEAD` requests for existing routes that have the `GET` verb defined. 
 
+{% include feature/feature.html %}
+
 ### Usage
 
 To enable automatic `HEAD` responses, install the `AutoHeadResponse` feature

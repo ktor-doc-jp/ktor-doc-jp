@@ -18,6 +18,8 @@ download managers, or in unreliable networks.
 
 It is specially useful along the [Static Content Feature](/features/static-content.html).
 
+{% include feature/feature.html %}
+
 ## Usage
 
 To install the PartialContent feature with the default configuration:

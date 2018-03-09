@@ -18,6 +18,8 @@ served over secure (https) connection.
 When browser receives HSTS policy headers, it will no longer attempt to connect to the server with insecure connections 
 for the given period of time. 
 
+{% include feature/feature.html %}
+
 ### Usage
 
 ```kotlin

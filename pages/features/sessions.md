@@ -15,6 +15,8 @@ and more. Sessions are typically implemented by employing `Cookies`, but could a
 stateless when entire data object goes back and force between client and server, or as server-side storage when only session ID 
 is traveling back and forth and associated data is retrieved at server. 
 
+{% include feature/feature.html %}
+
 ### Usage
 
 ```kotlin

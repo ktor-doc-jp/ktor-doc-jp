@@ -8,3 +8,6 @@ feature:
     class: io.ktor.server.engine.ShutDownUrl
 status: todo
 ---
+
+{% include feature/feature.html %}
+

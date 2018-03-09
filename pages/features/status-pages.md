@@ -23,6 +23,8 @@ There are three main configuration options provided to StatusPages:
 2. `status` - Configures response to status code value
 3. `statusFile` - Configures standard file response from classpath
 
+{% include feature/feature.html %}
+
 ### Exceptions 
 
 The exception configuration can provide simple interception patterns for calls that result in a thrown exception. In the most basic case, a 500 HTTP status code can be configured for any exception.

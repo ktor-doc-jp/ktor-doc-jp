@@ -8,3 +8,6 @@ feature:
     class: io.ktor.features.CallLogging
 status: todo
 ---
+
+{% include feature/feature.html %}
+
