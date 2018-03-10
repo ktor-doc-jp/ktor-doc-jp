@@ -22,6 +22,7 @@ or a close or ping/pong message. Frames can be marked as incomplete or final.
 {:toc}
 
 ## Installing
+{: #installing}
 
 In order to use the WebSockets functionality you first have to install it: 
 
@@ -41,6 +42,7 @@ install(WebSockets) {
 ```
 
 ## Usage
+{: #usage}
 
 Once installed, you can define `webSocket` routes for the [routing](/features/routing.html) feature:
 
@@ -53,6 +55,7 @@ instance as the receiver. That interface defines an `incoming` (ReceiveChannel) 
 property, as well as a `close` method. Check the full [WebSocketSession](#WebSocketSession) for more information.
 
 ### Usage as an suspend actor
+{: #actor}
 
 ```kotlin
 routing {
@@ -79,6 +82,7 @@ a leak.
 {: .note}
 
 ### Usage as a Channel
+{: #channel}
 
 Since the `incoming` property is a ReceiveChannel, you can use it with its stream-like interface:
 
@@ -97,6 +101,7 @@ routing {
 ``` 
 
 ## Interface
+{: #interface}
 
 ### The WebSocketSession interface
 {: #WebSocketSession}
