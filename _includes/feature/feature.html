@@ -2,6 +2,10 @@
     <div id="artifact">
         This feature is defined
         in the class <code class="highlighter-rouge">{{ page.feature.class }}</code>
-        in the artifact <code class="highlighter-rouge">{{ page.feature.artifact }}</code>.
+        {% if page.feature.artifact == 'io.ktor:ktor-server-core:$ktor_version' %}
+            and no additional artifacts are required.
+        {% else %}
+            in the artifact <code class="highlighter-rouge">{{ page.feature.artifact }}</code>.
+        {% endif %}
     </div>
 </div>
