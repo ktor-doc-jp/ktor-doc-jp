@@ -6,7 +6,7 @@ permalink: /features/https-redirect.html
 keywords: https ssl
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
-    fqname: io.ktor.features.HttpsRedirect
+    class: io.ktor.features.HttpsRedirect
 ---
 
 This feature will make all the affected http calls to perform a redirect to its
