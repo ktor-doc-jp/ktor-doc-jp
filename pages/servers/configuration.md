@@ -272,7 +272,8 @@ General switches and parameters:
 |                 | `ktor.deployment.callGroupSize`        | `parallelism`         | Event group size running application code |
 |                 | `ktor.deployment.connectionGroupSize`  | `parallelism / 2 + 1` | Event group size accepting connections |
 |                 | `ktor.deployment.workerGroupSize`      | `parallelism / 2 + 1` | Event group size for processing connections, parsing messages and doing engine's internal work |
-{: .styled-table}
+|                 | `ktor.deployment.shutdown.url`         |                       | URL for shutdown the application when defined. Internally uses the [ShutDownUrl feature](/features/shutdown-url.html) |
+{: .styled-table #general }
 
 Required when SSL port is defined:
 
@@ -283,7 +284,8 @@ Required when SSL port is defined:
 |                 | `ktor.security.ssl.keyAlias`           | `mykey`          | Alias for the SSL key store |
 |                 | `ktor.security.ssl.keyStorePassword`   | `null`           | Password for the SSL key store |
 |                 | `ktor.security.ssl.privateKeyPassword` | `null`           | Password for the SSL private key |
-{: .styled-table}
+{: .styled-table #ssql}
+
 
 You can use `-P:` to specify parameters that don't have a specific switch. For example:
 `-P:ktor.deployment.callGroupSize=7`.
