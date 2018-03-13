@@ -11,16 +11,32 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{ "/assets/js/jekyll-search.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ '/assets/js/jekyll-search.js' | prepend: site.baseurl }}"></script>
 
 <script type="text/javascript">
+    function sectionPriority(entry) {
+        switch (String(entry.section).toLowerCase()) {
+            case 'quickstart': return 0;
+            case 'server': return 1;
+            case 'client': return 2;
+            case 'features': return 3;
+            case 'advanced': return 4;
+            case 'samples': return 5;
+            default: return 6;
+        }
+    }
+
     SimpleJekyllSearch.init({
         searchInput: document.getElementById('search-input'),
         resultsContainer: document.getElementById('search-results-container'),
         json: '{{ "/search.json" | prepend: site.baseurl }}',
-        searchResultTemplate: '<li><a href="{url}" title="{title}"><span style="color:#777;">{section}:</span> {caption}</a></li>',
+        searchResultTemplate: '<li><a href="{url}" title="{title}" style="display:block;width:100%;"><span style="color:#777;">{section}:</span> {caption}</a></li>',
         noResultsText: '{{site.data.search.no_results_text}}',
         sortMiddleware: function(a, b) {
+            var apriority = sectionPriority(a);
+            var bpriority = sectionPriority(b);
+            if (apriority > bpriority) return -1;
+            if (apriority < bpriority) return +1;
             var astr = String(a.section) + "-" + String(a.caption);
             var bstr = String(b.section) + "-" + String(b.caption);
             return astr.localeCompare(bstr)
