@@ -42,3 +42,13 @@ You can use `Runtime.getRuntime().addShutdownHook` JVM's facility.
 The property `call.request.origin` gives connection information about the original caller (the proxy)
 if the proxy provides proper headers and the feature `XForwardedHeadersSupport` is installed.
 
+#### How do I get the client IP behind a proxy?
+{: #proxy-ip }
+
+The property `call.request.origin` gives connection information about the original caller (the proxy)
+if the proxy provides proper headers and the feature `XForwardedHeadersSupport` is installed.
+
+#### What is the proper way to pronounce ktor?
+{: #pronounce }
+
+> kay-tor
