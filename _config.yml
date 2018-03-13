@@ -44,6 +44,12 @@ kramdown:
  smart_quotes: lsquo,rsquo,ldquo,rdquo
  syntax_highlighter: rouge
 
+plugins:
+  - jekyll-redirect-from
+
+whitelist:
+  - jekyll-redirect-from
+
 # these are defaults used for the frontmatter for these file types
 defaults:
   -

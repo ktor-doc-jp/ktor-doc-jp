@@ -1,8 +1,11 @@
 ---
 title: FAQ
 caption: Frequently Asked Questions 
-section: Servers
-permalink: /servers/faq.html
+section: Quick Start
+permalink: /quickstart/faq.html
+priority: 100
+redirect_from:
+  - /servers/faq.html
 ---
 
 In this section we provide answers to the frequent questions you ask us.
