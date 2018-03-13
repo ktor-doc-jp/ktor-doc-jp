@@ -1,6 +1,6 @@
 ---
 title: Gson
-caption: JSON support
+caption: JSON support using Gson
 section: Features
 permalink: /features/gson.html
 feature:
