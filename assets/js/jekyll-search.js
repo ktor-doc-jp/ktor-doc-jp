@@ -397,7 +397,8 @@
             if (len === 0) {
                 return appendToResultsContainer(options.noResultsText)
             }
-            var sortedResults = results.sort(opt.sort);
+            var sortedResults = results.slice()
+            sortedResults.sort(opt.sort)
             for (var i = 0; i < len; i++) {
                 appendToResultsContainer(_$Templater_7.compile(sortedResults[i]))
             }
