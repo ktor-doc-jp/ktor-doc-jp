@@ -1,5 +1,5 @@
 ---
-title: Gson
+title: Jackson
 caption: JSON support using Jackson
 section: Features
 permalink: /features/jackson.html
