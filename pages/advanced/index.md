@@ -2,7 +2,8 @@
 title: Advanced
 section: Advanced
 permalink: /advanced/index.html
-caption: Under the Hood  
+caption: Under the Hood
+priority: -1
 ---
 
 This area of the web site is designated for people familiar with the basics of developing applications with Ktor.

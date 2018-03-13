@@ -5,6 +5,7 @@ section: Quick Start
 permalink: /quickstart/index.html
 search: exclude
 ktor_version: 0.9.1
+priority: -1
 ---
 
 ![](/assets/images/ktor_logo.png){:style="height:4em;"}

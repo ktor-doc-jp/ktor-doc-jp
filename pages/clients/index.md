@@ -2,7 +2,8 @@
 title: Clients
 section: Clients
 permalink: /clients/index.html
-caption: Clients 
+caption: Clients
+priority: -1 
 ---
 
 In addition to server applications, Ktor supports asynchronous clients

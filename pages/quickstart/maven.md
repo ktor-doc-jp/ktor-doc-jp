@@ -3,6 +3,7 @@ title: Maven
 caption: Setting up Maven Build
 section: Quick Start
 permalink: /quickstart/maven.html
+priority: 0
 ---
 
 Maven is a build automation tool used primarily for Java projects. It reads project configuration from `pom.xml` files. 

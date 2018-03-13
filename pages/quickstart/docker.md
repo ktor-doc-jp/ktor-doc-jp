@@ -3,6 +3,7 @@ title: Docker
 caption: Creating Docker Container
 section: Quick Start
 permalink: /quickstart/docker.html
+priority: 0
 ---
 
 [Docker](https://www.docker.com) is a container platform, a way to package software in a format that can run isolated on a shared operating system.

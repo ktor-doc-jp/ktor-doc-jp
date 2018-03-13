@@ -3,6 +3,7 @@ title: Gradle
 caption: Setting up Gradle Build
 section: Quick Start
 permalink: /quickstart/gradle.html
+priority: 0
 ---
 
 ## Basic Kotlin Gradle build file

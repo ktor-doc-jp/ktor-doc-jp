@@ -1,11 +1,14 @@
 {% if page.section != null %}
-{% for other in site.pages %}
-{% if other.section == page.section and other.section != other.title %}
+{% assign section_pages = site.pages | where: 'section', page.section %}
+{% assign sorted_section_pages = section_pages | sort: 'priority', 'last' %}
+{% for other in sorted_section_pages %}
 <li
-        {% if (other.url == page.url) %}class="active"{% endif %}
+        class="
+        {% if (other.url == page.url) %}active{% endif %}
+        {% if (other.section == other.title) %}section-main{% endif %}
+        "
 >
     <a href="{{ other.url | prepend: site.baseurl }}">{{ other.title }}</a>
 </li>
-{% endif %}
 {% endfor %}
 {% endif %}

@@ -3,11 +3,17 @@ title: Features
 caption: Extend Application Capabilities 
 section: Features
 permalink: /features/index.html
+priority: -1
 ---
 
 A Ktor application typically consists of a series of features. You can think of features as functionality 
 that is injected into the request and response pipeline. Usually an application would have a series of features such as `DefaultHeaders` which add headers to every outgoing
 response, `Routing` which allows us to define routes to handle requests, etc.
+
+**Table of contents:**
+
+* TOC
+{:toc}
 
 ### Features
 

@@ -3,6 +3,7 @@ title: Application
 caption: Creating First Application
 section: Quick Start
 permalink: /quickstart/application.html
+priority: 0
 ---
 
 This tutorial will guide you through the steps on how to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
