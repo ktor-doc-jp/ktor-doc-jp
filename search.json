@@ -7,10 +7,10 @@ search: exclude
 [
 {% for page in site.pages %}{% if page.search != "exclude" and page.caption != null %}
 {
-"title": "{{ page.title | escape }}",
-"caption": "{{ page.caption | escape }}",
-"section": "{{ page.section | escape }}",
-"keywords": "{{ page.keywords }}",
-"url": "{{ page.url | prepend: site.baseurl }}"
+"title": "{{ page.title | json }}",
+"caption": "{{ page.caption | json }}",
+"section": "{{ page.section | json }}",
+"keywords": "{{ page.keywords | json }}",
+"url": "{{ page.url | prepend: site.baseurl | json }}"
 },{%endif%}{% endfor %} {}
 ]

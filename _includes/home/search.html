@@ -14,9 +14,45 @@
 </div>
 </form>
 
-<script type="text/javascript" src="{{ '/assets/js/jekyll-search.js' | prepend: site.baseurl }}"></script>
-
 <script type="text/javascript">
+    String.prototype.normalizeForSearch = function() {
+        return this.toLowerCase().replace(/[\s\/,.;\-]+/g, '');
+    };
+
+    String.prototype.escapeHTML = function() {
+        return String(this)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
+
+    Array.prototype.sorted = function(method) {
+        let out = this.slice();
+        out.sort(method);
+        return out;
+    };
+
+    function comparerBy(selector) {
+        return function(a, b) {
+            let ra = selector(a), rb = selector(b);
+            if (ra < rb) return -1;
+            if (ra > rb) return +1;
+            return 0;
+        }
+    }
+
+    function composeComparers(...comparers) {
+        return function(a, b) {
+            for (const comparer of comparers) {
+                const result = comparer(a, b);
+                if (result !== 0) return result;
+            }
+            return 0;
+        }
+    }
+
     function sectionPriority(section) {
         switch (String(section).toLowerCase().replace(/\s+/, '')) {
             case 'quickstart': return 0;
@@ -30,59 +66,88 @@
         return 7;
     }
 
-    function escapeHtml(unsafe) {
-        return String(unsafe)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+    async function fetchSearch() {
+        //console.log('Fetching /search.json'.trim());
+        let res = await fetch("/search.json");
+        let results = await res.json();
+        for (const result of results) {
+            result.section = String(result.section);
+            result.title = String(result.title);
+            result.caption = String(result.caption);
+            result.search = String('' + result.section + ' ' + result.title + ' ' + result.caption + ' ' + result.keywords).normalizeForSearch();
+        }
+        return results;
     }
 
-    function trim(str) {
-        return String(str).replace(/^\s+/, '').replace(/\s+$/, '');
+    let fetchSearchPromise = null;
+
+    async function fetchSearchOnce() {
+        fetchSearchPromise = fetchSearchPromise || fetchSearch();
+        return await fetchSearchPromise;
     }
 
-    window.jekyllSearch = SimpleJekyllSearch.init({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results-container'),
-        json: '{{ "/search.json" | prepend: site.baseurl }}',
-        searchResultTemplate: '<li><a href="{url}" title="{title}" style="display:block;width:100%;"><span style="color:#777;">{section}:</span> {title} - {caption}</a></li>',
-        //noResultsText: '<li>No results found.</li>',
-        noResultsText: '',
-        prependTextFunc: function(query) {
-            var out = [];
-            //$(".doc-content").find("h1,h2,h3,h4,h5,h6").filter("[id]").each(function() {
-            $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function() {
-                var id = $(this).attr('id');
-                var headerText = $(this).text();
+    // Prefetch
+    fetchSearchOnce();
 
-                var queryLC = String(query).toLowerCase().replace(/#/g, '').replace(/[ ,.;\-]+/g, '-');
-                var searchTextLC = (headerText.toLowerCase() + ' ' + id.toLowerCase()).replace(/[ ,.;\-]+/g, '-');
+    async function updateSearchResults() {
+        let query = $('#search-input').val().trim();
+        let containsHash = query.indexOf('#') >= 0;
+        let querySearch = query.normalizeForSearch();
+        let querySearchForSection = querySearch.replace(/#/g, '');
+        let searchResults = $('#search-results-container');
+        let results = await fetchSearchOnce();
+        let lines = [];
+        let filteredResults = results
+            .sorted(composeComparers(
+                comparerBy((it) => sectionPriority(it.section)),
+                comparerBy((it) => String(it.search))
+            ))
+            .filter((it) => String(it.search).match(querySearch))
+            .slice(0, 10)
+        ;
 
-                if (searchTextLC.match(queryLC)) {
-                    //console.log('matches: ', headerText, this);
-                    out.push("<li><a href='#" + escapeHtml(id) + "' onclick='gotoIdClearSearch(\"" + escapeHtml(id) + "\");'># " + escapeHtml(headerText) + "</a></li>");
-                }
-            });
-            //console.log();
-            return out.join("\n");
-        },
-        appendTextFunc: function(query) {
-            //if (query.match('#')) return '';
-            return '<li class="google-search"><a href="https://www.google.com/search?q=site:ktor.io+' + escapeHtml(encodeURIComponent(trim(query))) + '">Search <code>' + escapeHtml(trim(query)) + '</code> in google site:ktor.io</a></li>'
-        },
-        sortMiddleware: function(a, b) {
-            var bpriority = sectionPriority(a.section);
-            var apriority = sectionPriority(b.section);
-            var pri = bpriority - apriority;
-            if (pri != 0) return pri;
-            var astr = String(a.caption);
-            var bstr = String(b.caption);
-            return astr.localeCompare(bstr)
-        },
-        limit: 10,
-        fuzzy: false
+        $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function () {
+            const id = $(this).attr('id');
+            const headerText = $(this).text();
+
+            const searchTextLC = `${headerText} ${id}`.normalizeForSearch();
+
+            if (searchTextLC.match(querySearchForSection)) {
+                lines.push(`<a href='#${id.escapeHTML()}'># ${headerText.escapeHTML()}</a>`);
+            }
+        });
+
+        for (const result of filteredResults) {
+            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.section.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
+        }
+        if (query !== '' && !containsHash) {
+            lines.push(`<a href="https://www.google.com/search?q=site:ktor.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ktor.io</a>`)
+        }
+        let outLines = [];
+        for (let n = 0; n < lines.length; n++) {
+            const line = lines[n];
+            let active = (n === 0) ? ' active' : '';
+            let google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
+            outLines.push(`<li class="${active}${google}">${line}</li>`);
+        }
+        if (outLines.length === 0) {
+            outLines.push('<li>No results found</li>');
+        }
+        searchResults.html(outLines.join(''));
+    }
+
+    $('#search-input').on('focus', function() {
+        //console.log('focus');
+        //search-results-container
+        updateSearchResults();
+    }).on('change', function() {
+        //console.log('change');
+        updateSearchResults();
+    }).on('keyup', function(e) {
+        //console.log('keyup');
+        if ([13, 16, 20, 37, 38, 39, 40, 91].indexOf(e.which) < 0) {
+            updateSearchResults();
+        }
     });
 
     function gotoIdClearSearch(id) {

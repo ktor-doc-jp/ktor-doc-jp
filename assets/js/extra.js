@@ -26,8 +26,8 @@ $(document).ready(function() {
     //    console.log('keypress', e);
     //});
     $('#search-input').on('keydown', function(e) {
-        var search_container = $('.search-results');
-        var active = search_container.find('li.active');
+        const search_container = $('.search-results');
+        let active = search_container.find('li.active');
         //console.log(active);
         //console.log('keydown', active);
         switch (e.keyCode) {
@@ -37,13 +37,8 @@ $(document).ready(function() {
                     // Do nothing, do the normal behaviour.
                 } else {
                     e.preventDefault();
-                    var alink = active.find('a');
-                    var href = String(alink.attr('href'));
-                    if (href.substr(0, 1) === '#') {
-                        alink.click();
-                    } else {
-                        document.location.href = alink.attr('href');
-                    }
+                    $('#search-input').val('').blur();
+                    document.location.href = active.find('a').attr('href');
                 }
                 break;
             case 27: // ESC
