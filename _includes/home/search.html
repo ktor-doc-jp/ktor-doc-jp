@@ -58,10 +58,9 @@
                 var headerText = $(this).text();
 
                 var queryLC = String(query).toLowerCase();
-                var idLC = id.toLowerCase()
-                var headerTextLC = headerText.toLowerCase();
+                var searchTextLC = '# ' + headerText.toLowerCase() + ' # ' + id.toLowerCase();
 
-                if (headerTextLC.match(queryLC) || idLC.match(queryLC)) {
+                if (searchTextLC.match(queryLC)) {
                     //console.log('matches: ', headerText, this);
                     out.push("<li><a href='#" + escapeHtml(id) + "' onclick='gotoIdClearSearch(\"" + escapeHtml(id) + "\");'># " + escapeHtml(headerText) + "</a></li>");
                 }
