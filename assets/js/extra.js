@@ -37,8 +37,8 @@ $(document).ready(function() {
                     // Do nothing, do the normal behaviour.
                 } else {
                     e.preventDefault();
-                    $('#search-input').val('').blur();
                     document.location.href = active.find('a').attr('href');
+                    $('#search-input').val('').blur();
                 }
                 break;
             case 27: // ESC
@@ -103,7 +103,7 @@ $(document).ready(function() {
         clearTimeout(hideTimeout);
         hideTimeout = setTimeout(function() {
             $('.search-results-inline-container').css('display', 'none');
-        }, 20);
+        }, 250);
         $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
     });
 
