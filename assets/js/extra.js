@@ -54,7 +54,7 @@ $(document).ready(function() {
                 }
 
                 e.preventDefault();
-                //$(this).blur();
+                $(this).blur();
 
                 break;
             case 38: // UP
