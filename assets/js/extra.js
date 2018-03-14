@@ -98,9 +98,17 @@ $(document).ready(function() {
             }
         }
     });
+    var hideTimeout = 0;
     $('#search-input').on('focus', function() {
+        clearTimeout(hideTimeout);
+        $('.search-results-inline-container').css('display', 'block');
         $(this).attr('placeholder', $(this).attr('data-placeholder-focus'));
+        $(this).select();
     }).on('blur', function() {
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(function() {
+            $('.search-results-inline-container').css('display', 'none');
+        }, 20);
         $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
     });
 });
