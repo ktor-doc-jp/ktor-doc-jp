@@ -1,6 +1,7 @@
 {% if page.section != null %}
 {% assign section_pages = site.pages | where: 'section', page.section %}
-{% assign sorted_section_pages = section_pages | sort: 'priority', 'last' %}
+{% assign sorted_section_pages = section_pages | sort: 'title', 'last' %}
+{% assign sorted_section_pages = sorted_section_pages | sort: 'priority', 'last' %}
 {% for other in sorted_section_pages %}
 <li
         class="
