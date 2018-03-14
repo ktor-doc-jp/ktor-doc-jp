@@ -1,7 +1,7 @@
 <form action="https://www.google.com/search" method="get">
 <div class="page-inline-search" style="margin-bottom:8px;">
     <div class="input-group">
-        <input name="q" id="search-input" type="text" class="form-control" placeholder="Search... (press 's' to focus)" data-placeholder-focus="Search... (use '↑', '↓' and '⏎' to select results)" data-placeholder-blur="Search... (press 's' to focus)" autocomplete="off">
+        <input name="q" id="search-input" type="text" class="form-control" placeholder="Search... (press 's' to focus, or '#' for sections)" data-placeholder-focus="Search... (use '↑', '↓' and '⏎' to select results)" data-placeholder-blur="Search... (press 's' to focus, or '#' for sections)" autocomplete="off">
         <input type="hidden" name="as_sitesearch" value="ktor.io" />
         <div class="input-group-btn">
             <button class="btn btn-default form-control" type="submit"><i class="glyphicon glyphicon-search"></i></button>
@@ -57,8 +57,8 @@
                 var id = $(this).attr('id');
                 var headerText = $(this).text();
 
-                var queryLC = String(query).toLowerCase();
-                var searchTextLC = '# ' + headerText.toLowerCase() + ' # ' + id.toLowerCase();
+                var queryLC = String(query).toLowerCase().replace(/#/g, '');
+                var searchTextLC = headerText.toLowerCase() + ' ' + id.toLowerCase();
 
                 if (searchTextLC.match(queryLC)) {
                     //console.log('matches: ', headerText, this);

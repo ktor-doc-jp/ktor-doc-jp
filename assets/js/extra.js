@@ -91,6 +91,11 @@ $(document).ready(function() {
                 $('#search-input').focus();
                 e.preventDefault();
             }
+            if (e.key === '#') {
+                $('#search-input').focus();
+                $('#search-input').val('#');
+                e.preventDefault();
+            }
         }
     });
     $('#search-input').on('focus', function() {
