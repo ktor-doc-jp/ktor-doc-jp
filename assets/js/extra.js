@@ -106,6 +106,90 @@ $(document).ready(function() {
         }, 20);
         $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
     });
+
+    async function fetchSearch() {
+        //console.log('Fetching /search.json'.trim());
+        let res = await fetch("/search.json");
+        let results = await res.json();
+        for (const result of results) {
+            result.section = String(result.section);
+            result.title = String(result.title);
+            result.caption = String(result.caption);
+            result.search = String('' + result.section + ' ' + result.title + ' ' + result.caption + ' ' + result.keywords).normalizeForSearch();
+        }
+        return results;
+    }
+
+    let fetchSearchPromise = null;
+
+    async function fetchSearchOnce() {
+        fetchSearchPromise = fetchSearchPromise || fetchSearch();
+        return await fetchSearchPromise;
+    }
+
+// Prefetch
+    fetchSearchOnce();
+
+    async function updateSearchResults() {
+        let query = $('#search-input').val().trim();
+        let containsHash = query.indexOf('#') >= 0;
+        let querySearch = query.normalizeForSearch();
+        let querySearchForSection = querySearch.replace(/#/g, '');
+        let searchResults = $('#search-results-container');
+        let results = await fetchSearchOnce();
+        let lines = [];
+        let filteredResults = results
+            .sorted(composeComparers(
+                comparerBy((it) => sectionPriority(it.section)),
+                comparerBy((it) => String(it.search))
+            ))
+            .filter((it) => String(it.search).match(querySearch))
+            .slice(0, 10)
+        ;
+
+        $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function () {
+            const id = $(this).attr('id');
+            const headerText = $(this).text();
+
+            const searchTextLC = `${headerText} ${id}`.normalizeForSearch();
+
+            if (searchTextLC.match(querySearchForSection)) {
+                lines.push(`<a href='#${id.escapeHTML()}'># ${headerText.escapeHTML()}</a>`);
+            }
+        });
+
+        for (const result of filteredResults) {
+            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.section.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
+        }
+        if (query !== '' && !containsHash) {
+            lines.push(`<a href="https://www.google.com/search?q=site:ktor.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ktor.io</a>`)
+        }
+        let outLines = [];
+        for (let n = 0; n < lines.length; n++) {
+            const line = lines[n];
+            let active = (n === 0) ? ' active' : '';
+            let google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
+            outLines.push(`<li class="${active}${google}">${line}</li>`);
+        }
+        if (outLines.length === 0) {
+            outLines.push('<li>No results found</li>');
+        }
+        searchResults.html(outLines.join(''));
+    }
+
+    $('#search-input').on('focus', function() {
+        //console.log('focus');
+        //search-results-container
+        updateSearchResults();
+    }).on('change', function() {
+        //console.log('change');
+        updateSearchResults();
+    }).on('keyup', function(e) {
+        //console.log('keyup');
+        if ([13, 16, 20, 37, 38, 39, 40, 91].indexOf(e.which) < 0) {
+            updateSearchResults();
+        }
+    });
 });
 
 
@@ -159,87 +243,3 @@ function sectionPriority(section) {
     }
     return 7;
 }
-
-async function fetchSearch() {
-    //console.log('Fetching /search.json'.trim());
-    let res = await fetch("/search.json");
-    let results = await res.json();
-    for (const result of results) {
-        result.section = String(result.section);
-        result.title = String(result.title);
-        result.caption = String(result.caption);
-        result.search = String('' + result.section + ' ' + result.title + ' ' + result.caption + ' ' + result.keywords).normalizeForSearch();
-    }
-    return results;
-}
-
-let fetchSearchPromise = null;
-
-async function fetchSearchOnce() {
-    fetchSearchPromise = fetchSearchPromise || fetchSearch();
-    return await fetchSearchPromise;
-}
-
-// Prefetch
-fetchSearchOnce();
-
-async function updateSearchResults() {
-    let query = $('#search-input').val().trim();
-    let containsHash = query.indexOf('#') >= 0;
-    let querySearch = query.normalizeForSearch();
-    let querySearchForSection = querySearch.replace(/#/g, '');
-    let searchResults = $('#search-results-container');
-    let results = await fetchSearchOnce();
-    let lines = [];
-    let filteredResults = results
-        .sorted(composeComparers(
-            comparerBy((it) => sectionPriority(it.section)),
-            comparerBy((it) => String(it.search))
-        ))
-        .filter((it) => String(it.search).match(querySearch))
-        .slice(0, 10)
-    ;
-
-    $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function () {
-        const id = $(this).attr('id');
-        const headerText = $(this).text();
-
-        const searchTextLC = `${headerText} ${id}`.normalizeForSearch();
-
-        if (searchTextLC.match(querySearchForSection)) {
-            lines.push(`<a href='#${id.escapeHTML()}'># ${headerText.escapeHTML()}</a>`);
-        }
-    });
-
-    for (const result of filteredResults) {
-        lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.section.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
-    }
-    if (query !== '' && !containsHash) {
-        lines.push(`<a href="https://www.google.com/search?q=site:ktor.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ktor.io</a>`)
-    }
-    let outLines = [];
-    for (let n = 0; n < lines.length; n++) {
-        const line = lines[n];
-        let active = (n === 0) ? ' active' : '';
-        let google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
-        outLines.push(`<li class="${active}${google}">${line}</li>`);
-    }
-    if (outLines.length === 0) {
-        outLines.push('<li>No results found</li>');
-    }
-    searchResults.html(outLines.join(''));
-}
-
-$('#search-input').on('focus', function() {
-    //console.log('focus');
-    //search-results-container
-    updateSearchResults();
-}).on('change', function() {
-    //console.log('change');
-    updateSearchResults();
-}).on('keyup', function(e) {
-    //console.log('keyup');
-    if ([13, 16, 20, 37, 38, 39, 40, 91].indexOf(e.which) < 0) {
-        updateSearchResults();
-    }
-});
