@@ -79,6 +79,16 @@ val method = request.origin.method
 val remoteHost = request.origin.method // Determined from X-Forwarded-For
 ```
 
+In the case you need the X-Forwarded-By (the interface used for the socket), you can access the raw X-Forwarded properties with:
+
+```kotlin
+val forwardedValues: List<ForwardedHeaderSupport.ForwardedHeaderValue> = call.attributes[ForwardedHeaderSupport.ForwardedParsedKey]
+```
+
+```kotlin
+data class ForwardedHeaderValue(val host: String?, val by: String?, val forParam: String?, val proto: String?, val others: Map<String, String>)
+```
+
 ## Header description
 
 The standard `Forwarded` header looks like this: 
