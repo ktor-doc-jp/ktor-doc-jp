@@ -47,7 +47,7 @@
         searchInput: document.getElementById('search-input'),
         resultsContainer: document.getElementById('search-results-container'),
         json: '{{ "/search.json" | prepend: site.baseurl }}',
-        searchResultTemplate: '<li><a href="{url}" title="{title}" style="display:block;width:100%;"><span style="color:#777;">{section}:</span> {caption}</a></li>',
+        searchResultTemplate: '<li><a href="{url}" title="{title}" style="display:block;width:100%;"><span style="color:#777;">{section}:</span> {title} - {caption}</a></li>',
         //noResultsText: '<li>No results found.</li>',
         noResultsText: '',
         prependTextFunc: function(query) {
@@ -57,8 +57,8 @@
                 var id = $(this).attr('id');
                 var headerText = $(this).text();
 
-                var queryLC = String(query).toLowerCase().replace(/#/g, '');
-                var searchTextLC = headerText.toLowerCase() + ' ' + id.toLowerCase();
+                var queryLC = String(query).toLowerCase().replace(/#/g, '').replace(/[ ,.;\-]+/g, '-');
+                var searchTextLC = (headerText.toLowerCase() + ' ' + id.toLowerCase()).replace(/[ ,.;\-]+/g, '-');
 
                 if (searchTextLC.match(queryLC)) {
                     //console.log('matches: ', headerText, this);
@@ -69,6 +69,7 @@
             return out.join("\n");
         },
         appendTextFunc: function(query) {
+            //if (query.match('#')) return '';
             return '<li class="google-search"><a href="https://www.google.com/search?q=site:ktor.io+' + escapeHtml(encodeURIComponent(trim(query))) + '">Search <code>' + escapeHtml(trim(query)) + '</code> in google site:ktor.io</a></li>'
         },
         sortMiddleware: function(a, b) {

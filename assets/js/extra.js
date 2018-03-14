@@ -91,7 +91,7 @@ $(document).ready(function() {
                 $('#search-input').focus();
                 e.preventDefault();
             }
-            if (e.key === '#') {
+            if (e.key === '#' || e.key === 'a') {
                 $('#search-input').focus();
                 $('#search-input').val('#');
                 e.preventDefault();

@@ -1000,9 +1000,9 @@ table.api-docs-table td p {
     padding-left: 0;
 }
 
-.doc-menu > li {
+/*.doc-menu > li {
     margin-bottom: 5px;
-}
+}*/
 
 .doc-menu > li > a {
     display: block;
