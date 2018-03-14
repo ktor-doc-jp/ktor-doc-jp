@@ -21,10 +21,10 @@ $(document).ready(function() {
         })
     ;
 
-    console.log($('#search-input').length);
-    $('#search-input').on('keypress', function(e) {
-        console.log('keypress', e);
-    });
+    //console.log($('#search-input').length);
+    //$('#search-input').on('keypress', function(e) {
+    //    console.log('keypress', e);
+    //});
     $('#search-input').on('keydown', function(e) {
         var search_container = $('.search-results');
         var active = search_container.find('li.active');
@@ -32,13 +32,18 @@ $(document).ready(function() {
         //console.log('keydown', active);
         switch (e.keyCode) {
             case 13: // RETURN
-                console.log('RETURN');
+                //console.log('RETURN');
                 if (active.length === 0) {
                     // Do nothing, do the normal behaviour.
                 } else {
                     e.preventDefault();
-                    document.location.href = active.find('a').attr('href') + '#search-input';
+                    //document.location.href = active.find('a').attr('href') + '#search-input';
+                    document.location.href = active.find('a').attr('href');
                 }
+                break;
+            case 27: // ESC
+                e.preventDefault();
+                $(this).blur();
                 break;
             case 38: // UP
                 e.preventDefault();
@@ -65,5 +70,19 @@ $(document).ready(function() {
                 //console.log('DOWN');
                 break;
         }
+    });
+    $(document).on('keypress', function(e) {
+        // Capture events just in when come from the document.body
+        if (e.target === document.body) {
+            if (e.key === 's') {
+                $('#search-input').focus();
+                e.preventDefault();
+            }
+        }
+    });
+    $('#search-input').on('focus', function() {
+        $(this).attr('placeholder', $(this).attr('data-placeholder-focus'));
+    }).on('blur', function() {
+        $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
     });
 });
