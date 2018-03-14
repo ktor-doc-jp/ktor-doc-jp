@@ -173,6 +173,23 @@ h1 a.anchored-heading:hover {
     display: none;
 }
 
+.search-results-inline-container .search-results li.google-search {
+    border-top: 1px dotted #eee;
+}
+
+.search-results-inline-container .search-results li.google-search:only-child {
+    border-top: none;
+}
+
+
+.search-results-inline-container .search-results li.google-search a {
+    color:#999;
+}
+
+.search-results-inline-container .search-results li.google-search a code {
+    color:#3b5998;
+}
+
 li.section-main {
     /*
     font-size: 1.2em;

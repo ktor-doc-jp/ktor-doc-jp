@@ -1,6 +1,8 @@
+<form action="https://www.google.com/search" method="get">
 <div class="page-inline-search" style="margin-bottom:8px;">
     <div class="input-group">
-        <input id="search-input" type="text" class="form-control" placeholder="{{site.data.search.placeholder_text}}">
+        <input name="q" id="search-input" type="text" class="form-control" placeholder="{{site.data.search.placeholder_text}}" autocomplete="off">
+        <input type="hidden" name="as_sitesearch" value="ktor.io" />
         <div class="input-group-btn">
             <button class="btn btn-default form-control" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </div>
@@ -10,6 +12,7 @@
         <ul id="search-results-container" class="search-results"></ul>
     </div>
 </div>
+</form>
 
 <script type="text/javascript" src="{{ '/assets/js/jekyll-search.js' | prepend: site.baseurl }}"></script>
 
@@ -27,12 +30,29 @@
         return 7;
     }
 
+    function escapeHtml(unsafe) {
+        return String(unsafe)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function trim(str) {
+        return String(str).replace(/^\s+/, '').replace(/\s+$/, '');
+    }
+
     SimpleJekyllSearch.init({
         searchInput: document.getElementById('search-input'),
         resultsContainer: document.getElementById('search-results-container'),
         json: '{{ "/search.json" | prepend: site.baseurl }}',
         searchResultTemplate: '<li><a href="{url}" title="{title}" style="display:block;width:100%;"><span style="color:#777;">{section}:</span> {caption}</a></li>',
-        noResultsText: '{{site.data.search.no_results_text}}',
+        //noResultsText: '<li>{{site.data.search.no_results_text}}</li>',
+        noResultsText: '',
+        appendTextFunc: function(query) {
+            return '<li class="google-search"><a href="https://www.google.com/search?q=site:ktor.io+' + escapeHtml(encodeURIComponent(trim(query))) + '">Search <code>' + escapeHtml(trim(query)) + '</code> in google site:ktor.io</a></li>'
+        },
         sortMiddleware: function(a, b) {
             var bpriority = sectionPriority(a.section);
             var apriority = sectionPriority(b.section);

@@ -300,6 +300,8 @@
             templateMiddleware: function () {},
             sortMiddleware: function(a, b) { return 0; },
             noResultsText: 'No results found',
+            noResultsTextFunc: function(text, query) { return text },
+            appendTextFunc: function(query) { return '' },
             limit: 10,
             fuzzy: false,
             exclude: []
@@ -388,20 +390,22 @@
 
         function search(query) {
             if (isValidQuery(query)) {
-                render(_$Repository_4.search(query))
+                render(_$Repository_4.search(query), query)
             }
         }
 
-        function render(results) {
+        function render(results, query) {
             var len = results.length
             if (len === 0) {
-                return appendToResultsContainer(options.noResultsText)
+                appendToResultsContainer(options.noResultsTextFunc(options.noResultsText, query))
+            } else {
+                var sortedResults = results.slice()
+                sortedResults.sort(opt.sort)
+                for (var i = 0; i < len; i++) {
+                    appendToResultsContainer(_$Templater_7.compile(sortedResults[i]))
+                }
             }
-            var sortedResults = results.slice()
-            sortedResults.sort(opt.sort)
-            for (var i = 0; i < len; i++) {
-                appendToResultsContainer(_$Templater_7.compile(sortedResults[i]))
-            }
+            appendToResultsContainer(options.appendTextFunc(query))
         }
 
         function isValidQuery(query) {
