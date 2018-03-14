@@ -301,6 +301,7 @@
             sortMiddleware: function(a, b) { return 0; },
             noResultsText: 'No results found',
             noResultsTextFunc: function(text, query) { return text },
+            prependTextFunc: function(query) { return '' },
             appendTextFunc: function(query) { return '' },
             limit: 10,
             fuzzy: false,
@@ -346,7 +347,8 @@
             }
 
             return {
-                search: search
+                search: search,
+                emptyResultsContainer: emptyResultsContainer
             }
         }
 
@@ -396,6 +398,7 @@
 
         function render(results, query) {
             var len = results.length
+            appendToResultsContainer(options.prependTextFunc(query))
             if (len === 0) {
                 appendToResultsContainer(options.noResultsTextFunc(options.noResultsText, query))
             } else {

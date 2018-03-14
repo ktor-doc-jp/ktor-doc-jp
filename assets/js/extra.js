@@ -37,13 +37,25 @@ $(document).ready(function() {
                     // Do nothing, do the normal behaviour.
                 } else {
                     e.preventDefault();
-                    //document.location.href = active.find('a').attr('href') + '#search-input';
-                    document.location.href = active.find('a').attr('href');
+                    var alink = active.find('a');
+                    var href = String(alink.attr('href'));
+                    if (href.substr(0, 1) === '#') {
+                        alink.click();
+                    } else {
+                        document.location.href = alink.attr('href');
+                    }
                 }
                 break;
             case 27: // ESC
+                $('#search-input').val('');
+
+                if (window.jekyllSearch) {
+                    window.jekyllSearch.emptyResultsContainer();
+                }
+
                 e.preventDefault();
-                $(this).blur();
+                //$(this).blur();
+
                 break;
             case 38: // UP
                 e.preventDefault();
@@ -73,7 +85,8 @@ $(document).ready(function() {
     });
     $(document).on('keypress', function(e) {
         // Capture events just in when come from the document.body
-        if (e.target === document.body) {
+        //if (e.target === document.body) {
+        if ($(e.target).attr('id') !== 'search-input') {
             if (e.key === 's') {
                 $('#search-input').focus();
                 e.preventDefault();
