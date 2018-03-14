@@ -20,4 +20,50 @@ $(document).ready(function() {
             document.location.hash = $(this).attr('id');
         })
     ;
+
+    console.log($('#search-input').length);
+    $('#search-input').on('keypress', function(e) {
+        console.log('keypress', e);
+    });
+    $('#search-input').on('keydown', function(e) {
+        var search_container = $('.search-results');
+        var active = search_container.find('li.active');
+        //console.log(active);
+        //console.log('keydown', active);
+        switch (e.keyCode) {
+            case 13: // RETURN
+                console.log('RETURN');
+                if (active.length === 0) {
+                    // Do nothing, do the normal behaviour.
+                } else {
+                    e.preventDefault();
+                    document.location.href = active.find('a').attr('href') + '#search-input';
+                }
+                break;
+            case 38: // UP
+                e.preventDefault();
+                //console.log('UP');
+
+                active.removeClass('active');
+                if (active.length === 0 || active.prev().length === 0) {
+                    active = search_container.find('li').last().addClass('active');
+                } else {
+                    active.prev().addClass('active');
+                }
+
+                break;
+            case 40: // DOWN
+                e.preventDefault();
+
+                active.removeClass('active');
+                if (active.length === 0 || active.next().length === 0) {
+                    active = search_container.find('li').first().addClass('active');
+                } else {
+                    active.next().addClass('active');
+                }
+
+                //console.log('DOWN');
+                break;
+        }
+    });
 });
