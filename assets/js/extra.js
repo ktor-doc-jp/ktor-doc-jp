@@ -56,22 +56,29 @@ $(document).ready(function() {
                 e.preventDefault();
                 //console.log('UP');
 
-                active.removeClass('active');
-                if (active.length === 0 || active.prev().length === 0) {
-                    active = search_container.find('li').last().addClass('active');
-                } else {
-                    active.prev().addClass('active');
+                for (let n = 0; n < 10; n++) { // Skip up to 10 links
+                    active.removeClass('active');
+                    if (active.length === 0 || active.prev().length === 0) {
+                        active = search_container.find('li').last().addClass('active');
+                    } else {
+                        active = active.prev().addClass('active');
+                    }
+                    if (active.find('a').length !== 0) break;
                 }
 
                 break;
             case 40: // DOWN
                 e.preventDefault();
 
-                active.removeClass('active');
-                if (active.length === 0 || active.next().length === 0) {
-                    active = search_container.find('li').first().addClass('active');
-                } else {
-                    active.next().addClass('active');
+                for (let n = 0; n < 10; n++) { // Skip up to 10 links
+                    active.removeClass('active');
+                    if (active.length === 0 || active.next().length === 0) {
+                        active = search_container.find('li').first().addClass('active');
+                    } else {
+                        active = active.next().addClass('active');
+                    }
+                    // Found a link!
+                    if (active.find('a').length !== 0) break;
                 }
 
                 //console.log('DOWN');
@@ -138,14 +145,15 @@ $(document).ready(function() {
         let searchResults = $('#search-results-container');
         let results = await fetchSearchOnce();
         let lines = [];
-        let filteredResults = results
+        let filteredResultsAll = results
             .sorted(composeComparers(
                 comparerBy((it) => sectionPriority(it.section)),
                 comparerBy((it) => String(it.search))
             ))
             .filter((it) => String(it.search).match(querySearch))
-            .slice(0, 10)
         ;
+
+        let filteredResults = filteredResultsAll.slice(0, 10);
 
         $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function () {
             const id = $(this).attr('id');
@@ -160,6 +168,10 @@ $(document).ready(function() {
 
         for (const result of filteredResults) {
             lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.section.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
+        }
+        if (filteredResults.length < filteredResultsAll.length) {
+            const invisibleLinks = filteredResultsAll.length - filteredResults.length;
+            lines.push(`<small style="color:#999;">And ${invisibleLinks} more...</small>`);
         }
         if (query !== '' && !containsHash) {
             lines.push(`<a href="https://www.google.com/search?q=site:ktor.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ktor.io</a>`)
