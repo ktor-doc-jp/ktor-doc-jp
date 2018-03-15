@@ -4,6 +4,7 @@ caption: Configuring the Server
 keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
 section: Servers
 permalink: /servers/configuration.html
+priority: 200
 ---
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)

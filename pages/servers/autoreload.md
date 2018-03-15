@@ -4,6 +4,7 @@ caption: Saving Time with Automatic Reloading
 section: Servers
 permalink: /servers/autoreload.html
 keywords: autoreload watchpaths
+priority: 100
 ---
 
 During development, it is important to have a fast feedback loop cycle. 

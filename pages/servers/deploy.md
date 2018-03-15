@@ -4,6 +4,7 @@ section: Servers
 permalink: /servers/deploy.html
 keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku
 caption: Deployment 
+priority: 300
 ---
 
 In the Ktor's samples repository, you can find examples and README files

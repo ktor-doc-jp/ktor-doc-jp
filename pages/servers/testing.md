@@ -3,6 +3,7 @@ title: Testing
 section: Servers
 permalink: /application/testing.html
 caption: Testing Server Applications 
+priority: 1100
 ---
 
 Ktor is designed to allow creating applications that are easily testable. And of course,

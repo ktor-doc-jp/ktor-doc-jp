@@ -3,6 +3,7 @@ title: Requests
 caption: Handling HTTP Requests  
 section: Servers
 permalink: /servers/requests.html
+priority: 800
 ---
 
 When handling routes, or directly intercepting the pipeline, you

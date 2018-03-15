@@ -3,6 +3,7 @@ title: Application
 section: Servers
 permalink: /servers/application.html
 caption: What is an Application? 
+priority: 0
 ---
 
 A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),

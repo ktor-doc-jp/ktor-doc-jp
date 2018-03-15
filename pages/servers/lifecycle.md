@@ -3,6 +3,7 @@ title: Lifecycle
 section: Servers
 permalink: /servers/lifecycle.html
 caption: What Happens in a Server?  
+priority: 500
 ---
 
 Ktor is designed to be flexible and extensible. It is composed

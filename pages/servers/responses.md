@@ -3,6 +3,7 @@ title: Responses
 caption: Generating HTTP Responses  
 section: Servers
 permalink: /servers/responses.html
+priority: 900
 ---
 
 When handling routes, or directly intercepting the pipeline, you

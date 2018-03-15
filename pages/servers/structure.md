@@ -3,6 +3,7 @@ title: Structure
 caption: Building Complex Servers 
 section: Servers
 permalink: /servers/structure.html
+priority: 1000
 ---
 
 Depending on the complexity of the code of your server, you might want to structure your code

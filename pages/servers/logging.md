@@ -4,6 +4,7 @@ caption: Logging in Ktor
 section: Servers
 permalink: /servers/logging.html
 keywords: SLF4J logback log4j
+priority: 600
 ---
 
 Ktor uses [SLF4J](https://www.slf4j.org/) for logging.
