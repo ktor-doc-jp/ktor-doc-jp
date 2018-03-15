@@ -1,7 +1,7 @@
 ---
 title: Authentication
 caption: Developing Custom Authentication
-section: Drafts
+section: Advanced
 permalink: /drafts/advanced/authentication.html
 ---
 
