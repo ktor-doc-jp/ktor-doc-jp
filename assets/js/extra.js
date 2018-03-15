@@ -148,6 +148,7 @@ $(document).ready(function() {
         let filteredResultsAll = results
             .sorted(composeComparers(
                 comparerBy((it) => sectionPriority(it.section)),
+                comparerBy((it) => it.priority || 0),
                 comparerBy((it) => String(it.search))
             ))
             .filter((it) => String(it.search).match(querySearch))

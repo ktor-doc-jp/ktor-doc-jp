@@ -3,7 +3,6 @@ title: Quick Start
 caption: QuickStart
 section: Quick Start
 permalink: /quickstart/index.html
-search: exclude
 ktor_version: 0.9.1
 priority: -1
 ---
