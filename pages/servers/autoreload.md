@@ -3,11 +3,17 @@ title: Autoreload
 caption: Saving Time with Automatic Reloading  
 section: Servers
 permalink: /servers/autoreload.html
+keywords: autoreload watchpaths
 ---
 
 During development, it is important to have a fast feedback loop cycle. 
 Often, restarting the server can take some time, so Ktor provides a basic auto-reload facility that
 reloads your Application classes.
+
+Autoreload [*doesn't* work in Java 9](https://github.com/ktorio/ktor/issues/359). If you want to use it,
+please stick to JDK 8 for now.
+{: .note }
+{: #java9 }
 
 There is a performance penalty when using auto-reloading. So keep in mind that you should not use
 it in production or when doing benchmarks.
