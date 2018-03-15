@@ -3,6 +3,7 @@ title: Requests
 caption: Handling HTTP Requests  
 section: Servers
 permalink: /servers/requests.html
+keywords: multipart receiving
 priority: 800
 ---
 
@@ -153,6 +154,11 @@ They won't throw an exception if you call them several times,
 but subsequent receives will be executed with an empty payload.
 So for example, `receiveText` would return an empty string starting with the second call.
 {: .note #receiving-several-times}
+
+## Receiving files and multipart
+{: #receiving-files}
+
+Check the [uploads](/servers/uploads.html) section.
 
 ## Receiving custom objects, ContentNegotiation and JSON
 {: #receiving-content-negotitation}
