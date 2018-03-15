@@ -3,6 +3,7 @@ title: Features
 caption: Extend Application Capabilities 
 section: Features
 permalink: /features/index.html
+keywords: installing features install features
 priority: -1
 ---
 
