@@ -188,20 +188,16 @@ Ktor provides a `trace` method inside the routing feature.
 
 ```kotlin
 routing {
-    trace { trace ->
-        log.finer(trace.buildString())
-    }
+    trace { application.log.trace(it.buildText()) }
 }
 ```
 
-This method is executed whenever a call is done giving you a trace of the decissions
+This method is executed whenever a call is done giving you a trace of the decisions
 taken. As an example, for this routing configuration:
 
 ```kotlin
 routing {
-    trace { trace ->
-        println(trace.buildString())
-    }
+    trace { application.log.trace(it.buildText()) }
     get("/bar") { call.respond("/bar") }
     get("/baz") { call.respond("/baz") }
     get("/baz/x") { call.respond("/baz/x") }
@@ -227,3 +223,6 @@ Trace for [bar]
   /{param}, segment:0 -> FAILURE "Better match was already found" @ /{param})
   /*, segment:0 -> FAILURE "Better match was already found" @ /*)
 ```
+
+Remember to remove or disable this function when going to production.
+{: .note }
