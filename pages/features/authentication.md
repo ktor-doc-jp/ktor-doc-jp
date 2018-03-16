@@ -4,6 +4,7 @@ caption: Authenticating Clients
 section: Features
 permalink: /features/authentication.html
 subsection_tag: Authentication
+keywords: oauth authentication basic authentication form authentication digest authentication ldap authentication jwt authentication 
 feature:
     artifact: io.ktor:ktor-auth:$ktor_version
     class: io.ktor.auth.Authentication
@@ -32,18 +33,41 @@ Ktor defines two concepts: credentials and principals.
 * A credential is an object that represent a set of properties for the server to authenticate a principal:
   a couple of user/password, an API key and a authenticated payload signature, etc.
 
-In addition to `install(Authentication)`, Ktor provides a shorter convenient method called `authentication`,
-both available to any `ApplicationCallPipeline`, including `Application` and `Route` among others.
-Using its DSL, it allows you to configure the authentication mechanisms available:
+To install it, you have to call to `application.install(Authentication)`. You have to install this feature
+directly to the application and *won't* work in other `ApplicationCallPipeline` like `Route`.
+
+Using its DSL, it allows you to configure the authentication providers available:
 
 ```kotlin
-authentication {
-    basicAuthentication("ktor") { credentials ->
-        if (credentials.name == credentials.password) {
-            UserIdPrincipal(credentials.name)
-        } else {
-            null
+install(Authentication) {
+    basic(name = "myauth1") {
+        realm = "Ktor Server"
+        validate { credentials ->
+            if (credentials.name == credentials.password) {
+                UserIdPrincipal(credentials.name)
+            } else {
+                null
+            }
         }
+    }
+}
+```
+
+After defining one or more authentication providers (named or unnamed), with the [routing feature](/features/routing.html)
+you can create a route group, that will apply that authentication to all the routes defined in that group:
+
+```kotlin
+routing {
+    authenticate(name = "myauth1") {
+        get("/authenticated/route1") {
+            // ...
+        }    
+        get("/other/route2") {
+            // ...
+        }    
+    }
+    get("/") {
+        // ...
     }
 }
 ```
@@ -54,33 +78,68 @@ You can get the generated `Principal` instance inside your handler with:
 val principal: UserIdPrincipal? = call.authentication.principal<UserIdPrincipal>()
 ```
 
-You have to specify a generic type that *must* match the generated Principal.
+In the generic, you have to put a specific type that *must* match the generated Principal.
 It will return null in the case you provide another type. 
 {: .note}
 
-The handler won't be executed if the configured authentication fails, by returning null as the principal.
+The handler won't be executed if the configured authentication fails (when returning `null` in the authentication mechanism)
 {: .note}
 
-## Basic Authentication and Form Authentication
+## Naming the Authentication provider
 
-Ktor supports two methods of authentication with the user and raw password as credentials:
-`basicAuthentication` and `formAuthentication`.
+It is possible to give arbitrary names to the authentication providers you specify,
+or to not provide a name at all (unnamed provider) by not setting the name argument or passing a null.
+ 
+You cannot repeat authentication provider names, and you can define just one provider without name.
 
-```kotlin
-fun AuthenticationPipeline.basicAuthentication(
-    realm: String,
-    validate: suspend (UserPasswordCredential) -> Principal?
-)
+In the case you repeat a name for provider or try to define two unnamed providers, an exception will be thrown:
 
-fun AuthenticationPipeline.formAuthentication(
-    userParamName: String = "user",
-    passwordParamName: String = "password",
-    challenge: FormAuthChallenge = FormAuthChallenge.Unauthorized,
-    validate: suspend (UserPasswordCredential) -> Principal?
-)
+```
+java.lang.IllegalArgumentException: Provider with the name `authName` is already registered
 ```
 
-Both authentication methods have a mandatory `validate` callback and must generate a Principal from given a `UserPasswordCredential`
+Summarizing:
+
+```
+install(Authentication) {
+    basic { // Unamed `basic` provider
+        // ...
+    }
+    form { // Unamed `form` provider (exception, already defined a provider with name = null) 
+        // ...
+    }
+    basic("name1") { // "name1" provider
+        // ...
+    }
+    basic("name1") { // "name1" provider (exception, already defined a provider with name = "name1")
+        // ...
+    }
+}
+```
+
+## Basic and Form Authentication Providers
+
+Ktor supports two methods of authentication with the user and raw password as credentials:
+`basic` and `form`.
+
+```kotlin
+install(Authentication) {
+    basic(name = "myauth1") {
+        realm = "Ktor Server"
+        validate { credentials -> /*...*/ }
+    }
+
+    form(name = "myauth2") {
+        realm = "Ktor Server"
+        userParamName = "user"
+        passwordParamName = "password"
+        challenge = FormAuthChallenge.Unauthorized
+        validate { credentials -> /*...*/ }
+    }
+}
+```
+
+Both authentication providers have a method `validate` to provide a callback that must generate a Principal from given a `UserPasswordCredential`
 or null for invalid credentials. That callback is marked as *suspending*, so that you can validate credentials in an asynchronous fashion.
 
 You can use several strategies for validating:
@@ -92,9 +151,12 @@ So you can do things like checking the password against a constant, authenticati
 or composing several validation mechanisms.
 
 ```kotlin
-authentication {
-    basicAuthentication("ktor") { credentials ->
-        if (credentials.password == "${credentials.name}123") UserIdPrincipal(credentials.name) else null
+application.install(Authentication) {
+    basic("authName") {
+        realm = "ktor"
+        validate { credentials ->
+            if (credentials.password == "${credentials.name}123") UserIdPrincipal(credentials.name) else null
+        }
     }
 }
 ```
@@ -121,8 +183,11 @@ val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"),
 *Configuring server/routes:*
 
 ```kotlin
-authentication {
-    basicAuthentication("ktor") { credentials -> userTable.authenticate(credentials) }
+application.install(Authentication) {
+    basic("authName") {
+        realm = "ktor"
+        authenticate { credentials -> userTable.authenticate(credentials) }
+    }
 }
 ```
 
@@ -141,8 +206,11 @@ for credential authentication.
 
 ```kotlin
 authentication {
-    basicAuthentication("realm") { credential ->
-        ldapAuthenticate(credential, "ldap://$localhost:${ldapServer.port}", "uid=%s,ou=system")
+    basic("authName") {
+        realm = "realm"
+        validate { credential ->
+            ldapAuthenticate(credential, "ldap://$localhost:${ldapServer.port}", "uid=%s,ou=system")
+        }
     }
 }
 ```
@@ -150,12 +218,15 @@ authentication {
 Optionally you can define an additional validation check:
 ```kotlin
 authentication {
-    basicAuthentication("realm") { credential ->
-        ldapAuthenticate(credentials, "ldap://localhost:389", "cn=%s ou=users") {
-            if (it.name == it.password) {
-                UserIdPrincipal(it.name)
-            } else {
-                null
+    basic("authName") { 
+        realm = "realm"
+        validate { credential ->
+            ldapAuthenticate(credentials, "ldap://localhost:389", "cn=%s ou=users") {
+                if (it.name == it.password) {
+                    UserIdPrincipal(it.name)
+                } else {
+                    null
+                }
             }
         }
     }
@@ -172,15 +243,23 @@ Bear in mind that current LDAP implementation is synchronous.
 
 ## Digest Authentication
 
-Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication). But the API is slightly different than the Basic and Form authentication mechanisms:
+Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication).
+It works different than the basic/form auths:
 
 ```kotlin
-fun AuthenticationPipeline.digestAuthentication(
-    realm: String = "ktor",
-    digestAlgorithm: String = "MD5",
-    digesterProvider: (String) -> MessageDigest = { MessageDigest.getInstance(it) },
-    userNameRealmPasswordDigestProvider: suspend (userName: String, realm: String) -> ByteArray?
-)
+authentication {
+    digest {
+        val p = "Circle Of Life"
+        digester = MessageDigest.getInstance("MD5")
+        realm = "testrealm@host.com"
+        userNameRealmPasswordDigestProvider = { userName, realm ->
+            when (userName) {
+                "missing" -> null
+                else -> digest(digester, "$userName:$realm:$p")
+            }
+        }
+    }
+}
 ```
 
 Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
@@ -198,8 +277,10 @@ authentication {
         "test" to hex("fb12475e62dedc5c2744d98eb73b8877")
     )
 
-    digestAuthentication(realm = myRealm) { userName, realm ->
-        usersInMyRealmToHA1[userName]
+    digest("auth") {
+        userNameRealmPasswordDigestProvider = { userName, realm ->
+            usersInMyRealmToHA1[userName]
+        }
     }
 }
 ```
@@ -245,23 +326,38 @@ Both require the `realm` parameter, which is used in the WWW-Authenticate respon
 Using a verifier and a validator:
 
 The verifier will use the secret to verify the signature to trust the source.
-You can also check the payload within `validate` callback to ensure everything is right and to produce a Principal
+You can also check the payload within `validate` callback to ensure everything is right and to produce a Principal.
+
+application.conf:
 
 ```kotlin
-fun AuthenticationPipeline.jwtAuthentication(jwtVerifier: JWTVerifier, realm: String, validate: (JWTCredential) -> Principal?)
+jwt {
+    domain = "https://jwt-provider-domain/"
+    audience = "jwt-audience"
+    realm = "ktor sample app"
+}
 ```
 
+JWT auth:
+
 ```kotlin
-val jwtSecret = "secret"
-val jwtRealm = "ktor jwt auth test"
-val jwtVerifier = JWT.require(Algorithm.HMAC256(jwtSecret))
-    .withAudience(audience)
-    .withIssuer(issuer)
-    .build()
+val jwtIssuer = environment.config.property("jwt.domain").getString()
+val jwtAudience = environment.config.property("jwt.audience").getString()
+val jwtRealm = environment.config.property("jwt.realm").getString()
 
 authentication {
     jwtAuthentication(jwtVerifier, jwtRealm) { credentials ->
         if (credentials.payload.audience.contains(audience)) JWTPrincipal(credentials.payload) else null
+    }
+    jwt {
+        realm = jwtRealm
+        verifier(makeJwkProvider(jwtIssuer), jwtIssuer)
+        validate { credential ->
+            if (credential.payload.audience.contains(jwtAudience))
+                JWTPrincipal(credential.payload)
+            else
+                null
+        }
     }
 }
 ```
@@ -303,6 +399,8 @@ A simplified OAuth 2.0 workflow:
 *Example*:
 
 ```kotlin
+@Location("/login/{type?}") class login(val type: String = "")
+
 val loginProviders = listOf(
     OAuthServerSettings.OAuth2ServerSettings(
             name = "github",
@@ -313,27 +411,31 @@ val loginProviders = listOf(
     )
 )
 
-@Location("/login/{type?}") class login(val type: String = "")
-
-location<login>() {
-    authentication {
-        oauthAtLocation<login>(client, exec.asCoroutineDispatcher(),
-                providerLookup = { loginProviders[it.type] },
-                urlProvider = { _, p -> redirectUrl(login(p.name), false) })
+install(Authentication) {
+    oauth("oauth1") {
+        client = HttpClient(Apache)
+        providerLookup = { loginProviders[it.type] }
+        urlProvider = { url(login(it.name)) }
     }
+}
 
-    param("error") {
-        handle {
-            call.loginFailedPage(call.parameters.getAll("error").orEmpty())
-        }
-    }
-
-    handle {
-        val principal = call.authentication.principal<OAuthAccessTokenResponse>()
-        if (principal != null) {
-            call.loggedInSuccessResponse(principal)
-        } else {
-            call.loginPage()
+routing {
+    authenticate("oauth1") {
+        location<login>() {
+            param("error") {
+                handle {
+                    call.loginFailedPage(call.parameters.getAll("error").orEmpty())
+                }
+            }
+        
+            handle {
+                val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+                if (principal != null) {
+                    call.loggedInSuccessResponse(principal)
+                } else {
+                    call.loginPage()
+                }
+            }
         }
     }
 }
