@@ -3,6 +3,7 @@ title: Conditional Headers
 caption: Easy '304 Not Modified' Responses
 section: Features
 permalink: /features/conditional-headers.html
+keywords: etag last-modified 
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
     class: io.ktor.features.ConditionalHeaders
