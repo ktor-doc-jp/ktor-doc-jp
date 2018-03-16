@@ -99,3 +99,9 @@ Something like this should be sent as part of the response headers: `Server: kto
 
 > You can click on the headings and some notes, to get an anchored link to those sections.
 > After clicking, you can copy the new url in your browsing including the `#` to link to a specific section.
+
+#### My route is not being executed, how can I debug it?
+{: #route-not-executing }
+
+Ktor provides a tracing mechanism for the routing feature to help troubleshooting
+routing decisions. Check the [Tracing the routing decisions](/features/routing.html#tracing) section in the Routing page.

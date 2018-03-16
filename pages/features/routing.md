@@ -180,3 +180,50 @@ a builder function similar to built-in.
 
 Path parsing is not extensible.
 
+### Tracing the routing decisions
+{: #tracing }
+
+If you have problems trying to figure out why your route is not being executed,
+Ktor provides a `trace` method inside the routing feature.
+
+```kotlin
+routing {
+    trace { trace ->
+        log.finer(trace.buildString())
+    }
+}
+```
+
+This method is executed whenever a call is done giving you a trace of the decissions
+taken. As an example, for this routing configuration:
+
+```kotlin
+routing {
+    trace { trace ->
+        println(trace.buildString())
+    }
+    get("/bar") { call.respond("/bar") }
+    get("/baz") { call.respond("/baz") }
+    get("/baz/x") { call.respond("/baz/x") }
+    get("/baz/x/{optional?}") { call.respond("/baz/x/{optional?}") }
+    get("/baz/{y}") { call.respond("/baz/{y}") }
+    get("/baz/{y}/value") { call.respond("/baz/{y}/value") }
+    get("/{param}") { call.respond("/{param}") }
+    get("/{param}/x") { call.respond("/{param}/x") }
+    get("/{param}/x/z") { call.respond("/{param}/x/z") }
+    get("/*/extra") { call.respond("/*/extra") }
+
+}
+```
+
+The output if requesting `/bar` would be:
+
+```
+Trace for [bar]
+/, segment:0 -> SUCCESS @ /bar/(method:GET))
+  /bar, segment:1 -> SUCCESS @ /bar/(method:GET))
+    /bar/(method:GET), segment:1 -> SUCCESS @ /bar/(method:GET))
+  /baz, segment:0 -> FAILURE "Selector didn't match" @ /baz)
+  /{param}, segment:0 -> FAILURE "Better match was already found" @ /{param})
+  /*, segment:0 -> FAILURE "Better match was already found" @ /*)
+```
