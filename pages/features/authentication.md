@@ -34,7 +34,11 @@ Ktor defines two concepts: credentials and principals.
   a couple of user/password, an API key and a authenticated payload signature, etc.
 
 To install it, you have to call to `application.install(Authentication)`. You have to install this feature
-directly to the application and *won't* work in other `ApplicationCallPipeline` like `Route`.
+directly to the application and it *won't* work in other `ApplicationCallPipeline` like `Route`.
+
+You might still be able to call the install code inside a Route if you have the Application injected in a nested DSL,
+but it will be applied to the application itself.
+{: .note}
 
 Using its DSL, it allows you to configure the authentication providers available:
 
