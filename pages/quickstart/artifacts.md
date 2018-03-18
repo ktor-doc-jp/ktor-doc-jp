@@ -1,0 +1,56 @@
+---
+title: Artifacts
+caption: List of Artifacts  
+permalink: /quickstart/artifacts.html
+section: Quick Start
+priority: 1
+redirect_from:
+  - /artifacts.html
+---
+
+Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. 
+The typical Ktor application would require `ktor-server-core` and a corresponding engine depending on whether it's self-hosted
+ or using an Application Server. 
+
+All artifacts in Ktor belong to `io.ktor` group and hosted on [Bintray](https://bintray.com/kotlin/ktor)
+
+[![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}})](https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}})
+    
+Ktor is split into several groups of modules:
+
+* `ktor-server` contains modules that support running Ktor Application with different engines: Netty, Jetty, Tomcat, and 
+generic servlet. It also contains TestEngine for setting up application tests without starting real server
+  * `ktor-server-core` is a core package where most of the application API and implementation is located 
+  * `ktor-server-jetty` support a deployed or embedded Jetty instance
+  * `ktor-server-netty` supports Netty in an embedded mode
+  * `ktor-server-tomcat` supports Tomcat servers
+  * `ktor-server-servlet` is used by Jetty and Tomcat and allows running in generic servlet container
+  * `ktor-server-test-host` allows running application tests faster without starting full host
+* `ktor-features` groups modules for features that are optional and may not be required by every application
+  * `ktor-auth` provides support for different [authentication systems](/features/authentication.html) like Basic, Digest, Forms, OAuth 1a and 2
+  * `ktor-auth-jwt` adds the ability to authenticate against [JWT](/features/authentication.html#jwt)
+  * `ktor-auth-ldap` adds the ability to authenticate against [LDAP](/features/authentication.html#ldap) instance
+  * `ktor-freemarker` integrates Ktor with [Freemarker templates](/features/freemarker.html)
+  * `ktor-velocity` integrates Ktor with [Velocity templates](/features/velocity.html)
+  * `ktor-gson` integrates with [Gson](/features/gson.html) adding JSON content negotiation
+  * `ktor-jackson` integrates with [Jackson](/features/gson.html) adding JSON content negotiation
+  * `ktor-html-builder` integrates Ktor with [kotlinx.html builders](/features/html-dsl.html)
+  * `ktor-locations` contains experimental support for [typed locations](/features/locations.html)
+  * `ktor-metrics` adds the ability to add some [metrics](/features/metrics.html) to the server
+  * `ktor-server-sessions` adds ability to use [stateful sessions stored on a server](/features/sessions.html)
+  * `ktor-websockets` provides support for [Websockets](/features/websockets.html)
+* `ktor-client` contains modules for [performing http requests](/clients/http-client.html)
+  * `ktor-client-core` is a core package where most of the http http client API is located
+  * `ktor-client-apache` adds support for the Apache asynchronous HttpClient
+  * `ktor-client-cio`  adds support for a pure Kotlin Corutine based I/O asynchronous HttpClient
+  * `ktor-client-jetty` adds support
+  * `ktor-client-auth-basic` adds support for [authentication](/clients/http-client.html#basicauth)
+  * `ktor-client-json` adds support for [json content negotiation](/clients/http-client.html#jsonfeature)
+* `ktor-network` includes [raw sockets](/servers/raw-sockets.html) for client/server, and TCP/UDP
+  * `ktor-network-tls` contains TLS support for raw sockets
+ 
+See instructions for setting up a project with
+
+* [Maven](/quickstart/maven.html)
+* [Gradle](/quickstart/gradle.html)
+
