@@ -185,7 +185,7 @@ application on top of it:
 
 ## Final `pom.xml` (with Ktor)
 {: #complete}
-``
+
 When you are done, the `pom.xml` file should look like:
 
 ```xml
