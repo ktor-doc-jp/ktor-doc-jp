@@ -3,7 +3,7 @@ sections:
   color: green
   url: /quickstart/index.html
   icon: gift
-  summary: setting up environment and starting up
+  summary: setting up the environment and starting up
 
 - title: Servers
   color: purple
