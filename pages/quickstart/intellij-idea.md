@@ -8,53 +8,71 @@ priority: 0
 
 This tutorial will guide you from the most basic setup to a full featured setup you can use to start developing your app.
 
-### Prerequisites
+**Table of contents:**
+
+* TOC
+{:toc}
+
+## Prerequisites
 
 1.  The most recent version of Intellij IDEA
-2.  Kotlin and Gradle plugins enabled (They should be by default.)
+2.  Kotlin and Gradle plugins enabled (They should be enabled by default.)
 
-Check this in IDEA at:  _**File -> Settings -> Plugins**_
+You can check this in IDEA in its main menu:
+* Windows: `File -> Settings -> Plugins`
+* Mac: `IntelliJ IDEA -> Settings -> Plugins`
 
-### Start a Project
+## Start a Project
 
-1.  **_File -> New -> Project_**
-2.  Select Gradle and under Additional Libraries and Frameworks, check Java and Kotlin (Java).  Confirm that Project SDK is completed and click Next.
-3.  Enter a GroupId: **Example**  
-    and ArtifactId: **Example**  
-    and click Next
-4.  Check the checkboxes for "_Use auto-import_", "_Create directories for empty content roots automatically_", and "_Create separate module per source set_".  Confirm the Use default gradle wrapper radio button is selected and that Gradle JVM is populated and click Next.
-5.  Complete Project name: **Example**  
-    and Project location: _a/path/on/your/filesystem_   
-    and click Finish
-6.  Wait a few seconds for Gradle to run and you should see a project structure like the following (with a few other files and directories):
+1.  `File -> New -> Project`:
 
-```
-Example 
-  src
-    main
-        java
-        kotlin
-        resources
-    test
-        java
-        kotlin
-        resources
-  build.gradle
-```
+    ![](/pages/quickstart/intellij-idea/file-new-project.png)
 
-You will have to include `compile "io.ktor:ktor-server-netty:$ktor_version"`
-in your `build.gradle`'s `dependencies` block, for the classes in the example to be available.
+2.  Select Gradle and under Additional Libraries and Frameworks, check Java and Kotlin (Java).  Confirm that Project SDK is completed and click `Next`:
+
+    ![](/pages/quickstart/intellij-idea/gradle-kotlin-jvm.png)
+
+3.  Enter a GroupId: `Example`
+    and ArtifactId: `Example`
+    and click Next:
+
+    ![](/pages/quickstart/intellij-idea/groupid.png)
+
+4.  Check the checkboxes for `Use auto-import` and `Create separate module per source set`. Confirm the Use default gradle wrapper radio button is selected and that Gradle JVM is populated and click `Next`:
+
+    ![](/pages/quickstart/intellij-idea/gradle-config.png)
+
+5.  Complete Project name: `Example`
+    and Project location: `a/path/on/your/filesystem`
+    and click `Finish`:
+
+    ![](/pages/quickstart/intellij-idea/project-location-name.png)
+
+6.  Wait a few seconds for Gradle to run, and you should see a project structure like the following (with a few other files and directories):
+
+    ![](/pages/quickstart/intellij-idea/project-structure.png)
+
+7.  Update your `build.gradle` file with the artifact and repositories for the classes to be available:
+    * Include `compile "io.ktor:ktor-server-netty:$ktor_version"`, in your `build.gradle`'s `dependencies` block
+    * Include  `maven { url "http://kotlin.bintray.com/ktor" }` and `jcenter()` in your `repositories` block
+
+    ![](/pages/quickstart/intellij-idea/build-gradle.png)
 
 For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/gradle) section. 
 {: .note}
 
-### Create the App
+## Create the App
 
 Select the `src/main/kotlin` directory and create a new package.  We will call it `blog`.
 
 Select that directory and create a new kotlin file under it named `BlogApp`
 
+![](/pages/quickstart/intellij-idea/create-kotlin-file.png)
+
+![](/pages/quickstart/intellij-idea/create-kotlin-file-name.png)
+
 Copy and paste in the most basic setup for an app so that it looks like:
+
 
 ```kotlin
 package blog
@@ -77,13 +95,24 @@ fun main(args: Array<String>) {
 }
 ```
 
-Now you can Run '`blog.BlogAppKt`'  
+![](/pages/quickstart/intellij-idea/program.png)
+
+Now you can Run '`blog.BlogAppKt`'. You can do it, by pressing the glutter icon with the ▶ symbol and selecting `Debug 'blog.BlogAppKt'`:
+
+![](/pages/quickstart/intellij-idea/program-run.png)
+
+This will also create a run configuration in the upper right part of intelliJ, that will allow to run
+this configuration again easily:
+
+![](/pages/quickstart/intellij-idea/program-run-config.png)
 
 This will start the Netty web server.
 In your browser enter the url:  localhost:8080
 And you should see your example blog plage.
 
-### Improve the app with the Application object
+![](/pages/quickstart/intellij-idea/website.png)
+
+## Improve the app with the Application object
 
 The setup above has a lot of nested blocks and is not the best for starting to 
 add functionality to your app.  We can improve it by using the Application object 
@@ -117,7 +146,7 @@ fun main(args: Array<String>) {
 }
 ```
 
-### Extract out Configuration Data
+## Extract out Configuration Data
 
 Although we can designate some application configuration data in the main function embeddedServer call, we can provide more flexibility for future deployments and changes by extracting this out to a separate configuration file.  In the `src/main/resources` directory we will create a new text file named `application.conf` with the following content:
 
@@ -143,7 +172,7 @@ apply plugin: 'application'
 mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
 ```
 
-And then go to _**Run -> Edit Configurations**_ select the `blog.BlogAppKt` configuration and change its Main class to:
+And then go to `Run -> Edit Configurations` select the `blog.BlogAppKt` configuration and change its Main class to:
 `io.ktor.server.netty.DevelopmentEngine`
 
 Now when we run the new configuration, the application will start again.
