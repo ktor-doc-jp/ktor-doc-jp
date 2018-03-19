@@ -1,9 +1,11 @@
 ---
 title: Testing 
 section: Servers
-permalink: /application/testing.html
+permalink: /servers/testing.html
 caption: Testing Server Applications 
 priority: 1100
+redirect_from:
+  - /application/testing.html
 ---
 
 Ktor is designed to allow creating applications that are easily testable. And of course,
