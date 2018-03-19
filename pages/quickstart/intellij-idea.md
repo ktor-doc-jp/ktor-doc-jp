@@ -97,7 +97,7 @@ fun main(args: Array<String>) {
 
 ![](/pages/quickstart/intellij-idea/program.png)
 
-Now you can Run '`blog.BlogAppKt`'. You can do it, by pressing the glutter icon with the ▶ symbol and selecting `Debug 'blog.BlogAppKt'`:
+Now you can Run '`blog.BlogAppKt`'. You can do it, by pressing the glutter icon with the **🐞**{: style="transform:rotate(90deg);display:inline-block;"} symbol and selecting `Debug 'blog.BlogAppKt'`:
 
 ![](/pages/quickstart/intellij-idea/program-run.png)
 
