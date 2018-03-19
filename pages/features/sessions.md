@@ -6,6 +6,7 @@ permalink: /features/sessions.html
 keywords: custom session serializers, custom session transformers, custom session storage providers
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
+    artifact2: io.ktor:ktor-server-sessions:$ktor_version
     class: io.ktor.sessions.Sessions
 ---
 
@@ -158,29 +159,59 @@ application.install(Sessions) {
 Depending on the application, the size of the payload and the security, you might want to put the payload of
 the session in the client or the server.
 
-#### Client-side sessions
+#### Client-side sessions and transforms
+{: #client}
 
-Without additional arguments for the `cookie` and `header` methods, the session is configured to have the payload
-at the client. And the full payload will be sent back and forth. In this mode, you can apply transforms  
-
-```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION")
-} 
-```
-
-This installs the `Sessions` feature and maps cookie with the name `"SESSION"` to `MySession` type in a stateless way. 
-The entire class `MySession` will be serialized As a string and sent to the client as a cookie.
-When the client makes another request, the cookie is deserialized back into `MySession` and it is available to the
-server code:
-
-#### Server-side sessions
+Without additional arguments for the `cookie` and `header` methods, the session is configured to keep the payload
+at the client. And the full payload will be sent back and forth. In this mode, you can, and should apply
+transforms to encrypt or authenticate sessions:
 
 ```kotlin
 application.install(Sessions) {
-    cookie<MySession>("SESSION")
+    cookie<MySession>("SESSION") {
+        val secretSignKey = hex("000102030405060708090a0b0c0d0e0f")
+        transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
+    }
 } 
 ```
+
+You should only use client-side sessions if your payload can't suffer from replay attacks. Also if you need to prevent
+modifications, ensure that you are transforming the session with at least authentication, and ideally with encryption too.
+This should prevent payload modification if you keep your secret key safe. But remember that if you key is compromised
+you will have to invalidate all the sessions to change it.
+{: .note.security }
+
+#### Server-side sessions and storages
+{: #server}
+
+If you specify an storage, then the session will be configured to be stored at the server using that storage, and
+a sessionId will be transferred between the server and the client instead of the full payload: 
+
+```kotlin
+application.install(Sessions) {
+    cookie<MySession>("SESSION", storage = SessionStorageMemory())
+} 
+```
+
+There are two predefined storages: `SessionStorageMemory`, `DirectoryStorage`. And another composable storage: `CacheStorage`.
+
+`DirectoryStorage` and `CacheStorage` require you to depend on the `io.ktor:ktor-server-sessions:$ktor_version` artifact.
+{: .note.artifact } 
+
+### Serializers
+{: #serializer}
+
+You can specify a custom serializer with:
+
+```kotlin
+application.install(Sessions) {
+    cookie<MySession>("SESSION") {
+        serializer = MyCustomSerializer()
+    }
+} 
+```
+
+If you do not specify any serializer, there will be used one with an internal optimized format.
 
 ## Extending
 {: #extending}
