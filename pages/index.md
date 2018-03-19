@@ -11,3 +11,6 @@ This website provides a complete reference to the Ktor application structure, pr
 Search for information or explore the sections below to get started, find an answer or learn how it all works.
 
 {% include home/search.html inline="true" %} 
+
+![](/pages/what-is-ktor-shadow.png){: style="width:745px;max-width:100%;"}
+{: style="text-align:center;max-width:100%;"}
