@@ -89,10 +89,12 @@ $(document).ready(function() {
         // Capture events just in when come from the document.body
         //if (e.target === document.body) {
         if ($(e.target).attr('id') !== 'search-input') {
-            if (e.key === 's') {
+            // 's' for search, and 't' as an alias compatible with github search in repo
+                if (e.key === 's' || e.key === 't') {
                 $('#search-input').focus();
                 e.preventDefault();
             }
+            // '#' for hash and 'a' for anchor
             if (e.key === '#' || e.key === 'a') {
                 $('#search-input').focus();
                 $('#search-input').val('#');
