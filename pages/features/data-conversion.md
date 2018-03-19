@@ -24,26 +24,41 @@ service.
 {% include feature/feature.html %}
 
 ## Basic Installation
+{: #basic-installation }
+
+Installing the DataConversion is pretty easy, and it should be cover primitive types:
 
 ```kotlin
 install(DataConversion)
 ```
 
 ## Adding Converters
+{: #adding-converters }
 
-The DataConversion configuration, provide a `convert` method to define
-type conversions. For example:
+The DataConversion configuration, provide a `convert<T>` method to define
+type conversions. Inside, you have to provide a decoder and an encoder
+with the `decode` and `encode` methods accepting callbacks.
+
+* decode callback: `converter: (values: List<String>, type: Type) -> Any?`
+  Accepts `values`, a list of strings) representing repeated values in the URL, for example `a=1&a=2`,
+  and accepts the `type` to convert to. It should return the decoded value.
+* encode callback: `converter: (value: Any?) -> List<String>` 
+  Accepts an arbitrary value, and should return a list of strings representing the value.
+  When returning a list of a single element it will be serialized as `key=item1`. For multiple values
+  it will be serialized in the query string as: `samekey=item1&samekey=item2`.
+
+For example:
 
 ```kotlin
 install(DataConversion) {
-    convert<Date> {
+    convert<Date> { // this: DelegatingConversionService
         val format = SimpleDateFormat.getInstance()
     
-        decode { values, _ ->
+        decode { values, _ -> // converter: (values: List<String>, type: Type) -> Any?
             values.singleOrNull()?.let { format.parse(it) }
         }
 
-        encode { value ->
+        encode { value -> // converter: (value: Any?) -> List<String>
             when (value) {
                 null -> listOf()
                 is Date -> listOf(SimpleDateFormat.getInstance().format(value))
@@ -54,11 +69,8 @@ install(DataConversion) {
 }
 ```
 
-```kotlin
-install(DataConversion)
-```
-
 ## Accessing the Service
+{: #service }
 
 You can access the DataConversion service, from any call easily with:
 
@@ -67,6 +79,7 @@ val dataConversion = call.conversionService
 ```
 
 ## The ConversionService Interface
+{: #interface }
 
 ```kotlin
 interface ConversionService {
@@ -74,3 +87,12 @@ interface ConversionService {
     fun toValues(value: Any?): List<String>
 }
 ```
+{: #ConversionService }
+
+```kotlin
+class DelegatingConversionService(private val klass: KClass<*>) : ConversionService {
+    fun decode(converter: (values: List<String>, type: Type) -> Any?)
+    fun encode(converter: (value: Any?) -> List<String>)
+}
+```
+{: #DelegatingConversionService }
