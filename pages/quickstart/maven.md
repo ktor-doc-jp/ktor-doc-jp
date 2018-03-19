@@ -1,13 +1,25 @@
 ---
 title: Maven
-caption: Setting up Maven Build
+caption: Setting up a Maven Build
 section: Quick Start
 permalink: /quickstart/maven.html
 priority: 0
 ---
 
-Maven is a build automation tool used primarily for Java projects. It reads project configuration from `pom.xml` files. 
-Here is basic `pom.xml` file for building Kotlin applications:
+In this guide we will show you how to create a Maven `pom.xml` file
+and how to configure it to support Ktor.
+
+**Table of contents:**
+
+* TOC
+{:toc}
+
+## Basic Kotlin `pom.xml` file (without Ktor)
+{: #initial }
+
+Maven is a build automation tool used primarily for Java projects.
+It reads project configuration from `pom.xml` files.
+Here is a basic `pom.xml` file for building Kotlin applications:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -78,86 +90,103 @@ Here is basic `pom.xml` file for building Kotlin applications:
     </build>
 </project>
 ```
+{: .compact }
 
-### Add Ktor dependencies and configure build settings
+## Add Ktor dependencies and configure build settings
+{: #ktor-dependencies}
 
-The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx 
-so we will need to add the following to the repositories block:     
+Ktor artifacts are located on a specific repository on bintray.
+And its core has dependencies on the `kotlinx.coroutines` library that
+can be found on `jcenter`.
+
+You have to add both to the `repositories` block in the `pom.xml` file:
    
 ```xml
-    <repositories>
-        <repository>
-            <id>ktor</id>
-            <url>http://dl.bintray.com/kotlin/ktor</url>
-        </repository>
-        <repository>
-            <id>kotlinx</id>
-            <url>http://dl.bintray.com/kotlin/kotlinx</url>
-        </repository>
-        <repository>
-            <id>jcenter</id>
-            <url>http://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
+<repositories>
+    <repository>
+        <id>ktor</id>
+        <url>http://dl.bintray.com/kotlin/ktor</url>
+    </repository>
+    <repository>
+        <id>kotlinx</id>
+        <url>http://dl.bintray.com/kotlin/kotlinx</url>
+    </repository>
+    <repository>
+        <id>jcenter</id>
+        <url>http://jcenter.bintray.com</url>
+    </repository>
+</repositories>
 ``` 
 
-Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.  In this case it is `{{site.ktor_version}}`.  
-Then we will designate this as an extra property in the properties block like this:
+Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.
+In this case it is `{{site.ktor_version}}`.
+
+You have to specify that version in each Ktor artifact reference,
+and to avoid repetitions, you can specify that version in an extra property
+in the `properties` block for using it later:
 
 ```xml
-    <properties>
-        <ktor.version>{{site.ktor_version}}</ktor.version>
-    </properties>
+<properties>
+    <ktor.version>{{site.ktor_version}}</ktor.version>
+</properties>
 ```
 
-Now we add `ktor-server-core` module using `ktor.version` we specified
+Now you have to add `ktor-server-core` artifact using the `ktor.version` you specified:
  
 ```xml
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-core</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
+<dependency>
+    <groupId>io.ktor</groupId>
+    <artifactId>ktor-server-core</artifactId>
+    <version>${ktor.version}</version>
+</dependency>
 ```
 
-Coroutines are still experimental feature in Kotlin programming language, so we will need to tell compiler we
-are okay with using them to avoid warnings. We also need to tell Kotlin compiler to generate bytecode compatible with Java 8:
-
+As for Kotlin 1.2x, coroutines are still an experimental feature
+in Kotlin, so you will need to tell the compiler that it is okay
+to use them to avoid warnings:
 
 ```xml
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                
-                …
-                
-                <configuration>
-                    <jvmTarget>1.8</jvmTarget>
-                    <args>
-                        <arg>-Xcoroutines=enable</arg>
-                    </args>
-                </configuration>
+<plugin>
+    <groupId>org.jetbrains.kotlin</groupId>
+    
+    …
+    
+    <configuration>
+        <jvmTarget>1.8</jvmTarget>
+        <args>
+            <arg>-Xcoroutines=enable</arg>
+        </args>
+    </configuration>
+</plugin>
 ```
 
-### Choose your engine and configure it
+## Choose your engine and configure it
+{: #engine}
 
-Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat. 
-This example shows how to configure Ktor with Netty. For other engines see [artifacts](/artifacts.html) for list of
-available modules.
+Ktor can run in many environments, such as Netty, Jetty or any other
+Servlet-compatible Application Container such as Tomcat.
 
-We will add a dependency for `ktor-server-netty` using the ktor_version property we created. 
-This module provides Netty as a web server and all the required code to run Ktor application on top of it
+This example shows how to configure Ktor with Nett.
+For other engines see [artifacts](/artifacts.html) for list of
+available artifacts.
+
+You will add a dependency for `ktor-server-netty` using the
+`ktor.version` property you have created. This module provides
+Netty as a web server and all the required code to run Ktor
+application on top of it:
 
 ```xml
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-netty</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
+<dependency>
+    <groupId>io.ktor</groupId>
+    <artifactId>ktor-server-netty</artifactId>
+    <version>${ktor.version}</version>
+</dependency>
 ```
 
-### Final pom.xml
-
-When you are done the pom.xml file should look like:
+## Final `pom.xml` (with Ktor)
+{: #complete}
+``
+When you are done, the `pom.xml` file should look like:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -258,59 +287,14 @@ When you are done the pom.xml file should look like:
     </repositories>
 </project>
 ```
+{: .compact}
 
 You can now run `mvn package` to fetch dependencies and verify everything is set up correctly.
 
-### Configure logging
+## Configure logging
+{: #logging}
 
-Ktor uses [SLF4J](https://www.slf4j.org/) for logging. If you don't add a logging provider, you will see the 
-following message when you run your application:
-
-```
-SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-```
-
-We can set up logging to remove these warning messages and get a better idea of what is happening with the app.
-
-Add the following to the dependencies:
-    
-```xml
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-```
-    
-Run the app and you should now see the logging messages in the Run pane of IDEA.
-However, these logging messages are not as helpful as they could be.  To get a better configuration for logging, create a text file named logback.xml file in the `src/main/resources` directory and put the following xml configuation in it:
-
-```xml
-<configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <root level="trace">
-        <appender-ref ref="STDOUT"/>
-    </root>
-
-    <logger name="org.eclipse.jetty" level="INFO"/>
-    <logger name="io.netty" level="INFO"/>
-
-</configuration>
-```
-
-Stop the app, run it again, and go to localhost:8080 in your browser and now in the IDEA run pane, you should see a log message like:
-
-```
-    2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
-```
-    
-To understand how to change the `logback.xml` configuration file to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
+If you want to log application events and useful information,
+you can read further in the [logging](/servers/logging.html) page.
 
 

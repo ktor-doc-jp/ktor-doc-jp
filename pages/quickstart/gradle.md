@@ -1,6 +1,6 @@
 ---
 title: Gradle
-caption: Setting up Gradle Build
+caption: Setting up a Gradle Build
 section: Quick Start
 permalink: /quickstart/gradle.html
 priority: 0
@@ -15,9 +15,9 @@ and how to configure it to support Ktor.
 {:toc}
 
 ## Basic Kotlin `build.gradle` file (without Ktor)
-{: #initial-build-gradle }
+{: #initial }
 
-First of all, we need a skeleton `build.gradle` file including Kotlin.
+First of all, you need a skeleton `build.gradle` file including Kotlin.
 You can create it with any text editor, or just let intelliJ create
 it for you following the [IntelliJ guide](/quickstart/intellij-idea.html).
 
@@ -78,7 +78,7 @@ in the `buildscript` block (or in a `gradle.properties` file) for using it later
 ext.ktor_version = '{{site.ktor_version}}'
 ```
 
-Now we add the `ktor-server-core` artifact referencing the `ktor_version` we specified:
+Now you have to add the `ktor-server-core` artifact referencing the `ktor_version` you specified:
 
 ```groovy
 compile "io.ktor:ktor-server-core:$ktor_version"
@@ -90,8 +90,8 @@ versions, you have to use double quoted strings.
 {: .note.tip }
 
 As for Kotlin 1.2x, coroutines are still an experimental feature
-in Kotlin, so you will need to tell the compiler that you are okay
-with using them to avoid warnings:
+in Kotlin, so you will need to tell the compiler that it is okay
+to use them to avoid warnings:
 
 ```groovy
 kotlin {
