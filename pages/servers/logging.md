@@ -8,12 +8,9 @@ priority: 600
 ---
 
 Ktor uses [SLF4J](https://www.slf4j.org/) for logging.
-## Accessing the main logger
-
-The `ApplicationEnvironment` interface has a `log` property.
-You can access it inside an `ApplicationCall` with `call.application.environment.log`.
 
 ## SLF4J Providers
+{: #providers }
 
 If you don't add a logging provider, you will see the
 following message when you run your application:
@@ -24,17 +21,42 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
+We can set up logging to remove these warning messages and get
+a better idea of what is happening with the app adding a provider.
+
+Providers using the Java's [ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html) mechanism,
+so they are discovered and added automatically without doing anything
+else by code.
+{: .note.tip }
+
 ### Logback provider
+{: #providers-logback }
 
-You can use [logback](https://logback.qos.ch/), which is the successor of log4j, as SLF4J provider:
+You can use [logback](https://logback.qos.ch/),
+which is the successor of log4j, as SLF4J provider:
 
+Gradle's `build.gradle`:
 ```groovy
 compile "ch.qos.logback:logback-classic:1.2.1"
 ```
 
-### Configuring the Logback provider
+Mavens's `pom.xml`:
+```xml
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>1.2.1</version>
+</dependency>
+```
 
-If the default logging is not enough, you can put a `logback.xml` or (`logback-test.xml` that has higher priority) file in your `resources` folder
+Once added, run the app and you should now see the logging messages
+in the Run pane of IDEA. However, these logging messages are not as
+helpful as they could be.
+
+### Configuring the Logback provider
+{: #providers-logback-config }
+
+If the default logging is not enough, you can put a `logback.xml` or (`logback-test.xml` that has higher priority) file in your `src/main/resources` folder
 to adjust logging if it is not being useful to you. For example:
 
 ```xml
@@ -53,3 +75,20 @@ to adjust logging if it is not being useful to you. For example:
     <logger name="io.netty" level="INFO"/>
 </configuration>
 ```
+
+After adding, if you stop your app, and run it again, after going
+to localhost:8080 in your browser, now in the IDEA run pane,
+you should see a log message like:
+
+```
+2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
+```
+
+To understand how to change the `logback.xml` configuration file
+to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
+
+## Accessing the main logger
+{: #main-logger }
+
+The `ApplicationEnvironment` interface has a `log` property.
+You can access it inside an `ApplicationCall` with `call.application.environment.log`.

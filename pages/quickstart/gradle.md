@@ -6,7 +6,22 @@ permalink: /quickstart/gradle.html
 priority: 0
 ---
 
-## Basic Kotlin Gradle build file
+In this guide we will show you how to create a `build.gradle` file
+and how to configure it to support Ktor.
+
+**Table of contents:**
+
+* TOC
+{:toc}
+
+## Basic Kotlin `build.gradle` file (without Ktor)
+{: #initial-build-gradle }
+
+First of all, we need a skeleton `build.gradle` file including Kotlin.
+You can create it with any text editor, or just let intelliJ create
+it for you following the [IntelliJ guide](/quickstart/intellij-idea.html).
+
+The initial file would look like this:
 
 ```groovy
 group 'Example'
@@ -39,29 +54,44 @@ dependencies {
 ```
 
 ## Add Ktor dependencies and configure build settings
+{: #ktor-dependencies}
 
-The Ktor file is located on bintray and it has a dependency on the coroutines library in kotlinx
-so we will need to add the following to the repositories block:     
+Ktor artifacts are located on a specific repository on bintray.
+And its core has dependencies on the `kotlinx.coroutines` library that
+can be found on `jcenter`.
+
+You have to add both to the `repositories` block in the `build.gradle` file:
 
 ```groovy
- maven { url  "http://dl.bintray.com/kotlin/ktor" }
- maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+jcenter()
+maven { url "https://dl.bintray.com/kotlin/ktor" }
 ```
 
-Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.  In this case it is `{{site.ktor_version}}`.  
-Then we will designate this as an extra property in the `buildscript` block like:
+Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.
+In this case it is `{{site.ktor_version}}`.
+
+You have to specify that version in each Ktor artifact reference,
+and to avoid repetitions, you can specify that version in an extra property
+in the `buildscript` block (or in a `gradle.properties` file) for using it later:
 
 ```groovy
 ext.ktor_version = '{{site.ktor_version}}'
 ```
 
-Now we add `ktor-server-core` module using `ktor_version` we specified
+Now we add the `ktor-server-core` artifact referencing the `ktor_version` we specified:
 
 ```groovy
 compile "io.ktor:ktor-server-core:$ktor_version"
 ```
 
-Coroutines are still an experimental feature in Kotlin, so we will need to tell the compiler that we are okay with using them to avoid warnings:
+In groovy there are single quoted strings (instead of characters)
+and double quoted strings, to be able to interpolate variables like
+versions, you have to use double quoted strings.
+{: .note.tip }
+
+As for Kotlin 1.2x, coroutines are still an experimental feature
+in Kotlin, so you will need to tell the compiler that you are okay
+with using them to avoid warnings:
 
 ```groovy
 kotlin {
@@ -71,7 +101,9 @@ kotlin {
 }
 ```
 
-We also need to tell Kotlin compiler to generate bytecode compatible with Java 8:
+You also need to tell Kotlin compiler to generate bytecode
+compatible with Java 8:
+{: #java8}
 
 ```groovy
 compileKotlin {
@@ -83,21 +115,28 @@ compileTestKotlin {
 ```
 
 ## Choose your engine and configure it
+{: #engine}
 
-Ktor can run in many environments, such as Netty, Jetty or any Application Server such as Tomcat.
-This example shows how to configure Ktor with Netty. For other engines see [artifacts](/artifacts.html) for list of
-available modules.
+Ktor can run in many environments, such as Netty, Jetty or any other
+Servlet-compatible Application Container such as Tomcat.
 
-We will add a dependency for `ktor-server-netty` using the ktor_version property we created.
-This module provides Netty as a web server and all the required code to run Ktor application on top of it
+This example shows how to configure Ktor with Nett.
+For other engines see [artifacts](/artifacts.html) for list of
+available artifacts.
+
+You will add a dependency for `ktor-server-netty` using the
+`ktor_version` property you have created. This module provides
+Netty as a web server and all the required code to run Ktor
+application on top of it:
 
 ```groovy
 compile "io.ktor:ktor-server-netty:$ktor_version"
 ```
 
-## Final build.gradle
+## Final `build.gradle` (with Ktor)
+{: #complete}
 
-When you are done the build.gradle file should look like:
+When you are done, the `build.gradle` file should look like:
 
 ```groovy
 group 'Example'
@@ -145,52 +184,11 @@ dependencies {
 }
 ```
 
-You can now run Gradle to fetch dependencies and verify everything is set up correctly.
+You can now run Gradle (just `gradle` or `./gradlew` if using the wrapper)
+to fetch dependencies and verify everything is set up correctly.
 
 ## Configure logging
+{: #logging}
 
-Ktor uses [SLF4J](https://www.slf4j.org/) for logging. If you don't add a logging provider, you will see the
-following message when you run your application:
-
-```
-SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-```
-
-We can set up logging to remove these warning messages and get a better idea of what is happening with the app.
-
-Add the following to the gradle dependencies:
-
-```groovy
-compile "ch.qos.logback:logback-classic:1.2.1"
-```
-
-Run the app and you should now see the logging messages in the Run pane of IDEA.
-However, these logging messages are not as helpful as they could be.  To get a better configuration for logging, create a text file named logback.xml file in the `src/main/resources` directory and put the following xml configuation in it:
-
-```xml
-<configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <root level="trace">
-        <appender-ref ref="STDOUT"/>
-    </root>
-
-    <logger name="org.eclipse.jetty" level="INFO"/>
-    <logger name="io.netty" level="INFO"/>
-
-</configuration>
-```
-
-Stop the app, run it again, and go to localhost:8080 in your browser and now in the IDEA run pane, you should see a log message like:
-
-```
-2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
-```
-
-To understand how to change the `logback.xml` configuration file to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
+If you want to log application events and useful information,
+you can read further in the [logging](/servers/logging.html) page.

@@ -6,7 +6,8 @@ permalink: /quickstart/intellij-idea.html
 priority: 0
 ---
 
-This tutorial will guide you from the most basic setup to a full featured setup you can use to start developing your app.
+This tutorial will guide you from the most basic setup to a full
+featured setup you can use to start developing your app.
 
 **Table of contents:**
 
