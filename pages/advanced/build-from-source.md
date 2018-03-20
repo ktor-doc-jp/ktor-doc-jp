@@ -37,7 +37,7 @@ Right now Ktor doesn't compile with Java 9. So for now, you should stick to Java
 {: .note }
 
 ## Installing locally
-{: #installing
+{: #installing}
 
 Ktor provides a gradle install task, that installs ktor artifacts in your
 local maven repository:
