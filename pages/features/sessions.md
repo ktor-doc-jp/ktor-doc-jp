@@ -178,8 +178,56 @@ application.install(Sessions) {
 You should only use client-side sessions if your payload can't suffer from replay attacks. Also if you need to prevent
 modifications, ensure that you are transforming the session with at least authentication, and ideally with encryption too.
 This should prevent payload modification if you keep your secret key safe. But remember that if you key is compromised
-you will have to invalidate all the sessions to change it.
+and you have to change the key, all the sessions will be effectively invalidated.
 {: .note.security }
+
+##### SessionTransportTransformerDigest
+{: #SessionTransportTransformerDigest}
+
+The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
+a hash of the payload with a salt and verifies it. It uses `SHA-256` as default
+hashing algorithm, but can be changed. It doesn't encrypt the payload, but still without the salt people
+shouldn't be able to change it.
+
+```kotlin
+// REMEMBER! Change this string and store them safely
+val salt = "my unity salt string"
+cookie<TestUserSession>(cookieName) {
+    transform(SessionTransportTransformerDigest(salt))
+}
+``` 
+
+##### SessionTransportTransformerMessageAuthentication
+{: #SessionTransportTransformerMessageAuthentication}
+
+The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
+an authenticated hash of the payload and verifies it. It is similar to SessionTransportTransformerDigest
+but uses an HMAC. It uses `HmacSHA1` as default authentication algorithm, but can be changed.
+It doesn't encrypt the payload, but still without the key people shouldn't be able to change it.
+
+```kotlin
+// REMEMBER! Change this string and store them safely
+val key = hex("03515606058610610561058")
+cookie<TestUserSession>(cookieName) {
+    transform(SessionTransportTransformerMessageAuthentication(key))
+}
+``` 
+
+##### SessionTransportTransformerEncrypt
+{: #SessionTransportTransformerEncrypt}
+
+The `SessionTransportTransformerEncrypt` provides a session transport transformer that encrypts the payload
+and authenticates it. By default it uses `AES` and `HmacSHA256`, but you can configure it. It requires 
+an encryption key and an authentication key compatible in size with the algorithms: 
+
+```kotlin
+// REMEMBER! Change ALL the digits in those hex numbers and store them safely
+val secretEncryptKey = hex("00112233445566778899aabbccddeeff") 
+val secretAuthKey = hex("02030405060708090a0b0c")
+cookie<TestUserSession>(cookieName) {
+    transform(SessionTransportTransformerEncrypt(secretEncryptKey, secretAuthKey))
+}
+``` 
 
 #### Server-side sessions and storages
 {: #server}
@@ -212,6 +260,31 @@ application.install(Sessions) {
 ```
 
 If you do not specify any serializer, there will be used one with an internal optimized format.
+
+#### SessionSerializerReflection
+{: #SessionSerializerReflection}
+
+This is the default serializer, when no serializer is specified:
+
+```kotlin
+cookie<MySession>("SESSION") {
+    serializer = autoSerializerOf()
+}
+```
+
+#### GsonSessionSerializer
+{: #GsonSessionSerializer}
+
+Using JSON instead of the default serializer. Note that the payload will be bigger:
+
+```kotlin
+cookie<MySession>("SESSION") {
+    serializer = gsonSessionSerializer()
+}
+```
+
+This serializes requires the artifact `io.ktor:ktor-gson:$ktor_version`.
+{: .note}
 
 ## Extending
 {: #extending}
