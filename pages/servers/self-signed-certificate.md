@@ -11,6 +11,11 @@ Ktor allows you to create and use self-signed certificates for serving HTTPS or 
 Right now it is not possible to create self-signed certificates using Java9. Please use Java8 in the meantime.
 {: .note}
 
+**Table of contents:**
+
+* TOC
+{:toc}
+
 To create a self-signed certificate using Ktor, you have to call the `generateCertificate` function.
 
 ```
