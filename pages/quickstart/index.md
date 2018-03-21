@@ -7,8 +7,8 @@ ktor_version: 0.9.1
 priority: -1
 ---
 
-![](/assets/images/ktor_logo.png){:style="height:4em;"}
-
+![](/assets/images/ktor_logo.svg){:style="width:134px;height:56px;"}
+ 
 Ktor is a framework to easily build connected applications – web applications, HTTP services, mobile and browser applications.
 Modern connected applications need to be asynchronous to provide best experience to users, and Kotlin coroutines provide
 awesome facilities to do it in an easy and straightforward way. 
