@@ -50,3 +50,8 @@ and we will try to help you!
 > The property `call.request.origin` gives connection information about the original caller (the proxy)
 > if the proxy provides proper headers and the feature `XForwardedHeadersSupport` is installed.
 
+## I get the error 'java.lang.IllegalStateException: No instance for key AttributeKey: Locations'
+{: #no-attribute-key-locations }
+
+> You get this error if you try to use the locations feature without actually installing it. Check the locations feature:
+> <https://ktor.io/features/locations.html>
