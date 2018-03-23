@@ -757,9 +757,7 @@ BUILD SUCCESSFUL in 42s
 {: .compact}
 
 Now you can view your application in your browser with `gcloud app browse`. It will open
-the application. In this case:
-
-<https://demo-demo-123456.appspot.com>
+the application. In this case: https://demo-demo-123456.appspot.com
 
 ## Samples
 {: #samples }
