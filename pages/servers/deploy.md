@@ -653,6 +653,7 @@ kotlin.experimental.coroutines = 'enable'
 
 task run(dependsOn: appengineRun)
 ```
+{: .compact}
 
 Once everything is configured, you can now run the application locally. Using the gradle task `appengineRun`:
 
