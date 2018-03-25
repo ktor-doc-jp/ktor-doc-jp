@@ -134,14 +134,14 @@ those property names in your classes for the internal routes. For example:
 @Location("/type/{name}") data class Type(val name: String)
 // In these classes we have to include the `name` property matching the parent.
 @Location("/edit") data class TypeEdit(val name: String)
-@Location("/list/{page}") data class TypeEdit(val name: String, val page: Int)
+@Location("/list/{page}") data class TypeList(val name: String, val page: Int)
 ```
 
 You can also express the same without sublocations, like this:
 
 ```kotlin
 @Location("/type/{name}/edit") data class TypeEdit(val name: String)
-@Location("/type/{name}/list/{page}") data class TypeEdit(val name: String, val page: Int)
+@Location("/type/{name}/list/{page}") data class TypeList(val name: String, val page: Int)
 
 routing {
     get<TypeEdit> { typeEdit -> // /type/{name}/edit
