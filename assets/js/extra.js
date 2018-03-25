@@ -1,10 +1,35 @@
 $(document).ready(function() {
-    $(".compact").on("click", function(e) {
-        $(this).toggleClass('expand')
+    function toggleSelection(e) {
+        $(e).toggleClass('expand');
+        const compact = $(e).find('.compact_open');
+        if ($(e).hasClass('expand')) {
+            document.getSelection().selectAllChildren(e.children[1]);
+            compact.text('–');
+        } else {
+            document.getSelection().empty();
+            compact.text('+');
+        }
+
+    }
+
+    $(".compact").each((index, element) => {
+        //$(element).prepend(
+        $(element).prepend(
+            $('<div />').addClass("compact_open").text('+')
+                .attr('title', 'Click here, or double click the content to expand and select or to compact')
+                .on("click", () => {
+                    toggleSelection(element);
+                })
+        )
+    });
+
+    $(".compact").on('dblclick', function(e) {
+        window.event.preventDefault();
+        toggleSelection(this);
     });
 
     $(".doc-content").find("h1,h2,h3,h4,h5,h6").filter("[id]").each(function() {
-        var heading = $(this);
+        const heading = $(this);
 
         heading.html($('<a />')
             .addClass('anchored-heading')

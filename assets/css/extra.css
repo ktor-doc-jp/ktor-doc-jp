@@ -57,10 +57,36 @@ code.highlighter-rouge {
 .compact {
     position: relative;
     max-height: 120px;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     text-overflow: ellipsis;
     margin: 0.5em 0 1em 0;
+}
+
+.compact_open {
+    position: absolute;
+    left: -1em;
+    top: 0%;
+    width: 2em;
+    height: 2em;
+    background: white;
+    border: 3px solid #eee;
+    border-radius: 100%;
+    text-align: center;
+    vertical-align: center;
     cursor: pointer;
+    display: block;
+    opacity: 0.0;
+    z-index: 1000;
+    padding-left: 0.5em;
+}
+.compact:hover .compact_open {
+    display: block;
+    opacity: 1.0;
+    transition: 0.2s opacity;
+}
+.compact .compact_open:hover {
+    background: #eee;
 }
 
 .compact:after {
