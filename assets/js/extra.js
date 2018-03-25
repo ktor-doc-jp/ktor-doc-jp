@@ -230,6 +230,19 @@ $(document).ready(function() {
             updateSearchResults();
         }
     });
+
+    function hashChanged() {
+        const hash = document.location.hash;
+        $('.anchored-heading-fixed').removeClass('anchored-heading-fixed');
+        if (hash.startsWith('#')) {
+            $(hash).find('a').addClass('anchored-heading-fixed');
+        }
+    }
+
+    window.onhashchange = (e) => {
+        hashChanged();
+    };
+    hashChanged();
 });
 
 
