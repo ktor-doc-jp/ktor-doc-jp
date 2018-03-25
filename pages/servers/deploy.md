@@ -193,6 +193,7 @@ afterEvaluate {
 {: .compact}
 
 For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
+{: .note.example}
 
 ## Proguard
 {: #proguard}
@@ -238,6 +239,7 @@ task minimizedJar(type: proguard.gradle.ProGuardTask, dependsOn: shadowJar) {
 {: .compact }
 
 You have a full example on: <https://github.com/ktorio/ktor-samples/tree/master/other/proguard> 
+{: .note.example}
 
 ## Containers
 {: #containers}
@@ -314,6 +316,7 @@ You have to generate a [war file](#war) and put it in the `webapps` folder of to
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/tomcat-war>
+{: .note.example}
 
 ### Jetty
 {: #jetty}
@@ -322,6 +325,7 @@ You have to generate a [war file](#war) and put it in the `webapps` folder of je
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
+{: .note.example}
 
 ## Hosting 
 {: #hosting}
@@ -330,6 +334,7 @@ For a complete example, check:
 {: #heroku}
 
 There is a quickstart repository for heroku: <https://github.com/orangy/ktor-heroku-start>
+{: .note.example}
 
 #### Preparing
 
@@ -466,8 +471,7 @@ In this case it would open: https://demo-demo-12345.herokuapp.com/
 
 You can check a full google appengine sample, here:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/google-appengine-standard>
-
-Google App Engine use servlets.
+{: .note.example}
 
 #### Preparing
 
@@ -657,7 +661,7 @@ task run(dependsOn: appengineRun)
 
 Once everything is configured, you can now run the application locally. Using the gradle task `appengineRun`:
 
-In this case I'm executing this command in the root of the ktor-samples repository <https://github.com/ktorio/ktor-samples/>:  
+In this case these commands are executed in the root of the ktor-samples repository <https://github.com/ktorio/ktor-samples/>:  
 
 ```
 ./gradlew :google-appengine-standard:appengineRun
@@ -714,7 +718,7 @@ Now we can deploy the application using `gradle appengineDeploy`:
 Starting a Gradle Daemon (subsequent builds will be faster)
 Reading application configuration data...
 Mar 23, 2018 6:32:09 AM com.google.apphosting.utils.config.IndexesXmlReader readConfigXml
-INFORMACIÓN: Successfully processed /Users/user/projects/ktor-samples/deployment/google-appengine-standard/build/exploded-google-appengine-standard/WEB-INF/appengine-generated/datastore-indexes-auto.xml
+INFORMATION: Successfully processed /Users/user/projects/ktor-samples/deployment/google-appengine-standard/build/exploded-google-appengine-standard/WEB-INF/appengine-generated/datastore-indexes-auto.xml
 
 
 Beginning interaction for module default...
