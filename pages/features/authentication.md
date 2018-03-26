@@ -28,7 +28,7 @@ to keep the login information between requests.
 
 Ktor defines two concepts: credentials and principals.
 
-* A principal is something that can be authenticated: an user, a computer, a group, etc.
+* A principal is something that can be authenticated: a user, a computer, a group, etc.
 * A credential is an object that represent a set of properties for the server to authenticate a principal:
   a couple of user/password, an API key and a authenticated payload signature, etc.
 
@@ -99,7 +99,7 @@ authentication {
 }
 ```
 
-Remember that both: the `name` and the `password` from the credentials are arbitrary values.
+Remember that both the `name` and the `password` from the credentials are arbitrary values.
 Remember to escape and/or validate them when accessing with those values to the file system, a database,
 when storing them, generating HTML with its content, etc.
 {: .security.note }
