@@ -89,6 +89,14 @@ code.highlighter-rouge {
     background: #eee;
 }
 
+/* for mobile/touch devices */
+@media (hover: none) {
+.compact .compact_open {
+    display: block !important;
+    opacity: 1.0 !important;
+}
+}
+
 .compact:after {
     content:"";
     position:absolute;
