@@ -150,7 +150,7 @@ a.anchored-heading:hover {
     text-decoration: none;
 }
 
-a.anchored-heading:before, .anchored-note:before {
+a.anchored-heading:before {
     content: '#';
     float: left;
     position: relative;
