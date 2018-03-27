@@ -44,7 +44,7 @@ By default you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, en
 ### URL parameters
 {: #parameters-url }
 
-That class must be annotated with the annotation `@Location` specifying
+That class must be annotated with `@Location` specifying
 a path to match with placeholders between curly brackets `{` and `}`. For example: `{propertyName}`.
 The names between the curly braces must match the properties of the class.
 
@@ -84,6 +84,11 @@ routing {
     }
 }
 ```
+
+Some of these generic methods with one type parameter, defined in the `io.ktor.locations`, have the same name as other methods defined in the `io.ktor.routing` package. If you import the routing package before the locations one, the IDE might suggest you to generalize those methods instead of importing the right package. You can manually add `import io.ktor.locations.*` if that happens to you.
+Remember this API is experimental. This issue is already [reported at github](https://github.com/ktorio/ktor/issues/368).
+{: .note}
+
 
 ## Building URLs
 {: #building-urls }
