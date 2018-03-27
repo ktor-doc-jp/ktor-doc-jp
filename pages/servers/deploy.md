@@ -192,6 +192,13 @@ afterEvaluate {
 ```
 {: .compact}
 
+This gradle buildscript defines [several tasks](http://akhikhl.github.io/gretty-doc/Gretty-tasks) that
+you can use to run your application.
+
+In the case that you only need to generate a war file, there is a `war` task defined in the war plugin.<br />
+Just run `./gradlew war` and it will generate a `/build/libs/projectname.war` file.
+{: .note #generate-war-file }
+
 For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
 {: .note.example}
 
