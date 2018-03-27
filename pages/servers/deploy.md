@@ -2,7 +2,7 @@
 title: Deploy
 section: Servers
 permalink: /servers/deploy.html
-keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku nginx
+keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku nginx war fat-jar docker packing proguard
 caption: Deployment 
 priority: 300
 ---
