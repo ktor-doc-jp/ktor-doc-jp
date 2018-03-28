@@ -56,6 +56,13 @@ and we will try to help you!
 > You get this error if you try to use the locations feature without actually installing it. Check the locations feature:
 > <https://ktor.io/features/locations.html>
 
+## I get a 406 error with a client not sending an Accept header. With WRK I'm getting Non-2xx responses after adding JSON support
+{: #missing-accept-issue }
+
+> There is a [known issue](https://github.com/ktorio/ktor/issues/38) in Ktor <= 0.9.1,
+> that when a client do not send Accept header, the content negotiation assumes no accepting anything.
+> Since 0.9.2-alpha-1, ktor assumes it should accept everything when no Accept header is sent.  
+
 ## Website accessibility tips and tricks
 {: #website-tricks }
 
