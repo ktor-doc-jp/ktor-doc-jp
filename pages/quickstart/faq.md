@@ -70,6 +70,13 @@ You can use jitpack to get builds from master that are not yet released:
 <https://jitpack.io/#ktorio/ktor>
 Also you can [build ktor from source](/advanced/building-from-source.html), and use your mavenLocal repository for the artifact.  
 
+## How can I be sure of which version of ktor am I using?
+{: #ktor-version-used }
+
+You can use the [`DefaultHeaders` feature](/features/default-headers.html) that will send a
+Server header with the ktor version on it.
+Something like this should be sent as part of the response headers: `Server: ktor-server-core/0.9.2-alpha-3 ktor-server-core/0.9.2-alpha-3` 
+
 ## Website accessibility tips and tricks
 {: #website-tricks }
 
