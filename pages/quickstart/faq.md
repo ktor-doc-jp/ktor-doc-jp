@@ -61,7 +61,14 @@ and we will try to help you!
 
 > There is a [known issue](https://github.com/ktorio/ktor/issues/38) in Ktor <= 0.9.1,
 > that when a client do not send Accept header, the content negotiation assumes no accepting anything.
-> Since 0.9.2-alpha-1, ktor assumes it should accept everything when no Accept header is sent.  
+> Since 0.9.2-alpha-1, ktor assumes it should accept everything when no Accept header is sent.
+
+## How can I test latest commits on master?
+{: #bleeding-edge }
+
+You can use jitpack to get builds from master that are not yet released:
+<https://jitpack.io/#ktorio/ktor>
+Also you can [build ktor from source](/advanced/building-from-source.html), and use your mavenLocal repository for the artifact.  
 
 ## Website accessibility tips and tricks
 {: #website-tricks }

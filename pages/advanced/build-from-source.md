@@ -12,6 +12,9 @@ Ktor is an OpenSource project hosted at github:
 We usually provide binary version previews at bintray:
 <https://bintray.com/kotlin/ktor/ktor>
 
+In addition, you can use jitpack to get bleeding edge artifacts compiled from master:
+<https://jitpack.io/#ktorio/ktor>
+
 ## Downloading the sources
 {: #get-git-sources}
 
