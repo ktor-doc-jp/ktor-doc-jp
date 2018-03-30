@@ -1,6 +1,6 @@
 {% assign split_paths = include.paths | split: "," %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js" defer></script>
-<script type="text/javascript" src="{{ '/assets/plugins/github-embed/github-embed.min.js' | absolute_url }}" defer></script>
+<script type="text/javascript" src="{{ '/assets/plugins/github-embed/github-embed.min.js' | relative_url }}" defer></script>
 <div id="embed" style="height:800px;"></div>
 <script type="text/javascript" defer>
     window.addEventListener('load', function() {
