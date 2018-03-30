@@ -1,6 +1,6 @@
 ---
 title: Velocity
-caption: Velocity
+caption: Using Velocity Templates
 section: Features
 permalink: /features/velocity.html
 keywords: html
