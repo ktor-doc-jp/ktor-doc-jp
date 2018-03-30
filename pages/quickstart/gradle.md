@@ -44,7 +44,7 @@ apply plugin: 'kotlin'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -173,8 +173,7 @@ kotlin {
 }
 
 repositories {
-    mavenCentral()
-    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+    jcenter()
     maven { url "https://dl.bintray.com/kotlin/ktor" }
 }
 
