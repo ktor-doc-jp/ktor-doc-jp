@@ -10,7 +10,7 @@ feature:
 
 Ktor has built-in support for serving static content. This can come in useful when wanting to serve style sheets, scripts, images, etc. 
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Specifying Files and Folders
 

@@ -26,7 +26,7 @@ powerful routing system.
 In particular, `get` is an alias to `route(HttpMethod.Get, path) { handle(body) }`, where `body` is lambda passed to
 `get` function. 
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Routing Tree
 

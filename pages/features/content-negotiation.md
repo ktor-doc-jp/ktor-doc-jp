@@ -10,7 +10,7 @@ feature:
 
 This feature provides automatic content conversion according to `Content-Type` and `Accept` headers.
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Basic Usage
 {: #basic}

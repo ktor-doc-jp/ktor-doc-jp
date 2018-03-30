@@ -11,7 +11,7 @@ feature:
 This feature adds default set of headers to HTTP responses. List of headers is customizable, and `Date` header is cached
 to avoid building complex strings on each response.   
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Usage
 

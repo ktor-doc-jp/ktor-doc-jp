@@ -24,7 +24,7 @@ In other cases any client would be able to manipulate these headers.
 * TOC
 {:toc}
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Usage
 

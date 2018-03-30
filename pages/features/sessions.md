@@ -30,7 +30,7 @@ or server-side when only the session ID is transferred and the associated data i
 * TOC
 {:toc}
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Basic installation
 {: #install-basic}

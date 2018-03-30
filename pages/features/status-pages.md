@@ -23,7 +23,7 @@ There are three main configuration options provided to StatusPages:
 2. `status` - Configures response to status code value
 3. `statusFile` - Configures standard file response from classpath
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Exceptions 
 

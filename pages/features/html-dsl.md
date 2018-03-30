@@ -12,7 +12,7 @@ This feature integrates with [kotlinx.html](https://github.com/Kotlin/kotlinx.ht
 to directly emit HTML using Chunked transfer encoding without having to keep
 memory for the whole HTML.
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Installing
 {: #install }

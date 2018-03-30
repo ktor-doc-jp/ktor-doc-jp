@@ -14,7 +14,7 @@ the server and the client.
 Each message of this channel is called Frame: a frame can be a text or binary message,
 or a close or ping/pong message. Frames can be marked as incomplete or final.
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 **Table of contents:**
 

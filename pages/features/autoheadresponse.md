@@ -10,7 +10,7 @@ feature:
 
 Ktor can automatically provide responses to `HEAD` requests for existing routes that have the `GET` verb defined. 
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Usage
 

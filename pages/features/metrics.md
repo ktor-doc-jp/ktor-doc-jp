@@ -13,7 +13,7 @@ to get useful information about the server and the requests.
 
 It reports 
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Installing
 

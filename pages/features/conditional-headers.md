@@ -18,7 +18,7 @@ properties to what client indicates it is having. If conditions allow it entire 
 install(ConditionalHeaders)
 ```
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Configuration
 

@@ -22,7 +22,7 @@ to keep the login information between requests.
 * TOC
 {:toc}
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Basic usage
 

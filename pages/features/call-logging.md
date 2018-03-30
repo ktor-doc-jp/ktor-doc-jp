@@ -13,7 +13,7 @@ It uses the `ApplicationEnvironment.log` (`LoggerFactory.getLogger("Application"
 that uses slf4j so you can easily configure the output. For more information
 on logging in Ktor, please check the [logging in ktor](/servers/logging.html) page.
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Basic usage
 

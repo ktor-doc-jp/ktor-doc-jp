@@ -15,7 +15,7 @@ size of the response.
 install(Compression)
 ```
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ### Configuration
 

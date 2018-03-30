@@ -21,7 +21,7 @@ Locations are an experimental feature.
 * TOC
 {:toc}
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Installing the feature
 {: #installing }

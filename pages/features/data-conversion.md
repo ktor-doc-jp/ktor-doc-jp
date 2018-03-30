@@ -21,7 +21,7 @@ service.
 * TOC
 {:toc}
 
-{% include feature/feature.html %}
+{% include feature.html %}
 
 ## Basic Installation
 {: #basic-installation }
