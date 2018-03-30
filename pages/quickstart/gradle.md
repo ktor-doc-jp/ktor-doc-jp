@@ -52,6 +52,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
+{: .compact}
 
 ## Add Ktor dependencies and configure build settings
 {: #ktor-dependencies}
