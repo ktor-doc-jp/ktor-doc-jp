@@ -3,7 +3,9 @@
 <!--[if IE 9]><html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--><html lang="en"> <!--<![endif]-->
 <head>
-    {% if page.section == page.title or page.section == null %}
+    {% if page.landing_page %}
+    <title>Ktor - asynchronous Web framework for Kotlin</title>
+    {% elsif page.section == page.title or page.section == null %}
     <title>{{ site.title | prepend: " - " | prepend: page.title }}</title>
     {% else %}
     <title>{{ site.title | prepend: " - " | prepend: page.section | prepend: " - " | prepend: page.title }}</title>
@@ -51,12 +53,17 @@
 
 {% for section in site.data.sections.sections %}
 {% if section.title == page.section %}
-{% assign section-color = section.color %}
+{% assign sectioncolor = section.color %}
 {% endif %}
 {% endfor %}
 
+{% if page.landing_page %}
+{% assign body_class = "landing-page" %}
+{% else %}
+{% assign body_class = "body-" | append: sectioncolor %}
+{% endif %}
 
-<body class="body-{{section-color}}">
+<body class="{{ body_class }}">
     <div class="page-wrapper">
 
         {{ content }}
