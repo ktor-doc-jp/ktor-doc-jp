@@ -10,7 +10,7 @@ redirect_from:
 
 In this section we provide answers to the frequent questions you ask us.
 
-Can't find an answer for your question? Head over our #ktor [Kotlin Slack](http://slack.kotlinlang.org/){: target="_blank"} channel,
+Can't find an answer for your question? Head over our #ktor [Kotlin Slack](http://slack.kotlinlang.org/){: target="_blank" rel="noopener"} channel,
 and we will try to help you!
 {: .note}
 
