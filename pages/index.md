@@ -1,7 +1,7 @@
 ---
 title: Overview
 permalink: /index.html
-layout: home2
+layout: home
 landing_page: true
 caption: Connected Applications with Kotlin
 ---
