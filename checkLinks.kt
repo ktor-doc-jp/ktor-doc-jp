@@ -17,10 +17,10 @@
  */
 
 @file:MavenRepository("ktor", "https://kotlin.bintray.com/ktor")
-@file:DependsOn("io.ktor:ktor-server-netty:0.9.2-alpha-1")
-@file:DependsOn("io.ktor:ktor-client-core:0.9.2-alpha-1")
-@file:DependsOn("io.ktor:ktor-client-apache:0.9.2-alpha-1")
-@file:DependsOn("io.ktor:ktor-websockets:0.9.2-alpha-1")
+@file:DependsOn("io.ktor:ktor-server-netty:0.9.2-alpha-5")
+@file:DependsOn("io.ktor:ktor-client-core:0.9.2-alpha-5")
+@file:DependsOn("io.ktor:ktor-client-apache:0.9.2-alpha-5")
+@file:DependsOn("io.ktor:ktor-websockets:0.9.2-alpha-5")
 
 @file:EntryPoint("CheckLinks")
 
@@ -42,7 +42,6 @@ object CheckLinks {
 				check(task)
 			}
 			println("Done. Visited ${visited.size} links")
-			System.exit(0)
 		}
 	}
 
