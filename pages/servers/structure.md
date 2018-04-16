@@ -3,6 +3,7 @@ title: Structure
 caption: Building Complex Servers 
 section: Servers
 permalink: /servers/structure.html
+keywords: routing, routes, structuring, growing
 priority: 1000
 ---
 
