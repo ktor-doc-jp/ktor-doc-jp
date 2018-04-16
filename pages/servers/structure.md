@@ -37,18 +37,24 @@ at a glance.
 ## Extracting routes
 
 Once your code starts to grow and you have more routes defined, you will probably want to split
-that code instead of growing that main function indefinitely. A simple way to do this, is to extract routes into extension methods.
-Depending on the size, maybe still in the same file.
+that code instead of growing that main function indefinitely. A simple way to do this,
+is to extract routes into extension methods using the `Routing` class as receiver.
+
+Depending on the size, maybe still in the same file or in other files:
 
 ```kotlin
 fun main(args: Array<String>) {
     embeddedServer(Netty, port = 8080) {
         routing {
-            get("/") {
-                call.respondText("Hello World!")
-            }
+            root()
         }
     }.start(wait = true)
+}
+
+fun Routing.root() {
+    get("/") {
+        call.respondText("Hello World!")
+    }
 }
 ```
 
