@@ -3,7 +3,7 @@ title: Structure
 caption: Building Complex Servers 
 section: Servers
 permalink: /servers/structure.html
-keywords: routing, routes, structuring, growing
+keywords: routing, routes, structuring, growing, dependency injection, guice, external configuration, 
 priority: 1000
 ---
 
@@ -35,23 +35,45 @@ fun main(args: Array<String>) {
 This works fine to understand how Ktor works and to have all the application code available
 at a glance.
 
+## Defining modules
+
+You can extract the code configuring the server, also called a Ktor module, to an extension method:
+
+```kotlin
+fun main(args: Array<String>) {
+    embeddedServer(Netty, port = 8080, module = Application::mainModule).start(wait = true)
+}
+
+fun Application.mainModule() {
+    routing {
+        get("/") {
+            call.respondText("Hello World!")
+        }
+    }
+}
+```
+
 ## Extracting routes
 
 Once your code starts to grow and you have more routes defined, you will probably want to split
-that code instead of growing that main function indefinitely. A simple way to do this,
-is to extract routes into extension methods using the `Routing` class as receiver.
+that code instead of growing your main function indefinitely.
+
+A simple way to do this, is to extract routes into extension methods using the `Routing` class as receiver.
 
 Depending on the size, maybe still in the same file or in other files:
 
 ```kotlin
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = 8080) {
-        routing {
-            root()
-        }
-    }.start(wait = true)
+    embeddedServer(Netty, port = 8080, module = Application::mainModule).start(wait = true)
 }
 
+fun Application.mainModule() {
+    routing {
+        root()
+    }
+}
+
+// Extracted route
 fun Routing.root() {
     get("/") {
         call.respondText("Hello World!")
@@ -59,10 +81,26 @@ fun Routing.root() {
 }
 ```
 
-{::comment}
+Inside the `routing { ... }` block there is an implicit `this: Routing`, you can call the `root` method directly,
+that is effectively like calling `this.root()`.
+{: .note}
+
 ## Deployment and `application.conf`
 
-Once you want to deploy your server. 
+Once you want to deploy your server, you might also want to provide or to change the configuration of the server
+externally without recompiling it.
+
+Ktor libraries expose some entrypoints that read an `application.conf` file from the resources, or by an external
+file. In this file you can define things like the entry point of the application, the port used, the ssl configuration
+or arbitrary configurations.
+
+You can read more about using `application.conf` in the [configuration page](/servers/configuration.html).
+
+{::comment}
+## Dependency injection using Guice
+
+Ktor doesn't impose any dependency injection system. In fact, you can easily write even big applications
+without using any.
 {:/comment}
 
 ## Health checks
