@@ -91,9 +91,27 @@ val call = handleRequest(HttpMethod.Post, "/upload") {
 ```
 {: .compact}
 
+## Defining configuration properties in tests
+
+In tests, instead of using an `application.conf` to define configuration properties,
+you can use the `MapApplicationConfig.put` method:
+
+```kotlin
+withTestApplication({
+    (environment.config as MapApplicationConfig).apply {
+        // Set here the properties
+        put("youkube.session.cookie.key", "03e156f6058a13813816065")
+        put("youkube.upload.dir", tempPath.absolutePath)
+    }
+    main() // Call here your application's module
+})
+```
+
 ## Example
 
-See full example of application testing in [ktor-samples-testable](https://github.com/Kotlin/ktor/tree/master/ktor-samples/ktor-samples-testable) 
+See full example of application testing in [ktor-samples-testable](https://github.com/Kotlin/ktor/tree/master/ktor-samples/ktor-samples-testable).
+Also most [`ktor-samples`](https://github.com/Kotlin/ktor/) modules provide
+examples showing how to test specific functionalities.
 
 **build.gradle:**
 ```groovy
@@ -128,4 +146,3 @@ class ApplicationTest {
     }
 }
 ```
-
