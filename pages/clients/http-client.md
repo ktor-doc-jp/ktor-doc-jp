@@ -302,6 +302,14 @@ val client = HttpClient(HttpClientEngine) {
 To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 {: .note.artifact }
 
+### WebSockets
+
+This feature enable bidirectional WebSocket connections with the server.
+You can read more about it in its [dedicate WebSockets page](/clients/websockets.html). 
+
+To use this feature, you need to include `io.ktor:ktor-client-websocket` artifact.
+{: .note.artifact }
+
 ### Creating Custom Features
 
 If you want to create features, you can use the [standard features](https://github.com/ktorio/ktor/tree/master/ktor-client/ktor-client-core/src/io/ktor/client/features) as reference.
