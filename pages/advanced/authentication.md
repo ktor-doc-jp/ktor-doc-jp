@@ -2,7 +2,7 @@
 title: Authentication
 caption: Developing Custom Authentication
 section: Advanced
-permalink: /drafts/advanced/authentication.html
+permalink: /advanced/authentication.html
 ---
 
 Prerequisite reading: [Advanced Pipeline](advanced/pipeline)
