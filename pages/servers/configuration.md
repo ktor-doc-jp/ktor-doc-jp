@@ -161,6 +161,72 @@ embeddedServer(AnyEngine, configure = {
 }.start(true)
 ```
 
+### Multiple connectors
+
+It is possible to define by code several connectors using the `applicationEngineEnvironment`.
+
+Inside the `applicationEngineEnvironment`, you can define HTTP and HTTPS connectors:
+
+*To define a HTTP connector:* 
+
+```kotlin
+connector {
+    host = "0.0.0.0"
+    port = 9090
+}
+```
+
+*To define a HTTPS connector:* 
+
+```kotlin
+sslConnector(keyStore = keyStore, keyAlias = "mykey", keyStorePassword = { "changeit".toCharArray() }, privateKeyPassword = { "changeit".toCharArray() }) {
+    port = 9091
+    keyStorePath = keyStoreFile.absoluteFile
+}
+```
+
+*An actual example:*
+
+```kotlin
+fun main(args: Array<String>) {
+    val env = applicationEngineEnvironment {
+        module {
+            main()
+        }
+        // Private API
+        connector {
+            host = "127.0.0.1"
+            port = 9090
+        }
+        // Public API
+        connector {
+            host = "0.0.0.0"
+            port = 8080
+        }
+    }
+    embeddedServer(Netty, env).start(true)
+}
+```
+
+The application will handle all the connections. You have access to the local port for each ApplicationCall,
+so you can decide what to do based on the local port:
+
+```kotlin
+fun Application.main() {
+    routing {
+        get("/") {
+            if (call.request.local.port == 8080) {
+                call.respondText("Connected to public api")
+            } else {
+                call.respondText("Connected to private api")
+            }
+        }
+    }
+}
+```
+
+You can see a complete example of this in [ktor-samples/multiple-connectors](https://github.com/ktorio/ktor-samples/tree/master/other/multiple-connectors).
+
 ### Netty
 {:.no_toc}
 
