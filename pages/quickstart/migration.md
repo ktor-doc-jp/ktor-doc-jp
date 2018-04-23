@@ -125,3 +125,26 @@ import io.ktor.websocket.*
 ```
 import io.ktor.http.cio.websocket.*
 ```
+
+### HttpClient
+
+When building a new CIO HttpClient, while configuring the endpoint
+(it has been renamed from `endpointConfig` to `endpoint`, and now the property is immutable,
+so you have to mutate its contents):
+
+*Prior to 0.9.2:*
+```kotlin
+val client = HttpClient(CIO.config { 
+    endpointConfig = EndpointConfig().apply {    
+    }
+})
+```
+
+*After 0.9.2:*
+```kotlin
+val client = HttpClient(CIO.config { 
+    endpoint.apply {
+        // ...    
+    }
+})
+```

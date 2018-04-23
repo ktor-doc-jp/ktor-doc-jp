@@ -384,7 +384,7 @@ A sample configuration would look like:
 ```kotlin
 val client = HttpClient(CIO.config { 
     maxConnectionsCount = 1000 // Maximum number of socket connections.
-    endpointConfig = EndpointConfig().apply {
+    endpoint.apply {
         maxConnectionsPerRoute = 100 // Maximum number of requests for a specific endpoint route.
         pipelineMaxSize = 20 // Max number of opened endpoints.
         keepAliveTime = 5000 // Max number of milliseconds to keep each connection alive.
