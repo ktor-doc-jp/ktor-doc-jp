@@ -3,7 +3,6 @@ title: Quick Start
 caption: QuickStart
 section: Quick Start
 permalink: /quickstart/index.html
-ktor_version: 0.9.1
 priority: -1
 ---
 
@@ -51,8 +50,8 @@ group 'Example'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
-    ext.ktor_version = '0.9.1'
+    ext.kotlin_version = '{{ site.kotlin_version }}'
+    ext.ktor_version = '{{ site.ktor_version }}'
 
     repositories {
         mavenCentral()
