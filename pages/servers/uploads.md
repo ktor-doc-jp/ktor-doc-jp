@@ -29,11 +29,36 @@ multipart.forEachPart { part ->
         is PartData.FileItem -> {
             val ext = File(part.originalFileName).extension
             val file = File(uploadDir, "upload-${System.currentTimeMillis()}-${session.userId.hashCode()}-${title.hashCode()}.$ext")
-            part.streamProvider().use { its -> file.outputStream().buffered().use { its.copyTo(it) } }
+            part.streamProvider().use { its -> file.outputStream().buffered().use { its.copyToSuspend(it) } }
             videoFile = file
         }
     }
 
     part.dispose()
+}
+
+
+suspend fun InputStream.copyToSuspend(
+    out: OutputStream,
+    bufferSize: Int = DEFAULT_BUFFER_SIZE,
+    yieldSize: Int = 4 * 1024 * 1024,
+    dispatcher: CoroutineDispatcher = ioCoroutineDispatcher
+): Long {
+    return withContext(dispatcher) {
+        val buffer = ByteArray(bufferSize)
+        var bytesCopied = 0L
+        var bytesAfterYield = 0L
+        while (true) {
+            val bytes = read(buffer).takeIf { it >= 0 } ?: break
+            out.write(buffer, 0, bytes)
+            if (bytesAfterYield >= yieldSize) {
+                yield()
+                bytesAfterYield %= yieldSize
+            }
+            bytesCopied += bytes
+            bytesAfterYield += bytes
+        }
+        return@withContext bytesCopied
+    }
 }
 ```
