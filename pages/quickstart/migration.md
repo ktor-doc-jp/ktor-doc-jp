@@ -7,6 +7,7 @@ priority: 99
 ---
 
 ## Migrating from 0.9.1 to 0.9.2
+{: #0.9.2}
 
 Ktor 0.9.2 fixes some bugs, improves the overall performance of the sever, partially starts supporting JVM 9,
 and introduces new APIs and changes some of them.
