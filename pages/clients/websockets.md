@@ -21,7 +21,7 @@ The basic usage to create a http client supporting WebSockets is pretty simple:
 val client = HttpClient(CIO).config { install(WebSockets) }
 ```
 
-Once created we can perform a request, starting a WebSocketSession:
+Once created we can perform a request, starting a `WebSocketSession`:
 
 ```kotlin
 client.ws(method = HttpMethod.Get, host = "127.0.0.1", port = 8080, path = "/route/path/to/ws") { // this: WebSocketSession
@@ -33,3 +33,11 @@ client.ws(method = HttpMethod.Get, host = "127.0.0.1", port = 8080, path = "/rou
 }
 ```
 
+You can configure timeout and ping periods by casting to `DefaultWebSocketSession` (next version won't require this):
+
+```kotlin
+client.ws(...) { // this: WebSocketSession
+    (this as DefaultWebSocketSession).timeout = Duration.ofMinutes(10)
+    (this as DefaultWebSocketSession).pingInterval = Duration.ofMinutes(10) // null to disable it
+}
+```
