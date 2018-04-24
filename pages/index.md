@@ -7,9 +7,11 @@ caption: Connected Applications with Kotlin
 ---
 
 Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful [Kotlin programming language](https://kotlinlang.org). 
-This website provides a complete reference to the Ktor's application structure, programming interface and how to approach to particular tasks.
+This website provides a complete reference to the Ktor application structure and programming interface. And how to approach particular tasks.
 
-Search for information or explore the sections below to get started, find an answer or learn how it all works.
+Here is the place to find the answers you are looking for and learn all about how it works.
+Search for information or explore the sections below to get started. 
+
 
 {% include search.html inline="true" %} 
 
