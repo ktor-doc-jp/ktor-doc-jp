@@ -8,7 +8,7 @@ redirect_from:
   - /servers/faq.html
 ---
 
-In this section we provide answers to the frequent questions you ask us.
+In this section, we provide answers to the questions you frequently ask us.
 
 Can't find an answer for your question? Head over our #ktor [Kotlin Slack](http://slack.kotlinlang.org/){: target="_blank" rel="noopener"} channel,
 and we will try to help you!
@@ -27,7 +27,7 @@ and we will try to help you!
 ## Ktor imports are not being resolved. Imports are in red.
 {: #ktor-artifact }
 
-> Ensure that you are including the ktor artifact. For example, with gradle and Netty engine would be:
+> Ensure that you are including the ktor artifact. For example, for gradle and Netty engine it would be:
 > ```kotlin
 > dependencies {
 >     compile "io.ktor:ktor-server-netty:$ktor_version"
@@ -36,7 +36,7 @@ and we will try to help you!
 > * For gradle, check: <http://ktor.io/quickstart/gradle.html#choose-your-engine-and-configure-it>
 > * For maven, check: <http://ktor.io/quickstart/maven.html>
 
-## Does ktor provide a way to catch ipc signals (e.g. SIGTERM or SIGINT) so server shutdown can be handled gracefully?
+## Does ktor provide a way to catch ipc signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
 {: #sigterm }
 
 > If you are running a `DevelopmentEngine`, it will be handled automatically.
@@ -48,7 +48,7 @@ and we will try to help you!
 {: #proxy-ip }
 
 > The property `call.request.origin` gives connection information about the original caller (the proxy)
-> if the proxy provides proper headers and the feature `XForwardedHeadersSupport` is installed.
+> if the proxy provides proper headers, and the feature `XForwardedHeadersSupport` is installed.
 
 ## I get the error 'java.lang.IllegalStateException: No instance for key AttributeKey: Locations'
 {: #no-attribute-key-locations }
@@ -60,10 +60,10 @@ and we will try to help you!
 {: #missing-accept-issue }
 
 > There is a [known issue](https://github.com/ktorio/ktor/issues/38) in Ktor <= 0.9.1,
-> that when a client do not send Accept header, the content negotiation assumes no accepting anything.
+> that when a client does not send an Accept header, the content negotiation assumes that there is no accepting anything.
 > Since 0.9.2-alpha-1, ktor assumes it should accept everything when no Accept header is sent.
 
-## How can I test latest commits on master?
+## How can I test the latest commits on master?
 {: #bleeding-edge }
 
 You can use jitpack to get builds from master that are not yet released:
@@ -74,7 +74,7 @@ Also you can [build ktor from source](/advanced/building-from-source.html), and 
 {: #ktor-version-used }
 
 You can use the [`DefaultHeaders` feature](/features/default-headers.html) that will send a
-Server header with the ktor version on it.
+Server header with the ktor version in it.
 Something like this should be sent as part of the response headers: `Server: ktor-server-core/0.9.2-alpha-3 ktor-server-core/0.9.2-alpha-3` 
 
 ## Website accessibility tips and tricks
@@ -87,18 +87,18 @@ Something like this should be sent as part of the response headers: `Server: kto
 > In the search you can either select the options with the mouse or fingers, or using the keyboard arrows `'↑'` `'↓'`
 > and the return key `⏎` to go to the currently selected page.
 
-> This search only uses page titles, and keywords for the search. But it also enables a google search
+> This search only uses page titles, and keywords for the search. It is also possible to do a google search
 > in the `ktor.io` domain to do a full text search on all its contents. 
 
 > Long code fragments that are folded, can be expanded by either clicking on
-> the `'+'`/`'-'` symbol that appears on the top left corner always on mobile devices
+> the `'+'`/`'-'` symbol that always appears in the top left corner of mobile devices
 > or on hover on devices with mouse.
 > You can also double click the fragment to expand it.
-> In addition to expanding it, this action selects the text so you can copy those fragments easily
+> In addition to expanding it, this action selects the text so you can copy the fragments easily
 > with `cmd+c` on mac, or `ctrl+c` in other operating systems.
 
-> You can click on the headings and some notes, to get an anchored link to those sections.
-> After clicking, you can copy the new url in your browsing including the `#` to link to a specific section.
+> You can click on the headings and some notes, to get an anchored link to the sections.
+> After clicking, you can copy the new url in your browser including the `#` to link to a specific section.
 
 #### My route is not being executed, how can I debug it?
 {: #route-not-executing }
