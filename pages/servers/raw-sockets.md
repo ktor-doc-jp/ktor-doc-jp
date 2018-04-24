@@ -155,3 +155,33 @@ fun main(args: Array<String>) {
 }
 ```
 
+## Secure Sockets (SSL/TLS)
+{: #secure }
+
+Ktor supports secure sockets. To enable them you will need to include the `ktor-network-tls` artifact, and call
+the `.tls()` to a connected socket.
+
+*Connect to a secure socket:*
+```kotlin
+runBlocking {
+    val socket = aSocket().tcp().connect(InetSocketAddress("google.com", 443)).tls()
+    val w = socket.openWriteChannel(autoFlush = false)
+    w.write("GET / HTTP/1.1\r\n")
+    w.write("Host: google.com\r\n")
+    w.write("\r\n")
+    w.flush()
+    val r = socket.openReadChannel()
+    println(r.readASCIILine())
+}
+```
+
+You can adjust a few optional parameters for the TLS connection:
+
+```kotlin
+suspend fun Socket.tls(
+        trustManager: X509TrustManager? = null,
+        randomAlgorithm: String = "NativePRNGNonBlocking",
+        serverName: String? = null,
+        coroutineContext: CoroutineContext = ioCoroutineDispatcher
+): Socket
+```
