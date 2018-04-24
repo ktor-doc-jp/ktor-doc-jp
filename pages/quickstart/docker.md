@@ -7,15 +7,14 @@ priority: 0
 ---
 
 [Docker](https://www.docker.com) is a container platform:
-it allows to package package software in a format,
-and to run it isolated in any supported operating system.
+it allows packaging software in a format that can then be run in isolation in any supported operating system.
 
-Publish a Ktor application to docker is very easy and requires only a few steps:
+Publishing a Ktor application to docker is very easy and only takes a few steps:
 
 * Install [Docker](https://www.docker.com)
 * A JAR packaging tool
 
-In this page we will guide you through creating a docker images and publishing an application to it.
+In this page we will guide you through creating a docker image and publishing an application to it.
 
 **Table of contents:**
 
@@ -24,8 +23,8 @@ In this page we will guide you through creating a docker images and publishing a
 
 ### Package an application using Gradle
 
-In this tutorial we will use the Gradle [shadow plugin](https://github.com/johnrengelman/shadow).
-It packages all the output classes, resources and all the required dependencies into a single JAR file,
+In this tutorial, we will use the Gradle [shadow plugin](https://github.com/johnrengelman/shadow).
+It packages all the output classes, resources, and all the required dependencies into a single JAR file,
 and appends a manifest file to tell Java which is the entry-point main class containing the main method. 
 
 First, you need to add the shadow plugin dependency in your `build.gradle` file:
@@ -44,20 +43,20 @@ buildscript {
 }
 ```
 
-After that, you have to apply it, along the application plugin:
+After that, you have to apply it, along with the application plugin:
 
 ```groovy
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 ``` 
 
-Then specify main class, so it knows what to run when running the java's JAR inside Docker:
+Then specify the main class, so it knows what to run when running the java's JAR inside Docker:
 
 ```groovy
 mainClassName = 'org.sample.ApplicationKt'
 ```
 
-The string is the fully qualified name of the class containing your `main` function. When `main` function is a top level
+The string is the fully qualified name of the class containing your `main` function. When `main` function is a top-level
 function in a file, the class name is the file name with the `Kt` suffix. In the example above, `main` function is in the
 file `Application.kt` in package `org.sample`.
 
@@ -74,7 +73,7 @@ shadowJar {
 Now you can run `./gradlew build` to build and package your application.
 You should get `my-application.jar` in `build/libs` folder.  
 
-For more information about configuring this plugin see [documention for the plugin](http://imperceptiblethoughts.com/shadow/)
+For more information about configuring this plugin see [documentation for the plugin](http://imperceptiblethoughts.com/shadow/)
 
 So a full `build.gradle` file would look like this:
 
@@ -206,7 +205,7 @@ COPY ./build/libs/my-application.jar /root/my-application.jar
 WORKDIR /root
 ```
 
-These lines copy your packaged application into the Docker image and sets working directory to where we copied it.
+These lines copy your packaged application into the Docker image and sets the working directory to where we copied it.
 
 ```text
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
@@ -234,17 +233,17 @@ Start an image:
 docker run -it -p 8080:8080 --rm my-application
 ```
 
-With this command we start docker in a foreground mode. It will wait for server to exit, also it
-will respond to `Ctrl+C` to stop it. `-it` instructs docker to allocate a terminal (*tty*) to pipe the stdout
+With this command, we start Docker in a foreground mode. It will wait for the server to exit, it
+will also respond to `Ctrl+C` to stop it. `-it` instructs Docker to allocate a terminal (*tty*) to pipe the stdout
 and to respond to the interrupt key sequence. 
 
 Since our server is running in an isolated container now, we should tell Docker to expose a port so we can
-actually access the server port. Parameter `-p 8080:8080` tells docker to publish port 8080 from inside a container as a port 8080 on a local
-machine. Thus, when you tell your browser to visit `localhost:8080` it will first reach to Docker and it will bridge
+actually access the server port. Parameter `-p 8080:8080` tells Docker to publish port 8080 from inside a container as a port 8080 on a local
+machine. Thus, when you tell your browser to visit `localhost:8080` it will first reach out to Docker, and it will bridge
 it into internal port `8080` for your application. 
 
 By default a container’s file system persists even after the container exits, so we supply `--rm` option to prevent
-piling garbage.
+garbage piling up.
 
 For more information about running a docker image please consult [docker run](https://docs.docker.com/engine/reference/run) 
 documentation.
