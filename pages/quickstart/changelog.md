@@ -14,12 +14,12 @@ priority: 98
 * CIO http client pipelining support, chunked and more
 * CIO initial TLS support
 * Session authentication provider
-* OAuth2: introduce ability to generate and verify state field
+* OAuth2: introduced the ability to generate and verify state field
 * OAuth: fix scopes parameter to conform to RFC (#329)
 * OAuth2: fix bug with double scopes encoding (#370)
-* OAuth2: add ability to intercept redirect URL
-* CORS: introduce allowSameOrigin option
-* Auth: provide application call as receiver for validate functions (#375 and related)
+* OAuth2: add the ability to intercept redirect URL
+* CORS: introduced the allowSameOrigin option
+* Auth: provide application call as receiver for validating functions (#375 and related)
 * Test host reworked, handleRequest reads the body and redirects the exceptions correctly
 * Servlets: fixed inputStream acquisition, fixed error handling
 * Java 9 compatibility improved (no modules yet)
