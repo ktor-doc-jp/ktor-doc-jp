@@ -18,14 +18,14 @@ All artifacts in Ktor belong to `io.ktor` group and hosted on [Bintray](https://
     
 Ktor is split into several groups of modules:
 
-* `ktor-server` contains modules that support running Ktor Application with different engines: Netty, Jetty, Tomcat, and 
-generic servlet. It also contains TestEngine for setting up application tests without starting real server
+* `ktor-server` contains modules that support running the Ktor Application with different engines: Netty, Jetty, Tomcat, and 
+a generic servlet. It also contains a TestEngine for setting up application tests without starting the real server
   * `ktor-server-core` is a core package where most of the application API and implementation is located 
-  * `ktor-server-jetty` support a deployed or embedded Jetty instance
-  * `ktor-server-netty` supports Netty in an embedded mode
+  * `ktor-server-jetty` supports a deployed or embedded Jetty instance
+  * `ktor-server-netty` supports Netty in embedded mode
   * `ktor-server-tomcat` supports Tomcat servers
-  * `ktor-server-servlet` is used by Jetty and Tomcat and allows running in generic servlet container
-  * `ktor-server-test-host` allows running application tests faster without starting full host
+  * `ktor-server-servlet` is used by Jetty and Tomcat and allows running in a generic servlet container
+  * `ktor-server-test-host` allows running application tests faster without starting the full host
 * `ktor-features` groups modules for features that are optional and may not be required by every application
   * `ktor-auth` provides support for different [authentication systems](/features/authentication.html) like Basic, Digest, Forms, OAuth 1a and 2
   * `ktor-auth-jwt` adds the ability to authenticate against [JWT](/features/authentication.html#jwt)
@@ -37,10 +37,10 @@ generic servlet. It also contains TestEngine for setting up application tests wi
   * `ktor-html-builder` integrates Ktor with [kotlinx.html builders](/features/html-dsl.html)
   * `ktor-locations` contains experimental support for [typed locations](/features/locations.html)
   * `ktor-metrics` adds the ability to add some [metrics](/features/metrics.html) to the server
-  * `ktor-server-sessions` adds ability to use [stateful sessions stored on a server](/features/sessions.html)
+  * `ktor-server-sessions` adds the ability to use [stateful sessions stored on a server](/features/sessions.html)
   * `ktor-websockets` provides support for [Websockets](/features/websockets.html)
 * `ktor-client` contains modules for [performing http requests](/clients/http-client.html)
-  * `ktor-client-core` is a core package where most of the http http client API is located
+  * `ktor-client-core` is a core package where most of the http HttpClient API is located
   * `ktor-client-apache` adds support for the Apache asynchronous HttpClient
   * `ktor-client-cio`  adds support for a pure Kotlin Corutine based I/O asynchronous HttpClient
   * `ktor-client-jetty` adds support
