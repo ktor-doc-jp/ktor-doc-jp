@@ -293,7 +293,7 @@ and de-serializing them using a specific `serializer: JsonSerializer`.
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
-    install(JsonSerializer) {
+    install(JsonFeature) {
         serializer = GsonSerializer()
     }
 }
