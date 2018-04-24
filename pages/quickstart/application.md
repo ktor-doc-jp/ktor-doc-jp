@@ -6,7 +6,7 @@ permalink: /quickstart/application.html
 priority: 0
 ---
 
-This tutorial will guide you through the steps on how to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
+This tutorial will help guide you through the steps needed to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
 Ktor applications can be built using common build systems such as [Maven](https://kotlinlang.org/docs/reference/using-maven.html) or [Gradle](https://kotlinlang.org/docs/reference/using-gradle.html).
 
 **Table of contents:**
@@ -21,12 +21,12 @@ Ktor is split up into several groups of modules,
 allowing you to include only the functionality that you will need.
  
 For a list of these modules, please check the [Artifacts](/artifacts) page.
-In this case you only need to include `ktor-server-netty`.  
+In this case, you only need to include `ktor-server-netty`.  
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right
 repositories need to be added to your build script.
 
-For more detailed guide on setting up build files with different build systems see:
+For a more detailed guide on setting up build files with different build systems see:
 
 * [Setting up Gradle Build](/quickstart/gradle.html)
 * [Setting up Maven Build](/quickstart/maven.html)
@@ -37,13 +37,13 @@ For more detailed guide on setting up build files with different build systems s
 Ktor allows applications to run within an Application Server compatible with Servlets such as Tomcat,
 or as an embedded application, using Jetty or Netty.
 
-In this tutorial you will learn how to self-host an application using Netty.
+In this tutorial, you will learn how to self-host an application using Netty.
 
 You can start by creating an `embeddedServer`, passing in the engine factory as the first argument,
 the port as the second argument and the actual application code as the fourth argument (third argument
 is the host which is 0.0.0.0 by default).
 
-The code below defines a single route that responds to the `GET` verb on the url `/` with
+The code below defines a single route that responds to the `GET` verb on the URL `/` with
 the text `Hello, world!`
 
 After defining the routes, you have to start the server by calling `server.start`,
@@ -70,8 +70,8 @@ fun main(args: Array<String>) {
 }
 ```
 
-If you server is just listening for HTTP requests and do not want do do anything else after that in the setup,
-you will normaly call the server.start with `wait = true`.
+If your server is just listening for HTTP requests and do not want to do anything else after that in the setup,
+you will normally call the server.start with `wait = true`.
 {: .note}
 
 ## Running the Application
