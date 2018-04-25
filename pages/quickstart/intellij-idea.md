@@ -6,7 +6,7 @@ permalink: /quickstart/intellij-idea.html
 priority: 0
 ---
 
-This tutorial will guide you from the most basic setup to a full
+This tutorial will guide you from the most basic setup through to a full
 featured setup you can use to start developing your app.
 
 **Table of contents:**
@@ -16,10 +16,10 @@ featured setup you can use to start developing your app.
 
 ## Prerequisites
 
-1.  The most recent version of Intellij IDEA
+1.  The most recent version of IntelliJ IDEA
 2.  Kotlin and Gradle plugins enabled (They should be enabled by default.)
 
-You can check this in IDEA in its main menu:
+You can check this in IntelliJ IDEA in the main menu:
 * Windows: `File -> Settings -> Plugins`
 * Mac: `IntelliJ IDEA -> Settings -> Plugins`
 
@@ -102,20 +102,20 @@ Now you can Run '`blog.BlogAppKt`'. You can do it, by pressing the glutter icon 
 
 ![Ktor IntelliJ: Program Run](/pages/quickstart/intellij-idea/program-run.png)
 
-This will also create a run configuration in the upper right part of intelliJ, that will allow to run
+This will also create a run configuration in the upper-right part of IntelliJ, that will allow running
 this configuration again easily:
 
 ![Ktor IntelliJ: Program Run Config](/pages/quickstart/intellij-idea/program-run-config.png)
 
 This will start the Netty web server.
-In your browser enter the url:  localhost:8080
-And you should see your example blog plage.
+In your browser enter the URL:  localhost:8080
+And you should see your example blog page.
 
 ![Ktor IntelliJ: Website](/pages/quickstart/intellij-idea/website.png)
 
 ## Improve the app with the Application object
 
-The setup above has a lot of nested blocks and is not the best for starting to 
+The setup above has a lot of nested blocks and is not ideal for starting to 
 add functionality to your app.  We can improve it by using the Application object 
 and referring to that from an embeddedServer call in the main function.  
 
@@ -163,7 +163,7 @@ ktor {
 }
 ```
 
-Then we delete the main function from `BlogApp.kt` and change fun `Application.module()` to `fun Application.main()`.  However, if we run the application now it will fail with an error message like "Top-level function 'main' not found in package blog."  Our `Application.main()` function is now a function extension and does not qualify as a top-level main function.   
+Then we delete the main function from `BlogApp.kt` and change fun `Application.module()` to `fun Application.main()`.  However, if we run the application now, it will fail with an error message like "Top-level function 'main' not found in package blog."  Our `Application.main()` function is now a function extension and does not qualify as a top-level main function.   
 
 This requires us to indicate a new main class as IDEA will no longer be able to find it automatically.  In `build.gradle` we add:
 
