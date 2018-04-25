@@ -8,9 +8,9 @@ caption: Http Client
 {::options toc_levels="1..2" /}
 
 In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
-This client support several [configurable engines](#engines), and has its own set of [features](#features).
+This client supports several [configurable engines](#engines), and has its own set of [features](#features).
 
-The main functionality is exposed through the `io.ktor:ktor-client-core:$ktor_version` artifact.
+The main functionality is available through the `io.ktor:ktor-client-core:$ktor_version` artifact.
 And each engine, is provided in [separate artifacts](#engines).
 {: .note.artifact }
 
@@ -23,7 +23,7 @@ And each engine, is provided in [separate artifacts](#engines).
 
 The basic usage is *super* simple: you just have to instantiate an `HttpClient` instance,
 specifying an engine, for example [`Apache`](#apache), [`Jetty`](#jetty)
-or [`CIO`](#cio), and start making requests using one of the many convenient methods available.
+or [`CIO`](#cio), and start making requests using one of the many convenience methods available.
 
 First you need to instantiate the client:   
 
@@ -44,23 +44,23 @@ val bytes: ByteArray = client.call("http://127.0.0.1:8080/").response.readBytes(
 ```
 
 It is possible to customize the request a lot and
-to stream the request and response payloads , but you can also just call a convenience
+to stream the request and response payloads, but you can also just call a convenience
 extension method like `HttpClient.get` to do a `GET` request to receive
 the specified type directly (for example `String`).
 {: .note}
 
 ## Custom requests
 
-We cannot live only from *get* requests, and Ktor allows you to build complex
-requests with any of the HTTP verbs, and process responses in many flexible ways.
+We cannot live only on *get* requests, Ktor allows you to build complex
+requests with any of the HTTP verbs, with the flexibility to process responses in many ways.
 
 ### The `call` method
 
 The HttpClient `call` method, returns an `HttpClientCall` and allows you to perform
 simple untyped requests.
 
-You can read the content by using `response: HttpResponse`.
-For further information, check the [receiving content using HttpResponse](#HttpResponse) section. 
+You can read the content using `response: HttpResponse`.
+For further information, check out the [receiving content using HttpResponse](#HttpResponse) section. 
 
 ```kotlin
 val call = client.call("http://127.0.0.1:8080/") {
@@ -73,7 +73,7 @@ println(call.response.readText())
 
 In addition to call, there is a `request` method for performing a typed request,
 [receiving a specific type](#receive) like String, HttpResponse, or an arbitrary class.
-You have to specify the URL, and the method when building the request. 
+You have to specify the URL and the method when building the request. 
 
 ```kotlin
 val call = client.request<String> {
@@ -107,7 +107,7 @@ class HttpRequestBuilder : HttpMessageBuilder {
 }
 ```
 
-The `HttpClient` class only offers the basic functionality, and all the methods for building requests are exposed as extensions.\\
+The `HttpClient` class only offers some basic functionality, and all the methods for building requests are exposed as extensions.\\
 You can check the standard available [HttpClient build extension methods](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/builders.kt).
 {: .note.api}
 
@@ -155,7 +155,7 @@ client.post<Unit> {
 ```
 {: .compact}
 
-Remember that your classes must be *top level* to be recognized by `Gson`. \\
+Remember that your classes must be *top-level* to be recognized by `Gson`. \\
 If you try to send a class that is inside a function, the feature will send a *null*.
 {: .note}
 
@@ -266,13 +266,13 @@ val client = HttpClient(HttpClientEngine) {
 ```
 
 Use this if you are only interested in the response headers, and you cannot use the HEAD verb.
-This will use less memory, and will execute faster.
+This will use less memory and will execute faster.
 {: .note}
 
 ### HttpPlainText
 
 This feature processes the request content as plain text of a specified charset by `defaultCharset`.
-Also it will process the response content as plain text too.
+Also, it will process the response content as plain text too.
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -304,7 +304,7 @@ To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 
 ### WebSockets
 
-This feature enable bidirectional WebSocket connections with the server.
+This feature enables bi-directional WebSocket connections with the server.
 You can read more about it in its [dedicate WebSockets page](/clients/websockets.html). 
 
 To use this feature, you need to include `io.ktor:ktor-client-websocket` artifact.
@@ -312,7 +312,7 @@ To use this feature, you need to include `io.ktor:ktor-client-websocket` artifac
 
 ### Creating Custom Features
 
-If you want to create features, you can use the [standard features](https://github.com/ktorio/ktor/tree/master/ktor-client/ktor-client-core/src/io/ktor/client/features) as reference.
+If you want to create features, you can use the [standard features](https://github.com/ktorio/ktor/tree/master/ktor-client/ktor-client-core/src/io/ktor/client/features) as a reference.
 
 You can also check the [HttpRequestPipeline.Phases](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/HttpRequestPipeline.kt)
 and [HttpResponsePipeline.Phases](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/response/HttpResponsePipeline.kt)
@@ -322,7 +322,7 @@ to understand the interception points available.
 ## Supported engines
 {: #engines}
 
-Ktor HttpClient lets you to configure the parameters of each engine by calling `Engine.config { }`.
+Ktor HttpClient lets you configure the parameters of each engine by calling `Engine.config { }`.
 
 Every engine config has two common properties that can be set:
 
@@ -340,15 +340,15 @@ val client = HttpClient(MyHttpEngine.config {
 ### Apache
 {: #apache}
 
-Apache is the most configurable HTTP client at this point. It supports HTTP/1.1 and HTTP/2.
+Apache is the most configurable HTTP client about right now. It supports HTTP/1.1 and HTTP/2.
 It is the only one that supports following redirects and allows you to configure timeouts,
-proxies among other things supported by `org.apache.httpcomponents:httpasyncclient`.
+proxies among other things it is supported by `org.apache.httpcomponents:httpasyncclient`.
 
 A sample configuration would look like:
 
 ```kotlin
 val client = HttpClient(Apache.config {
-    followRedirects = true  // Follow http Location redirects - default false. It uses the default number of redirects defined by Apache's HttpClient that is 50.
+    followRedirects = true  // Follow HTTP Location redirects - default false. It uses the default number of redirects defined by Apache's HttpClient that is 50.
     
     // For timeouts: 0 means infinite, while negative value mean to use the system's default value
     socketTimeout = 10_000  // Max time between TCP packets - default 10 seconds
@@ -374,7 +374,7 @@ Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
 ### CIO
 {: #cio}
 
-CIO (Coroutine-based I/O) is a Ktor implementation with no additional dependencies and fully asynchronous.
+CIO (Coroutine-based I/O) is a Ktor implementation with no additional dependencies and is fully asynchronous.
 It only supports HTTP/1.x for now.
 
 CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
@@ -402,7 +402,7 @@ No additional transitive dependencies.
 ### Jetty
 {: .jetty}
 
-Jetty provides an additional `sslContextFactory` for configuring. It just supports HTTP/2 for now.
+Jetty provides an additional `sslContextFactory` for configuring. It only supports HTTP/2 for now.
 
 A sample configuration would look like:
 
@@ -418,7 +418,7 @@ Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`.
 
 ## Concurrency
 
-Remember that requests are asynchronous, but when performing a requests, the API is suspending
+Remember that requests are asynchronous, but when performing requests, the API suspends further requests
 and your function will be suspended until done. If you want to perform several requests at once
 in the same block, you can use `launch` or `async` functions and later get the results.
 For example:
