@@ -337,6 +337,9 @@ val client = HttpClient(MyHttpEngine.config {
 })
 ```
 
+You can also adjust maximum total connections and maximum connections
+per route in Apache and CIO clients (but not Jetty).
+
 ### Apache
 {: #apache}
 
@@ -358,6 +361,8 @@ val client = HttpClient(Apache.config {
     customizeClient {
         // Apache's HttpAsyncClientBuilder
         setProxy(HttpHost("127.0.0.1", 8080))
+        setMaxConnTotal(1000) // Maximum number of socket connections.
+        setMaxConnPerRoute(100) // Maximum number of requests for a specific endpoint route.
     }
     customizeRequest {
         // Apache's RequestConfig.Builder
