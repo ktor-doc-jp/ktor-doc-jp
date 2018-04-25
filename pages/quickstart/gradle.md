@@ -6,7 +6,7 @@ permalink: /quickstart/gradle.html
 priority: 0
 ---
 
-In this guide we will show you how to create a `build.gradle` file
+In this guide, we will show you how to create a `build.gradle` file
 and how to configure it to support Ktor.
 
 **Table of contents:**
@@ -18,10 +18,10 @@ and how to configure it to support Ktor.
 {: #initial }
 
 First of all, you need a skeleton `build.gradle` file including Kotlin.
-You can create it with any text editor, or just let intelliJ create
-it for you following the [IntelliJ guide](/quickstart/intellij-idea.html).
+You can create it with any text editor, or you can use IntelliJ to create
+it following the [IntelliJ guide](/quickstart/intellij-idea.html).
 
-The initial file would look like this:
+The initial file looks like this:
 
 ```groovy
 group 'Example'
@@ -57,7 +57,7 @@ dependencies {
 ## Add Ktor dependencies and configure build settings
 {: #ktor-dependencies}
 
-Ktor artifacts are located on a specific repository on bintray.
+Ktor artifacts are located in a specific repository on bintray.
 And its core has dependencies on the `kotlinx.coroutines` library that
 can be found on `jcenter`.
 
@@ -79,19 +79,19 @@ in the `buildscript` block (or in a `gradle.properties` file) for using it later
 ext.ktor_version = '{{site.ktor_version}}'
 ```
 
-Now you have to add the `ktor-server-core` artifact referencing the `ktor_version` you specified:
+Now you have to add the `ktor-server-core` artifact, referencing the `ktor_version` you specified:
 
 ```groovy
 compile "io.ktor:ktor-server-core:$ktor_version"
 ```
 
-In groovy there are single quoted strings (instead of characters)
-and double quoted strings, to be able to interpolate variables like
-versions, you have to use double quoted strings.
+In groovy, there are single-quoted strings (instead of characters)
+and double-quoted strings, to be able to interpolate variables like
+versions, you have to use double-quoted strings.
 {: .note.tip }
 
-As for Kotlin 1.2x, coroutines are still an experimental feature
-in Kotlin, so you will need to tell the compiler that it is okay
+As for Kotlin 1.2x, coroutines are still an experimental feature, 
+so you will need to tell the compiler that it is okay
 to use them to avoid warnings:
 
 ```groovy
@@ -102,7 +102,7 @@ kotlin {
 }
 ```
 
-You also need to tell Kotlin compiler to generate bytecode
+You also need to tell the Kotlin compiler to generate bytecode
 compatible with Java 8:
 {: #java8}
 
@@ -121,13 +121,13 @@ compileTestKotlin {
 Ktor can run in many environments, such as Netty, Jetty or any other
 Servlet-compatible Application Container such as Tomcat.
 
-This example shows how to configure Ktor with Nett.
-For other engines see [artifacts](/artifacts.html) for list of
+This example shows you how to configure Ktor with Netty.
+For other engines see [artifacts](/artifacts.html) for a list of
 available artifacts.
 
 You will add a dependency for `ktor-server-netty` using the
 `ktor_version` property you have created. This module provides
-Netty as a web server and all the required code to run Ktor
+a Netty web server and all the required code to run Ktor
 application on top of it:
 
 ```groovy
@@ -137,7 +137,7 @@ compile "io.ktor:ktor-server-netty:$ktor_version"
 ## Final `build.gradle` (with Ktor)
 {: #complete}
 
-When you are done, the `build.gradle` file should look like:
+When you are done, the `build.gradle` file should look like this:
 
 ```groovy
 group 'Example'
@@ -191,4 +191,4 @@ to fetch dependencies and verify everything is set up correctly.
 {: #logging}
 
 If you want to log application events and useful information,
-you can read further in the [logging](/servers/logging.html) page.
+you can read about it further in the [logging](/servers/logging.html) page.
