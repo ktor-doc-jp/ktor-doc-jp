@@ -9,18 +9,18 @@ priority: 99
 ## Migrating from 0.9.1 to 0.9.2
 {: #0.9.2}
 
-Ktor 0.9.2 fixes some bugs, improves the overall performance of the sever, partially starts supporting JVM 9,
-and introduces new APIs and changes some of them.
+Ktor 0.9.2 fixes some bugs, improves the overall performance of the server, partially starts supporting JVM 9,
+and introduces new APIs and changes for some of them.
 
-In this section we will discuss how to convert existing code from 0.9.1 to 0.9.2.
+In this section, we will discuss how to convert existing code from 0.9.1 to 0.9.2.
 
-For a changelog including fixes, improvements and new APIs, check the [changelog](/quickstart/changelog.html#0.9.2) instead.
+For a changelog including fixes, improvements, and new APIs, check the [changelog](/quickstart/changelog.html#0.9.2) instead.
 
 ### Authentication
 
 The biggest change in this version since 0.9.1, is authentication. Which has been redesigned:
 
-In previous versions you had to define an `authentication` block inside your Application or in a Route block,
+In previous versions, you had to define an `authentication` block inside your Application or in a Route block,
 applying that authentication to all the subroutes matching that block.
 
 That forced you to redefine several authentication providers, or in some cases that would force you to include
@@ -34,12 +34,12 @@ authentication {
 }
 ```
 
-In 0.9.2, all the authentication mechanisms are defined at the Application level, and have an optional name
-associated to them.
-Also the method names for defining different mechanisms have changed. Now the new name of the authentication mechanism
-is part of the function call, and all its old parameters are defined using a dsl instead.
+In 0.9.2, all the authentication mechanisms are defined at the Application level and have an optional name
+associated with them.
+Also, the method names for defining different mechanisms have changed. Now the new name of the authentication mechanism
+is part of the function call, and all its old parameters are defined using a DSL instead.
 
-For example, in order to define a basic authentication `myauth1`, you should add this code to your application configuration: 
+For example, to define a basic authentication `myauth1`, you should add this code to your application configuration: 
 
 ```kotlin
 install(Authentication) {
@@ -95,9 +95,9 @@ handleRequest(HttpMethod.Post, "/") {
 }
 ```
 
-Prior to 0.9.2, you had to call a method `awaitCompletion` in the response in the case the request
-was not generating the response body synchronously. In 0.9.2, the `awaitCompletion` method doesn't exists,
-and it awaits for completion automatically before returning the response.
+Before 0.9.2, you had to call the method `awaitCompletion` in the response in the case the request
+was not generating the response body synchronously. In 0.9.2, the `awaitCompletion` method doesn't exist,
+and it awaits completion automatically before returning the response.
 
 ### IncomingContent deprecation
 
@@ -106,13 +106,13 @@ or `call.request.receiveContent().inputStream()`, you should consider changing i
 `call.receive<ByteReadChannel>()`, `call.receive<MultiPartData>()` and/or `call.receive<InputStream>()`
 since it is deprecated and will be removed in future versions of Ktor.
 
-Also remember that `InputStream` is a synchronous API, so you should avoid it if possible.
+Also, remember that `InputStream` is a synchronous API, so you should avoid it if possible.
 
 ### WebSockets
 
 In order to support WebSockets at the client side, we have changed some of the transitive dependencies
-and moved some classes: Now there is a transitive dependency called `ktor-http-cio` that include common
-WebSockets code among other things, and `ktor-websockets` server feature depends on it.
+and moved some classes: now there is a transitive dependency called `ktor-http-cio` that includes common
+WebSockets code among other things, which the `ktor-websockets` server feature depends on.
 But since it is a transitive dependency, that should be transparent to you.
 
 Classes like `WebSocketSession` and `Frame` have been moved from the `io.ktor.websocket` package to the
