@@ -182,12 +182,9 @@ In the root folder of your project create a file named `Dockerfile` with the fol
 
 ```text
 FROM openjdk:8-jre-alpine
-
 COPY ./build/libs/my-application.jar /root/my-application.jar
-
 WORKDIR /root
-
-CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
+CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
 Let's see what is what:
@@ -208,7 +205,7 @@ WORKDIR /root
 These lines copy your packaged application into the Docker image and sets the working directory to where we copied it.
 
 ```text
-CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
+CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
 The last line instructs Docker to run `java` with G10s GC, 4G of memory and your packaged application. 
@@ -230,7 +227,7 @@ docker build -t my-application .
 Start an image:
 
 ```
-docker run -it -p 8080:8080 --rm my-application
+docker run -m512M --cpus 2 -it -p 8080:8080 --rm ktor-docker-sample-application
 ```
 
 With this command, we start Docker in a foreground mode. It will wait for the server to exit, it
@@ -241,6 +238,8 @@ Since our server is running in an isolated container now, we should tell Docker 
 actually access the server port. Parameter `-p 8080:8080` tells Docker to publish port 8080 from inside a container as a port 8080 on a local
 machine. Thus, when you tell your browser to visit `localhost:8080` it will first reach out to Docker, and it will bridge
 it into internal port `8080` for your application. 
+
+You can adjust memory with `-m512M` and number of exposed cpus with `--cpus 2`. 
 
 By default a container’s file system persists even after the container exits, so we supply `--rm` option to prevent
 garbage piling up.
