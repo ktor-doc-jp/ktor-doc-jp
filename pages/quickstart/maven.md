@@ -6,7 +6,7 @@ permalink: /quickstart/maven.html
 priority: 0
 ---
 
-In this guide we will show you how to create a Maven `pom.xml` file
+In this guide, we will show you how to create a Maven `pom.xml` file
 and how to configure it to support Ktor.
 
 **Table of contents:**
@@ -95,7 +95,7 @@ Here is a basic `pom.xml` file for building Kotlin applications:
 ## Add Ktor dependencies and configure build settings
 {: #ktor-dependencies}
 
-Ktor artifacts are located on a specific repository on bintray.
+Ktor artifacts are located in a specific repository on bintray.
 And its core has dependencies on the `kotlinx.coroutines` library that
 can be found on `jcenter`.
 
@@ -167,7 +167,7 @@ Ktor can run in many environments, such as Netty, Jetty or any other
 Servlet-compatible Application Container such as Tomcat.
 
 This example shows how to configure Ktor with Nett.
-For other engines see [artifacts](/artifacts.html) for list of
+For other engines see [artifacts](/artifacts.html) for a list of
 available artifacts.
 
 You will add a dependency for `ktor-server-netty` using the
