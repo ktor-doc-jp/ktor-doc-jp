@@ -78,10 +78,10 @@ and how to configure the server.
 
 Those classes are normally declared in `CommandLine.kt` source files.
 
-* CIO: [`io.ktor.server.cio.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-cio/src/io/ktor/server/cio/CommandLine.kt)
-* Jetty: [`io.ktor.server.jetty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-jetty/src/io/ktor/server/jetty/CommandLine.kt)
-* Netty: [`io.ktor.server.netty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-netty/src/io/ktor/server/netty/CommandLine.kt)
-* Tomcat: [`io.ktor.server.tomcat.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tomcat/src/io/ktor/server/tomcat/CommandLine.kt)
+* CIO: [`io.ktor.server.cio.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-cio/src/io/ktor/server/cio/DevelopmentEngine.kt)
+* Jetty: [`io.ktor.server.jetty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-jetty/src/io/ktor/server/jetty/DevelopmentEngine.kt)
+* Netty: [`io.ktor.server.netty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-netty/src/io/ktor/server/netty/DevelopmentEngine.kt)
+* Tomcat: [`io.ktor.server.tomcat.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tomcat/src/io/ktor/server/tomcat/DevelopmentEngine.kt)
 
 ### [TestApplicationEngine](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-test-host/src/io/ktor/server/testing/TestApplicationEngine.kt)
 
