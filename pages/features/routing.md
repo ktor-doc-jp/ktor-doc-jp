@@ -62,9 +62,9 @@ Builder functions:
 
 * `route(path)` – adds path segments matcher(s), see below about [paths](#path)
 * `method(verb)` – adds HTTP method matcher.
-* `param(name, value)` – adds matcher for specific value of query parameter
-* `param(name)` – adds matcher that checks existence of query parameter and captures its value
-* `optionalParam(name)` – adds matcher that captures value of query parameter if it exists
+* `param(name, value)` – adds matcher for a specific value of the query parameter
+* `param(name)` – adds matcher that checks for the existence of a query parameter and captures its value
+* `optionalParam(name)` – adds matcher that captures the value of a query parameter if it exists
 * `header(name, value)` – adds matcher that for a specific value of HTTP header, see below about [quality](#quality)
 
 ### Path
@@ -100,7 +100,7 @@ will have `"login"` key with value `"john"`.
 
 ##### Optional, Wildcard, Tailcard
 
-Parameters and path segments can be optional, or capture entire reminder of URI.
+Parameters and path segments can be optional or capture entire reminder of URI.
 
 * `{param?}` – optional path segment, if it exists its captured in the parameter
 * `*` – wildcard, any segment will match, but shouldn't be missing
@@ -174,8 +174,8 @@ loading user from the database in `/user/{id}` section and placing it into call'
 
 ### Extensibility
   
-`ktor-server-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
-one can easily add own selectors to fit in even more complex logic. Implement `RouteSelector` and create
+The `ktor-server-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
+you can easily add your own selectors to fit in even more complex logic. Implement `RouteSelector` and create
 a builder function similar to built-in. 
 
 Path parsing is not extensible.
