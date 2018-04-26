@@ -12,10 +12,10 @@ feature:
 
 {::options toc_levels="1..2" /}
 
-Ktor supports authentication out of the box as a pluggable standard feature.
-It support mechanisms to read *credentials*, and to authenticate *principals*.
+Ktor supports authentication out of the box as a standard pluggable feature.
+It supports mechanisms to read *credentials*, and to authenticate *principals*.
 
-It can be used in some cases along the [sessions feature](/features/sessions.html)
+It can be used in some cases along with the [sessions feature](/features/sessions.html)
 to keep the login information between requests.
 
 **Table of contents:**
@@ -30,11 +30,11 @@ to keep the login information between requests.
 Ktor defines two concepts: credentials and principals.
 
 * A principal is something that can be authenticated: a user, a computer, a group, etc.
-* A credential is an object that represent a set of properties for the server to authenticate a principal:
-  a couple of user/password, an API key and a authenticated payload signature, etc.
+* A credential is an object that represents a set of properties for the server to authenticate a principal:
+  a user/password, an API key or an authenticated payload signature, etc.
 
 To install it, you have to call to `application.install(Authentication)`. You have to install this feature
-directly to the application and it *won't* work in other `ApplicationCallPipeline` like `Route`.
+directly to the application and it *won't* work in another `ApplicationCallPipeline` like `Route`.
 
 You might still be able to call the install code inside a Route if you have the Application injected in a nested DSL,
 but it will be applied to the application itself.
@@ -96,9 +96,9 @@ The handler won't be executed if the configured authentication fails (when retur
 It is possible to give arbitrary names to the authentication providers you specify,
 or to not provide a name at all (unnamed provider) by not setting the name argument or passing a null.
  
-You cannot repeat authentication provider names, and you can define just one provider without name.
+You cannot repeat authentication provider names, and you can define just one provider without a name.
 
-In the case you repeat a name for provider or try to define two unnamed providers, an exception will be thrown:
+In the case you repeat a name for the provider or try to define two unnamed providers, an exception will be thrown:
 
 ```
 java.lang.IllegalArgumentException: Provider with the name `authName` is already registered
@@ -169,7 +169,7 @@ application.install(Authentication) {
 
 Remember that both the `name` and the `password` from the credentials are arbitrary values.
 Remember to escape and/or validate them when accessing with those values to the file system, a database,
-when storing them, generating HTML with its content, etc.
+when storing them, or generating HTML with its content, etc.
 {: .security.note }
 
 ### Strategy: Validating using UserHashedTableAuth
@@ -250,7 +250,7 @@ Bear in mind that current LDAP implementation is synchronous.
 ## Digest Authentication
 
 Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication).
-It works different than the basic/form auths:
+It works differently than the basic/form auths:
 
 ```kotlin
 authentication {
@@ -271,9 +271,9 @@ authentication {
 Instead of providing a verifier, you have to provide a `userNameRealmPasswordDigestProvider` that is in charge of
 returning the `HA1` part of the digest. In the case of `MD5`: `MD5("$username:$realm:$password")`.
 The idea is that [you can store passwords already hashed](https://tools.ietf.org/html/rfc2069#section-3.5).
-And just return the expected hash for a specific user, or *null* if the user do not exist.
-The callback is suspendable so you can retrieve or compute the expected hash asynchronously,
-for example from disk or from a database.
+And only return the expected hash for a specific user, or *null* if the user does not exist.
+The callback is suspendable, so you can retrieve or compute the expected hash asynchronously,
+for example from disk or a database.
 
 ```kotlin
 authentication {
@@ -308,8 +308,8 @@ for accessing the file system, accessing databases, storing it, generating HTML,
 ## Authenticating APIs using JWT
 {:#jwt}
 
-Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating json-encoded payloads.
-It is useful to create stateless authenticated APIs in a standard way, since there are client libraries for it
+Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating JSON-encoded payloads.
+It is useful to create stateless authenticated APIs in the standard way, since there are client libraries for it
 in a myriad of languages.
 
 This feature will handle `Authorization: Bearer <JWT-TOKEN>`.
@@ -394,7 +394,7 @@ Ktor has a feature to work with OAuth 1a and 2.0
 
 A simplified OAuth 2.0 workflow:
 * The client is redirected to an authorize URL for the specified provider (Google, Facebook, Twitter, Github...).
-  specifying the `clientId` and a valid redirection url.
+  specifying the `clientId` and a valid redirection URL.
 * Once the login is correct, the provider generates an auth token using a `clientSecret` associated with that `clientId`.
 * Then the client is redirected to a valid, previously agreed upon, application URL with an auth token that is signed with the `clientSecret`.
 * Ktor's OAuth feature verifies the token and generates a Principal `OAuthAccessTokenResponse`.
@@ -466,7 +466,7 @@ sealed class OAuthAccessTokenResponse : Principal {
 ## Advanced
 
 If you want to create custom authentication strategies,
-you can check the [Authentication feature](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/src/io/ktor/auth) as reference.
+you can check the [Authentication feature](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/src/io/ktor/auth) as a reference.
 
 The authentication feature defines two stages as part of its [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/src/io/ktor/auth/AuthenticationPipeline.kt): `RequestAuthentication` and `CheckAuthentication`.
 {: .note}
