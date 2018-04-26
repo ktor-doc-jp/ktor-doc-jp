@@ -11,7 +11,7 @@ feature:
 {::options toc_levels="1..2" /}
 
 Ktor provides a mechanism to create routes in a typed way, for both:
-constructing urls and reading the parameters.
+constructing URLs and reading the parameters.
 
 Locations are an experimental feature.
 {: .note.experimental}
@@ -39,7 +39,7 @@ For each typed route you want to handle, you need to create a class (usually a d
 containing the parameters that you want to handle.
 
 The parameters must be of any type supported by the [Data Conversion](/features/data-conversion.html) feature.
-By default you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, enums and `Iterable` as parameters.
+By default, you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, enums and `Iterable` as parameters.
 
 ### URL parameters
 {: #parameters-url }
@@ -85,7 +85,7 @@ routing {
 }
 ```
 
-Some of these generic methods with one type parameter, defined in the `io.ktor.locations`, have the same name as other methods defined in the `io.ktor.routing` package. If you import the routing package before the locations one, the IDE might suggest you to generalize those methods instead of importing the right package. You can manually add `import io.ktor.locations.*` if that happens to you.
+Some of these generic methods with one type parameter, defined in the `io.ktor.locations`, have the same name as other methods defined in the `io.ktor.routing` package. If you import the routing package before the locations one, the IDE might suggest you generalize those methods instead of importing the right package. You can manually add `import io.ktor.locations.*` if that happens to you.
 Remember this API is experimental. This issue is already [reported at github](https://github.com/ktorio/ktor/issues/368).
 {: .note}
 
@@ -106,7 +106,7 @@ So for this class, `path` would be `"/list/movies?page=10&count=20""`.
 @Location("/list/{name}") data class Listing(val name: String, val page: Int, val count: Int)
 ```
 
-If you construct the URLS like this, and you decide to change the format of the URL,
+If you construct the URLs like this, and you decide to change the format of the URL,
 you will just have to update the `@Location` path, which is really convenient.
 
 ## Subroutes with parameters
