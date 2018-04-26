@@ -8,9 +8,9 @@ feature:
     class: io.ktor.features.DataConversion
 ---
 
-`DataConversion` is a feature that allows to serialize and deserialize list of values.
+`DataConversion` is a feature that allows to serialize and deserialize a list of values.
 
-By default it handle primitive types and enums, but can be configured to handle additional types. 
+By default, it handles primitive types and enums, but it can also be configured to handle additional types. 
 
 If you are using the [Locations feature](/features/locations.html) and want to support
 custom types as part of its parameters, you can add new custom converters with this
@@ -40,11 +40,11 @@ type conversions. Inside, you have to provide a decoder and an encoder
 with the `decode` and `encode` methods accepting callbacks.
 
 * decode callback: `converter: (values: List<String>, type: Type) -> Any?`
-  Accepts `values`, a list of strings) representing repeated values in the URL, for example `a=1&a=2`,
+  Accepts `values`, a list of strings) representing repeated values in the URL, for example, `a=1&a=2`,
   and accepts the `type` to convert to. It should return the decoded value.
 * encode callback: `converter: (value: Any?) -> List<String>` 
   Accepts an arbitrary value, and should return a list of strings representing the value.
-  When returning a list of a single element it will be serialized as `key=item1`. For multiple values
+  When returning a list of a single element, it will be serialized as `key=item1`. For multiple values,
   it will be serialized in the query string as: `samekey=item1&samekey=item2`.
 
 For example:
@@ -72,7 +72,7 @@ install(DataConversion) {
 ## Accessing the Service
 {: #service }
 
-You can access the DataConversion service, from any call easily with:
+You can easily access the DataConversion service, from any call with:
 
 ```kotlin
 val dataConversion = call.conversionService
