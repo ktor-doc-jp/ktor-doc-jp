@@ -8,7 +8,7 @@ feature:
     class: io.ktor.metrics.Metrics
 ---
 
-The Metrics feature allows to configure the [Metrics](http://metrics.dropwizard.io/4.0.0/)
+The Metrics feature allows you to configure the [Metrics](http://metrics.dropwizard.io/4.0.0/)
 to get useful information about the server and the requests.
 
 It reports 
