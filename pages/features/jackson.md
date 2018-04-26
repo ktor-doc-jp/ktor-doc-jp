@@ -17,7 +17,7 @@ This feature is a [ContentNegotiation](/features/content-negotiation.html) conve
 
 ## Basic usage
 
-To install the feature by registering a JSON content conversor using Jackson:
+To install the feature by registering a JSON content convertor using Jackson:
 
 ```kotlin
 install(ContentNegotiation) {
