@@ -9,14 +9,14 @@ feature:
     class2: io.ktor.features.XForwardedHeaderSupport
 ---
 
-This feature allows to handle reverse proxy headers to get information about the original
-request when behind a proxy.
+This feature allows you to handle reverse proxy headers to get information about the original
+request when it's behind a proxy.
 
 * `ForwardedHeaderSupport` handles the standard `Forwarded` header ([RFC 7239](https://tools.ietf.org/html/rfc7239))
 * `XForwardedHeaderSupport` handles the non-standard (but standard de-facto) `X-Forwarded-Host`/`X-Forwarded-Server`, `X-Forwarded-For`, `X-Forwarded-By`, `X-Forwarded-Proto`/`X-Forwarded-Protocol` and `X-Forwarded-SSL`/`Front-End-Https`
 
 Only install these features if you have a reverse proxy supporting these headers serving your requests.
-In other cases any client would be able to manipulate these headers.
+In other cases, a client will be able to manipulate these headers.
 {: .note.security}
 
 **Table of contents:**
@@ -45,12 +45,12 @@ install(XForwardedHeaderSupport)
 
 ## Request information
 
-You can see all the [available request properties](/servers/requests.html#properties) in the Requests page.
+You can see all the [available request properties](/servers/requests.html#properties) on the Requests page.
 
 ### The proxy request information
 
 You can read the raw or local request information, read from the received normal
-headers and socket properties, that corresponds to the proxy request
+headers and socket properties, that correspond to the proxy request
 using the `request.local` property:
 
 ```kotlin
@@ -79,7 +79,7 @@ val method = request.origin.method
 val remoteHost = request.origin.method // Determined from X-Forwarded-For
 ```
 
-In the case you need the X-Forwarded-By (the interface used for the socket), you can access the raw X-Forwarded properties with:
+In the cases where you need the X-Forwarded-By (the interface used for the socket), you can access the raw X-Forwarded properties with:
 
 ```kotlin
 val forwardedValues: List<ForwardedHeaderSupport.ForwardedHeaderValue> = call.attributes[ForwardedHeaderSupport.ForwardedParsedKey]
