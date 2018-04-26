@@ -9,11 +9,11 @@ feature:
     class: io.ktor.features.HttpsRedirect
 ---
 
-This feature will make all the affected http calls to perform a redirect to its
-https counterpart before processing the call.
+This feature will make all the affected HTTP calls perform a redirect to its
+HTTPS counterpart before processing the call.
 
 By default the redirection is a `301 Moved Permanently`,
-but can be configured to be a `302 Found` redirect.
+but it can be configured to be a `302 Found` redirect.
 
 {% include feature.html %}
 
