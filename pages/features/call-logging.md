@@ -11,7 +11,7 @@ feature:
 You might want to log client requests: and the Call Logging feature does just that.
 It uses the `ApplicationEnvironment.log` (`LoggerFactory.getLogger("Application")`)
 that uses slf4j so you can easily configure the output. For more information
-on logging in Ktor, please check the [logging in ktor](/servers/logging.html) page.
+on logging in Ktor, please check the [logging in the ktor](/servers/logging.html) page.
 
 {% include feature.html %}
 
@@ -25,7 +25,7 @@ install(CallLogging)
 
 ## Configuring
 
-This feature allows configuring the log level and filtering the requests that are being logged:
+This feature allows you to configure the log level and filtering the requests that are being logged:
 
 ```kotlin
 install(CallLogging) {
@@ -36,7 +36,7 @@ install(CallLogging) {
 }
 ```
 
-The filter methods keeps is a whitelist list of filters. If no filters are defined,
+The filter method keeps a whitelist list of filters. If no filters are defined,
 everything is logged. And if there are filters, if any of them returns true,
 the call will be logged.
 
