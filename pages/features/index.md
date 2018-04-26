@@ -8,7 +8,7 @@ priority: -1
 ---
 
 A Ktor application typically consists of a series of features. You can think of features as functionality 
-that is injected into the request and response pipeline. Usually an application would have a series of features such as `DefaultHeaders` which add headers to every outgoing
+that is injected into the request and response pipeline. Usually, an application would have a series of features such as `DefaultHeaders` which add headers to every outgoing
 response, `Routing` which allows us to define routes to handle requests, etc.
 
 **Table of contents:**
@@ -60,7 +60,7 @@ we could simply write
 
 Ktor comes with a number of ready-made features that can be installed into your application:
 
-> Some features might need adding an extra dependency to your project. See feature pages for more details.
+> Some features might need you to add an extra dependency to your project. See the feature pages for more details.
 
 ### Custom features
 
