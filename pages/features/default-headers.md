@@ -8,7 +8,7 @@ feature:
     class: io.ktor.features.DefaultHeaders
 ---
 
-This feature adds default set of headers to HTTP responses. List of headers is customizable, and `Date` header is cached
+This feature adds a default set of headers to HTTP responses. The list of headers is customizable, and the `Date` header is cached
 to avoid building complex strings on each response.   
 
 {% include feature.html %}
@@ -51,5 +51,5 @@ fun Application.main() {
 }
 ```
 
-* default `Date` header cannot be overriden. If you need to override it, do not install `DefaultHeaders` feature and instead 
+* The default `Date` header cannot be overriden. If you need to override it, do not install the `DefaultHeaders` feature and instead 
 intercept the call manually 
