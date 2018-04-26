@@ -16,7 +16,7 @@ the served content when required.
 Partial Content is well-suited for streaming content or resume partial downloads with
 download managers, or in unreliable networks.
 
-It is specially useful along the [Static Content Feature](/features/static-content.html).
+It is especially useful for the [Static Content Feature](/features/static-content.html).
 
 {% include feature.html %}
 
@@ -38,8 +38,8 @@ fun Application.main() {
 
 ```kotlin
 install(PartialContent) {
-    // Maximum number of ranges that will be accepted from HTTP request.
-    // If HTTP request specifies more ranges, they will all be merged into a single range.
+    // Maximum number of ranges that will be accepted from a HTTP request.
+    // If the HTTP request specifies more ranges, they will all be merged into a single range.
     maxRangeCount = 10
 }
 ```
@@ -57,7 +57,7 @@ It is only enabled for responses that define the `Content-Length`. And it:
 * Removes the `Content-Length` header
 * Adds the `Accept-Ranges` header 
 * Adds the `Content-Range` header with the requested Ranges
-* Serves just the requested slice of the content
+* Serves only the requested slice of the content
 
 It should work with any served content of the type `OutgoingContent.ReadChannelContent`
 as long as its length is defined, like for example the `LocalFileContent`.
