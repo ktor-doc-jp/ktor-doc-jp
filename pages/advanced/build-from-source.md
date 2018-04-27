@@ -6,7 +6,7 @@ keywords: git compiling compile ktor from source
 permalink: /advanced/building-from-source.html
 ---
 
-Ktor is an OpenSource project hosted at github:
+Ktor is an OpenSource project hosted at GitHub:
 <https://github.com/ktorio/ktor>
 
 We usually provide binary version previews at bintray:
@@ -30,7 +30,7 @@ cd ktor
 
 Ktor uses gradle for building. It should work with any gradle version
 greater than 4.3, but for best results we provide a gradle wrapper,
-that should work with any supported system just having a JDK installed: 
+which should work with any supported system with a JDK installed: 
 
 ```
 ./gradlew build
@@ -64,7 +64,7 @@ An exception occurred applying plugin request [id: 'me.champeau.gradle.jmh', ver
    > Could not generate a proxy class for class me.champeau.gradle.JMHPluginExtension.
 ```
 
-You might have forgotten to use the gradle wrapper (`./gradlew`) and your default installed
+You might have forgotten to use the gradle wrapper (`./gradlew`) or your default installed
 gradle version is lower than 4.3.
 
-To ensure that it works, please using the gradle wrapper instead.
+To ensure that it works, please use the gradle wrapper instead.
