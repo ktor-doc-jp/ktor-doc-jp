@@ -6,9 +6,9 @@ caption: Under the Hood
 priority: -1
 ---
 
-This area of the web site is designated for people familiar with the basics of developing applications with Ktor.
-Pages in this section will assume understanding of many things and not go into explaining them. If you are learning Ktor,
-please be sure to explore other sections ahead of going deeper.  
+This area of the website is designated for people who are familiar with the basics of developing applications with Ktor.
+Pages in this section will assume an understanding of many things and will not go into explaining them. If you are learning Ktor,
+please be sure to explore other sections before going deeper.  
 
 ### Topics
 
