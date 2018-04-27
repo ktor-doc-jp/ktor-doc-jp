@@ -5,15 +5,15 @@ section: Advanced
 permalink: /advanced/authentication.html
 ---
 
-Prerequisite reading: [Advanced Pipeline](advanced/pipeline)
+Prerequisite reading: [Advanced Pipeline](/advanced/pipeline.html)
 
 `Authentication` feature creates an `AuthenticationPipeline` which is executed right after `Infrastructure` phase
 in call pipeline. All authentication protocols like basic, digest, oauth are implemented as interceptors on AuthenticationPipeline.
 
 AuthenticationPipeline has two phases:
 
-* `CheckAuthentication` – something I can't remember why it is there, will investigate
-* `RequestAuthentication` – where all the work is done
+* `CheckAuthentication` – Phase for checking if user is already authenticated before all mechanisms kicks in
+* `RequestAuthentication` – Phase for authentications mechanisms to plug into
 
 The subject of the pipeline is an `AuthenticationContext` instance.
 
