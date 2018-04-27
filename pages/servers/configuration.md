@@ -9,7 +9,7 @@ priority: 200
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
 format as external configuration file. In this file you can configure things like the port to listen to,
-or the [modules](/servers/application.html#modules) to be load. This format is similar to JSON,
+or the [modules](/servers/application.html#modules) to be loaded. This format is similar to JSON,
 but it is optimized to be read and written by humans, and supports additional
 features like environment variable substitution.
 In this case, you configure the server engine to use with the `mainClassName` pointing to a particular `DevelopmentEngine`.
@@ -43,7 +43,7 @@ Available development engines that you can use as `mainClassName`:
 </div>
 
 Ktor only requires you to specify which [module or modules](/servers/application.html#modules)
-do you want it to load when starting the server using `ktor.application.modules` property.
+you want it to load when starting the server using the `ktor.application.modules` property.
 All the other properties are optional.
 
 A typical, simple HOCON file for Ktor (`application.conf`) would look like this:
@@ -113,12 +113,12 @@ youkube {
 ```
 {: .compact}
 
-There is a [list of available core configurations](#available-config) in this document.
+There is a [list of the available core configurations](#available-config) in this document.
 
 You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
 {: .note.tip}
 
-There is a [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you might want to install. 
+There is an [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you might want to install. 
 {: .note.tip}
 
 ## Command Line
@@ -230,7 +230,7 @@ You can see a complete example of this in [ktor-samples/multiple-connectors](htt
 ### Netty
 {:.no_toc}
 
-When using Netty as engine, in addition to common properties, you can configure some other properties:
+When using Netty as the engine, in addition to common properties, you can configure some other properties:
 
 ```kotlin
 embeddedServer(Netty, configure = {
@@ -252,12 +252,12 @@ embeddedServer(Netty, configure = {
 ### Jetty
 {:.no_toc}
 
-When using Jetty as engine, in addition to common properties, you can configure the Jetty server.
+When using Jetty as the engine, in addition to common properties, you can configure the Jetty server.
 
 ```kotlin
 embeddedServer(Jetty, configure = {
     // Property to provide a lambda that will be called during Jetty
-    // server initialization with the server instance as argument.
+    // server initialization with the server instance as an argument.
     configureServer = {
         // ...
     } 
@@ -269,7 +269,7 @@ embeddedServer(Jetty, configure = {
 ### CIO
 {:.no_toc}
 
-When using CIO (Coroutine I/O) as engine, in addition to common properties, you can configure the `connectionIdleTimeoutSeconds` property.
+When using CIO (Coroutine I/O) as the engine, in addition to common properties, you can configure the `connectionIdleTimeoutSeconds` property.
 
 ```kotlin
 embeddedServer(CIO, configure = {
@@ -361,7 +361,7 @@ You can use `-P:` to specify parameters that don't have a specific switch. For e
 {: #accessing-config}
 
 If you are using a `DevelopmentEngine` instead of an `embeddedServer`, the HOCON file is loaded,
-and you are able to access to its configuration properties.
+and you are able to access its configuration properties.
 
 You can also define arbitrary property paths to configure your application.
 
