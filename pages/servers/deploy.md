@@ -11,7 +11,7 @@ priority: 300
 
 Once you are ready with your application, you will probably want to put it somewhere.
 
-In this page you will learn how to deploy your application to several providers and containers. 
+In this page, you will learn how to deploy your application to several providers and containers. 
 
 **Table of contents:**
 
@@ -21,7 +21,7 @@ In this page you will learn how to deploy your application to several providers 
 ## Packing
 
 When deploying, you will normally want to generate a single archive with all your
-classes, dependencies and resources packed together: either in a single JAR archive
+classes, dependencies, and resources packed together: either in a single JAR archive
 (also called Fat JAR) or a WAR file (Web Application Resource).
 
 ### Fat JAR (Standalone)
@@ -30,14 +30,14 @@ classes, dependencies and resources packed together: either in a single JAR arch
 A *fat-jar* (or *uber-jar*) archive allows you to generate a single archive to run your stand-alone
 embedded application directly using java: `java -jar yourapplication.jar`.
 
-This is the preferred way for running in a container like [docker](#docker), when deploying to [heroku](#heroku)
+This is the preferred way of running in a container like [docker](#docker), when deploying to [heroku](#heroku)
 or when being reverse-proxied with [nginx](#nginx). 
 
 #### Gradle
 {: #fat-jar-gradle}
 
 When using Gradle, you can use the `shadow` gradle plugin to generate it. For example,
-to generate a fat JAR using netty as engine:
+to generate a fat JAR using netty as an engine:
 
 ```groovy
 buildscript {
@@ -61,7 +61,7 @@ mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
 {: #fat-jar-maven}
 
 When using Maven, you can generate a fat JAR archive with the `maven-assembly-plugin`. For example, to generate
-a fat JAR using netty as engine:
+a fat JAR using netty as an engine:
 
 ```xml
 <plugin>
@@ -96,10 +96,10 @@ a fat JAR using netty as engine:
 {: #war}
 
 A WAR archive allows you to easily deploy your application inside your web container / servlet container,
-by just copying it to its `webapps` folder. Ktor supports two popular servlet container: [Jetty](#jetty) and [Tomcat](#tomcat).
+by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: [Jetty](#jetty) and [Tomcat](#tomcat).
 Also serves when deploying to [google app engine](#google-app-engine).
 
-To generate a war file, you can use the greety gradle plugin. You also need a `WEB-INF/web.xml` that looks like this:
+To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` that looks like this:
 
 `webapp/WEB-INF/web.xml`:
 ```xml
@@ -206,9 +206,9 @@ For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployme
 {: #proguard}
 
 If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](#heroku)),
-you can use proguard to shrink it. If you are using gradle, it is pretty straight forward using the
+you can use proguard to shrink it. If you are using gradle, it is pretty straightforward to use the
 `proguard-gradle` plugin. You only have to remember to keep: your main module method, the DevelopmentEngine
-class and the kotlin reflect classes. You can fine-tune it as required:
+class, and the Kotlin reflect classes. You can fine-tune it as required:
 
 ```groovy
 buildscript {
@@ -255,10 +255,10 @@ You have a full example on: <https://github.com/ktorio/ktor-samples/tree/master/
 {: #docker}
 
 Docker is a container engine: it allows you to pack and run applications, in a sandboxed layered
-lightweight environment, with its own isolated filesystem, operating system and resources.
+lightweight environment, with its own isolated filesystem, operating system, and resources.
 
 You usually have to create a `Dockerfile` for monolithic services, and a `docker-compose.yml` 
-when your container need to interact with other services, like for example a database or a redis. 
+when your container needs to interact with other services, like for example a database or a redis. 
 
 First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, that would look like this:
 ```
@@ -268,7 +268,7 @@ WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
-For simple deploying to docker you can check the [docker quickstart](/quickstart/docker.html) page for full details.
+For simple deploying to Docker you can check the [docker quickstart](/quickstart/docker.html) page for full details.
 
 #### Nginx
 {: #nginx}
@@ -311,10 +311,10 @@ networks:
 You can start it with `docker-compose up -d` and it will be restarted if the service fails or
 after a system reboot.
 
-If the DNS for the specified domain is pointing to your server and you have configured correctly the nginx-proxy and its companion,
+If the DNS for the specified domain is pointing to your server and you have configured the nginx-proxy and its companion correctly,
 the letsencrypt companion will contact with letsencrypt and will grab and configure the certificate automatically
-for you. So you will be able to access your http-only service via: https://mydomain.com/ nginx will handle the ssl certificates
-and will contact your server via plain http.
+for you. So you will be able to access your http-only service via: https://mydomain.com/ nginx will handle the SSL certificates
+and will contact your server via plain HTTP.
 
 ### Tomcat
 {: #tomcat}
@@ -340,14 +340,14 @@ For a complete example, check:
 ### Heroku
 {: #heroku}
 
-There is a quickstart repository for heroku: <https://github.com/orangy/ktor-heroku-start>
+There is a quickstart repository for Heroku: <https://github.com/orangy/ktor-heroku-start>
 {: .note.example}
 
 #### Preparing
 
-For using Heroku you will need Java, Maven/Gradle and the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+For using Heroku, you will need Java, Maven/Gradle and the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
-You will also need to configure your public key in the haroku configuration.
+You will also need to configure your public key in the Heroku configuration.
 
 You can try the `heroku --version` command to see if you have the command line installed:
 
@@ -380,7 +380,7 @@ java.runtime.version=1.8
 #### Running locally
 
 And a file called `.env` along the other files with (just required for development).
-This will contain environment variables that heroku will pass to the application.
+This will contain environment variables that Heroku will pass to the application.
 For example, for the quickstart:
 
 ```properties
@@ -401,7 +401,7 @@ You will also need to create that database first:
 CREATE DATABASE
 ```
 
-With those files, you can use gradle or maven to create a [far-jar](#fat-jar) and adjust the `Procfile`
+With those files, you can use gradle or maven to create a [fat-jar](#fat-jar) and adjust the `Procfile`
 pointing to the right file.
 
 After building the jar, in Unix systems you can use `heroku local:start` to start your server.
@@ -410,7 +410,7 @@ After building the jar, in Unix systems you can use `heroku local:start` to star
 
 You first have to create an app or set the git remote. `heroku create` will create an app
 with a random available name and will set a git remote of the repo.
-After calling `heroku create` you should see something like this:
+After calling `heroku create`, you should see something like this:
 
 ```
 > heroku create
@@ -428,7 +428,7 @@ This effectively adds a `heroku` remote to your git clone:
 	fetch = +refs/heads/*:refs/remotes/heroku/*
 ```
 
-After that you have to push your git changes to the `heroku` remote. And it does a build on push:
+After that, you have to push your git changes to the `heroku` remote. And it does a build on push:
 
 ```
 > git push heroku master
@@ -471,7 +471,7 @@ Now you can execute `heroku open` to open your application in your browser:
 heroku open
 ```
 
-In this case it would open: https://demo-demo-12345.herokuapp.com/
+In this case, it will open: https://demo-demo-12345.herokuapp.com/
 
 ### Google App Engine
 {: #google-app-engine}
@@ -564,7 +564,7 @@ For more information on how to get started, please visit:
 ```
 {: .compact}
 
-After that you can start a new shell, and you should have access to the `gcloud` cli. For example:
+After that, you can start a new shell, and you should have access to the `gcloud` cli. For example:
 
 ```
 > gcloud --version
@@ -610,10 +610,10 @@ Do you want to continue (Y/n)?  Y
 ╠════════════════════════════════════════════════════════════╣
 ╠═ Installing: gcloud app Python Extensions                 ═╣
 ╠════════════════════════════════════════════════════════════╣
-╠═ Creating backup and activating new installation          ═╣
+╠═ Creating a backup and activating a new installation      ═╣
 ╚════════════════════════════════════════════════════════════╝
 
-Performing post processing steps...done.
+Performing post-processing steps...done.
 
 Update done!
 ```
@@ -666,9 +666,9 @@ task run(dependsOn: appengineRun)
 ```
 {: .compact}
 
-Once everything is configured, you can now run the application locally. Using the gradle task `appengineRun`:
+Once everything is configured, you can now run the application locally, using the gradle task `appengineRun`:
 
-In this case these commands are executed in the root of the ktor-samples repository <https://github.com/ktorio/ktor-samples/>:  
+In this case, these commands are executed in the root of the ktor-samples repository <https://github.com/ktorio/ktor-samples/>:  
 
 ```
 ./gradlew :google-appengine-standard:appengineRun
@@ -678,7 +678,7 @@ It should start the server in <http://localhost:8080/> and the admin in <http://
 
 #### Deploying
 
-First we need to create a project `gcloud projects create demo-demo-123456 --set-as-default`:
+First, we need to create a project `gcloud projects create demo-demo-123456 --set-as-default`:
 
 ```
 > gcloud projects create demo-demo-123456 --set-as-default
@@ -691,8 +691,8 @@ And then we need to create an application using `gcloud app create`:
 
 ```
 > gcloud app create
-You are creating an app for project [demo-demo-123456].
-WARNING: Creating an App Engine application for a project is irreversible and the region
+You are creating an app for the project [demo-demo-123456].
+WARNING: Creating an App Engine application for a project is irreversible, and the region
 cannot be changed. More information about regions is at
 <https://cloud.google.com/appengine/docs/locations>.
 
