@@ -8,10 +8,10 @@ feature:
     class: io.ktor.websocket.WebSockets
 ---
 
-This feature adds support for WebSockets to Ktor.
-WebSockets are a mechanism to keep a bidirectional real-time ordered connection between
+This feature adds WebSockets support to Ktor.
+WebSockets are a mechanism to keep a bi-directional real-time ordered connection between
 the server and the client.
-Each message of this channel is called Frame: a frame can be a text or binary message,
+Each message from this channel is called Frame: a frame can be a text or binary message,
 or a close or ping/pong message. Frames can be marked as incomplete or final.
 
 {% include feature.html %}
@@ -44,10 +44,10 @@ install(WebSockets) {
 ## Usage
 {: #usage}
 
-Once installed, you can define `webSocket` routes for the [routing](/features/routing.html) feature:
+Once installed, you can define the `webSocket` routes for the [routing](/features/routing.html) feature:
 
-Instead of short-lived normal route handlers, webSocket handlers are meant to be long-lived.
-And all the relevant WebSocket methods are suspend, so the function will be suspended in
+Instead of the short-lived normal route handlers, webSocket handlers are meant to be long-lived.
+And all the relevant WebSocket methods are suspended so that the function will be suspended in
 a non-blocking way while receiving or sending messages.
 
 `webSocket` methods receive a callback with a [WebSocketSession](#WebSocketSession)
@@ -117,7 +117,7 @@ interface WebSocketSession {
     fun close(reason: CloseReason)
 
     // Convenience method equivalent to `outgoing.send(frame)`
-    suspend fun send(frame: Frame) // Enqueue frame, may suspend if outgoing queue is full. May throw an exception if outgoing channel is already closed so it is impossible to transfer any message.
+    suspend fun send(frame: Frame) // Enqueue frame, may suspend if the outgoing queue is full. May throw an exception if the outgoing channel is already closed, so it is impossible to transfer any message.
 
     // The call and the context
     val call: ApplicationCall
@@ -127,7 +127,7 @@ interface WebSocketSession {
     var pingInterval: Duration?
     var timeout: Duration
     var masking: Boolean // Enable or disable masking output messages by a random xor mask.
-    var maxFrameSize: Long // Specifies frame size limit. Connection will be closed if violated
+    var maxFrameSize: Long // Specifies frame size limit. The connection will be closed if violated
     
     // Advanced
     val closeReason: Deferred<CloseReason?>
@@ -146,7 +146,7 @@ your websocket block.
 {: #Frame}
 
 A frame is each packet sent and received at the WebSocket protocol level.
-There are two message types: TEXT and BINARY. And three control packets: CLOSE, PING and PONG.
+There are two message types: TEXT and BINARY. And three control packets: CLOSE, PING, and PONG.
 Each packet has a payload `buffer`. And for Text or Close messages, you can
 call the `readText` or `readReason` to interpret that buffer.
 
