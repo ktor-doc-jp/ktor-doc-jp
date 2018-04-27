@@ -5,7 +5,7 @@ section: Advanced
 permalink: /advanced/features.html
 ---
 
-You can develop your own features and reuse them across your Ktor applications, or share with the community. Typical 
+You can develop your own features and reuse them across all your Ktor applications, or you can share them with the community. A typical 
 feature has the following structure:
 
 ```kotlin
@@ -43,11 +43,11 @@ class CustomFeature(configuration: Configuration) {
 `CustomFeature` is a feature instance class, which should be immutable to avoid unintended side-effects in a highly
 concurrent environment. Feature implementation should be thread-safe as it will be called from multiple threads.
 
-`Configuration` instance is handed to the user installation script and allows for feature configuration. 
+The `Configuration` instance is handed to the user installation script and allows the feature configuration. 
 
-`Feature` companion object conforms to Ktor API and wires things together.
+The `Feature` companion object conforms to Ktor API and connects things together.
  
-Feature can be installed with the standard `install` function:
+A feature can be installed with the standard `install` function:
 
 ```kotlin
 fun Application.main() {
@@ -57,4 +57,4 @@ fun Application.main() {
 }
 ```
 
-See complete example in a [custom feature sample](https://github.com/ktorio/ktor/blob/master/ktor-samples/ktor-samples-custom-feature/src/io/ktor/samples/feature/CustomHeader.kt)
+See a complete example in the [custom feature sample](https://github.com/ktorio/ktor/blob/master/ktor-samples/ktor-samples-custom-feature/src/io/ktor/samples/feature/CustomHeader.kt)
