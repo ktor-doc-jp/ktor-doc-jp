@@ -27,7 +27,7 @@ There are three main configuration options provided to StatusPages:
 
 ### Exceptions 
 
-The exception configuration can provide simple interception patterns for calls that result in a thrown exception. In the most basic case, a 500 HTTP status code can be configured for any exception.
+The exception configuration can provide simple interception patterns for calls that result in a thrown exception. In the most basic case, a 500 HTTP status code can be configured for any exceptions.
 
 ```kotlin
 install(StatusPages){
@@ -51,7 +51,7 @@ install(StatusPages){
 
 These customizations can work well when paired with custom status code responses, e.g. providing a login page when a user has not authenticated.
 
-Each call is only caught by a single exception handler, the closest exception up the object graph from the thrown exception. When multiple exceptions within the same object hierarchy are handled, only a single one will be executed.
+Each call is only caught by a single exception handler, the closest exception on the object graph from the thrown exception. When multiple exceptions within the same object hierarchy are handled, only a single one will be executed.
 
 ```kotlin
 install(StatusPages) {
@@ -67,7 +67,7 @@ intercept(ApplicationCallPipeline.Fallback) {
 }
 ```
 
-Single handling also implies that recursive call stacks are avoided. For example, this configuration would result in the created `IllegalStateException` propogating to the client.
+Single handling also implies that recursive call stacks are avoided. For example, this configuration would result in the created `IllegalStateException` propagating to the client.
 
 ```kotlin
 install(StatusPages) {
@@ -80,7 +80,7 @@ install(StatusPages) {
 
 ### Status 
 
-The `status` configuration provides a custom actions for status responses from within the application. Below is a basic configuration that provides information about the http status code within the response text.
+The `status` configuration provides a custom actions for status responses from within the application. Below is a basic configuration that provides information about the HTTP status code within the response text.
 
 ```kotlin
 install(StatusPages) {
