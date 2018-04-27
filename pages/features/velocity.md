@@ -10,7 +10,7 @@ feature:
 ---
 
 Ktor includes support for [Velocity](http://velocity.apache.org/) templates through the Velocity
-feature.  Initialize the Velocity feature with a
+feature.  Initialize the Velocity feature with the
 [VelocityEngine](https://velocity.apache.org/engine/1.7/apidocs/org/apache/velocity/app/VelocityEngine.html):
 
 {% include feature.html %}
@@ -36,7 +36,7 @@ install(Velocity) { // this: VelocityEngine
 ## Usage
 {: #usage}
 
-When Velocity configured, you can call the `call.respond` method with a `VelocityContent` instance: 
+When Velocity is configured, you can call the `call.respond` method with a `VelocityContent` instance: 
 
 ```kotlin
 routing {
