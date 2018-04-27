@@ -8,13 +8,13 @@ feature:
     class: io.ktor.routing.Routing
 ---
 
-Ktor has built-in support for serving static content. This can come in useful when wanting to serve style sheets, scripts, images, etc. 
+Ktor has built-in support for serving static content. This can come in useful when you want to serve style sheets, scripts, images, etc. 
 
 {% include feature.html %}
 
 ### Specifying Files and Folders
 
-Using the `static` function we can tell Ktor that we want certain URIs to be treated as static contents and also define where the contents resides. All content is relative to the current working directory. 
+Using the `static` function, we can tell Ktor that we want certain URIs to be treated as static content and also define where the content resides. All content is relative to the current working directory. 
 See [Defining a custom root folder](#defining-a-custom-root-folder) to set a different root. 
       
 ```kotlin
@@ -25,13 +25,13 @@ See [Defining a custom root folder](#defining-a-custom-root-folder) to set a dif
     }
 ```
 
-The example above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
- are located - anything that is in the folder `css` will be served. In essence this means that a request such as
+The example the above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
+ are located - anything that is in the folder `css` will be served. In essence, this means that a request such as
  
 
 **/static/styles.css** will serve the file **css/styles.css**. 
 
-In addition to folders, we can also include specific files using `file`, which can optionally take a second parameter that maps to the actual physical filename, if different.
+In addition to folders, we can also include specific files using `file`, which can optionally take a second parameter that maps to the actual physical filename, if it is different.
 
  
 ```kotlin
@@ -48,11 +48,11 @@ In addition to folders, we can also include specific files using `file`, which c
 
 We can also have default files that can be served using `default`. For instance, on calling
 
-**/static** with not filename,  **index.html** will be served.
+**/static** with no filename,  **index.html** will be served.
 
 ### Defining a custom root folder
 
-To specify a different root folder, other than the working directory, we set the value of `staticRootFolder` which expect a type `File`.
+To specify a different root folder, one other than the working directory, we set the value of `staticRootFolder` which expects a type `File`.
 
 ```kotlin
     static("custom") {
@@ -76,7 +76,7 @@ We can also define sub-routes, i.e. `/static/themes` for instance
 
 ### Serving embedded resources
 
-If you embed your static content as resources into your application, you can serve them right from there using `resource` and `resources` 
+If you embed your static content as resources into your application, you can serve them right from there using the `resource` and `resources` 
 functions:
 
 ```kotlin
@@ -86,13 +86,13 @@ functions:
     }
 ```
 
-There is also `defaultResource` similar to `default` for serving default page for a folder, 
-and `staticBasePackage` similar to `staticRootFolder` for specifying base resource package for static content. 
+There is also `defaultResource` similar to `default` for serving a default page for a folder, 
+and `staticBasePackage` similar to `staticRootFolder` for specifying a base resource package for static content. 
 
 ### Handling Errors
 
 If the requested content is not found, a `FileNotFoundException` is thrown. It should be handled in `StatusPages` with the `exception` handler 
-to produce a corresponding `404 Not Found`, otherwise it propagates to the engine and causes 500 Internal Server Error. 
+to produce a corresponding `404 Not Found`, otherwise it propagates to the engine and causes a 500 Internal Server Error. 
 
 ### Customising Content Types
 
@@ -107,6 +107,6 @@ The function `static` is defined as
     fun Route.static(remotePath: String, configure: Route.() -> Unit) = route(remotePath, configure)
 ````
 
-which essentially is just another route definition. 
+which is essentially just another route definition. 
 
 
