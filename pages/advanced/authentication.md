@@ -13,24 +13,24 @@ in call pipeline. All authentication protocols like basic, digest, oauth are imp
 AuthenticationPipeline has two phases:
 
 * `CheckAuthentication` – something I can't remember why it is there, will investigate
-* `RequestAuthentication` – where all the work done
+* `RequestAuthentication` – where all the work is done
 
 The subject of the pipeline is an `AuthenticationContext` instance.
 
 Protocol:
 
-* Auth provider interceptor tries to find a `Principal` in the context of current call.
-* If principal is found, it is returned and pipeline is finished
-* If principal is not found, provider will add a challenge to AuthenticationContext
-* In the end of the pipeline, if there is no principal, we start calling challenges in order
+* Auth provider interceptor tries to find a `Principal` in the context of the current call.
+* If the principal is found, it is returned and the pipeline is finished
+* If the principal is not found, the provider will add a challenge to AuthenticationContext
+* At the end of the pipeline, if there is no principal, we start calling challenges in order
 * Whichever challenge succeeds first wins. 
 
 Example:
 
-* Basic auth looks into `Authorization` header 
-* If it's missing or invalid or user not recognized, 401 Unauthorized is sent back to user and current call ends
+* Basic auth looks into the `Authorization` header 
+* If it's missing or invalid or the user is not recognized, 401 Unauthorized is sent back to the user and the current call ends
 * Browser shows a dialog, and after credentials are provided it makes a new HTTP request with a proper `Authorization` header
 * Basic auth provider now gets a header, extract credentials and verifies them. 
-* If credentials are valid, principal is attached to a call. If not, 401 is sent back again.
+* If the credentials are valid, the principal is attached to a call. If not, a 401 is sent back again.
 
 
