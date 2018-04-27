@@ -13,7 +13,7 @@ feature:
 {::options toc_levels="1..3" /}
 
 A session is a mechanism to persist data between different HTTP requests. Establishing a conversational
-context into otherwise stateless HTTP nature. They allow servers to keep a piece of information associated
+context into the otherwise stateless nature of HTTP. They allow servers to keep a piece of information associated
 with the client during a sequence of HTTP requests and responses.
  
 Different use-cases include: authentication and authorization, user tracking, keeping information
@@ -52,8 +52,8 @@ application.install(Sessions) {
 
 In order to access or set the session content, you use the `call.sessions` property:
 
-To get the session content, you have to call `call.sessions.get` method reciving as type parameter one
-of the registered sesion types:
+To get the session content, you have to call the `call.sessions.get` method receiving as type parameter one
+of the registered session types:
 
 ```kotlin
 application.routing {
@@ -73,7 +73,7 @@ data class:
 call.sessions.set(MySession(name = "John", value = 12))
 ```
 
-When user logs out or session should be cleared for some other reason, you call `clear` function:
+When a user logs out, or a session should be cleared for any other reason, you can call the `clear` function:
 
 ```kotlin
 call.sessions.clear<MySession>()
@@ -82,7 +82,7 @@ call.sessions.clear<MySession>()
 ## Multiple sessions
 {: #multiple-sessions}
 
-Since there could be several conversational states for a single application, you can install multiple session mappings:
+Since there could be several conversational states for a single application, you can install multiple session mapping:
 
 ```kotlin
 application.install(Sessions) {
@@ -98,7 +98,7 @@ For multiple session mapping, both type and name should be unique.
 ## Configuration
 {: #configuration}
 
-But you will want to create sessions and to configure them. You can configure sessions in several ways:
+But you will want to create sessions and then configure them. You can configure the sessions in several different ways:
 
 * *Where is the payload stored:* client-side, or server-side.
 * *How is the payload or the session id transferred:* Using cookies or headers.
@@ -113,18 +113,18 @@ Since sessions can be implemented by various techniques, there is an extensive c
 
 Each of these functions will get the name of the cookie or header. 
 
-If the function is passed an argument of type `SessionStorage` it will use the storage to save the session, otherwise
-it will serialize data into the cookie/header value.
+If a function is passed an argument of type `SessionStorage` it will use the storage to save the session, otherwise
+it will serialize the data into the cookie/header value.
 
 Each of these functions can receive an optional configuration lambda.
 
-For cookies, the receiver is `CookieSessionBuilder` which allows to:
+For cookies, the receiver is `CookieSessionBuilder` which allows you to:
 
 * specify custom `serializer`
 * add a value `transformer`, like signing or encrypting
-* specify cookie configuration such as duration, encoding, domain, path and so on
+* specify the cookie configuration such as duration, encoding, domain, path and so on
 
-For headers, the receiver is `HeaderSessionBuilder` that allows `serializer` and `transformer` customization.
+For headers, the receiver is `HeaderSessionBuilder` which allows `serializer` and `transformer` customization.
 
 For cookies & headers that are server-side with a `SessionStorage`, additional configuration is `identity` function
 that should generate a new ID when the new session is created.
@@ -133,7 +133,7 @@ that should generate a new ID when the new session is created.
 {: #cookies-headers }
 
 Depending on the consumer, you might want to transfer the sessionId or the payload using a cookie,
-or a hader. For example, for a website you will normally use cookies, while for an API you might want to use headers.
+or a header. For example, for a website, you will normally use cookies, while for an API you might want to use headers.
 
 The Sessions.Configuration provide two methods `cookie` and `header` to select how to transfer the sessions: 
 
@@ -176,17 +176,17 @@ application.install(Sessions) {
 ```
 
 You should only use client-side sessions if your payload can't suffer from replay attacks. Also if you need to prevent
-modifications, ensure that you are transforming the session with at least authentication, and ideally with encryption too.
-This should prevent payload modification if you keep your secret key safe. But remember that if you key is compromised
-and you have to change the key, all the sessions will be effectively invalidated.
+modifications, ensure that you are transforming the session with at least authentication, but ideally with encryption too.
+This should prevent payload modification if you keep your secret key safe. But remember that if your key is compromised
+and you have to change the key, all the sessions will effectively be invalid.
 {: .note.security }
 
 ##### SessionTransportTransformerDigest
 {: #SessionTransportTransformerDigest}
 
 The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
-a hash of the payload with a salt and verifies it. It uses `SHA-256` as default
-hashing algorithm, but can be changed. It doesn't encrypt the payload, but still without the salt people
+a hash of the payload with a salt and verifies it. It uses `SHA-256` as the default
+hashing algorithm, but it can be changed. It doesn't encrypt the payload, but still without the salt people
 shouldn't be able to change it.
 
 ```kotlin
@@ -202,7 +202,7 @@ cookie<TestUserSession>(cookieName) {
 
 The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
 an authenticated hash of the payload and verifies it. It is similar to SessionTransportTransformerDigest
-but uses an HMAC. It uses `HmacSHA1` as default authentication algorithm, but can be changed.
+but uses a HMAC. It uses `HmacSHA1` as the default authentication algorithm, but it can be changed.
 It doesn't encrypt the payload, but still without the key people shouldn't be able to change it.
 
 ```kotlin
@@ -232,7 +232,7 @@ cookie<TestUserSession>(cookieName) {
 #### Server-side sessions and storages
 {: #server}
 
-If you specify an storage, then the session will be configured to be stored at the server using that storage, and
+If you specify storage, then the session will be configured to be stored on the server using that storage, and
 a sessionId will be transferred between the server and the client instead of the full payload: 
 
 ```kotlin
@@ -243,7 +243,7 @@ application.install(Sessions) {
 
 There are two predefined storages: `SessionStorageMemory`, `DirectoryStorage`. And another composable storage: `CacheStorage`.
 
-`DirectoryStorage` and `CacheStorage` require you to depend on the `io.ktor:ktor-server-sessions:$ktor_version` artifact.
+`DirectoryStorage` and `CacheStorage` are dependant on the `io.ktor:ktor-server-sessions:$ktor_version` artifact.
 {: .note.artifact } 
 
 ### Serializers
@@ -259,7 +259,7 @@ application.install(Sessions) {
 } 
 ```
 
-If you do not specify any serializer, there will be used one with an internal optimized format.
+If you do not specify any serializer, it will use one with an internal optimized format.
 
 #### SessionSerializerReflection
 {: #SessionSerializerReflection}
@@ -289,7 +289,7 @@ This serializes requires the artifact `io.ktor:ktor-gson:$ktor_version`.
 ## Extending
 {: #extending}
 
-Sessions are designed to be extensible, allowing to provide: custom serializers, transformers and storage providers.
+Sessions are designed to be extensible, allowing you to provide: custom serializers, transformers, and storage providers.
 
 ### Custom serializers
 {: #extending-serializers}
@@ -344,8 +344,8 @@ interface SessionTransportTransformer {
 }
 ```
 
-You can use these transformations to encrypt, authenticate, or generally transform the Payload.
-You have to implement that interface and add the transfomer as usual:
+You can use these transformations to encrypt, authenticate, or transform the Payload.
+You have to implement that interface and add the transformer as usual:
 
 ```kotlin
 cookie<MySession>("NAME") {
@@ -370,10 +370,10 @@ All three functions are marked as `suspend` and are designed to be fully asynchr
 and use `ByteWriteChannel` and `ByteReadChannel` from `kotlinx.coroutines.io` that provide
 APIs for reading and writing from an asynchronous Channel.
 
-In your implementations you have to call the callbacks providing a ByteWriteChannel and a ByteReadChannel
+In your implementations, you have to call the callbacks providing a ByteWriteChannel and a ByteReadChannel
 that you have to provide: it is your responsibility to open and close them.
 You can read more about `ByteWriteChannel` and `ByteReadChannel` in their libraries documentation.
-If you just need to load or store a ByteArray, you can use this snipped that provides a simplified session storage:
+If you just need to load or store a ByteArray, you can use this snippet which provides a simplified session storage:
 
 ```kotlin
 abstract class SimplifiedSessionStorage : SessionStorage {
