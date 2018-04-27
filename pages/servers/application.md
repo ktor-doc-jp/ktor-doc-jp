@@ -10,7 +10,7 @@ A Ktor Server Application is a custom program listening to one or more ports usi
 composed by [modules](#modules) with the application logic, that install [features](#features), like [routing](/features/routing.html),
 [sessions](/features/sessions.html), [compression](/features/compression.html), etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
 
-Ktor also exposes functionality lo [handle raw sockets](/servers/raw-sockets.html), but not as part of the Application and
+Ktor also provides functionality to [handle raw sockets](/servers/raw-sockets.html), but not as part of the Application and
 its pipeline.
 {: .note}
 
@@ -37,7 +37,7 @@ You can read further information about the pipeline, in the [lifecycle](/servers
 
 The `ApplicationCall` provides access to two main properties [`ApplicationRequest`](/servers/requests.html) and [`ApplicationResponse`](/servers/responses.html).
 As their names indicate, they correspond to the incoming request and outgoing response. In addition to these,
-it also provides an `ApplicationEnvironment`, and some useful functions to help response to client requests.
+it also provides an `ApplicationEnvironment`, and some useful functions to help respond to client requests.
 Given that pipelines can be executed asynchronously, `ApplicationCall` also represents the logical execution
 context with `Attributes` to pass data between various parts of the pipeline.
 
@@ -51,10 +51,10 @@ the application call processing.
             call.respondText("Test String")
     }
 ```
-The code above installs an interceptor into the `Call` phase of an `ApplicationCall` processing, and responds with plain text
+The code above installs an interceptor into the `Call` phase of an `ApplicationCall` processing and responds with plain text
 when the request is asking for a root page.  
 
-This is just an example and usually page requests are not handled in this way, as there is a [routing](/features/routing) facility that does this
+This is just an example, and usually, page requests are not handled in this way, as there is a [routing](/features/routing) facility that does this
  and more. Also, as mentioned previously, defining interceptor is usually done using [features](#features) with an `install` function.
    
 Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
@@ -96,7 +96,7 @@ fun Application.mymodule() {
 }
 ```
 
-Modules are referenced by its fully qualified name: the fully qualified name of the class and the method name,
+Modules are referenced by their fully qualified name: the fully qualified name of the class and the method name,
 separated by a dot (`.`).
 
 So for the example, the module's fully qualified name would be:
@@ -108,6 +108,6 @@ com.example.myapp.MainKt.mymodule
 `mymodule` is an extension method of the class `Application` (where `Application` is the *receiver*).
 Since it is defined as a top-level function, Kotlin creates a JVM class with a `Kt` suffix (`FileNameKt`),
 and adds the extension method as a static method with the received as its first parameter.
-In this case the class name is `MainKt` in the `com.example.myapp` package, and the Java method signature would be
+In this case, the class name is `MainKt` in the `com.example.myapp` package, and the Java method signature would be
 `static public void mymodule(Application app)`.
 {: .note}
