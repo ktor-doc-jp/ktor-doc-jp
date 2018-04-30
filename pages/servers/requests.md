@@ -11,7 +11,7 @@ When handling routes, or directly intercepting the pipeline, you
 get a context with an [ApplicationCall](/servers/application.html#applicationcall).
 That `call` contains a property called `request` that includes information about the request.
 
-Also the call itself has some useful convenience properties and methods that rely on the request.
+Also, the call itself has some useful convenience properties and methods that rely on the request.
 
 **Table of contents:**
 
@@ -83,7 +83,7 @@ You can access the `HttpMethod` and the `httpVersion` used for the request:
 
 If you need to access the query parameters `?param1=value&param2=value` as a collection,
 you can use `queryParameters`. The same happens with `headers: Headers`. Both types
-implement the `StringValues` interface where each key can have a list of Strings associated.
+implement the `StringValues` interface where each key can have a list of Strings associated with it.
 
 * `val queryParameters: Parameters = request.queryParameters`
 * `val queryString: String = request.queryString()`
@@ -176,14 +176,14 @@ install(ContentNegotiation) {
 }
 ```
 
-In the case you configure the ContentNegotiation to use gson,
+If you configure the ContentNegotiation to use gson,
 you will need to include the `ktor-gson` artifact:
 
 ```kotlin
 compile "io.ktor:ktor-gson:$ktor_version"
 ```
 
-Then you can do, as an example:
+Then you can, as an example, do:
 
 ```kotlin
 data class HelloWorld(val hello: String)
@@ -195,5 +195,5 @@ routing {
 }
 ```
 
-Remember that your classes must be defined top level (outside any other class or function) to be recognized by Gson. 
+Remember that your classes must be defined top level (outside of any other class or function) to be recognized by Gson. 
 {: .note #receiving-gson-top-level}
