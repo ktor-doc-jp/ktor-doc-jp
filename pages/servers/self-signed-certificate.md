@@ -26,11 +26,11 @@ Since Ktor requires the certificate when it starts, you have to create the certi
 
 ## Create the certificate using gradle
 
-One possible option is to execute a main class generating the certificate before actually running the server:
+One possible option is to execute the main class generating the certificate before actually running the server:
 
 ### `CertificateGenerator.kt`
 
-You can declare a class with a main method that just generates the certificate when it doesn't exists:
+You can declare a class with a main method that only generates the certificate when it doesn't exist:
 
 ```kotlin
 package io.ktor.samples.http2
@@ -146,9 +146,9 @@ fun Application.main() {
 ```
 {: .compact }
 
-## Accessing to your server
+## Accessing your server
 
-Then you can point to <https://127.0.0.1:8443/> to access to your server.
+Then you can point to <https://127.0.0.1:8443/> to access your server.
 Since this is a self-signed certificate, your browser will probably warn you about an invalid certificate, so
 you will have to disable that warning.
 
