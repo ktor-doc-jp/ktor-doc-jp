@@ -55,12 +55,12 @@ fun Application.mainModule() {
 
 ## Extracting routes
 
-Once your code starts to grow and you have more routes defined, you will probably want to split
-that code instead of growing your main function indefinitely.
+Once your code starts to grow, and you have more routes defined, you will probably want to split
+the code up instead of growing your main function indefinitely.
 
-A simple way to do this, is to extract routes into extension methods using the `Routing` class as receiver.
+A simple way to do this, is to extract routes into extension methods using the `Routing` class as a receiver.
 
-Depending on the size, maybe still in the same file or in other files:
+Depending on the size, maybe still keeping it in the same file or you can move it to other files:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -82,7 +82,7 @@ fun Routing.root() {
 ```
 
 Inside the `routing { ... }` block there is an implicit `this: Routing`, you can call the `root` method directly,
-that is effectively like calling `this.root()`.
+it is effectively like calling `this.root()`.
 {: .note}
 
 ## Deployment and `application.conf`
@@ -105,10 +105,10 @@ without using any.
 
 ## Health checks
 
-Depending on your application, you might want to create a health check in different ways.
+Depending on your application, you might want to use different ways to create a health check.
 The easiest way would be to enable an endpoint like `/health_check` that returns
 something like HTTP 200 `OK`, while optionally verifying your dependant services.
-That's up to you.
+It's completely up to you.
 
 You can also use the [StatusPages feature](/features/status-pages.html) to handle exceptions.
 
