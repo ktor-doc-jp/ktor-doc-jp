@@ -7,9 +7,9 @@ priority: 500
 ---
 
 Ktor is designed to be flexible and extensible. It is composed
-of small simple pieces, but if you don't know what's happening then it is like a black box.
+of small, simple pieces, but if you don't know what's happening, then it is like a black box.
 
-In this section you will discover what Ktor is doing under the hood and you will learn more
+In this section, you will discover what Ktor is doing under the hood, and you will learn more
 about its generic infrastructure. 
 
 **Table of contents:**
@@ -116,8 +116,8 @@ with **interceptors** associated to them. As well as, **attributes** that act as
 
 Phases are ordered and can be defined to be executed, after or before another phase, or at the end.
 
-Each pipeline has an ordered list of phase contexts for that instance, that contain a set of
-interceptors per phase.
+Each pipeline has an ordered list of phase contexts for that instance, which contain a set of
+interceptors for each phase.
 
 So for example:
 
@@ -173,7 +173,7 @@ Routing, like other features, is normally installed like this:
 install(Routing) { }
 ```
 
-But there is a convenient method to register and start using it, that also installs it once if it is already registered:
+But there is a easy method to register and start using it, that also installs it if it is already registered:
 
 ```kotlin
 routing { }
