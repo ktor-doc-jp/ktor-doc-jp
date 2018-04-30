@@ -8,9 +8,9 @@ redirect_from:
   - /application/testing.html
 ---
 
-Ktor is designed to allow creating applications that are easily testable. And of course,
-Ktor infrastructure itself is well tested with unit, integration and stress tests.
-In this section you will learn how to test your applications. 
+Ktor is designed to allow the creation of applications that are easily testable. And of course,
+Ktor infrastructure itself is well tested with unit, integration, and stress tests.
+In this section, you will learn how to test your applications. 
 
 **Table of contents:**
 
@@ -20,18 +20,18 @@ In this section you will learn how to test your applications.
 ## TestEngine
 
 Ktor has a special kind engine `TestEngine`, that doesn't create a web server, doesn't bind to sockets and doesn't do
-any real HTTP requests. Instead, it hooks directly into internal machinery and processes `ApplicationCall` directly. 
-This allows for fast test execution at the expense of may be missing some details about HTTP processing. 
-It's perfectly capable of testing application logic, but be sure to setup integration tests as well.
+any real HTTP requests. Instead, it hooks directly into internal mechanisms and processes `ApplicationCall` directly. 
+This allows for fast test execution at the expense of maybe missing some HTTP processing details. 
+It's perfectly capable of testing application logic, but be sure to set up integration tests as well.
 
-Quick walk through:  
+A quick walkthrough:  
 
-* Add `ktor-server-test-host` dependency to `test` scope 
+* Add `ktor-server-test-host` dependency to the `test` scope 
 * Create a JUnit test class and a test function
-* Use `withTestApplication` function to setup test environment for your Application
-* Use `handleRequest` function to send requests to your application and verify results
+* Use `withTestApplication` function to setup a test environment for your Application
+* Use the `handleRequest` function to send requests to your application and verify the results
 
-See an [example](#example) in this page.
+See an [example](#example) on this page.
 
 ## Building post/put bodies
 
@@ -63,7 +63,7 @@ val call = handleRequest(HttpMethod.Post, "/route") {
 
 ### `multipart/form-data`
 
-When uploading big files, it is common to use the multipart encoding, that allows to send
+When uploading big files, it is common to use the multipart encoding, which allows sending
 complete files without preprocessing. Ktor's test host provides a `setBody` extension method
 to build this kind of payload. For example:
 
@@ -110,8 +110,8 @@ withTestApplication({
 ## Example
 
 See full example of application testing in [ktor-samples-testable](https://github.com/Kotlin/ktor/tree/master/ktor-samples/ktor-samples-testable).
-Also most [`ktor-samples`](https://github.com/Kotlin/ktor/) modules provide
-examples showing how to test specific functionalities.
+Also, most [`ktor-samples`](https://github.com/Kotlin/ktor/) modules provide
+examples of how to test specific functionalities.
 
 **build.gradle:**
 ```groovy
