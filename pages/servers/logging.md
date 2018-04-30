@@ -22,10 +22,10 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 ```
 
 We can set up logging to remove these warning messages and get
-a better idea of what is happening with the app adding a provider.
+a better idea of what is happening with the app by adding a provider.
 
-Providers using the Java's [ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html) mechanism,
-so they are discovered and added automatically without doing anything
+Providers use Java's [ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html) mechanism,
+and so are discovered and added automatically without having to do anything
 else by code.
 {: .note.tip }
 
@@ -33,7 +33,7 @@ else by code.
 {: #providers-logback }
 
 You can use [logback](https://logback.qos.ch/),
-which is the successor of log4j, as SLF4J provider:
+which is the successor of log4j, as a SLF4J provider:
 
 Gradle's `build.gradle`:
 ```groovy
@@ -49,15 +49,15 @@ Mavens's `pom.xml`:
 </dependency>
 ```
 
-Once added, run the app and you should now see the logging messages
+Once added, run the app, and you should now see the logging messages
 in the Run pane of IDEA. However, these logging messages are not as
 helpful as they could be.
 
 ### Configuring the Logback provider
 {: #providers-logback-config }
 
-If the default logging is not enough, you can put a `logback.xml` or (`logback-test.xml` that has higher priority) file in your `src/main/resources` folder
-to adjust logging if it is not being useful to you. For example:
+If the default logging is not enough, you can put a `logback.xml` or `logback-test.xml` (that has higher priority) file in your `src/main/resources` folder
+to adjust the logging if it is not useful to you. For example:
 
 ```xml
 <configuration>
@@ -76,16 +76,16 @@ to adjust logging if it is not being useful to you. For example:
 </configuration>
 ```
 
-After adding, if you stop your app, and run it again, after going
-to localhost:8080 in your browser, now in the IDEA run pane,
-you should see a log message like:
+After it is added, if you stop your app, and run it again, after going
+to localhost:8080 in your browser, 
+you should see a log message now in the IDEA run pane, something like:
 
 ```
 2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
 ```
 
 To understand how to change the `logback.xml` configuration file
-to change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
+and change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
 
 ## Accessing the main logger
 {: #main-logger }
