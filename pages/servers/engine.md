@@ -6,7 +6,7 @@ permalink: /servers/engine.html
 priority: 400
 ---
 
-Ktor applications can be self-hosted or hosted in an Application Server. This section shows to how host Ktor applications externally.
+Ktor applications can be self-hosted or hosted on an Application Server. This section shows you how to host Ktor applications externally.
 
 **Table of contents:**
 
@@ -20,7 +20,7 @@ to tell Ktor how to start your application.
 
 #### Defining the configuration
 
-In the resources folder create a file named `application.conf` with the following contents
+In the resources folder, create a file named `application.conf` with the following contents
 
 ```kotlin
 ktor {
@@ -34,7 +34,7 @@ ktor {
 }
 ```
 
-Replace `my.company.MyApplication` with your application's package, and `ApplicationKt` with then name of the
+Replace `my.company.MyApplication` with your application's package, and `ApplicationKt` with the name of the
 file your `Application.main` function is contained in.
 
 #### Deploying the hosted application
@@ -47,7 +47,7 @@ Running applications in a development environment such as IntelliJ IDEA, is supp
 
 ##### IntelliJ IDEA 
 
-1. Create a new Run Configuration using "Application" as template
+1. Create a new Run Configuration using "Application" as a template
 2. For the main class use one of the following engines
   * Netty: use `io.ktor.server.netty.DevelopmentEngine` 
   * Jetty: use `io.ktor.server.jetty.DevelopmentEngine` 
@@ -61,7 +61,7 @@ See also: [Configuration](configuration)
 
 ### Use automatic reloading
 
-Ktor can automatically reload application when changes to class files are detected, i.e. when you build the Application.
+Ktor can automatically reload the application when changes to the class files are detected, i.e. when you build the Application.
 Enable this feature by adding `watch` configuration to `application.conf`:
 
 ```groovy
