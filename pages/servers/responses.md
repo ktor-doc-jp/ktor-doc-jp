@@ -10,7 +10,7 @@ When handling routes, or directly intercepting the pipeline, you
 get a context with an [ApplicationCall](/servers/application.html#applicationcall).
 That `call` contains a property called `response` that allows you to emit the response.
 
-Also the call itself has some useful convenience properties and methods 
+Also, the call itself has some useful convenience properties and methods 
 that interact with the response.
 
 **Table of contents:**
@@ -45,11 +45,11 @@ intercept(ApplicationCallPipeline.Call) {
 ## Controlling the HTTP headers and the status
 {: #properties}
 
-You can control how the response is generated, the http status, the headers, cookies, and the payload.
+You can control how the response is generated, the HTTP status, the headers, cookies, and the payload.
 
 Remember that since HTTP requests an responses are non-seekable streams,
 once you start emitting the response payload/content, the status and the headers are emitted,
-and you won't be able to modify neither the status or the headers/cookies.
+and you won't be able to modify either the status or the headers/cookies.
 {: .note #headers-already-sent } 
 
 As part of the `response`, you can get access to its internal context:
@@ -106,8 +106,8 @@ routing {
 }
 ```
 
-Pushing allows to reduce the time between the request and the display of the page.
-But beware that sending beforehand content, might send content already cached by the client.
+Pushing reduces the time between the request and the display of the page.
+But beware that sending content beforehand, might send content that is already cached by the client.
 {: .note.performance }
 
 ## Redirections
@@ -140,7 +140,7 @@ Sending files:
 * `call.respondFile(File("basedir"), "filename") { ... }` - Send a file and configures the [OutgoingContent](#outgoing-content) 
 
 When sending files based on the request parameters,
-be specially careful validating and limiting the input.
+be especially careful validating and limiting the input.
 {: .note.security #validate-respond-file-parameters }
 
 Sending chunked content using a Writer:
