@@ -19,7 +19,7 @@ It exposes a suspending API that uses NIO under the hoods.
 This functionality is exposed through the `io.ktor:ktor-network:$ktor_version` artifact.
 {: .note.artifact }
 
-In order to create sockets, either server or client sockets, you have to use the `aSocket` builder,
+In order to create either server or client sockets, you have to use the `aSocket` builder,
 with an optional `ActorSelectorManager`: `aSocket(selector)` or just `aSocket()`.
 
 Then use:
@@ -50,12 +50,12 @@ val output: ByteWriteChannel = socket.openWriteChannel(autoFlush = true)
 
 You can read the KDoc for [ByteReadChannel](https://github.com/Kotlin/kotlinx.coroutines/blob/master/core/kotlinx-coroutines-io/src/main/kotlin/kotlinx/coroutines/experimental/io/ByteReadChannel.kt)
 and [ByteWriteChannel](https://github.com/Kotlin/kotlinx.coroutines/blob/master/core/kotlinx-coroutines-io/src/main/kotlin/kotlinx/coroutines/experimental/io/ByteWriteChannel.kt)
-for further information on available methods.
+for further information on the available methods.
 {: .note}
 
 ## Server
 
-When creating a socket server, you have to `bind` to a specific `SocketAddress` to get
+When creating a server socket, you have to `bind` to a specific `SocketAddress` to get
 a `ServerSocket`:
 
 ```kotlin
@@ -70,7 +70,7 @@ val socket = server.accept()
 ```
 
 If you want to support multiple clients at once, remember to call `launch { }` to prevent
-suspending the function that is accepting the sockets.
+the function that is accepting the sockets from suspending.
 {: .note}
 
 *Simple Echo Server*:
