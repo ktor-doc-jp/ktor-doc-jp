@@ -473,6 +473,15 @@ heroku open
 
 In this case, it will open: https://demo-demo-12345.herokuapp.com/
 
+Remember that heroku sets an environment variable called `PORT` and you have to bind to it instead of
+a fixed port.<br/>
+When using embeddedServer you will have to use `System.getenv` while when using `application.conf` you will
+have to set `ktor.deployment.port = ${PORT}`.<br/>
+Check the page about
+[using environment variables in the configuration](http://127.0.0.1:4000/servers/configuration.html#environment-variables)
+for more information.
+{: .note}
+
 ### Google App Engine
 {: #google-app-engine}
 
