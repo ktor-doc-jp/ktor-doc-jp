@@ -426,10 +426,22 @@ ktor {
 }
 ```
 
-This will look for a PORT environment variable, and if not found an exception will be thrown:
+This will look for a `PORT` environment variable, and if not found an exception will be thrown:
 
 ```
 Exception in thread "main" com.typesafe.config.ConfigException$UnresolvedSubstitution: application.conf @ file:/path/to/application.conf: 3: Could not resolve substitution to a value: ${PORT}
+```
+
+In the case you want to provide a default value for a property when the environment doesn't exists, 
+you can set the property with the default value, and then set again with the `${?ENV}` syntax:
+
+```groovy
+ktor {
+    deployment {
+        port = 8080
+        port = ${?PORT}
+    }
+}
 ```
 
 If you are using `embeddedServer` you can still use `System.getenv` from Java. For example:
