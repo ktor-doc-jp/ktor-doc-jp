@@ -110,6 +110,7 @@ To generate a war file, you can use the gretty gradle plugin. You also need a `W
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <!-- path to application.conf file, required -->
+    <!-- note that this file is always loaded as an absolute path from the classpath -->
     <context-param>
         <param-name>io.ktor.ktor.config</param-name>
         <param-value>application.conf</param-value>
