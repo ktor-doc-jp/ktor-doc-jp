@@ -109,16 +109,16 @@ To generate a war file, you can use the gretty gradle plugin. You also need a `W
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+    <!-- path to application.conf file, required -->
+    <context-param>
+        <param-name>io.ktor.ktor.config</param-name>
+        <param-value>application.conf</param-value>
+    </context-param>
+	
     <servlet>
         <display-name>KtorServlet</display-name>
         <servlet-name>KtorServlet</servlet-name>
         <servlet-class>io.ktor.server.servlet.ServletApplicationEngine</servlet-class>
-
-        <!-- path to application.conf file, required -->
-        <init-param>
-            <param-name>io.ktor.config</param-name>
-            <param-value>application.conf</param-value>
-        </init-param>
 
         <!-- required! -->
         <async-supported>true</async-supported>
