@@ -69,6 +69,35 @@ install(DataConversion) {
 }
 ```
 
+Another potential use is to customize how a specific enum is serialized. By default enums are serialized and de-serialized
+using its `.name` in a case-sensitive fashion. But you can for example serialize them as lower case and deserialize
+them in a case-insensitive fashion: 
+
+```kotlin
+enum class LocationEnum {
+    A, B, C
+}
+
+@Location("/") class LocationWithEnum(val e: LocationEnum)
+
+@Test fun `location class with custom enum value`() = withLocationsApplication {
+    application.install(DataConversion) {
+        convert(LocationEnum::class) {
+            encode { if (it == null) emptyList() else listOf((it as LocationEnum).name.toLowerCase()) }
+            decode { values, type -> LocationEnum.values().first { it.name.toLowerCase() in values } }
+        }
+    }
+    application.routing {
+        get<LocationWithEnum> {
+            call.respondText(call.locations.resolve<LocationWithEnum>(LocationWithEnum::class, call).e.name)
+        }
+    }
+
+    urlShouldBeHandled("/?e=a", "A")
+    urlShouldBeHandled("/?e=b", "B")
+}
+```
+
 ## Accessing the Service
 {: #service }
 
