@@ -116,8 +116,8 @@ You can check the standard available [HttpClient build extension methods](https:
 {: #custom-headers}
 
 When building requests with `HttpRequestBuilder`, you can set custom headers.
-There is a final property `val headers: HeadersBuilder` (where `HeadersBuilder` inherits from `StringValuesBuilder`).
-You can add or remove headers using it or other convenience methods.
+There is a final property `val headers: HeadersBuilder` that inherits from `StringValuesBuilder`.
+You can add or remove headers using it, or with the `header` convenience methods.
 
 ```kotlin
 // this : HttpMessageBuilder
