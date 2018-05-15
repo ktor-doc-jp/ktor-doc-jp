@@ -93,7 +93,7 @@ val text = client.post<String>("http://127.0.0.1:8080/")
 
 When calling request methods, you can provide a lambda to build the request
 parameters like the URL, the HTTP method (verb), the body, or the headers.
-The HttpRequestBuilder looks like this:
+The `HttpRequestBuilder` looks like this:
 
 ```kotlin
 class HttpRequestBuilder : HttpMessageBuilder {
@@ -102,6 +102,7 @@ class HttpRequestBuilder : HttpMessageBuilder {
     val headers: HeadersBuilder
     var body: Any = EmptyContent
     val executionContext: CompletableDeferred<Unit>
+    fun header(key: String, value: String)
     fun headers(block: HeadersBuilder.() -> Unit)
     fun url(block: URLBuilder.(URLBuilder) -> Unit)
 }
@@ -110,6 +111,35 @@ class HttpRequestBuilder : HttpMessageBuilder {
 The `HttpClient` class only offers some basic functionality, and all the methods for building requests are exposed as extensions.\\
 You can check the standard available [HttpClient build extension methods](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/builders.kt).
 {: .note.api}
+
+### Specifying custom headers
+{: #custom-headers}
+
+When building requests with `HttpRequestBuilder`, you can set custom headers.
+There is a final property `val headers: HeadersBuilder` (where `HeadersBuilder` inherits from `StringValuesBuilder`).
+You can add or remove headers using it or other convenience methods.
+
+```kotlin
+// this : HttpMessageBuilder
+
+// Convenience method to add a header
+header("My-Custom-Header", "HeaderValue")
+
+// Calls methods from the headers: HeadersBuilder to manipulate the headers
+headers.clear()
+headers.append("My-Custom-Header", "HeaderValue")
+headers.appendAll("My-Custom-Header", listOf("HeaderValue1", "HeaderValue2"))
+headers.remove("My-Custom-Header")
+
+// Applies the headers with the `headers` convenience method
+headers { // this: HeadersBuilder
+    clear()
+    append("My-Custom-Header", "HeaderValue")
+    appendAll("My-Custom-Header", listOf("HeaderValue1", "HeaderValue2"))
+    remove("My-Custom-Header")
+}
+``` 
+
 
 ## Specifying a body for requests
 
