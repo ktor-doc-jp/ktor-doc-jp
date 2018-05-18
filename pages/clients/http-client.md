@@ -212,11 +212,12 @@ val helloWorld = client.get<HelloWorld>("http://127.0.0.1:8080/")
 
 From an `HttpResponse`, you can get the response content easily:
  
+* `val readChannel: ByteReadChannel = response.content`
 * `val bytes: ByteArray = response.readBytes()`
 * `val text: String = response.readText()`
-* `val readChannel = response.receive<ByteReadChannel>()`
-* `val multiPart = response.receive<MultiPartData>()`
-* `val inputStream = response.receive<InputStream>()` *Remember that InputStream API is synchronous!*
+* `val readChannel = response.call.receive<ByteReadChannel>()`
+* `val multiPart = response.call.receive<MultiPartData>()`
+* `val inputStream = response.call.receive<InputStream>()` *Remember that InputStream API is synchronous!*
 * `response.discardRemaining()`
 
 You can also get the additional response information such as its status, headers, internal state, etc.:
