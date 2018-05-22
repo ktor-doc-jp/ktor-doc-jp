@@ -1,6 +1,6 @@
 ---
 title: Custom Feature
-section: Samples
+category: samples
 permalink: /samples/custom-feature.html
 caption: Example of a Custom Feature
 ---

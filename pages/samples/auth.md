@@ -1,6 +1,6 @@
 ---
 title: Authenticate
-section: Samples
+category: samples
 permalink: /samples/auth.html
 caption: Example of Using Authentication 
 ---

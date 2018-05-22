@@ -1,7 +1,7 @@
 ---
 title: Requests
 caption: Handling HTTP Requests  
-section: Servers
+category: servers
 permalink: /servers/requests.html
 keywords: multipart receiving
 priority: 800

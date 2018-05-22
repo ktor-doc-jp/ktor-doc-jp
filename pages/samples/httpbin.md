@@ -1,6 +1,6 @@
 ---
 title: HttpBin
-section: Samples
+category: samples
 permalink: /samples/httpbin.html
 caption: Showcase of Basic Features
 ---

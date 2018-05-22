@@ -1,0 +1,48 @@
+main:
+  - title: Quick Start
+    category: quickstart
+    url: /quickstart/index.html
+    icon_url: '/assets/images/icon_quick-start.svg'
+    summary: setting up the environment and starting up
+    color: green
+    icon: gift
+
+  - title: Servers
+    category: servers
+    url: /servers/index.html
+    icon_url: '/assets/images/icon_servers.svg'
+    summary: creating web applications and services
+    color: purple
+    icon: cloud
+
+  - title: Clients
+    category: clients
+    url: /clients/index.html
+    icon_url: '/assets/images/icon_clients.svg'
+    summary: connecting to services and applications
+    color: orange
+    icon: link_alt
+
+  - title: Features
+    category: features
+    url: /features/index.html
+    icon_url: '/assets/images/icon_features.svg'
+    summary: customizing applications with extensible features
+    color: blue
+    icon: tools
+
+  - title: Samples
+    category: samples
+    url: /samples/index.html
+    icon_url: '/assets/images/icon_samples.svg'
+    summary: samples and open source projects
+    color: primary
+    icon: toolbox_alt
+
+  - title: Advanced
+    category: advanced
+    url: /advanced/index.html
+    icon_url: '/assets/images/icon_advanced.svg'
+    summary: advanced topics and implementation details
+    color: red
+    icon: cone

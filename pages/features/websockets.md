@@ -1,7 +1,7 @@
 ---
 title: WebSockets
 caption: WebSockets
-section: Features
+category: features
 permalink: /features/websockets.html
 feature:
     artifact: io.ktor:ktor-websockets:$ktor_version

@@ -1,7 +1,7 @@
 ---
 title: Routing
 caption: Structured Handling of HTTP Requests
-section: Features
+category: features
 permalink: /features/routing.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version

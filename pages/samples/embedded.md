@@ -1,6 +1,6 @@
 ---
 title: Embedded
-section: Samples
+category: samples
 permalink: /samples/embedded.html
 caption: Example of Creating an Embedded Application
 ---

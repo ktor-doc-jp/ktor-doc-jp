@@ -1,6 +1,6 @@
 ---
 title: Testable
-section: Samples
+category: samples
 permalink: /samples/testable.html
 caption: Example of Writing Tests for an Application
 ---

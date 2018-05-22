@@ -1,7 +1,7 @@
 ---
 title: Authentication
 caption: Authenticating Clients  
-section: Features
+category: features
 permalink: /features/authentication.html
 subsection_tag: Authentication
 keywords: oauth authentication basic authentication form authentication digest authentication ldap authentication jwt authentication 

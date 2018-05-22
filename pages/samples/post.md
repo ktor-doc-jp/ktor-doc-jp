@@ -1,6 +1,6 @@
 ---
 title: POST
-section: Samples
+category: samples
 permalink: /samples/post.html
 caption: Example of Posting Data with Forms
 ---

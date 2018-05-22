@@ -1,7 +1,7 @@
 ---
 title: Quick Start
 caption: QuickStart
-section: Quick Start
+category: quickstart
 permalink: /quickstart/index.html
 priority: -1
 ---

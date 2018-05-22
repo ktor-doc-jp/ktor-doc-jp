@@ -2,33 +2,39 @@
 layout: default
 ---
 
-{% for section in site.data.sections.sections %}
-{% if section.title == page.section %}
+{% for section in site.data.navigation.main %}
+{% if section.category == page.category %}
+{% assign section-category = section.category %}
 {% assign section-title = section.title %}
 {% assign section-icon = section.icon %}
 {% assign sectioncolor = section.color %}
 {% assign section-url = section.url %}
 {% endif %}
 {% endfor %}
+{% if section-title == page.title %}
+{% assign section-is-main-page = true %}
+{% else %}
+{% assign section-is-main-page = false %}
+{% endif %}
 
 <header id="header" class="header">
     <div class="container">
         <div class="branding">
             <h1 class="logo">
                 <span aria-hidden="true" class="icon icon_{{ section-icon }}"></span>
-                <span class="text-highlight">{{ page.section }}</span>
-                {% if page.section != page.title %}
+                <span class="text-highlight">{{ section-title }}</span>
+                {% unless section-is-main-page %}
                 <span class="text-bold">{{ page.title }}</span>
-                {% endif %}
+                {% endunless %}
             </h1>
         </div>
         <ol class="breadcrumb">
             <li><a href="{{ "/index.html" | prepend: site.baseurl }}">Home</a></li>
-            {% if page.section == page.title %}
-            <li>{{ page.section }}</li>
+            {% if section-is-main-page %}
+            <li>{{ section-title }}</li>
             {% else %}
-            {% if page.section != null %}
-            <li><a href="{{ section-url | prepend: site.baseurl }}">{{ page.section }}</a></li>
+            {% if page.category != null %}
+            <li><a href="{{ section-url | prepend: site.baseurl }}">{{ section-title }}</a></li>
             {% endif %}
             {% endif %}
         </ol>

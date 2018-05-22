@@ -2,7 +2,7 @@
 title: Configuration
 caption: Configuring the Server
 keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
-section: Servers
+category: servers
 permalink: /servers/configuration.html
 priority: 200
 ---

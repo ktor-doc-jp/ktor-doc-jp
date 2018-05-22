@@ -1,6 +1,6 @@
 ---
 title: WebSockets
-section: Clients
+category: clients
 permalink: /clients/websockets.html
 caption: WebSockets  
 feature:

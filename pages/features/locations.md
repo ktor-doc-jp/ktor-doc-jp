@@ -1,7 +1,7 @@
 ---
 title: Locations
 caption: Type-safe Routing   
-section: Features
+category: features
 permalink: /features/locations.html
 feature:
     artifact: io.ktor:ktor-locations:$ktor_version

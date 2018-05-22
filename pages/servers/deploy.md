@@ -1,6 +1,6 @@
 ---
 title: Deploy
-section: Servers
+category: servers
 permalink: /servers/deploy.html
 keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku nginx war fat-jar docker packing proguard
 caption: Deployment 

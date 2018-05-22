@@ -1,7 +1,7 @@
 ---
 title: IntelliJ IDEA 
 caption: Setting up Project in IntelliJ IDEA
-section: Quick Start
+category: quickstart
 permalink: /quickstart/intellij-idea.html
 priority: 0
 ---

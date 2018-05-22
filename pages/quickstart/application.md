@@ -1,7 +1,7 @@
 ---
 title: Application
 caption: Creating Your First Application
-section: Quick Start
+category: quickstart
 permalink: /quickstart/application.html
 priority: 0
 ---

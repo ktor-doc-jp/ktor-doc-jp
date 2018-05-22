@@ -1,7 +1,7 @@
 ---
 title: Autoreload
 caption: Saving Time with Automatic Reloading  
-section: Servers
+category: servers
 permalink: /servers/autoreload.html
 keywords: autoreload watchpaths
 priority: 100

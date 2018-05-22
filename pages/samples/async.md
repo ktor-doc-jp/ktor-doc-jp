@@ -1,6 +1,6 @@
 ---
 title: Asynchronous
-section: Samples
+category: samples
 permalink: /samples/async.html
 caption: Example of Asynchronous Responses
 ---

@@ -1,7 +1,7 @@
 ---
 title: Features
 caption: Extend Application Capabilities 
-section: Features
+category: features
 permalink: /features/index.html
 keywords: installing features install features
 priority: -1

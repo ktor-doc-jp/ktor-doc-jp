@@ -146,10 +146,11 @@ $(document).ready(function() {
         let res = await fetch("/search.json");
         let results = await res.json();
         for (const result of results) {
-            result.section = String(result.section);
+            result.category = String(result.category);
             result.title = String(result.title);
             result.caption = String(result.caption);
-            result.search = String('' + result.section + ' ' + result.title + ' ' + result.caption + ' ' + result.keywords).normalizeForSearch();
+            result.categoryName = categoryNames[result.category] || result.category || "unknown";
+            result.search = String('' + result.categoryName + ' ' + result.title + ' ' + result.caption + ' ' + result.keywords).normalizeForSearch();
         }
         return results;
     }
@@ -174,7 +175,7 @@ $(document).ready(function() {
         let lines = [];
         let filteredResultsAll = results
             .sorted(composeComparers(
-                comparerBy((it) => sectionPriority(it.section)),
+                comparerBy((it) => sectionPriority(it.category)),
                 comparerBy((it) => it.priority || 0),
                 comparerBy((it) => String(it.search))
             ))
@@ -195,7 +196,7 @@ $(document).ready(function() {
         });
 
         for (const result of filteredResults) {
-            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.section.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
+            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.categoryName.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
         }
         if (filteredResults.length < filteredResultsAll.length) {
             const invisibleLinks = filteredResultsAll.length - filteredResults.length;
@@ -284,8 +285,8 @@ function composeComparers(...comparers) {
     }
 }
 
-function sectionPriority(section) {
-    switch (String(section).toLowerCase().replace(/\s+/, '')) {
+function sectionPriority(category) {
+    switch (String(category).toLowerCase().replace(/\s+/, '')) {
         case 'quickstart': return 0;
         case 'servers': return 1;
         case 'clients': return 2;

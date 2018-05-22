@@ -1,7 +1,7 @@
 ---
 title: Default Headers
 caption: Send Headers Automatically
-section: Features
+category: features
 permalink: /features/default-headers.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version

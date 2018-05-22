@@ -1,3 +1,8 @@
+<script type="text/javascript">
+    var categoryNames = {};
+    {% for item in site.data.navigation.main %}categoryNames["{{ item.category | json }}"] = "{{ item.title | json }}";
+    {% endfor %}
+</script>
 <form action="https://www.google.com/search" method="get">
 <div class="page-inline-search" style="margin-bottom:8px;">
     <div class="input-group">

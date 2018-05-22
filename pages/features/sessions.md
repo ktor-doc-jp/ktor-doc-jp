@@ -1,7 +1,7 @@
 ---
 title: Sessions
 caption: Handle Conversations with Sessions
-section: Features
+category: features
 permalink: /features/sessions.html
 keywords: custom session serializers, custom session transformers, custom session storage providers
 feature:

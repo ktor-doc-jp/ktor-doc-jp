@@ -1,7 +1,7 @@
 ---
 title: Features
 caption: Creating Custom Feature  
-section: Advanced
+category: advanced
 permalink: /advanced/features.html
 ---
 

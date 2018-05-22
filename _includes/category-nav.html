@@ -1,12 +1,12 @@
-{% if page.section != null %}
-{% assign section_pages = site.pages | where: 'section', page.section %}
+{% if page.category != null %}
+{% assign section_pages = site.pages | where: 'category', page.category %}
 {% assign sorted_section_pages = section_pages | sort: 'title', 'last' %}
 {% assign sorted_section_pages = sorted_section_pages | sort: 'priority', 'last' %}
 {% for other in sorted_section_pages %}
 <li
         class="
         {% if (other.url == page.url) %}active{% endif %}
-        {% if (other.section == other.title) %}section-main{% endif %}
+        {% if (other.category == other.title) %}section-main{% endif %}
         "
 >
     <a href="{{ other.url | prepend: site.baseurl }}">{{ other.title }}</a>

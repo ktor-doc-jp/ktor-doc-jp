@@ -1,6 +1,6 @@
 ---
 title: Servers
-section: Servers
+category: servers
 permalink: /servers/index.html
 caption: Server Applications 
 priority: -1

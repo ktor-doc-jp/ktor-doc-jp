@@ -1,7 +1,7 @@
 ---
 title: Data Conversion
 caption: Data Conversion
-section: Features
+category: features
 permalink: /features/data-conversion.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version

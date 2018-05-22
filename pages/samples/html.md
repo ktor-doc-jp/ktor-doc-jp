@@ -1,6 +1,6 @@
 ---
 title: Html
-section: Samples
+category: samples
 permalink: /samples/html.html
 caption: Example of Using Html Builders
 ---

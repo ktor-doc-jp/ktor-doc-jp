@@ -1,7 +1,7 @@
 ---
 title: FAQ
 caption: Frequently Asked Questions 
-section: Quick Start
+category: quickstart
 permalink: /quickstart/faq.html
 priority: 100
 redirect_from:

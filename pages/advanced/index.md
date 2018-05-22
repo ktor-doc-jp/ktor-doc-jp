@@ -1,6 +1,6 @@
 ---
 title: Advanced
-section: Advanced
+category: advanced
 permalink: /advanced/index.html
 caption: Under the Hood
 priority: -1

@@ -1,7 +1,7 @@
 ---
 title: Logging
 caption: Logging in Ktor
-section: Servers
+category: servers
 permalink: /servers/logging.html
 keywords: SLF4J logback log4j
 priority: 600

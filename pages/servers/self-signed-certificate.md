@@ -1,7 +1,7 @@
 ---
 title: Self-Signed Certificate
 caption: Using a Self-Signed Certificate  
-section: Servers
+category: servers
 keywords: self-signed certificate https
 permalink: /servers/self-signed-certificate.html
 ---

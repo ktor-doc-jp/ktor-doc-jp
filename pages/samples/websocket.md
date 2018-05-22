@@ -1,6 +1,6 @@
 ---
 title: Websockets
-section: Samples
+category: samples
 permalink: /samples/websockets.html
 caption: Trivial Chat Application with WebSockets
 ---

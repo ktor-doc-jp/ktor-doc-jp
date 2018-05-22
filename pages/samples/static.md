@@ -1,6 +1,6 @@
 ---
 title: Static
-section: Samples
+category: samples
 permalink: /samples/static.html
 caption: Example of Serving Static Files
 ---

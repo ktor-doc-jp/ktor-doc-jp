@@ -1,7 +1,7 @@
 ---
 title: Gradle
 caption: Setting up a Gradle Build
-section: Quick Start
+category: quickstart
 permalink: /quickstart/gradle.html
 priority: 0
 ---

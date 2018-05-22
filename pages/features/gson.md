@@ -1,7 +1,7 @@
 ---
 title: Gson
 caption: JSON support using Gson
-section: Features
+category: features
 permalink: /features/gson.html
 feature:
     artifact: io.ktor:ktor-gson:$ktor_version

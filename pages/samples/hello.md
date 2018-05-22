@@ -1,6 +1,6 @@
 ---
 title: Hello World
-section: Samples
+category: samples
 permalink: /samples/hello.html
 caption: Hello, World!
 ---

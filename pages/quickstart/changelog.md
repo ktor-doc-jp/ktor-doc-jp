@@ -1,7 +1,7 @@
 ---
 title: Changelog
 caption: Changelog
-section: Quick Start
+category: quickstart
 permalink: /quickstart/changelog.html
 priority: 98
 ---

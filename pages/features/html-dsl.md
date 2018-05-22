@@ -1,7 +1,7 @@
 ---
 title: HTML DSL
 caption: Emit HTML with a DSL
-section: Features
+category: features
 permalink: /features/html-dsl.html
 feature:
     artifact: io.ktor:ktor-html-builder:$ktor_version

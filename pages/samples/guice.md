@@ -1,6 +1,6 @@
 ---
 title: Guice
-section: Samples
+category: samples
 permalink: /samples/guice.html
 caption: Example of Using Guice Dependency Injection
 ---

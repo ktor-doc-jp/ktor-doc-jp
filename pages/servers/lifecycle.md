@@ -1,6 +1,6 @@
 ---
 title: Lifecycle
-section: Servers
+category: servers
 permalink: /servers/lifecycle.html
 caption: What Happens in a Server?  
 priority: 500

@@ -1,6 +1,6 @@
 ---
 title: Open Source
-section: Samples
+category: samples
 permalink: /samples/open-source.html
 caption: Explore Open Source Projects  
 ---

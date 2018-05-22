@@ -1,6 +1,6 @@
 ---
 title: Jackson
-section: Samples
+category: samples
 permalink: /samples/jackson.html
 caption: Example of Serving JSON using Jackson
 ---

@@ -1,6 +1,6 @@
 ---
 title: HTTP/2
-section: Samples
+category: samples
 permalink: /samples/http2.html
 caption: Example of Enabling HTTP/2 Support
 ---

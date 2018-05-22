@@ -1,7 +1,7 @@
 ---
 title: Structure
 caption: Building Complex Servers 
-section: Servers
+category: servers
 permalink: /servers/structure.html
 keywords: routing, routes, structuring, growing, dependency injection, guice, external configuration, 
 priority: 1000

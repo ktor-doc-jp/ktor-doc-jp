@@ -1,6 +1,6 @@
 ---
 title: Application
-section: Servers
+category: servers
 permalink: /servers/application.html
 caption: What is an Application? 
 priority: 0

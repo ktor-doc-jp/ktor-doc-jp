@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% for section in site.data.navigation.main %}{% if section.category == page.category %}{% assign section-title = section.title %}{% endif %}{% endfor %}
     {% if page.landing_page %}
     <title>Ktor - asynchronous Web framework for Kotlin</title>
-    {% elsif page.section == page.title or page.section == null %}
+    {% elsif section-category == page.title or page.category == null %}
     <title>{{ site.title | prepend: " - " | prepend: page.title }}</title>
     {% else %}
-    <title>{{ site.title | prepend: " - " | prepend: page.section | prepend: " - " | prepend: page.title }}</title>
+    <title>{{ site.title | prepend: " - " | prepend: section-title | prepend: " - " | prepend: page.title }}</title>
     {% endif %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +28,8 @@
     <script type="text/javascript" src="{{ '/assets/js/extra.js' | relative_url }}" defer></script>
 </head>
 
-{% for section in site.data.sections.sections %}
-{% if section.title == page.section %}
+{% for section in site.data.navigation.main %}
+{% if section.category == page.category %}
 {% assign sectioncolor = section.color %}
 {% endif %}
 {% endfor %}

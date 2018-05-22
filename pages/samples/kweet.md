@@ -1,6 +1,6 @@
 ---
 title: Kweet
-section: Samples
+category: samples
 permalink: /samples/kweet.html
 caption: Example of Twitter-like Application
 ---

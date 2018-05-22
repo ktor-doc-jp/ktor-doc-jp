@@ -1,6 +1,6 @@
 ---
 title: Samples
-section: Samples
+category: samples
 permalink: /samples/index.html
 caption: Sample Projects
 priority: -1

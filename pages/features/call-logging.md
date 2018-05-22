@@ -1,7 +1,7 @@
 ---
 title: Call Logging
 caption: Log the client requests
-section: Features
+category: features
 permalink: /features/call-logging.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version

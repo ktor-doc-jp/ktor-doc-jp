@@ -1,7 +1,7 @@
 ---
 title: Migration
 caption: Migration
-section: Quick Start
+category: quickstart
 permalink: /quickstart/migration.html
 priority: 99
 ---

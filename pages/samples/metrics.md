@@ -1,6 +1,6 @@
 ---
 title: Metrics
-section: Samples
+category: samples
 permalink: /samples/metrics.html
 caption: Example of Wiring up Metrics
 ---

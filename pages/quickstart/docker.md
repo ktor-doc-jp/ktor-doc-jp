@@ -1,7 +1,7 @@
 ---
 title: Docker
 caption: Creating Docker Container
-section: Quick Start
+category: quickstart
 permalink: /quickstart/docker.html
 priority: 0
 ---

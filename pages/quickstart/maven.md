@@ -1,7 +1,7 @@
 ---
 title: Maven
 caption: Setting up a Maven Build
-section: Quick Start
+category: quickstart
 permalink: /quickstart/maven.html
 priority: 0
 ---

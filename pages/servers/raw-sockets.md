@@ -1,7 +1,7 @@
 ---
 title: Sockets
 caption: Raw Sockets  
-section: Servers
+category: servers
 permalink: /servers/raw-sockets.html
 priority: 700
 ---

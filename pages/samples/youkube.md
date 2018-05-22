@@ -1,6 +1,6 @@
 ---
 title: YouKube
-section: Samples
+category: samples
 permalink: /samples/youkube.html
 caption: Example of YouTube-like Application
 ---

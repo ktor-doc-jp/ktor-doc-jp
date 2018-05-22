@@ -1,7 +1,7 @@
 ---
 title: Responses
 caption: Generating HTTP Responses  
-section: Servers
+category: servers
 permalink: /servers/responses.html
 priority: 900
 ---

@@ -1,6 +1,6 @@
 ---
 title: Http Client
-section: Clients
+category: clients
 permalink: /clients/http-client.html
 caption: Http Client 
 ---

@@ -1,6 +1,6 @@
 ---
 title: GSON
-section: Samples
+category: samples
 permalink: /samples/gson.html
 caption: Example of Serving JSON using GSON
 ---

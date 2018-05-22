@@ -1,6 +1,6 @@
 ---
 title: Locations
-section: Samples
+category: samples
 permalink: /samples/locations.html
 caption: Example of Using Typed Locations
 ---

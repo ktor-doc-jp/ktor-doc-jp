@@ -1,6 +1,6 @@
 ---
 title: Pipeline
-section: Advanced
+category: advanced
 permalink: /advanced/pipeline.html
 caption: Internal Pipeline Machinery
 ---

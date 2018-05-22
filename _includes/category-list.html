@@ -1,7 +1,13 @@
+{% for section in site.data.navigation.main %}
+{% if section.category == page.category %}
+{% assign section-title = section.title %}
+{% endif %}
+{% endfor %}
+
 <ul>
-{% if page.section != null %}
+{% if page.category != null %}
 {% for other in site.pages %}
-{% if other.section == page.section and other.section != other.title %}
+{% if other.category == page.category and section-title != other.title %}
 <li>
     <a href="{{ other.url | prepend: site.baseurl }}">{{ other.caption }}</a>
 </li>

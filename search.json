@@ -9,7 +9,7 @@ search: exclude
 {
 "title": "{{ page.title | json }}",
 "caption": "{{ page.caption | json }}",
-"section": "{{ page.section | json }}",
+"category": "{{ page.category | json }}",
 "priority": {{ page.priority | plus: 0 }},
 "keywords": "{{ page.keywords | json }}",
 "url": "{{ page.url | prepend: site.baseurl | json }}"
