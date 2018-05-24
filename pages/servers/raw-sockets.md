@@ -158,8 +158,8 @@ fun main(args: Array<String>) {
 ## Secure Sockets (SSL/TLS)
 {: #secure }
 
-Ktor supports secure sockets. To enable them you will need to include the `ktor-network-tls` artifact, and call
-the `.tls()` to a connected socket.
+Ktor supports secure sockets. To enable them you will need to include the
+`io.ktor:ktor-network-tls:$ktor_version` artifact, and call the `.tls()` to a connected socket.
 
 *Connect to a secure socket:*
 ```kotlin
