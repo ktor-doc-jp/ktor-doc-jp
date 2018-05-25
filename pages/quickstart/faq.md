@@ -105,3 +105,16 @@ Something like this should be sent as part of the response headers: `Server: kto
 
 Ktor provides a tracing mechanism for the routing feature to help troubleshooting
 routing decisions. Check the [Tracing the routing decisions](/features/routing.html#tracing) section in the Routing page.
+
+## I get a `io.ktor.pipeline.InvalidPhaseException: Phase Phase('YourPhase') was not registered for this pipeline`.
+{: #invalid-phase }
+
+This means that you are trying to use a phase that is not registered as a reference for another phase.
+This might happen for example in the Routing feature if you try to register a phase relation inside a node,
+but the phase referenced is defined in another ancestor Route node. Since route phases and interceptors are later
+merged, it should work, but you need to register it in your Route node:
+
+```kotlin
+route.addPhase(PhaseDefinedInAncestor)
+route.insertPhaseAfter(PhaseDefinedInAncestor, MyNodePhase)
+```
