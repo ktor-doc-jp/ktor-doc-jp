@@ -5,6 +5,8 @@ permalink: /samples/html.html
 caption: Example of Using Html Builders
 ---
 
-Browse source code on GitHub: [ktor-samples-html](https://github.com/ktorio/ktor/tree/master/ktor-samples/ktor-samples-html)
+Browse source code on GitHub: [ktor-samples-html](https://github.com/ktorio/ktor-samples/tree/master/feature/html-widget)
 
-{% include sample.html paths = 'ktor-samples/ktor-samples-html/src/io/ktor/samples/html/HtmlApplication.kt' %}
+{% include sample.html paths = '
+    feature/html-widget/src/HtmlWidgetApplication.kt
+' %}

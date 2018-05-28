@@ -5,4 +5,8 @@ permalink: /samples/post.html
 caption: Example of Posting Data with Forms
 ---
 
-Browse source code on GitHub: [ktor-samples-post](https://github.com/ktorio/ktor/tree/master/ktor-samples/ktor-samples-post)
+Browse source code on GitHub: [ktor-samples-post](https://github.com/ktorio/ktor-samples/blob/master/feature/post)
+
+{% include sample.html paths='
+    feature/post/src/PostApplication.kt
+' %}

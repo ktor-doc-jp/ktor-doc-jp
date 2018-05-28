@@ -6,13 +6,12 @@
     window.addEventListener('load', function() {
         githubEmbed('#embed', {
             "owner": "ktorio",
-            "repo": "ktor",
+            "repo": "ktor-samples",
             "ref": "master",
             "embed": [
                 {% for item in split_paths %}
-                    {% assign file_name = item | split: "/" | last %}
-                    { "type": "kt",  "label": "{{file_name}}", "path": "{{item}}" }
-                    {% unless forloop.last %},{% endunless %}
+                    {% assign item_trim = item | strip %}{% assign file_name = item_trim | split: "/" | last %}
+                    { "type": "kt",  "label": "{{file_name}}", "path": "{{item_trim}}" }{% unless forloop.last %},{% endunless %}
                 {% endfor %}
             ]
         });

@@ -5,6 +5,9 @@ permalink: /samples/guice.html
 caption: Example of Using Guice Dependency Injection
 ---
 
-Browse source code on GitHub: [ktor-samples-guice](https://github.com/ktorio/ktor/tree/master/ktor-samples/ktor-samples-guice)
+Browse source code on GitHub: [ktor-samples-guice](https://github.com/ktorio/ktor-samples/tree/master/feature/guice)
 
-
+{% include sample.html paths = '
+    feature/guice/src/GuiceApplication.kt,
+    feature/guice/test/GuiceApplicationTest.kt
+' %}

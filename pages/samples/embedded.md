@@ -5,6 +5,9 @@ permalink: /samples/embedded.html
 caption: Example of Creating an Embedded Application
 ---
 
-Browse source code on GitHub: [ktor-samples-embedded](https://github.com/ktorio/ktor/tree/master/ktor-samples/ktor-samples-embedded)
+Browse source code on GitHub: [ktor-samples-embedded](https://github.com/ktorio/ktor-samples/tree/master/deployment/netty-embedded)
 
-{% include sample.html paths = 'ktor-samples/ktor-samples-embedded/src/io/ktor/samples/embedded/EmbeddedApplication.kt' %}
+{% include sample.html paths = '
+    deployment/netty-embedded/src/Main.kt,
+    deployment/netty-embedded/src/HelloApplication.kt
+' %}
