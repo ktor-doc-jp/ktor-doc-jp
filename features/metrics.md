@@ -35,7 +35,7 @@ install(Metrics) {
 }
 ```
 
-![Ktor Metrics: JMX](/pages/features/metrics/jmx.png)
+![Ktor Metrics: JMX](/features/metrics/jmx.png)
 
 ### SLF4J Reporter
 
@@ -53,7 +53,7 @@ install(Metrics) {
 }
 ```
 
-![Ktor Metrics: SLF4J](/pages/features/metrics/slf4j.png)
+![Ktor Metrics: SLF4J](/features/metrics/slf4j.png)
 
 ### Other reporters
 

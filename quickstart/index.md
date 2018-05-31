@@ -42,7 +42,7 @@ gradle.org provides [several guides](https://guides.gradle.org/building-java-app
 
 You can set-up a simple Ktor application using gradle like this:
 
-![Ktor Build with Gradle](/pages/quickstart/1/ktor_build_gradle.png)
+![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
 
 Text version:
 ```groovy
@@ -104,7 +104,7 @@ specific feature documentation.
 
 A simple hello world in Ktor would look like this:
 
-![Ktor Hello World](/pages/quickstart/1/ktor_hello_world_main.png)
+![Ktor Hello World](/quickstart/1/ktor_hello_world_main.png)
 
 1. Here you define a plain callable *main method*.
 2. Then you create an embedded *server using Netty* as the back-end that will listen on *port 8080*.
@@ -146,7 +146,7 @@ If that doesn't work, maybe you are using that port already. You can try changin
 port 8080 (in line 10) and adjust it as needed.
 {: .note}
 
-![Ktor Hello World Browser](/pages/quickstart/1/screenshot.png){: width="50%""}
+![Ktor Hello World Browser](/quickstart/1/screenshot.png){: width="50%""}
 
 At this point you should have a very simple Web Back-end running, so you can make changes,
 and see the results in your browser.

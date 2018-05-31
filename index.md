@@ -15,5 +15,5 @@ Search for information or explore the sections below to get started.
 
 {% include search.html inline="true" %} 
 
-![Ktor Example](/pages/what-is-ktor-shadow.png){: style="width:745px;height:auto;max-width:100%;"}
+![Ktor Example](/what-is-ktor-shadow.png){: style="width:745px;height:auto;max-width:100%;"}
 {: style="text-align:center;"}
