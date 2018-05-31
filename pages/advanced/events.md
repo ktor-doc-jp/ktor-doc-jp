@@ -3,7 +3,7 @@ title: Application monitoring
 caption: Handling application-level events
 category: advanced
 permalink: /advanced/events.html
-keywords: >
+keywords: >-
     EventDefinition events monitoring monitors
     ApplicationStarting ApplicationStarted ApplicationStopPreparing ApplicationStopping ApplicationStopped
     subscribing unsubscribing raising raise events dispatching
