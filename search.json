@@ -11,7 +11,7 @@ search: exclude
 "caption": "{{ page.caption | json }}",
 "category": "{{ page.category | json }}",
 "priority": {{ page.priority | plus: 0 }},
-"keywords": "{{ page.keywords | json }}",
+"keywords": "{{ page.keywords | strip | json }}",
 "url": "{{ page.url | prepend: site.baseurl | json }}"
 },{%endif%}{% endfor %} {}
 ]

@@ -118,3 +118,8 @@ merged, it should work, but you need to register it in your Route node:
 route.addPhase(PhaseDefinedInAncestor)
 route.insertPhaseAfter(PhaseDefinedInAncestor, MyNodePhase)
 ```
+
+## How can I subscribe to ktor events?
+{: #ktor-events }
+
+There is a page [explaining the Ktor's application-level event system](/advanced/events.html). 
