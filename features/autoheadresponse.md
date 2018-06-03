@@ -20,7 +20,7 @@ To enable automatic `HEAD` responses, install the `AutoHeadResponse` feature
 ```kotlin
 fun Application.main() {
   ...
-  install(HeadRequestSupport) 
+  install(AutoHeadResponse) 
   ...
 }
 ```
