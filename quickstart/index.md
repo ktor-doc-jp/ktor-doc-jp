@@ -5,7 +5,7 @@ category: quickstart
 toc: true
 permalink: /quickstart/index.html
 children: /quickstart/quickstart/
-priority: -1
+priority: -100
 ---
 
 ![Ktor logo](/assets/images/ktor_logo.svg){:style="width:134px;height:56px;"}

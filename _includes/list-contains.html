@@ -1,0 +1,7 @@
+<ul>
+{% for other in site.pages -%}
+{%- if other.url contains include.starts -%}
+    <li><a href="{{ other.url | prepend: site.baseurl }}">{{ other.caption }}</a></li>
+{% endif -%}
+{%- endfor %}
+</ul>
