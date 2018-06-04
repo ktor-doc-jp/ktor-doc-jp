@@ -2,7 +2,10 @@
 title: Maven
 caption: Setting up a Maven Build
 category: quickstart
-permalink: /quickstart/maven.html
+toc: true
+permalink: /quickstart/quickstart/maven.html
+redirect_from:
+  - /quickstart/maven.html
 priority: 0
 ---
 

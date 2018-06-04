@@ -2,7 +2,10 @@
 title: IntelliJ IDEA 
 caption: Setting up Project in IntelliJ IDEA
 category: quickstart
-permalink: /quickstart/intellij-idea.html
+toc: true 
+permalink: /quickstart/quickstart/intellij-idea.html
+redirect_from:
+  - /quickstart/intellij-idea.html
 priority: 0
 ---
 

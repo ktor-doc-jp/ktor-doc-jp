@@ -2,7 +2,9 @@
 title: Quick Start
 caption: QuickStart
 category: quickstart
+toc: true
 permalink: /quickstart/index.html
+children: /quickstart/quickstart/
 priority: -1
 ---
 

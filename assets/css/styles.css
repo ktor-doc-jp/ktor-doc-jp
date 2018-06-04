@@ -1868,3 +1868,14 @@ li.section-main {
     color: white;
     */
 }
+
+.collapse._is-open {
+    display: block;
+}
+.sidebar-active {
+    font-weight: bold;
+}
+
+.sidebar-inner-block {
+    padding-left: 16px;
+}

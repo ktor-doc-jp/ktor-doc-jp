@@ -46,9 +46,15 @@ layout: default
         <div class="doc-body">
             <div class="doc-sidebar" style="position: absolute; display: inline-block;">
                 <nav id="doc-nav">
-                    <ul id="doc-menu" class="nav doc-menu hidden-xs">
-                        {% include category-nav.html %}
-                    </ul>
+                    <div id="doc-menu" class="nav doc-menu hidden-xs">
+                    {% for item in site.data.navigation.main %}
+                    {% if item.category == page.category %}
+                    {% assign slug = item.url | split: "/" | last %}
+                    {% assign item_url = item.url | remove: slug %}
+                    {% include nav.html context=item_url level=0 %}
+                    {% endif %}
+                    {% endfor %}
+                    </div>
                 </nav>
             </div>
             <div class="doc-content">

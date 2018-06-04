@@ -1,0 +1,34 @@
+{% assign next_level = include.level + 1 %}
+{% capture html %}
+<ul class="sidebar-tree doc-menu level{{ include.level }}">
+    {% if page.category != null %}
+
+    {% assign entries = site.pages | sort: "path" %}
+    {% assign sorted_category_pages = entries | sort: 'title', 'last' %}
+    {% assign sorted_category_pages = sorted_category_pages | sort: 'priority', 'last' %}
+
+    {% for entry in sorted_category_pages %}
+    {% assign slug = entry.url | split: "/" | last %}
+    {% assign current = entry.url | remove: slug %}
+
+    {% if current == include.context %}{% unless entry.redirect.from %}
+    <li class="sidebar-tree__item
+        {% if entry.children %}_has-children sidebar-collapse{% endif %}
+        {% if page.url contains entry.url %} sidebar-is-open active{% endif %}
+    ">
+        <a href="{{ entry.url | relative_url }}"
+           class="sidebar-tree__link {% if page.url contains entry.url %}sidebar-active{% endif %}">{{ entry.title }}</a>
+
+        {% if entry.children %}
+        <div class="sidebar-js-toggle-collapse-button sidebar-tree__collapse-button sidebar-collapse__button"></div>
+        <div class="sidebar-js-collapse-content sidebar-collapse__content sidebar-inner-block">
+            {% include nav.html context=entry.children level=next_level %}
+        </div>
+        {% endif %}
+    </li>
+    {% endunless %}{% endif %}
+
+    {% endfor %}
+    {% endif %}
+</ul>
+{% endcapture %}{{ html | strip_newlines | replace:'    ','' | replace:'    ','' | replace:'  ',' ' }}
