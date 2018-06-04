@@ -2,10 +2,11 @@
 title: Gson
 caption: JSON support using Gson
 category: features
-permalink: /features/gson.html
 feature:
     artifact: io.ktor:ktor-gson:$ktor_version
     class: io.ktor.gson.GsonConverter
+redirect_from:
+  - /features/gson.html
 ---
 
 The GSON feature allows you to handle JSON content in your application easily using

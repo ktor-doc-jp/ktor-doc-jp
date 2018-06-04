@@ -6,6 +6,7 @@ permalink: /features/content-negotiation.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
     class: io.ktor.features.ContentNegotiation
+children: /features/content-negotiation/
 ---
 
 This feature provides automatic content conversion according to `Content-Type` and `Accept` headers.

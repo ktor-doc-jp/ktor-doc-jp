@@ -2,10 +2,11 @@
 title: Jackson
 caption: JSON support using Jackson
 category: features
-permalink: /features/jackson.html
 feature:
     artifact: io.ktor:ktor-jackson:$ktor_version
     class: io.ktor.jackson.JacksonConverter
+redirect_from:
+  - /features/jackson.html
 ---
 
 The Jackson feature allows you to handle JSON content in your application easily using

@@ -2,11 +2,12 @@
 title: Freemarker
 caption: Using Freemarker Templates
 category: features
-permalink: /features/freemarker.html
 keywords: html
 feature:
     artifact: io.ktor:ktor-freemarker:$ktor_version
     class: io.ktor.freemarker.FreeMarker
+redirect_from:
+  - /features/freemarker.html
 ---
 
 Ktor includes support for [FreeMarker](http://freemarker.org/) templates through the FreeMarker

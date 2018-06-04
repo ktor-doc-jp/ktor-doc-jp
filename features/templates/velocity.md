@@ -2,11 +2,12 @@
 title: Velocity
 caption: Using Velocity Templates
 category: features
-permalink: /features/velocity.html
 keywords: html
 feature:
     artifact: io.ktor:ktor-velocity:$ktor_version
     class: io.ktor.velocity.Velocity
+redirect_from:
+  - /features/velocity.html
 ---
 
 Ktor includes support for [Velocity](http://velocity.apache.org/) templates through the Velocity

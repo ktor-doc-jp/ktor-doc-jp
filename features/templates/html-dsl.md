@@ -2,10 +2,11 @@
 title: HTML DSL
 caption: Emit HTML with a DSL
 category: features
-permalink: /features/html-dsl.html
 feature:
     artifact: io.ktor:ktor-html-builder:$ktor_version
     class: io.ktor.html.HtmlContent
+redirect_from:
+  - /features/html-dsl.html
 ---
 
 This feature integrates with [kotlinx.html](https://github.com/Kotlin/kotlinx.html)

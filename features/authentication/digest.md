@@ -4,7 +4,6 @@ caption: Digest authentication
 category: features
 ---
 
-
 Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication).
 It works differently than the basic/form auths:
 
