@@ -13,7 +13,7 @@
  *
  * You can edit this file with autocompletion executing:
  *
- *     kscript --idea checkLinks.kts
+ *     kscript --idea checkLinks.kt
  */
 
 @file:MavenRepository("ktor", "https://kotlin.bintray.com/ktor")
@@ -29,6 +29,7 @@ import io.ktor.client.engine.apache.*
 import io.ktor.client.request.*
 import io.ktor.client.response.*
 import kotlinx.coroutines.experimental.*
+import kotlin.system.*
 
 object CheckLinks {
 	@JvmStatic
@@ -36,12 +37,14 @@ object CheckLinks {
 		runBlocking {
 			val entry = args.getOrElse(0) { "http://127.0.0.1:4000" }
 			println("Loading $entry...")
-			enqueue(entry, "")
-			while (queue.isNotEmpty()) {
-				val task = queue.remove()
-				check(task)
+			val time = measureTimeMillis {
+				enqueue(entry, "")
+				while (queue.isNotEmpty()) {
+					val task = queue.remove()
+					check(task)
+				}
 			}
-			println("Done. Visited ${visited.size} links")
+			println("Done. Visited ${visited.size} links in ${time.toDouble() / 1000.0} seconds")
 		}
 	}
 
@@ -79,19 +82,29 @@ object CheckLinks {
 
 		if (url !in ids) {
 			val response = client.get<HttpResponse>(url)
+			val html = response.readText()
 			//println("Downloaded: $url")
 			//if (response.status.isOk()) {
-			if (response.status.value < 400) {
-				val html = response.readText()
-				val idList = ID_REGEX.findAll(html).map { it.groupValues[1] }
-				ids[url] = idList.toSet()
-				val links = HREF_REGEX.findAll(html).map { it.groupValues[1] }
-				for (link in links) {
-					enqueue(task.full, link)
+
+			val redirected = Regex("<meta http-equiv=\"refresh\" content=\"0; url=(.*)\">").find(html)
+			when {
+				redirected != null -> {
+					val redirection = redirected.groupValues[1]
+					ids[url] = setOf()
+					println("The url $url is a redirection to $redirection linked in ${task.base}".blue)
 				}
-			} else {
-				ids[url] = setOf()
-				println("\u001b[31mError loading $url linked in ${task.base} : ${response.status}\u001B[0m")
+				response.status.value < 400 -> {
+					val idList = ID_REGEX.findAll(html).map { it.groupValues[1] }
+					ids[url] = idList.toSet()
+					val links = HREF_REGEX.findAll(html).map { it.groupValues[1] }
+					for (link in links) {
+						enqueue(task.full, link)
+					}
+				}
+				else -> {
+					ids[url] = setOf()
+					println("Error loading $url linked in ${task.base} : ${response.status}".red)
+				}
 			}
 		}
 
@@ -100,3 +113,8 @@ object CheckLinks {
 		}
 	}
 }
+
+fun consoleColor(color: Int) = "\u001B[${color}m"
+
+val String.red get() = "${consoleColor(31)}${this}${consoleColor(0)}"
+val String.blue get() = "${consoleColor(34)}${this}${consoleColor(0)}"
