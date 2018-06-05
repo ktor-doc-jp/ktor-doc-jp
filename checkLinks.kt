@@ -56,7 +56,7 @@ object CheckLinks {
 	val queue = java.util.LinkedList<Task>()
 
 	val ID_REGEX = Regex("id=['\"](.*?)['\"]")
-	val HREF_REGEX = Regex("href=['\"](.*?)['\"]")
+	val HREF_REGEX = Regex("<(a|link).+?href=['\"](?<href>.*?)['\"]")
 
 	fun enqueue(base: String, link: String) {
 		//println("Processing: '$base' -> '$link'...")
@@ -96,7 +96,7 @@ object CheckLinks {
 				response.status.value < 400 -> {
 					val idList = ID_REGEX.findAll(html).map { it.groupValues[1] }
 					ids[url] = idList.toSet()
-					val links = HREF_REGEX.findAll(html).map { it.groupValues[1] }
+					val links = HREF_REGEX.findAll(html).map { it.groups["href"]!!.value }
 					for (link in links) {
 						enqueue(task.full, link)
 					}
