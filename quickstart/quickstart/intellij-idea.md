@@ -62,7 +62,7 @@ You can check this in IntelliJ IDEA in the main menu:
 
     ![Ktor IntelliJ: Build Gradle](/quickstart/intellij-idea/build-gradle.png)
 
-For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/gradle) section. 
+For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/quickstart/gradle.html) section. 
 {: .note}
 
 ## Create the App

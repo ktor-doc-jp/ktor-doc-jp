@@ -269,7 +269,7 @@ WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
-For simple deploying to Docker you can check the [docker quickstart](/quickstart/docker.html) page for full details.
+For simple deploying to Docker you can check the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
 
 #### Nginx
 {: #nginx}

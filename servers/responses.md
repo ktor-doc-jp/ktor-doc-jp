@@ -175,15 +175,15 @@ types for the [`call.respond`](#call-respond) methods.
 ### Sending HTML with the DSL
 {: #html-dsl}
 
-Ktor includes an optional [feature to send HTML content using a DSL](/features/html-dsl.html).
+Ktor includes an optional [feature to send HTML content using a DSL](/features/templates/html-dsl.html).
 
 ### Sending HTML with FreeMarker
 {: #html-freemarker}
 
-Ktor includes an optional [feature to send HTML content using FreeMarker](/features/freemarker.html).
+Ktor includes an optional [feature to send HTML content using FreeMarker](/features/templates/freemarker.html).
 
 ### Sending JSON with data classes
 {: #json}
 
-Ktor includes an optional [feature to send JSON content using Content negotiation](/features/gson.html).
+Ktor includes an optional [feature to send JSON content using Content negotiation](/features/content-negotiation/gson.html).
 

@@ -22,7 +22,7 @@ and how to configure it to support Ktor.
 
 First of all, you need a skeleton `build.gradle` file including Kotlin.
 You can create it with any text editor, or you can use IntelliJ to create
-it following the [IntelliJ guide](/quickstart/intellij-idea.html).
+it following the [IntelliJ guide](/quickstart/quickstart/intellij-idea.html).
 
 The initial file looks like this:
 
@@ -125,7 +125,7 @@ Ktor can run in many environments, such as Netty, Jetty or any other
 Servlet-compatible Application Container such as Tomcat.
 
 This example shows you how to configure Ktor with Netty.
-For other engines see [artifacts](/artifacts.html) for a list of
+For other engines see [artifacts](/quickstart/artifacts.html) for a list of
 available artifacts.
 
 You will add a dependency for `ktor-server-netty` using the

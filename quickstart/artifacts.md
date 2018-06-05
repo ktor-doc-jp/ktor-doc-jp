@@ -28,13 +28,13 @@ a generic servlet. It also contains a TestEngine for setting up application test
   * `ktor-server-test-host` allows running application tests faster without starting the full host
 * `ktor-features` groups modules for features that are optional and may not be required by every application
   * `ktor-auth` provides support for different [authentication systems](/features/authentication.html) like Basic, Digest, Forms, OAuth 1a and 2
-  * `ktor-auth-jwt` adds the ability to authenticate against [JWT](/features/authentication.html#jwt)
-  * `ktor-auth-ldap` adds the ability to authenticate against [LDAP](/features/authentication.html#ldap) instance
-  * `ktor-freemarker` integrates Ktor with [Freemarker templates](/features/freemarker.html)
-  * `ktor-velocity` integrates Ktor with [Velocity templates](/features/velocity.html)
-  * `ktor-gson` integrates with [Gson](/features/gson.html) adding JSON content negotiation
-  * `ktor-jackson` integrates with [Jackson](/features/gson.html) adding JSON content negotiation
-  * `ktor-html-builder` integrates Ktor with [kotlinx.html builders](/features/html-dsl.html)
+  * `ktor-auth-jwt` adds the ability to authenticate against [JWT](/features/authentication/jwt.html)
+  * `ktor-auth-ldap` adds the ability to authenticate against [LDAP](/features/authentication/ldap.html) instance
+  * `ktor-freemarker` integrates Ktor with [Freemarker templates](/features/templates/freemarker.html)
+  * `ktor-velocity` integrates Ktor with [Velocity templates](/features/templates/velocity.html)
+  * `ktor-gson` integrates with [Gson](/features/content-negotiation/gson.html) adding JSON content negotiation
+  * `ktor-jackson` integrates with [Jackson](/features/content-negotiation/gson.html) adding JSON content negotiation
+  * `ktor-html-builder` integrates Ktor with [kotlinx.html builders](/features/templates/html-dsl.html)
   * `ktor-locations` contains experimental support for [typed locations](/features/locations.html)
   * `ktor-metrics` adds the ability to add some [metrics](/features/metrics.html) to the server
   * `ktor-server-sessions` adds the ability to use [stateful sessions stored on a server](/features/sessions.html)
@@ -51,6 +51,7 @@ a generic servlet. It also contains a TestEngine for setting up application test
  
 See instructions for setting up a project with
 
-* [Maven](/quickstart/maven.html)
-* [Gradle](/quickstart/gradle.html)
+* [Maven](/quickstart/quickstart/maven.html)
+* [Gradle](/quickstart/quickstart/gradle.html)
+* [Generate a project online](/quickstart/quickstart/generator.html)
 

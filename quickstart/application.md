@@ -20,7 +20,7 @@ Ktor applications can be built using common build systems such as [Maven](https:
 Ktor is split up into several groups of modules,
 allowing you to include only the functionality that you will need.
  
-For a list of these modules, please check the [Artifacts](/artifacts) page.
+For a list of these modules, please check the [Artifacts](/quickstart/artifacts.html) page.
 In this case, you only need to include `ktor-server-netty`.  
 
 These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right
@@ -28,8 +28,8 @@ repositories need to be added to your build script.
 
 For a more detailed guide on setting up build files with different build systems see:
 
-* [Setting up Gradle Build](/quickstart/gradle.html)
-* [Setting up Maven Build](/quickstart/maven.html)
+* [Setting up Gradle Build](/quickstart/quickstart/gradle.html)
+* [Setting up Maven Build](/quickstart/quickstart/maven.html)
 
 ## Creating a self-hosted Application
 {: #self-hosted}
