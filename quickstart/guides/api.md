@@ -111,7 +111,7 @@ Would reply with:
 
 ## Handling other verbs
 
-REST APIs use most of the HTTP verbs (GET, POST, PUT, PATCH, DELETE) to perform operations.
+REST APIs use most of the HTTP verbs (_GET_, _POST_, _PUT_, _PATCH_, _DELETE_) to perform operations.
 Let's create a route to add new snippets. For this, we will need to read the JSON body of the POST request.
 For this we will use `call.receive<Type>()`:
 
@@ -142,9 +142,10 @@ Nice!
 
 ## Grouping routes together
 
-Now we have two separate routes that share the route (but not the verb) and we don't want to repeat ourselves.
-We can group routes with the same prefix using the `route(name) { }` block. For each HTTP verb, there is an
-overload without receiving the route path when we are at routing leaf nodes:
+Now we have two separate routes that share the path (but not the verb) and we don't want to repeat ourselves.
+
+We can group routes with the same prefix, using the `route(path) { }` block. For each HTTP verb, there is an
+overload without the route path argument that we can use at routing leaf nodes:
 
 ```kotlin
 routing {
