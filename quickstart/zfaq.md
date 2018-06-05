@@ -80,12 +80,12 @@ Something like this should be sent as part of the response headers: `Server: kto
 ## Website accessibility tips and tricks
 {: #website-tricks }
 
-> You can use the keys `'s'` (search), `'t'` (github file finder flavor) or `'#'` to access the search in any page
+> You can use the keys <kbd>s</kbd> (search), <kbd>t</kbd> (github file finder flavor) or <kbd>#</kbd> to access the search in any page
 > of the documentation website.
-> The `'#'` version will limit the search to the sections in the current page.
+> The <kbd>#</kbd> version will limit the search to the sections in the current page.
 
-> In the search you can either select the options with the mouse or fingers, or using the keyboard arrows `'↑'` `'↓'`
-> and the return key `⏎` to go to the currently selected page.
+> In the search you can either select the options with the mouse or fingers, or using the keyboard arrows <kbd>↑</kbd> <kbd>↓</kbd>
+> and the return key <kbd>⏎</kbd> to go to the currently selected page.
 
 > This search only uses page titles, and keywords for the search. It is also possible to do a google search
 > in the `ktor.io` domain to do a full text search on all its contents. 
@@ -95,7 +95,7 @@ Something like this should be sent as part of the response headers: `Server: kto
 > or on hover on devices with mouse.
 > You can also double click the fragment to expand it.
 > In addition to expanding it, this action selects the text so you can copy the fragments easily
-> with `cmd+c` on mac, or `ctrl+c` in other operating systems.
+> with <kbd>cmd</kbd> + <kbd>c</kbd> on mac, or <kbd>ctrl</kbd> + <kbd>c</kbd> in other operating systems.
 
 > You can click on the headings and some notes, to get an anchored link to the sections.
 > After clicking, you can copy the new url in your browser including the `#` to link to a specific section.

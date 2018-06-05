@@ -4,10 +4,8 @@
     {% if page.category != null %}
 
     {% assign entries = site.pages | sort: "path" %}
-    {% assign sorted_category_pages = entries | sort: 'title', 'last' %}
-    {% assign sorted_category_pages = sorted_category_pages | sort: 'priority', 'last' %}
 
-    {% for entry in sorted_category_pages %}
+    {% for entry in entries %}
     {% assign slug = entry.url | split: "/" | last %}
     {% assign current = entry.url | remove: slug %}
 
