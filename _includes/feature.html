@@ -1,11 +1,51 @@
+{% if page.feature.artifact != 'io.ktor:ktor-server-core:$ktor_version' %}
+{% assign artifact_required = true %}
+{% else %}
+{% assign artifact_required = false %}
+{% endif %}
+{% assign artifact_parts = page.feature.artifact | split: ':' %}
+{% assign artifact_group = artifact_parts[0] %}
+{% assign artifact_name = artifact_parts[1] %}
+{% assign artifact_version = artifact_parts[2] %}
+
 <div class="note artifact artifact-small">
     <div id="artifact">
         This feature is defined
         in the class <code class="highlighter-rouge">{{ page.feature.class }}</code>
-        {% if page.feature.artifact == 'io.ktor:ktor-server-core:$ktor_version' %}
-            and no additional artifacts are required.
-        {% else %}
+        {% if artifact_required %}
             in the artifact <code class="highlighter-rouge">{{ page.feature.artifact }}</code>.
+        {% else %}
+            and no additional artifacts are required.
         {% endif %}
     </div>
+    {% if artifact_required %}
+<ul class="nav nav-tabs artifact-tabs">
+    <li role="presentation" class="active"><a data-toggle="tab" href="#artifact-gradle">Gradle</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#artifact-maven">Maven</a></li>
+</ul>
+<div class="tab-content" style="background: white; padding: 8px; border: 1px solid #ddd; border-top: transparent; position: relative; top: -1px;">
+<div id="artifact-gradle" class="tab-pane fade in active">
+<div><code style="white-space: pre;font-size: 0.9em">dependencies {
+    compile "{{ page.feature.artifact }}"
+}
+</code></div>
 </div>
+<div id="artifact-maven" class="tab-pane fade in">
+<div><code style="white-space: pre;font-size: 0.9em">&lt;project&gt;
+    ...
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;{{ artifact_group }}&lt;/groupId&gt;
+            &lt;artifactId&gt;{{ artifact_name }}&lt;/artifactId&gt;
+            &lt;version&gt;${ktor.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;
+</code></div>
+</div>
+</div>
+    {% endif %}
+
+
+</div>
+

@@ -244,6 +244,11 @@ $(document).ready(function() {
         hashChanged();
     };
     hashChanged();
+
+    $('.artifact-tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
 });
 
 
