@@ -162,8 +162,53 @@ routing {
 }
 ```
 
-## StatusPages
-
 ## Authentication
+
+It would be a good idea to prevent everyone from posting snippets. For now, we are going to limit it using
+http's basic authentication with a fixed user and password. To do it, we are going to use the authentication feature.
+
+```kotlin
+fun Application.module() {
+    install(Authentication) {
+        basic {
+            realm = "myrealm" 
+            validate { if (it.name == "user" && it.password == "password") UserIdPrincipal("user") else null }
+        }
+    }
+    // ...
+}
+```
+
+After installing and configuring the feature, we can group some routes together to be authenticated with the
+`authenticate { }` block.
+
+In our case, we are going to keep the get call unauthenticated, and going to require authentication for the post one:
+
+```kotlin
+routing {
+    route("/snippets") {
+        get {
+            call.respond(mapOf("snippets" to synchronized(snippets) { snippets.toList() }))
+        }
+        authenticate {
+            post {
+                val post = call.receive<PostSnippet>()
+                snippets += Snippet(post.snippet.text)
+                call.respond(mapOf("OK" to true))
+            }        
+        }
+    }
+}
+```
+
+## JWT Authentication
+
+Instead of using a fixed authentication, we are going to use JWT tokens.
+
+We are going to add a login-register route. That route will register a user if it doesn't exist,
+and for a valid login or register it will return a JWT token.
+The JWT token will hold the user name, and posting will link a snippet to the user.
+
+## StatusPages
 
 ## CORS
