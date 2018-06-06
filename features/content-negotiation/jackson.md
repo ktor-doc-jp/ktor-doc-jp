@@ -44,11 +44,11 @@ used to install the ContentNegotiation. To give you an idea of what is available
 ```kotlin
 install(ContentNegotiation) {
     jackson {
-        this.enable(SerializationFeature.INDENT_OUTPUT)
-        this.enable(...)
-        this.dateFormat = DateFormat.getDateInstance()
-        this.disableDefaultTyping()
-        this.convertValue(..., ...)
+        enable(SerializationFeature.INDENT_OUTPUT)
+        enable(...)
+        dateFormat = DateFormat.getDateInstance()
+        disableDefaultTyping()
+        convertValue(..., ...)
         ...
     }
 }
