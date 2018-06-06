@@ -109,14 +109,16 @@ Would reply with:
 
 ![](/quickstart/guides/api/snippets_get.png){: style="box-shadow: 0px 0px 10px #999;"}
 
-## Handling other verbs
+## Handling other HTTP methods
 
-REST APIs use most of the HTTP verbs (_GET_, _POST_, _PUT_, _PATCH_, _DELETE_) to perform operations.
+REST APIs use most of the HTTP methods/verbs (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) to perform operations.
 Let's create a route to add new snippets. For this, we will need to read the JSON body of the POST request.
 For this we will use `call.receive<Type>()`:
 
 ```kotlin
-data class PostSnippet(val snippet: Snippet)
+data class PostSnippet(val snippet: PostSnippet.Text) {
+    data class Text(val text: String)
+}
 
 routing {
     get("/snippets") {
@@ -130,9 +132,33 @@ routing {
 }
 ```
 
-You can use postman to perform a simulated call:
+You can use postman or curl to perform a POST call easily:
+
+Postman:
 
 ![](/quickstart/guides/api/postman.png)
+
+CURL:
+
+<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
+
+```bash
+curl \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data '{"snippet" : {"text" : "mysnippet"}}' \
+  http://127.0.0.1:8080/snippets
+```
+
+</td><td markdown="1">
+
+```json
+{
+  "OK" : true
+}
+```
+
+</td></tr></tbody></table>
 
 Let's do the GET request again:
 
@@ -142,9 +168,9 @@ Nice!
 
 ## Grouping routes together
 
-Now we have two separate routes that share the path (but not the verb) and we don't want to repeat ourselves.
+Now we have two separate routes that share the path (but not the method) and we don't want to repeat ourselves.
 
-We can group routes with the same prefix, using the `route(path) { }` block. For each HTTP verb, there is an
+We can group routes with the same prefix, using the `route(path) { }` block. For each HTTP method, there is an
 overload without the route path argument that we can use at routing leaf nodes:
 
 ```kotlin
@@ -209,6 +235,268 @@ We are going to add a login-register route. That route will register a user if i
 and for a valid login or register it will return a JWT token.
 The JWT token will hold the user name, and posting will link a snippet to the user.
 
+We will need to install and configure JWT (replacing the basic auth):
+
+```kotlin
+open class SimpleJWT(val secret: String) {
+    private val algorithm = Algorithm.HMAC256(secret)
+    val verifier = JWT.require(algorithm).build()
+    fun sign(name: String): String = JWT.create().withClaim("name", name).sign(algorithm)
+}
+
+fun Application.module() {
+    val jwt = SimpleJWT("my-super-secret-for-jwt")
+    install(Authentication) {
+        jwt {
+            verifier(jwt.verifier)
+            validate {
+                UserIdPrincipal(it.payload.getClaim("name").asString())
+            }
+        }
+    }
+    // ...
+}
+```
+
+We will also need a data source holding usernames and passwords. One simple option would be:
+
+```kotlin
+class User(val name: String, val password: String)
+
+val users = Collections.synchronizedMap(
+    listOf(User("test", "test"))
+        .associateBy { it.name }
+        .toMutableMap()
+)
+```
+
+With all this, we can already create a route for logging or registering users:
+
+```kotlin
+routing {
+    post("/login-register") {
+        val post = call.receive<LoginRegister>()
+        val user = users.getOrPut(post.user) { User(post.user, post.password) }
+        if (user.password != post.password) error("Invalid credentials")
+        call.respond(mapOf("token" to jwt.sign(user.name)))
+    }
+}
+```
+
+With all this, we can already try to obtain a JWT token for our user:
+
+<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
+
+```bash
+curl -v \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data '{"user" : "test", "password" : "test"}' \
+  http://127.0.0.1:8080/login-register
+```
+
+</td><td markdown="1">
+
+```json
+{
+  "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCJ9.96At6bwFhxebk4xk4tpkOFj-3ThxkLFNHkHaKoedOfA"
+}
+```
+
+</td></tr></tbody></table>
+
+And with that token, we can already publish snippets:
+
+<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
+
+```bash
+curl -v \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCJ9.96At6bwFhxebk4xk4tpkOFj-3ThxkLFNHkHaKoedOfA" \
+  --data '{"snippet" : {"text": "hello-world-jwt"}}' \
+  http://127.0.0.1:8080/snippets
+```
+
+</td><td markdown="1">
+
+```json
+{
+  "OK" : true
+}
+```
+
+</td></tr></tbody></table>
+
+## Associating user to snippets
+
+Since we are posting snippets with an authenticated route, we have access to the generated `Principal` that includes
+the username. So we should be able to access that user and associate it to the snippet.
+
+First of all, we will need to associate user information to snippets:
+
+```kotlin
+data class Snippet(val user: String, val text: String)
+
+val snippets = Collections.synchronizedList(mutableListOf(
+    Snippet(user = "test", text = "hello"),
+    Snippet(user = "test", text = "world")
+))
+```
+
+Now we can use the principal information (that is generated by the authentication feature when authenticating JWT)
+when inserting new snippets:
+
+```kotlin
+routing {
+    // ...
+    route("/snippets") {
+        // ...
+        authenticate {
+            post {
+                val post = call.receive<PostSnippet>()
+                val principal = call.principal<UserIdPrincipal>() ?: error("No principal")
+                snippets += Snippet(principal.name, post.snippet.text)
+                call.respond(mapOf("OK" to true))
+            }
+        }
+    }
+}
+```
+
+Let's try this:
+
+<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
+
+```bash
+curl -v \
+  --request GET \
+  http://127.0.0.1:8080/snippets
+```
+
+</td><td markdown="1">
+
+```json
+{
+  "snippets" : [ {
+    "user" : "test",
+    "text" : "hello"
+  }, {
+    "user" : "test",
+    "text" : "world"
+  }, {
+    "user" : "test",
+    "text" : "hello-world-jwt"
+  } ]
+}
+```
+
+</td></tr></tbody></table>
+
+Awesome!
+
 ## StatusPages
 
+Now let's refine things a bit. A REST API should use Http Status codes to provide semantic information about errors.
+Right now, when an exception is thrown (for example when trying to get a JWT token from an user that already exists,
+but with a wrong password), a 500 server error is returned. We can do it better, and the StatusPages features
+will allow you to do this by capturing specific exceptions and generating the result.
+
+Let's create a new exception type:
+
+```kotlin
+class InvalidCredentialsException(message: String) : RuntimeException(message)
+```
+
+Now, let's install the StatusPages feature, register this exception type, and generate an Unauthorized page: 
+
+```kotlin
+fun Application.module() {
+    install(StatusPages) {
+        exception<InvalidCredentialsException> { exception ->
+            call.respond(HttpStatusCode.Unauthorized, mapOf("OK" to false, "error" to (exception.message ?: "")))
+        }
+    }
+    // ...
+}
+```
+
+We should also update our login-register page to throw this exception:
+
+```kotlin
+routing {
+    post("/login-register") {
+        val post = call.receive<LoginRegister>()
+        val user = users.getOrPut(post.user) { User(post.user, post.password) }
+        if (user.password != post.password) throw InvalidCredentialsException("Invalid credentials")
+        call.respond(mapOf("token" to jwt.sign(user.name)))
+    }
+}
+```
+
+Let's try this:
+
+<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
+
+```bash
+curl -v \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data '{"user" : "test", "password" : "invalid-password"}' \
+  http://127.0.0.1:8080/login-register
+```
+
+</td><td markdown="1">
+
+```bash
+< HTTP/1.1 401 Unauthorized
+< Content-Length: 53
+< Content-Type: application/json; charset=UTF-8
+```
+```json
+{
+  "OK" : false,
+  "error" : "Invalid credentials"
+}
+```
+
+</td></tr></tbody></table>
+
+Things are getting better!
+
 ## CORS
+
+Now suppose we need this API to be accessible via JavaScript from another domain. We will need to configure CORS.
+And Ktor has a feature to configure this:
+
+```kotlin
+fun Application.module() {
+    install(CORS) {
+        method(HttpMethod.Options)
+        method(HttpMethod.Get)
+        method(HttpMethod.Post)
+        method(HttpMethod.Put)
+        method(HttpMethod.Delete)
+        method(HttpMethod.Patch)
+        header(HttpHeaders.Authorization)
+        allowCredentials = true
+        anyHost()
+    }
+    // ...
+}
+```
+
+Now our API is accessible from any host :)
+
+## Exercises
+
+After following this guide, as an exercise, you can try to do the following exercises:
+
+### Exercise 1
+
+Add unique ids to each snippet and add a DELETE http verb to /snippets allowing an authenticated user to delete
+her snippets.  
+
+### Exercise 2
+
+Store users and snippets in a database. 

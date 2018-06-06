@@ -1879,3 +1879,24 @@ li.section-main {
 .sidebar-inner-block {
     padding-left: 24px;
 }
+
+table td, table th {
+    vertical-align: top;
+}
+
+table.compare-table {
+    border: 2px solid #aaa;
+    margin-bottom: 8px;
+}
+
+table.compare-table tr {
+}
+
+table.compare-table td, table.compare-table th {
+    padding: 8px;
+    width: 50%;
+}
+
+table.compare-table pre.highlight {
+    border: 0;
+}
