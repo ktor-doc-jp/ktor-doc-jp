@@ -28,15 +28,16 @@ layout: default
                 {% endunless %}
             </h1>
         </div>
-        <ol class="breadcrumb">
-            <li><a href="{{ "/index.html" | prepend: site.baseurl }}">Home</a></li>
-            {% if section-is-main-page %}
-            <li>{{ section-title }}</li>
-            {% else %}
-            {% if page.category != null %}
-            <li><a href="{{ section-url | prepend: site.baseurl }}">{{ section-title }}</a></li>
-            {% endif %}
-            {% endif %}
+
+        <ol class="breadcrumb" style="font-size: 1.3em;">
+            <li><a class="link" href="/">Home</a></li>
+            {% for section in site.data.navigation.main %}
+                {% if section-title == section.title %}
+                <li><strong><a class="link" href="{{ section.url | prepend: site.baseurl }}">{{ section.title }}</a></strong></li>
+                {% else %}
+                <li><a class="link" href="{{ section.url | prepend: site.baseurl }}">{{ section.title }}</a></li>
+                {% endif %}
+            {% endfor %}
         </ol>
     </div>
 </header>
