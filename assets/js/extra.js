@@ -235,7 +235,7 @@ $(document).ready(function() {
     function hashChanged() {
         const hash = document.location.hash;
         $('.anchored-heading-fixed').removeClass('anchored-heading-fixed');
-        if (hash.startsWith('#')) {
+        if (hash.startsWith('#') && hash.indexOf("&") < 0 && hash.indexOf("=") < 0 && hash.indexOf('"') < 0) {
             $(hash).find('a').addClass('anchored-heading-fixed');
         }
     }
