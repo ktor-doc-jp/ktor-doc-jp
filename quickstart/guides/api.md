@@ -107,7 +107,7 @@ fun Application.module() {
 
 Would reply with:
 
-![](/quickstart/guides/api/snippets_get.png){: style="box-shadow: 0px 0px 10px #999;"}
+![](/quickstart/guides/api/snippets_get.png){:.rounded-shadow}
 
 ## Handling other HTTP methods
 
@@ -136,7 +136,7 @@ You can use postman or curl to perform a POST call easily:
 
 Postman:
 
-![](/quickstart/guides/api/postman.png)
+![](/quickstart/guides/api/postman.png){:.rounded-shadow}
 
 CURL:
 
@@ -162,7 +162,7 @@ curl \
 
 Let's do the GET request again:
 
-![](/quickstart/guides/api/snippets_get_new.png){: style="box-shadow: 0px 0px 10px #999;"}
+![](/quickstart/guides/api/snippets_get_new.png){:.rounded-shadow}
 
 Nice!
 

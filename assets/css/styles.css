@@ -1901,3 +1901,8 @@ table.compare-table td, table.compare-table th {
 table.compare-table pre.highlight {
     border: 0;
 }
+
+.rounded-shadow {
+    box-shadow: 0px 0px 10px #999;
+    border-radius: 8px;
+}
