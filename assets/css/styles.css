@@ -1887,6 +1887,7 @@ table td, table th {
 table.compare-table {
     border: 2px solid #aaa;
     margin-bottom: 8px;
+    width: 100%;
 }
 
 table.compare-table tr {
