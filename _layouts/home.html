@@ -15,6 +15,13 @@ layout: default
             -->
             <p>Easy to use, fun and asynchronous.</p>
         </div>
+
+        <ol class="breadcrumb" style="font-size: 1.3em; margin-top: 32px;">
+            <li><strong><a class="link" href="/">Home</a></strong></li>
+            {% for section in site.data.navigation.main %}
+            <li><a class="link" href="{{ section.url | prepend: site.baseurl }}">{{ section.title }}</a></li>
+            {% endfor %}
+        </ol>
     </div>
 </header>
 

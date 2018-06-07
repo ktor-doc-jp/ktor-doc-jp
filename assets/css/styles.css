@@ -1323,7 +1323,7 @@ table.api-docs-table td p {
 .landing-page .header {
     background: #35304e;
     color: rgba(255, 255, 255, 0.85);
-    padding: 60px 0;
+    /*padding: 60px 0;*/
 }
 
 .landing-page .header a {
