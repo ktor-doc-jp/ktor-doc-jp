@@ -4,6 +4,8 @@ caption: How to create an API using ktor
 category: quickstart
 ---
 
+{::options toc_levels="1..2" /}
+
 In this guide you will learn how to create an API using ktor.
 We are going to create a simple API to store simple text snippets (like a small pastebin-like API).
 
@@ -11,6 +13,7 @@ To achieve this, we are going to use the
 [Routing](/features/routing.html),
 [StatusPages](/features/status-pages.html),
 [Authentication](/features/authentication.html),
+[JWT Authentication](/features/authentication/jwt.html),
 [CORS](/features/cors.html),
 [ContentNegotiation](/features/content-negotiation.html) and
 [Jackson](/features/content-negotiation/jackson.html)
@@ -27,7 +30,7 @@ The first step is to set up a project. You can follow the [Quick Start](/quickst
 
 [**Open the pre-configured generator form**](javascript:$('#start_ktor_io_form').toggle())
 
-<iframe src="{{ site.start_ktor_io_url }}#dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&artifact-group=com.example&artifact-name=api-example" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:500px;display:none;"></iframe>
+<iframe src="{{ site.start_ktor_io_url }}#dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:500px;display:none;"></iframe>
 
 ## Simple routing
 

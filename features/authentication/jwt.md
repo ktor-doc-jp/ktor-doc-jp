@@ -2,6 +2,10 @@
 title: JWT and JWK
 caption: JWT and JWK authentication
 category: features
+keywords: jwt authentication jwt
+feature:
+    artifact: io.ktor:ktor-auth-jwt:$ktor_version
+    method: io.ktor.auth.jwt.jwt
 ---
 
 Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating JSON-encoded payloads.
@@ -10,8 +14,7 @@ in a myriad of languages.
 
 This feature will handle `Authorization: Bearer <JWT-TOKEN>`.
 
-In order to use this authentication method, you need to include the `io.ktor:ktor-auth-jwt:$ktor_version` artifact.
-{: .artifact.note}
+{% include feature.html %}
 
 Ktor has a couple of classes to use the JWT Payload as `Credential` or as `Principal`.
 

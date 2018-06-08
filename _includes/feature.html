@@ -11,7 +11,13 @@
 <div class="note artifact artifact-small">
     <div id="artifact">
         This feature is defined
+        {% if page.feature.method %}
+        in the method <code class="highlighter-rouge">{{ page.feature.method }}</code>
+        {% elsif page.feature.package %}
+        in the package <code class="highlighter-rouge">{{ page.feature.package }}</code>
+        {% else %}
         in the class <code class="highlighter-rouge">{{ page.feature.class }}</code>
+        {% endif %}
         {% if artifact_required %}
             in the artifact <code class="highlighter-rouge">{{ page.feature.artifact }}</code>.
         {% else %}
