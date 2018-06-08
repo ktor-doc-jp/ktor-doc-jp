@@ -1,8 +1,10 @@
 ---
-title: kotlinx.coroutines
-category: advanced
-permalink: /advanced/kotlinx.coroutines.html
-caption: kotlinx.coroutines
+title: Coroutines
+category: quickstart
+permalink: /quickstart/coroutines.html
+caption: Coroutines
+redirect_from:
+  - /advanced/kotlinx.coroutines.html
 ---
 
 Ktor heavily uses kotlin coroutines for linear-like asynchronous programming.
