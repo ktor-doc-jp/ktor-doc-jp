@@ -95,7 +95,7 @@ It will return null in the case you provide another type.
 The handler won't be executed if the configured authentication fails (when returning `null` in the authentication mechanism)
 {: .note}
 
-## Naming the Authentication provider
+## Naming the AuthenticationProvider
 
 It is possible to give arbitrary names to the authentication providers you specify,
 or to not provide a name at all (unnamed provider) by not setting the name argument or passing a null.
@@ -110,7 +110,7 @@ java.lang.IllegalArgumentException: Provider with the name `authName` is already
 
 Summarizing:
 
-```
+```kotlin
 install(Authentication) {
     basic { // Unamed `basic` provider
         // ...
@@ -123,6 +123,28 @@ install(Authentication) {
     }
     basic("name1") { // "name1" provider (exception, already defined a provider with name = "name1")
         // ...
+    }
+}
+```
+
+## Skipping/Omitting Authentication providers
+
+You can also skip an authentication based on a criteria.
+
+```kotlin
+/**
+ * Authentication filters specifying if authentication is required for particular [ApplicationCall]
+ * If there is no filters, authentication is required. If any filter returns true, authentication is not required.
+ */
+fun AuthenticationProvider.skipWhen(predicate: (ApplicationCall) -> Boolean)
+```
+
+For example, to skip a basic authentication if there is already a session, you could write:
+
+```kotlin
+authentication {
+    basic {
+        skipWhen { call -> call.sessions.get<UserSession>() != null }
     }
 }
 ```
