@@ -259,7 +259,6 @@ route("/login") {
 }
 ```
 
-
 ## Sessions
 
 To prevent having to authenticate all the pages, we are going to store the user in a session, and that session will
@@ -294,7 +293,38 @@ fun Application.module() {
             call.respond(FreeMarkerContent("index.ftl", mapOf("data" to IndexData(listOf(1, 2, 3))), ""))
         }
     }
-} 
+}
+
+## Using HTML DSL instead of FreeMarker
+
+You can choose to generate HTML directly from code instead of using a Template Engine.
+For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact.
+This artifact exposes an extension to respond with HTML blocks:
+
+```kotlin
+get("/") { 
+    val data = IndexData(listOf(1, 2, 3)))  
+    call.respondHtml {
+        head {
+            link(rel = "stylesheet", href = "/static/styles.css")
+        }
+        body {
+            ul {
+                for (item in data.items) {
+                    li { +"$item" }                
+                }
+            }
+        }
+    }
+}
+```
+
+The main benefits of HTML DSL is that you have fully statically typed access to variables and it is thighly integrated
+with the code base.
+
+The counterpart of all this is that you have to recompile to change the HTML, and you can't search complete HTML blocks.
+But it is lightning fast, and you can use the [autoreload feature](https://ktor.io/servers/autoreload.html) to recompile
+on change and reload the relevant JVM classes.
 
 ## Exercises
 
