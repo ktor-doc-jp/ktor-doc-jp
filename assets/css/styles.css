@@ -1674,6 +1674,7 @@ code.highlighter-rouge {
 .note.performance:before { content: "PERFORMANCE NOTE"; font-weight: bold; }
 .note.security:before { content: "SECURITY NOTE"; font-weight: bold; }
 .note.contact:before { content: "CONTACT"; font-weight: bold; }
+.note.exercise:before { content: "EXERCISE"; font-weight: bold; }
 .note.artifact-small {
     font-size: 0.8em;
 }

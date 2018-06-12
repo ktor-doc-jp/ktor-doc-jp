@@ -6,7 +6,7 @@ category: quickstart
 
 {::options toc_levels="1..2" /}
 
-In this guide you will learn how to create an HTML Website using ktor.
+In this guide you will learn how to create an HTML Website using Ktor.
 We are going to create a simple website with HTML rendered at the backend with users, a loging form,
 and keeping a persistent session.
 
@@ -24,3 +24,284 @@ features.
 
 * TOC
 {:toc}
+
+## Setting up the project
+
+The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
+
+[**Open the pre-configured generator form**](javascript:$('#start_ktor_io_form').toggle())
+
+<iframe src="{{ site.start_ktor_io_url }}#dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:500px;display:none;"></iframe>
+
+## Simple routing
+
+First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
+to include any additional artifact.
+
+This feature is installed automatically when using the `routing { }` block.
+
+Let's start creating a simple GET route that responds with 'OK':
+
+```kotlin
+fun Application.module() {
+    routing {
+        get("/") {
+            call.respondText("OK")
+        }
+    }
+}
+```
+
+## Serving HTML with FreeMarker
+
+Apache FreeMarker is a template engine for the JVM, and thus you can use it with Kotlin.
+There is a Ktor feature supporting it.
+
+For now, we are going to store the templates embedded as part of the resources in a `templates` folder.
+
+Create a file called `resources/templates/index.ftl` and put the following content to create a simple HTML list:
+
+```freemarker
+<#-- @ftlvariable name="data" type="com.example.IndexData" -->
+<html>
+	<body>
+		<ul>
+		<#list data.items as item>
+			<li>${item}</li>
+		</#list>
+		</ul>
+	</body>
+</html>
+```
+
+IntelliJ IDEA Ultimate has FreeMarker support with autocompletion and variable hinting.
+{:.note}
+
+Now, let's install the FreeMarker feature and let's create a route serving this template and passing a set of values to it:
+
+```kotlin
+data class IndexData(val items: List<Int>)
+
+fun Application.module() {
+    install(FreeMarker) {
+        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
+    }
+    
+    routing {
+        get("/") {
+            call.respond(FreeMarkerContent("index.ftl", mapOf("data" to IndexData(listOf(1, 2, 3))), ""))
+        }
+    }
+}
+```
+
+Now you can run the server and open a browser pointing to <http://127.0.0.1:8080/html-freemarker>{:target="_blank"} to see the results:
+
+![](/quickstart/guides/website/website1.png){:.rounded-shadow}
+
+Nice!
+
+## Serving static files: styles, scripts, images... 
+
+In addition to templates, you will want to serve static content.
+Static content will serve faster, and is compatible with other features like Partial Content that allows
+to resume downloads or partially download files.
+
+For now, we are going to serve a simple `styles.css` file to apply styles to our simple page.
+
+Serving static files doesn't require installing any feature, but it is a plain Route handler.
+To serve static files at the `/static` url, from `/resources/static`, you would write the following code:
+
+```kotlin
+routing {
+    // ...
+    static("/static") {
+        resources("static")
+    }
+}
+```
+
+Now let's create the `resources/static/styles.css` file with the following content:
+
+```css
+body {
+    background: #B9D8FF;
+}
+```
+
+In addition to that, we will have to update our template to include the `style.css` file:
+```freemarker
+<#-- @ftlvariable name="data" type="com.example.IndexData" -->
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+	<body>
+	    <!-- ... -->
+	</body>
+</html>
+```
+
+And the result:
+
+![](/quickstart/guides/website/website2.png){:.rounded-shadow}
+
+Now we have a colorful website from 1990!
+
+Static files are not only text files! Try to add an image (what about a fancy animated blinking gif file? 👩🏻‍🎨) to the `static` folder, and include a `<img src="...">` tag to the HTML template.
+{: .note.exercise}
+
+## Enabling partial content: large files and videos
+
+Though not really needed for this specific case, if you enable partial content support, people will be able
+to resume larger static files on connections with frequent problems, or allowing seeking support when
+serving and watching videos.
+
+Enabling partial content is straightforward:
+
+```kotlin
+install(PartialContentPartialContent) {
+}
+```
+
+## Creating a form
+
+Now we are going to create a fake login form. To make it simple, we are going to accept users with the same password,
+and we are not going to implement a registration form.
+
+Create a `resources/templates/login.ftl`:
+
+```kotlin
+<html>
+<head>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<#if error??>
+    <p style="color:red;">${error}</p>
+</#if>
+<form action="/login" method="post" enctype="application/x-www-form-urlencoded">
+    <div>User:</div>
+    <div><input type="text" name="username" /></div>
+    <div>Password:</div>
+    <div><input type="password" name="password" /></div>
+    <div><input type="submit" value="Login" /></div>
+</form>
+</body>
+</html>
+```
+
+In addition to the template, we need to add some logic to it. In this case we are going to handle GET and POST methods in different blocks of code:
+
+```kotlin
+route("/login") {
+    get {
+        call.respond(FreeMarkerContent("login.ftl", null))
+    }
+    post {
+        val post = call.receiveParameters()
+        if (post["username"] != null && post["username"] == post["password"]) {
+            call.respondText("OK")
+        } else {
+            call.respond(FreeMarkerContent("login.ftl", mapOf("error" to "Invalid login")))
+        }
+    }
+}
+```
+
+As we said, we are accepting `username` with the same `password`, but we are not accepting null values.
+In the case the login is valid, we respond with a single OK for now, while we reuse the template if the login fails
+to display the same form with an error.
+
+## Redirections
+
+In some cases, like route refactoring or forms, we will want to perform redirections (either temporal or permanent).
+In this case we want to temporally redirect to the homepage upon success login, instead of replying with a plain text.
+
+<table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
+
+```kotlin
+call.respondText("OK")
+```
+
+</td><td markdown="1">
+
+```kotlin
+call.respondRedirect("/", permanent = false)
+```
+
+</td></tr></tbody></table>
+
+## Using the Form authentication
+
+To illustrate how to receive POST parameters we have handled the login manually, but we can also use the authentication
+feature with a form provider:
+
+```kotlin
+install(Authentication) {
+    form("login") {
+        userParamName = "username"
+        passwordParamName = "password"
+        challenge = FormAuthChallenge.Unauthorized
+        validate { credentials -> if (credentials.name == credentials.password) UserIdPrincipal(credentials.name) else null }
+    }
+}
+route("/login") {
+    get {
+        // ...
+    }
+    authenticate("login") {
+        post {
+            val principal = call.principal<UserIdPrincipal>()
+            call.respondRedirect("/", permanent = false)
+        }
+    }
+}
+```
+
+
+## Sessions
+
+To prevent having to authenticate all the pages, we are going to store the user in a session, and that session will
+be propagated among all pages using a session cookie.
+
+```kotlin
+data class MySession(val username: String)
+
+fun Application.module() {
+    install(Sessions) {
+        cookie<MySession>("SESSION")
+    }
+    authenticate("login") {
+        post {
+            val principal = call.principal<UserIdPrincipal>() ?: error("No principal")
+            call.sessions.set(MySession(principal.name))
+            call.respondRedirect("/", permanent = false)
+        }
+    }
+} 
+```
+
+Inside our pages, we can try to get the session and produce different results:
+
+fun Application.module() {
+    // ...
+    get("/") {
+        val session = call.sessions.get<MySession>()
+        if (session != null) {
+            call.respondText("User is logged")
+        } else {
+            call.respond(FreeMarkerContent("index.ftl", mapOf("data" to IndexData(listOf(1, 2, 3))), ""))
+        }
+    }
+} 
+
+## Exercises
+
+### Exercise 1
+
+Make a register page and store the user/password datasource inmemory in a hashmap.
+
+### Exercise 2
+
+Use a database for store the users.

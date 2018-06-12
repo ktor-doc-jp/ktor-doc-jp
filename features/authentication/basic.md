@@ -15,7 +15,6 @@ install(Authentication) {
     }
 
     form(name = "myauth2") {
-        realm = "Ktor Server"
         userParamName = "user"
         passwordParamName = "password"
         challenge = FormAuthChallenge.Unauthorized
