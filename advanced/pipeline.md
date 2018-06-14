@@ -3,6 +3,7 @@ title: Pipeline
 category: advanced
 permalink: /advanced/pipeline.html
 caption: Internal Pipeline Machinery
+children: /advanced/pipeline/
 ---
 
 ## Description
