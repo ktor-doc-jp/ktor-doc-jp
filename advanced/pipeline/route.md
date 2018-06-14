@@ -1,7 +1,6 @@
 ---
 title: Route interception
 category: advanced
-permalink: /advanced/pipeline/pipeline.html
 caption: Interception per route
 ---
 
