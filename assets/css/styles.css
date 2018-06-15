@@ -1906,4 +1906,5 @@ table.compare-table pre.highlight {
 .rounded-shadow {
     box-shadow: 0px 0px 10px #999;
     border-radius: 8px;
+    margin-bottom: 8px;
 }
