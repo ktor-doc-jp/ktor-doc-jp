@@ -96,7 +96,9 @@ OAuth client
 
 ## Configuring our application
 
-A simple embedded application would look like this:
+First we have to define the settings for our oauth provider. We have to replace the `clientId` and `clientSecret`
+with the values obtained from the previous step. Depending on what we need from the user, we can adjust the `defaultScopes`
+list with something else `profile` will have access to id, full name and picture, but not to the email or something else:
 
 ```kotlin
 val googleOauthProvider = OAuthServerSettings.OAuth2ServerSettings(
@@ -109,6 +111,98 @@ val googleOauthProvider = OAuthServerSettings.OAuth2ServerSettings(
     clientSecret = "yyyyyyyyyyy",
     defaultScopes = listOf("profile") // no email, but gives full name, picture, and id
 )
+```
+
+Remember to adjust the defaultScopes to just request what you really need for the security sake, and user privacy and trust. 
+{: .note}
+
+We also have to install the OAuth feature and configure it. We need to provide a HTTP client instance, a provider lookup
+where we determine the provider from the call (we don't need to put logic here since we are just supporting google for this guide) and
+a urlProvider giving the redirection url that must match the one specified as authorized redirection at Google Developers Console, in this case `http://me.mydomain.com:8080/login`:
+
+```kotlin
+install(Authentication) {
+    oauth("google-oauth") {
+        client = HttpClient(Apache)
+        providerLookup = { googleOauthProvider }
+        urlProvider = { redirectUrl("/login") }
+    }
+}
+
+private fun ApplicationCall.redirectUrl(path: String): String {
+    val defaultPort = if (request.origin.scheme == "http") 80 else 443
+    val hostPort = request.host()!! + request.port().let { port -> if (port == defaultPort) "" else ":$port" }
+    val protocol = request.origin.scheme
+    return "$protocol://$hostPort$path"
+}
+
+```
+
+Then we have to define the `/login` route that must be authenticated against our authentication provider.
+When no get parameters are passed to that URL, the authentication feature will hook the handler, and will
+redirect to the OAuth Consent Screen from Google, and it will redirect back to our `/login` route with a
+`status` and `code` arguments that will be used by the authentication provider to call back to google to obtain
+an `accessToken` and will attach a `OAuthAccessTokenResponse.OAuth2` principal to our call. And this time,
+our handler will be executed.
+
+We can retrieve that `accessToken` by getting the generated `OAuthAccessTokenResponse.OAuth2` principal and
+`accessToken`. Then we can use the <https://www.googleapis.com/userinfo/v2/me>{:target="_blank"} URL
+with our `accessToken` passed as Authorization Bearer, to get a JSON with the user information.
+You can check the contents of this JSON by using the [Google OAuth playground](https://developers.google.com/oauthplayground){:target="_blank"}.
+
+In this case, once we get the User ID, we are going to store it in a session, and then redirect to another place.
+
+```kotlin
+class MySession(val userId: String)
+
+authenticate("google-oauth") {
+    route("/login") {
+        handle {
+            val principal = call.authentication.principal<OAuthAccessTokenResponse.OAuth2>()
+                ?: error("No principal")
+
+            val json = HttpClient(Apache).get<String>("https://www.googleapis.com/userinfo/v2/me") {
+                header("Authorization", "Bearer ${principal.accessToken}")
+            }
+
+            val data = ObjectMapper().readValue<Map<String, Any?>>(json)
+            val id = data["id"] as String?
+
+            if (id != null) {
+                call.sessions.set(MySession(id))
+            }
+            call.respondRedirect("/")
+        }
+    }
+} 
+```
+
+We have to install the Session feature first. Check the [Full Example](#full-example) for details:
+{: .note }
+
+ID from the user information is a string that looks like a number. Remember that JSON do not define long types,
+and that in cases like Twitter or Google, that have tons and tons of users and entities, that ID could be greater
+than 31 bits for a signed integer or even than 51 bits of precission from a standard Double.<br /> 
+As rule of thumb you should always treat IDs and other number-like values as strings as long as you dont't need
+to do arithmetic with them.
+{: .note }
+
+## Full Example
+{: #full-example }
+
+A simple embedded application would look like this:
+
+```kotlin
+val googleOauthProvider = OAuthServerSettings.OAuth2ServerSettings(
+    name = "google",
+    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+    accessTokenUrl = "https://www.googleapis.com/oauth2/v3/token",
+    requestMethod = HttpMethod.Post,
+
+    clientId = "xxxxxxxxxxx.apps.googleusercontent.com", // @TODO: Remember to change this! 
+    clientSecret = "yyyyyyyyyyy", // @TODO: Remember to change this! 
+    defaultScopes = listOf("profile") // no email, but gives full name, picture, and id
+)
 
 class MySession(val userId: String)
 
@@ -116,7 +210,10 @@ fun main(args: Array<String>) {
     embeddedServer(Netty, port = 8080) {
         install(WebSockets)
         install(Sessions) {
-            cookie<MySession>("oauthSampleSessionId")
+            cookie<MySession>("oauthSampleSessionId") {
+                val secretSignKey = hex("000102030405060708090a0b0c0d0e0f") // @TODO: Remember to change this! 
+                transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
+            }
         }
         install(Authentication) {
             oauth("google-oauth") {
@@ -137,21 +234,21 @@ fun main(args: Array<String>) {
                     handle {
                         val principal = call.authentication.principal<OAuthAccessTokenResponse.OAuth2>()
                             ?: error("No principal")
-
-                        val cc = HttpClient(Apache).get<String>("https://www.googleapis.com/userinfo/v2/me") {
+            
+                        val json = HttpClient(Apache).get<String>("https://www.googleapis.com/userinfo/v2/me") {
                             header("Authorization", "Bearer ${principal.accessToken}")
                         }
-
-                        val ccs = ObjectMapper().readValue<Map<String, Any?>>(cc)
-                        val id = ccs["id"] as String?
-
+            
+                        val data = ObjectMapper().readValue<Map<String, Any?>>(json)
+                        val id = data["id"] as String?
+            
                         if (id != null) {
                             call.sessions.set(MySession(id))
                         }
                         call.respondRedirect("/")
                     }
                 }
-            }
+            } 
         }
     }.start(wait = true)
 }
@@ -166,4 +263,6 @@ private fun ApplicationCall.redirectUrl(path: String): String {
 
 ## Additional resources
 
-* Google oauth playground: <https://developers.google.com/oauthplayground/>{:target="_blank"}
+* Google OAuth playground: <https://developers.google.com/oauthplayground/>{:target="_blank"}
+* List of available google oauth scopes: <https://developers.google.com/identity/protocols/googlescopes>{:target="_blank"} 
+* Example with several oauth providers: <https://github.com/ktorio/ktor-samples/blob/master/feature/auth/src/io/ktor/samples/auth/OAuthLoginApplication.kt>{:target="_blank"} 
