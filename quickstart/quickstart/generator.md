@@ -14,5 +14,5 @@ window.addEventListener('message', function(event) {
         location.hash = event.data.value.replace(/^#/, '');
     }
 });
-document.getElementById('generator_id').innerHTML = '<iframe src="{{ site.start_ktor_io_url }}' + location.hash.replace(/"/g, '\\"') + '" style="border:1px solid #343a40;width:100%;height:500px;"></iframe>';
+document.getElementById('generator_id').innerHTML = '<iframe src="{{ site.ktor_init_tools_url }}' + location.hash.replace(/"/g, '\\"') + '" style="border:1px solid #343a40;width:100%;height:500px;"></iframe>';
 </script>

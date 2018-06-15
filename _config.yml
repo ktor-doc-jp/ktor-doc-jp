@@ -11,8 +11,8 @@ ktor_version: 0.9.2
 ktor_version_eap: 0.9.2
 kotlin_version: 1.2.40
 
-start_ktor_io_url: https://soywiz.github.io/start-ktor-io-proposal/?v=3
-#start_ktor_io_url: http://127.0.0.1:8081/
+ktor_init_tools_url: https://ktor.io/ktor-init-tools/
+#ktor_init_tools_url: http://127.0.0.1:8081/
 
 # if you're using Github, provide the basepath to the branch you've created for reviews, following the sample here. if not, leave this value blank.
 github_editme_path: ktorio/ktorio.github.io/edit/master/
