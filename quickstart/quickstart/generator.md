@@ -7,7 +7,7 @@ category: quickstart
 #  - /quickstart/quickstart/generator.html
 ---
 
-<https://ktor.io/start/>
+<https://ktor.io/start>
 
 <div id="generator_id"></div>
 
