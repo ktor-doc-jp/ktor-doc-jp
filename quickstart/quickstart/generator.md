@@ -2,7 +2,12 @@
 title: Generator
 caption: Generate a Ktor project 
 category: quickstart
+#permalink: /start
+#redirect_from:
+#  - /quickstart/quickstart/generator.html
 ---
+
+<https://ktor.io/start/>
 
 <div id="generator_id"></div>
 

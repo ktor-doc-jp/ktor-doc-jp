@@ -9,15 +9,16 @@ category: quickstart
 In this guide you will learn how to create an API using ktor.
 We are going to create a simple API to store simple text snippets (like a small pastebin-like API).
 
-To achieve this, we are going to use the
-[Routing](/features/routing.html),
-[StatusPages](/features/status-pages.html),
-[Authentication](/features/authentication.html),
-[JWT Authentication](/features/authentication/jwt.html),
-[CORS](/features/cors.html),
-[ContentNegotiation](/features/content-negotiation.html) and
-[Jackson](/features/content-negotiation/jackson.html)
-features.
+To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [JWT Authentication],
+[CORS], [ContentNegotiation] and [Jackson] features.
+
+[Routing]: /features/routing.html
+[StatusPages]: /features/status-pages.html
+[Authentication]: /features/authentication.html
+[JWT Authentication]: /features/authentication/jwt.html
+[CORS]: /features/cors.html
+[ContentNegotiation]: /features/content-negotiation.html
+[Jackson]: /features/content-negotiation/jackson.html
 
 **Table of contents:**
 
