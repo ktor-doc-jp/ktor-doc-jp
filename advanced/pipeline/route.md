@@ -29,3 +29,22 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
     return routeWithTimeout
 }
 ```
+
+### Getting the route being handled
+{: #route-from-call }
+
+You can get the route being handled by casting the `call: ApplicationCall` to `RoutingApplicationCall` that 
+has a `route: Route` property.
+
+### Getting the route path
+{: #route-path }
+
+`Route` overrides the `toString()` to generate a path to the route of the toString, looking something like:
+
+```kotlin
+override fun Route.toString() = when {
+    parent == null -> "/"
+    parent.parent == null -> "/$selector"
+    else -> "$parent/$selector"
+}
+```
