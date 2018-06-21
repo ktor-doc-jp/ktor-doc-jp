@@ -5,6 +5,7 @@ keywords: hocon json config DevelopmentEngine embeddedServer switches cli comman
 category: servers
 permalink: /servers/configuration.html
 priority: 200
+children: /servers/configuration/
 ---
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
