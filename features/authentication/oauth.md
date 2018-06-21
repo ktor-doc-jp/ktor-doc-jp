@@ -78,3 +78,9 @@ sealed class OAuthAccessTokenResponse : Principal {
     ) : OAuthAccessTokenResponse()
 }
 ```
+
+## Guide, example and testing
+
+* [OAuth Guide](/quickstart/guides/oauth.html)
+* [Example configuring several OAuth providers](https://github.com/ktorio/ktor-samples/blob/master/feature/auth/src/io/ktor/samples/auth/OAuthLoginApplication.kt)
+* [Testing OAuth authentication](https://github.com/ktorio/ktor-samples/commit/56119d2879d9300cf51d66ea7114ff815f7db752)
