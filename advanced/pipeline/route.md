@@ -62,3 +62,5 @@ pipeline.environment.monitor.subscribe(Routing.RoutingCallFinished) { call: Rout
     println("Route completed: ${call.route}")
 }
 ```
+
+You can see a full example of this in the [Metrics feature](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-metrics/src/io/ktor/metrics/Metrics.kt).
