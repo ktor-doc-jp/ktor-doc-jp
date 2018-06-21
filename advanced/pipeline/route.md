@@ -48,3 +48,17 @@ override fun Route.toString() = when {
     else -> "$parent/$selector"
 }
 ```
+
+### Hooking before and after routing 
+
+You can globally intercept the routing calls by using the events `Routing.RoutingCallStarted` and `Routing.RoutingCallFinished`:
+
+```kotlin
+pipeline.environment.monitor.subscribe(Routing.RoutingCallStarted) { call: RoutingApplicationCall ->
+    println("Route started: ${call.route}")
+}
+
+pipeline.environment.monitor.subscribe(Routing.RoutingCallFinished) { call: RoutingApplicationCall ->
+    println("Route completed: ${call.route}")
+}
+```
