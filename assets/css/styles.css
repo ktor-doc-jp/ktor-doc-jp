@@ -1908,3 +1908,7 @@ table.compare-table pre.highlight {
     border-radius: 8px;
     margin-bottom: 8px;
 }
+
+.nomnoml {
+    display: none;
+}
