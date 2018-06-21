@@ -259,7 +259,11 @@ private fun ApplicationCall.redirectUrl(path: String): String {
     val protocol = request.origin.scheme
     return "$protocol://$hostPort$path"
 }
-``` 
+```
+
+## Testing
+
+You can [provide a test HttpClient for testing OAuth](https://github.com/ktorio/ktor-samples/commit/56119d2879d9300cf51d66ea7114ff815f7db752).
 
 ## Additional resources
 
