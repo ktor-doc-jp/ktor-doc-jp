@@ -6,6 +6,18 @@ caption: Internal Pipeline Machinery
 children: /advanced/pipeline/
 ---
 
+{% include nomnoml-support.html %}
+
+<div class="nomnoml">
+#direction: right
+#.call: fill=#af8 dashed
+#.fallback: fill=#faa dashed
+[&lt;call&gt;Call]
+[&lt;fallback&gt;Fallback]
+[Infrastructure] then -> [Call]
+[Call] then -> [Fallback]
+</div>
+
 ## Description
 
 The pipeline is a structure containing a sequence of functions (blocks / lambdas) that are called one after another,
