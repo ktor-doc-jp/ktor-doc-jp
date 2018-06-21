@@ -8,16 +8,6 @@ children: /advanced/pipeline/
 
 {% include nomnoml-support.html %}
 
-<div class="nomnoml">
-#direction: right
-#.call: fill=#af8 dashed
-#.fallback: fill=#faa dashed
-[&lt;call&gt;Call]
-[&lt;fallback&gt;Fallback]
-[Infrastructure] then -> [Call]
-[Call] then -> [Fallback]
-</div>
-
 ## Description
 
 The pipeline is a structure containing a sequence of functions (blocks / lambdas) that are called one after another,
@@ -172,9 +162,23 @@ pipeline we merge them all.
 ## Ktor pipelines
 
 ### ApplicationCallPipeline
+{: #ApplicationCallPipeline }
 
 Ktor defines a pipeline without subject, and the `ApplicationCall` as context
 defining three phases `Infrastructure`, `Call` and `Fallback`:
+
+<div class="nomnoml">
+#direction: right
+#.call: fill=#af8 dashed
+#.fallback: fill=#faa dashed
+[&lt;call&gt;Call]
+[&lt;fallback&gt;Fallback]
+[Infrastructure] then -> [Call]
+[Call] then -> [Fallback]
+</div>
+
+The code looks like this:
+
 
 ```
 open class ApplicationCallPipeline : Pipeline<Unit, ApplicationCall>(Infrastructure, Call, Fallback) {
