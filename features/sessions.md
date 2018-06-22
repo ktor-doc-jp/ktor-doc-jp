@@ -443,3 +443,32 @@ class RedisSessionStorage(val redis: Redis, val prefix: String = "session_", val
     }
 }
 ```
+
+### Invalidating Client-side sessions
+{: #invalidating-client-sessions }
+
+Since client-side sessions can't be invalidated directly like server sessions. You can manually mark an expiration
+time for the session by including an expiration timestamp as part of your session payload.
+
+For example:
+
+```kotlin
+data class MyExpirableSession(val name: String, val expiration: Long)
+
+fun Application.main() {
+    routing {
+        get("/user/panel") {
+            val session = call.getMyExpirableSession()
+            call.respondText("Welcome ${session.name}")
+        }
+    }
+}
+
+fun ApplicationCall.getMyExpirableSession(): MyExpirableSession {
+    val session = sessions.get<MyExpirableSession>() ?: error("No session found")
+    if (System.currentTimeMillis() > session.expiration) {
+        error("Session expired")
+    }
+    return session
+}
+```
