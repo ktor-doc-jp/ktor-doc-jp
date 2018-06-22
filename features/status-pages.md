@@ -25,6 +25,11 @@ There are three main configuration options provided to StatusPages:
 
 {% include feature.html %}
 
+**Table of contents:**
+
+* TOC
+{:toc}
+
 ### Exceptions 
 
 The exception configuration can provide simple interception patterns for calls that result in a thrown exception. In the most basic case, a 500 HTTP status code can be configured for any exceptions.
@@ -106,3 +111,45 @@ This will resolve two resources from the classpath.
 2. On a 401, it will return error401.html.
 
 The `statusFile` configuration replaces any `#` character with the value of the status code within the list of configured statuses.
+
+### Redirections using StatusPages
+{: #redirect }
+
+When doing redirections by executing `call.respondRedirect("/moved/here", permanent = true)`, the rest of the callee function is executed.
+So when doing redirections inside guard clauses, you have to return the function.
+
+```kotlin
+routing {
+    get("/") {
+        if (condition) {
+            return@gget call.respondRedirect("/invalid", permanent = false)
+        }
+        call.respondText("Normal response")
+    }
+}
+```
+
+Other frameworks, use exceptions on redirect, so the normal flow is broken and you can execute redirections in guard
+clauses or subfunctions without having to worry about returning in all the subfunction chain. You can use the StatusPages
+feature to simulate this:
+
+```kotlin
+fun Application.module() {
+    install(StatusPages) {
+        exception<HttpRedirectException> { e ->
+            call.respondRedirect(e.location, permanent = e.permanent)
+        }
+    }
+    routing {
+        get("/") {
+            if (condition) {
+                redirect("/invalid", permanent = false)
+            }
+            call.respondText("Normal response")
+        }
+    }
+}
+
+class HttpRedirectException(val location: String, val permanent: Boolean = false) : RuntimeException()
+fun redirect(location: String, permanent: Boolean = false): Nothing = throw HttpRedirectException(location, permanent)
+```

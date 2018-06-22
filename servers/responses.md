@@ -119,6 +119,11 @@ to send `301 Moved Permanently` or `302 Found` redirects, with a `Location` head
 call.respondRedirect("/moved/here", permanent = true)
 ```
 
+Remember that once this function is executed, the rest of the function is still executed, so if you have it in a guard
+clause, you should return the function to avoid continuing with the rest of the handler.
+If you want to make redirections that stop the controlflow by throwing an exception check this [sample from status pages](/features/status-pages.html#redirect).
+{: .note}
+
 ## Sending response content
 
 Sending generic content (compatible with [Content negotiation](#content-negotiation)):
