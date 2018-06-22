@@ -444,7 +444,7 @@ class RedisSessionStorage(val redis: Redis, val prefix: String = "session_", val
 }
 ```
 
-### Invalidating Client-side sessions
+## Invalidating Client-side sessions
 {: #invalidating-client-sessions }
 
 Since client-side sessions can't be invalidated directly like server sessions. You can manually mark an expiration
