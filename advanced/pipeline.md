@@ -177,8 +177,16 @@ defining three phases `Infrastructure`, `Call` and `Fallback` to be executed in 
 [Call] then -> [Fallback]
 </div>
 
-The code looks like this:
+The purpose for intercepting each phase:
+* `Infrastructure`: For generic features that do not complete the call, like the [Authentication] feature
+* `Call`: Features and interceptors that are going to complete the call, like the [Routing] feature
+* `Fallback`: Features that process unhandled calls in a normal way, and resolve them somehow, like the [StatusPages] feature.
 
+[Authentication]: /features/authentication.html
+[Routing]: /features/routing.html
+[StatusPages]: /features/status-pages.html
+
+The code looks like this:
 
 ```
 open class ApplicationCallPipeline : Pipeline<Unit, ApplicationCall>(Infrastructure, Call, Fallback) {
@@ -194,12 +202,6 @@ open class ApplicationCallPipeline : Pipeline<Unit, ApplicationCall>(Infrastruct
 ```
 
 This base pipeline is used by the `Application` and the `Routing` feature.
-
-The idea is that generic features that do not complete the call, like the [Authentication](/features/authentication.html) feature, intercept the `Infrastructure`,
-while things like the [Routing](/features/routing.html) feature that are going to complete the call, goes to the `Call`,
-and Features, like the [StatusPages], that must process unhandled calls and resolve them somehow, intercept the `Fallback` phase.
-
-[StatusPages]: /features/status-pages.html
 
 ### Application
 
