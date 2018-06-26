@@ -24,6 +24,12 @@ and we will try to help you!
 
 > `kay-tor`
 
+## What does CIO mean?
+{: #cio }
+
+CIO stands for Coroutine-based I/O. Usually we call it to an engine that uses Kotlin and Coroutines to implement
+the logic implementing an IETF RFC or another protocol without relying on external JVM libraries.
+
 ## Ktor imports are not being resolved. Imports are in red.
 {: #ktor-artifact }
 
