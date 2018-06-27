@@ -183,7 +183,6 @@ client.post<Unit> {
     body = HelloWorld(hello = "world")
 }
 ```
-{: .compact}
 
 Remember that your classes must be *top-level* to be recognized by `Gson`. \\
 If you try to send a class that is inside a function, the feature will send a *null*.
