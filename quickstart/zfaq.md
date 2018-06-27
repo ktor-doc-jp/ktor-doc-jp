@@ -39,7 +39,7 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 >     compile "io.ktor:ktor-server-netty:$ktor_version"
 > }
 > ```
-> * For gradle, check: <http://ktor.io/quickstart/gradle.html#choose-your-engine-and-configure-it>
+> * For gradle, check: <http://ktor.io/quickstart/gradle.html#engine>
 > * For maven, check: <http://ktor.io/quickstart/maven.html>
 
 ## Does ktor provide a way to catch ipc signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
@@ -106,7 +106,7 @@ Something like this should be sent as part of the response headers: `Server: kto
 > You can click on the headings and some notes, to get an anchored link to the sections.
 > After clicking, you can copy the new url in your browser including the `#` to link to a specific section.
 
-#### My route is not being executed, how can I debug it?
+## My route is not being executed, how can I debug it?
 {: #route-not-executing }
 
 Ktor provides a tracing mechanism for the routing feature to help troubleshooting
