@@ -546,7 +546,6 @@ fun Application.mymodule() {
     }
 }
 ```
-{: .compact}
 
 You can check the [ktor-samples](https://github.com/ktorio/ktor-samples) and [ktor-exercises](https://github.com/ktorio/ktor-exercises) repositories for samples and exercises.
 {: .note }
