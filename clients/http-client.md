@@ -492,7 +492,8 @@ suspend fun parallelRequests() {
 
 ## Examples
 
-*Interchanging JSON: Ktor server / Ktor client*:
+### Interchanging JSON: Ktor server / Ktor client
+{: #example-json }
 
 ```kotlin
 fun main(args: Array<String>) {
