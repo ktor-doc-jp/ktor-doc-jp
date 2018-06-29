@@ -2,6 +2,7 @@
 title: Http Client
 category: clients
 permalink: /clients/http-client.html
+children: /clients/http-client/
 caption: Http Client 
 ---
 
