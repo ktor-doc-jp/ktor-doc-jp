@@ -136,22 +136,23 @@ You have to set the right values for your specific case:
 
 ```groovy
 ktor {
-	deployment {
-		port = 8889
-		port = ${?PORT}
+    deployment {
+        port = 8889
+        port = ${?PORT}
         sslPort = 8890
-	}
-	application {
-		modules = [ com.example.ApplicationKt.module ]
-	}
-	security {
-	    ssl {
+        sslPort = ${?PORT_SSL}
+    }
+    application {
+        modules = [ com.example.ApplicationKt.module ]
+    }
+    security {
+        ssl {
             keyStore = /etc/letsencrypt/live/mydomain.com/keystore.jks
             keyAlias = myalias
             keyStorePassword = mypassword
             privateKeyPassword = mypassword
-	    }
-	}
+        }
+    }
 }
 ```
 
