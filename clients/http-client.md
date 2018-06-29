@@ -26,6 +26,9 @@ The basic usage is *super* simple: you just have to instantiate an `HttpClient` 
 specifying an engine, for example [`Apache`](#apache), [`Jetty`](#jetty)
 or [`CIO`](#cio), and start making requests using one of the many convenience methods available.
 
+Since Ktor 0.9.3, you can omit the engine, and Ktor will choose an engine among the ones that are available
+from the included artifacts using a ServiceLoader. 
+
 First you need to instantiate the client:   
 
 ```kotlin

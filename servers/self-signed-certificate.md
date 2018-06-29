@@ -8,8 +8,7 @@ permalink: /servers/self-signed-certificate.html
 
 Ktor allows you to create and use self-signed certificates for serving HTTPS or HTTP/2 requests.
 
-Right now it is not possible to create self-signed certificates using Java9. Please use Java8 in the meantime.
-{: .note}
+{% include artifact.html kind="function" method="io.ktor.network.tls.certificates.generateCertificate" artifact="io.ktor:ktor-network-tls:$ktor_version" %}
 
 **Table of contents:**
 
@@ -19,7 +18,7 @@ Right now it is not possible to create self-signed certificates using Java9. Ple
 To create a self-signed certificate using Ktor, you have to call the `generateCertificate` function.
 
 ```
-io.ktor.util.generateCertificate(File("mycert.jks"))
+io.ktor.network.tls.certificates.generateCertificate(File("mycert.jks"))
 ```
 
 Since Ktor requires the certificate when it starts, you have to create the certificate before starting the server.

@@ -20,17 +20,17 @@ This functionality is exposed through the `io.ktor:ktor-network:$ktor_version` a
 {: .note.artifact }
 
 In order to create either server or client sockets, you have to use the `aSocket` builder,
-with an optional `ActorSelectorManager`: `aSocket(selector)` or just `aSocket()`.
+with a mandatory `ActorSelectorManager`: `aSocket(selector)`. For example: `aSocket(ActorSelectorManager(ioCoroutineDispatcher))`.
 
 Then use:
 
-* `val socketBuilder = aSocket().tcp()` for a builder using TCP sockets
-* `val socketBuilder = aSocket().udp()` for a builder using UDP sockets
+* `val socketBuilder = aSocket(selector).tcp()` for a builder using TCP sockets
+* `val socketBuilder = aSocket(selector).udp()` for a builder using UDP sockets
 
 This returns a `SocketBuilder` that can be used to:
  
-* `val serverSocket = aSocket().tcp().bind(address)` to listen to an address (for servers)
-* `val clientSocket = aSocket().tcp().connect(address)` to connect to an address (for clients)
+* `val serverSocket = aSocket(selector).tcp().bind(address)` to listen to an address (for servers)
+* `val clientSocket = aSocket(selector).tcp().connect(address)` to connect to an address (for clients)
  
 If you need to control the dispatcher used by the sockets, you can instantiate a selector,
 that uses, for example, a cached thread pool:
@@ -78,7 +78,7 @@ the function that is accepting the sockets from suspending.
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val server = aSocket().tcp().bind(InetSocketAddress("127.0.0.1", 2323))
+        val server = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().bind(InetSocketAddress("127.0.0.1", 2323))
         println("Started echo telnet server at ${server.localAddress}")
         
         while (true) {
@@ -136,7 +136,7 @@ When creating a socket client, you have to `connect` to a specific `SocketAddres
 a `Socket`:
 
 ```kotlin
-val socket = aSocket().tcp().connect(InetSocketAddress("127.0.0.1", 2323))
+val socket = aSocket(selector).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
 ```
 
 *Simple Client Connecting to an Echo Server:*
@@ -144,7 +144,7 @@ val socket = aSocket().tcp().connect(InetSocketAddress("127.0.0.1", 2323))
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val socket = aSocket().tcp().connect(InetSocketAddress("127.0.0.1", 2323))
+        val socket = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
         val input = socket.openReadChannel()
         val output = socket.openWriteChannel(autoFlush = true)
 
@@ -164,7 +164,7 @@ Ktor supports secure sockets. To enable them you will need to include the
 *Connect to a secure socket:*
 ```kotlin
 runBlocking {
-    val socket = aSocket().tcp().connect(InetSocketAddress("google.com", 443)).tls()
+    val socket = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().connect(InetSocketAddress("google.com", 443)).tls()
     val w = socket.openWriteChannel(autoFlush = false)
     w.write("GET / HTTP/1.1\r\n")
     w.write("Host: google.com\r\n")

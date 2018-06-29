@@ -139,6 +139,10 @@ Sending plain text:
 * `call.respondText { "string" }` - Responding a string with a suspend provider
 * `call.respondText(contentType = ..., status = ...) { "string" }` - Responding a string with a suspend provider
 
+Sending byte arrays:
+
+* `call.respondBytes(byteArrayOf(1, 2, 3))` - A ByteArray with a binary body
+
 Sending files:
 
 * `call.respondFile(File("/path/to/file"))` - Sends a file
