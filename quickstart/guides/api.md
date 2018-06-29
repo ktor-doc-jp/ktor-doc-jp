@@ -140,7 +140,7 @@ You can use postman or curl to perform a POST call easily:
 
 Postman:
 
-![](/quickstart/guides/api/postman.png)`{:.rounded-shadow}`
+![](/quickstart/guides/api/postman.png){:.rounded-shadow}
 
 CURL:
 
