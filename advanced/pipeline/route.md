@@ -30,6 +30,15 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
 }
 ```
 
+### Intercepting any Route node
+
+Route class defines an intercept method, that applies to that route node or any other inner route:
+
+```kotlin
+/// Installs an interceptor into this route which will be called when this or a child route is selected for a call
+fun Route.intercept(phase: PipelinePhase, block: PipelineInterceptor<Unit, ApplicationCall>)
+```
+
 ### Getting the route being handled
 {: #route-from-call }
 
@@ -64,3 +73,4 @@ pipeline.environment.monitor.subscribe(Routing.RoutingCallFinished) { call: Rout
 ```
 
 You can see a full example of this in the [Metrics feature](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-metrics/src/io/ktor/metrics/Metrics.kt).
+
