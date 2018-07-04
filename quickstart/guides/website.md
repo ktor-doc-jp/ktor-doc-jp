@@ -161,7 +161,7 @@ serving and watching videos.
 Enabling partial content is straightforward:
 
 ```kotlin
-install(PartialContentPartialContent) {
+install(PartialContent) {
 }
 ```
 
