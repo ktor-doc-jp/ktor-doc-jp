@@ -5,7 +5,25 @@ category: quickstart
 keywords: tls ssl https let's encrypt letsencrypt
 ---
 
+{::options toc_levels="1..2" /}
+{% include nomnoml-support.html %}
+
 ![](/quickstart/guides/ssl/lets-encrypt.svg)
+
+**Table of contents:**
+
+* TOC
+{:toc}
+
+You can buy a certificate and configure Ktor to use it,
+**or** you can use Let's Encrypt to automatically get a **free certificate** to serve `https://` and `wss://` requests
+with Ktor.
+In this page you will discover how to do it, by either configuring Ktor to directly serving the SSL certificate
+for a single domain or by using Docker with nginx to serve different applications in different machines on
+a single machine easily.
+
+## Option1: With Ktor serving SSL directly
+{: #ktor}
 
 ### Configuring an `A` register pointing to the machine
 
@@ -156,4 +174,127 @@ ktor {
 }
 ```
 
-If everything went well, Ktor should be listening at port 8889 in HTTP and listening at port 8890 in HTTPS. 
+If everything went well, Ktor should be listening at port 8889 in HTTP and listening at port 8890 in HTTPS.
+
+## Option2: With Docker and Nginx as reverse proxy
+{: #docker}
+
+When using Docker with multiple domains, you might want to use the [nginx-proxy] image and the [letsencrypt-nginx-proxy-companion]
+image to serve multiple domains/subdomains in a single machine/ip and to automatically provide https, using let’s encrypt.
+
+In this case you create a container with nginx, potentially listening to the port 80 and 443, a internal network
+accessible only between containers so nginx can connect and reverse proxy your websites (including websockets),
+and a nginx companion handling the domain certificates by introspecting the configured docker containers. 
+
+[nginx-proxy]: https://github.com/jwilder/nginx-proxy
+[letsencrypt-nginx-proxy-companion]: https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
+
+### Creating a internal docker network
+
+The first step is to create a bridge network that we will use so nginx can connect to other containers
+to reverse proxy user's http, https, ws and wss requests:
+
+```bash
+docker network create --driver bridge reverse-proxy
+```
+
+### Creating an internal Docker network
+
+Now we have to create a container running Nginx doing the reverse proxy:
+
+```bash
+docker rm -f nginx
+docker run -d -p 80:80 -p 443:443 \
+	--name=nginx \
+	--restart=always \
+	--network=reverse-proxy \
+	-v /home/virtual/nginx/certs:/etc/nginx/certs:ro \
+	-v /home/virtual/nginx/conf.d:/etc/nginx/conf.d \
+	-v /home/virtual/nginx/vhost.d:/etc/nginx/vhost.d \
+	-v /home/virtual/nginx/html:/usr/share/nginx/html \
+	-v /var/run/docker.sock:/tmp/docker.sock:ro \
+	-e NGINX_PROXY_CONTAINER=nginx \
+	--label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true \
+	jwilder/nginx-proxy
+```
+
+* `--restart=always` so the docker daemon restarts the container when the machine is restarted.
+* `--network=reverse-proxy` so nginx is in that network and can connect to other containers in the same network.
+* `-v certs:ro` this volume will be shared with the letsencrypt-companion to access the certificates per domain.
+* `-v conf, vhost` so this configuration is persistent and accessible from outside in the case you have to do some tweaks.
+* `-v /var/run/docker.sock` this allows this image to get notified / introspect about new containers running in the daemon.
+* `-e --label` used by the companion by identify this image as nginx.
+
+You can adjust `/home/virtual/nginx*` paths to the path you prefer.
+
+### Creating a Nginx Let's Encrypt companion container
+
+With the nginx-proxy container, now we can create a companion container,
+that will request and renew certificates:
+
+```bash
+docker rm -f nginx-letsencrypt
+docker run -d \
+    --name nginx-letsencrypt \
+    --restart=always \
+    --network=reverse-proxy \
+    --volumes-from nginx \
+    -v /home/virtual/nginx/certs:/etc/nginx/certs:rw \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
+    jrcs/letsencrypt-nginx-proxy-companion
+```
+
+* `--restart=always` as nginx image, to restart on boot.
+* `--network=reverse-proxy` it need to be on the same network as the nginx proxy container to communicate with it.
+* `--volumes-from nginx` it makes accessible the same volumes as the nginx container so it can write the `.well-known` challenge inside `/usr/share/nginx/html`.
+* `-v certs:rw` it requires write access to write the private key and certificates to be available from nginx.
+* `-v /var/run/docker.sock` requires access to docker events and introspection to determine which certificates to request.
+
+### Creating a service
+
+Now we have nginx and letsencrypt companion configured so they will automatically reverse-proxy your websites and
+request and serve certificates for them based on the environment variables `VIRTUAL_HOST`, `VIRTUAL_PORT` and `LETSENCRYPT_HOST`, `LETSENCRYPT_EMAIL`.
+
+Using docker-compose, you can create a `docker-compose.yml` file (without additional services) that could look like this:
+
+#### `docker-compose.yml`
+
+```yaml
+version: '2'
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    environment:
+      - VIRTUAL_HOST=mydomain.com
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=mydomain.com
+      - LETSENCRYPT_EMAIL=myemail@mydomain.com
+    networks:
+      - reverse-proxy
+    restart: always
+
+networks:
+  backend:
+  reverse-proxy:
+    external:
+      name: reverse-proxyv
+```
+
+#### `Dockerfile`
+
+```yaml
+FROM openjdk:8-jre-alpine
+COPY ./build/libs/my-application.jar /root/my-application.jar
+WORKDIR /root
+CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
+```
+
+You can find more information about [how to deploy a docker and the Dockerfile in the deploy section](/servers/deploy.html#docker).
+
+### Simplified overview
+
+<div class="nomnoml nomnoml-link">/quickstart/guides/ssl/docker.nomnoml.txt</div>

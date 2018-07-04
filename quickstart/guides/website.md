@@ -1,6 +1,6 @@
 ---
 title: Website
-caption: How to create an plain website using ktor
+caption: How to create a plain website using ktor
 category: quickstart
 ---
 

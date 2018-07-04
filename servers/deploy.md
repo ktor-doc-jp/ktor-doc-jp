@@ -283,7 +283,7 @@ using let's encrypt.
 After configuring nginx-proxy and letsencrypt-nginx-proxy-companion, your docker-compose.yml file
 (without additional services) could look like this:
 
-```
+```yaml
 version: '2'
 services:
   web:
