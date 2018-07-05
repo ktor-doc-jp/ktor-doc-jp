@@ -333,6 +333,8 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
+In this same page, you have a [full example using JSON](#example-json).
+
 To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 {: .note.artifact }
 
