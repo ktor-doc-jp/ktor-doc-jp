@@ -20,17 +20,17 @@ In this page, you will learn how to deploy your application to several providers
 
 ## Packing
 
-When deploying, you will normally want to generate a single archive with all your
+When deploying, normally you will want to generate a single archive with all your
 classes, dependencies, and resources packed together: either in a single JAR archive
 (also called Fat JAR) or a WAR file (Web Application Resource).
 
 ### Fat JAR (Standalone)
 {: #fat-jar}
 
-A *fat-jar* (or *uber-jar*) archive allows you to generate a single archive to run your stand-alone
-embedded application directly using java: `java -jar yourapplication.jar`.
+A *fat-jar* (or *uber-jar*) archive allows you to generate a single archive to run your standalone
+embedded application directly using Java: `java -jar yourapplication.jar`.
 
-This is the preferred way of running in a container like [docker](#docker), when deploying to [heroku](#heroku)
+This is the preferred way for running it in a container like [docker](#docker), when deploying to [heroku](#heroku)
 or when being reverse-proxied with [nginx](#nginx). 
 
 #### Gradle
@@ -97,9 +97,9 @@ a fat JAR using netty as an engine:
 
 A WAR archive allows you to easily deploy your application inside your web container / servlet container,
 by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: [Jetty](#jetty) and [Tomcat](#tomcat).
-Also serves when deploying to [google app engine](#google-app-engine).
+It also serves when deploying to [google app engine](#google-app-engine).
 
-To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` that looks like this:
+To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` which looks like this:
 
 `webapp/WEB-INF/web.xml`:
 ```xml
@@ -196,7 +196,7 @@ afterEvaluate {
 This gradle buildscript defines [several tasks](http://akhikhl.github.io/gretty-doc/Gretty-tasks) that
 you can use to run your application.
 
-In the case that you only need to generate a war file, there is a `war` task defined in the war plugin.<br />
+In the case where you only need to generate a war file, there is a `war` task defined in the war plugin.<br />
 Just run `./gradlew war` and it will generate a `/build/libs/projectname.war` file.
 {: .note #generate-war-file }
 
@@ -209,7 +209,7 @@ For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployme
 If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](#heroku)),
 you can use proguard to shrink it. If you are using gradle, it is pretty straightforward to use the
 `proguard-gradle` plugin. You only have to remember to keep: your main module method, the DevelopmentEngine
-class, and the Kotlin reflect classes. You can fine-tune it as required:
+class, and the Kotlin reflect classes. You can then fine-tune it as required:
 
 ```groovy
 buildscript {
@@ -261,7 +261,7 @@ lightweight environment, with its own isolated filesystem, operating system, and
 You usually have to create a `Dockerfile` for monolithic services, and a `docker-compose.yml` 
 when your container needs to interact with other services, like for example a database or a redis. 
 
-First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, that would look like this:
+First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, which looks like this:
 ```
 FROM openjdk:8-jre-alpine
 COPY ./build/libs/my-application.jar /root/my-application.jar
@@ -269,7 +269,7 @@ WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
-For simple deploying to Docker you can check the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
+For deploying to Docker simply you can check out the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
 
 #### Nginx
 {: #nginx}
@@ -277,11 +277,11 @@ For simple deploying to Docker you can check the [docker quickstart](/quickstart
 When using Docker with multiple domains, you might want to use the 
 [nginx-proxy](https://github.com/jwilder/nginx-proxy) image and the 
 [letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) image
-to serve multiple domains/subdomains in a single machine/ip and to automatically provide https,
+to serve multiple domains/subdomains in a single machine/ip and to automatically provide HTTPS,
 using let's encrypt.
 
-After configuring nginx-proxy and letsencrypt-nginx-proxy-companion, your docker-compose.yml file
-(without additional services) could look like this:
+After configuring the nginx-proxy and letsencrypt-nginx-proxy-companion, your docker-compose.yml file
+(without additional services) might look like this:
 
 ```yaml
 version: '2'
@@ -320,7 +320,7 @@ and will contact your server via plain HTTP.
 ### Tomcat
 {: #tomcat}
 
-You have to generate a [war file](#war) and put it in the `webapps` folder of tomcat.
+You have to generate a [war file](#war) and put it in the Tomcat `webapps` folder.
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/tomcat-war>
@@ -329,7 +329,7 @@ For a complete example, check:
 ### Jetty
 {: #jetty}
 
-You have to generate a [war file](#war) and put it in the `webapps` folder of jetty.
+You have to generate a [war file](#war) and put it in the Jetty `webapps` folder.
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
@@ -380,7 +380,7 @@ java.runtime.version=1.8
 
 #### Running locally
 
-And a file called `.env` along the other files with (just required for development).
+And a file called `.env` along with the other files(required for development).
 This will contain environment variables that Heroku will pass to the application.
 For example, for the quickstart:
 
@@ -389,12 +389,12 @@ PORT=8080
 JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
 ```
 
-If your local installation of postgresql has user/password, you have to change the jdbc uri too:
+If your local installation of postgresql has a user/password, you have to change the jdbc url too:
 ```properties
 JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name?user=user&password=password
 ```
 
-You will also need to create that database first:
+You will also first need to create the database:
 
 ```
 > psql -c "CREATE DATABASE java_database_name;"
@@ -402,15 +402,15 @@ You will also need to create that database first:
 CREATE DATABASE
 ```
 
-With those files, you can use gradle or maven to create a [fat-jar](#fat-jar) and adjust the `Procfile`
-pointing to the right file.
+With these files, you can use Gradle or Maven to create a [fat-jar](#fat-jar) and adjust the `Procfile`
+to point to the right file.
 
 After building the jar, in Unix systems you can use `heroku local:start` to start your server.
 
 #### Deploying
 
 You first have to create an app or set the git remote. `heroku create` will create an app
-with a random available name and will set a git remote of the repo.
+with a random available name and it will set a git remote of the repo.
 After calling `heroku create`, you should see something like this:
 
 ```
@@ -474,11 +474,11 @@ heroku open
 
 In this case, it will open: https://demo-demo-12345.herokuapp.com/
 
-Remember that heroku sets an environment variable called `PORT` and you have to bind to it instead of
+Remember that Heroku sets an environment variable called `PORT` which you have to bind to instead of
 a fixed port.<br/>
-When using embeddedServer you will have to use `System.getenv` while when using `application.conf` you will
+When using embeddedServer you will have to use `System.getenv`, while when using `application.conf` you will
 have to set `ktor.deployment.port = ${PORT}`.<br/>
-Check the page about
+Check out the page about
 [using environment variables in the configuration](http://127.0.0.1:4000/servers/configuration.html#environment-variables)
 for more information.
 {: .note}
@@ -486,7 +486,7 @@ for more information.
 ### Google App Engine
 {: #google-app-engine}
 
-You can check a full google appengine sample, here:
+You can check out a full google appengine sample, here:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/google-appengine-standard>
 {: .note.example}
 
@@ -495,7 +495,7 @@ You can check a full google appengine sample, here:
 You first need to install the `gcloud` cli. You can grab it from here:
 <https://cloud.google.com/sdk/docs/> and follow the described steps to install it.
 
-For example, a macOS setup could look like this:
+For example, a macOS setup might look something like this:
 
 ```
 > wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-194.0.0-darwin-x86_64.tar.gz
