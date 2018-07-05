@@ -5,7 +5,7 @@ permalink: /samples/youkube.html
 caption: Example of YouTube-like Application
 ---
 
-Browse source code on GitHub: [ktor-samples/app/youkube](https://github.com/ktorio/ktor-samples/tree/master/app/youkube)
+Browse the source code on GitHub: [ktor-samples/app/youkube](https://github.com/ktorio/ktor-samples/tree/master/app/youkube)
 
 {% include sample.html paths='
     app/youkube/src/YoukubeApplication.kt,
