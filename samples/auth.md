@@ -5,7 +5,7 @@ permalink: /samples/auth.html
 caption: Example of Using Authentication 
 ---
 
-Browse source code on GitHub: [ktor-samples/feature/auth](https://github.com/ktorio/ktor-samples/tree/master/feature/auth)
+Browse the source code on GitHub: [ktor-samples/feature/auth](https://github.com/ktorio/ktor-samples/tree/master/feature/auth)
 
 {% include sample.html paths='
     feature/auth/src/io/ktor/samples/auth/BasicAuthApplication.kt,
