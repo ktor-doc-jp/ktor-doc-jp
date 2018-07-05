@@ -5,7 +5,7 @@ permalink: /samples/httpbin.html
 caption: Showcase of Basic Features
 ---
 
-Browse source code on GitHub: [ktor-samples-httpbin](https://github.com/ktorio/ktor-samples/tree/master/app/httpbin)
+Browse the source code on GitHub: [ktor-samples-httpbin](https://github.com/ktorio/ktor-samples/tree/master/app/httpbin)
 
 {% include sample.html paths = '
     app/httpbin/src/HttpBinApplication.kt,
