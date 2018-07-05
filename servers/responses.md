@@ -107,7 +107,7 @@ routing {
 ```
 
 Pushing reduces the time between the request and the display of the page.
-But beware that sending content beforehand, might send content that is already cached by the client.
+But beware that sending content beforehand might send content that is already cached by the client.
 {: .note.performance }
 
 ## Redirections
@@ -121,7 +121,7 @@ call.respondRedirect("/moved/here", permanent = true)
 
 Remember that once this function is executed, the rest of the function is still executed, so if you have it in a guard
 clause, you should return the function to avoid continuing with the rest of the handler.
-If you want to make redirections that stop the controlflow by throwing an exception check this [sample from status pages](/features/status-pages.html#redirect).
+If you want to make redirections that stop the control flow by throwing an exception check out this [sample from status pages](/features/status-pages.html#redirect).
 {: .note}
 
 ## Sending response content
