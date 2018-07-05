@@ -5,6 +5,6 @@ permalink: /samples/async.html
 caption: Example of Asynchronous Responses
 ---
 
-Browse source code on GitHub: [ktor-samples/feature/async](https://github.com/ktorio/ktor-samples/tree/master/feature/async)
+Browse the source code on GitHub: [ktor-samples/feature/async](https://github.com/ktorio/ktor-samples/tree/master/feature/async)
 
 {% include sample.html paths = 'feature/async/src/AsyncApplication.kt' %}
