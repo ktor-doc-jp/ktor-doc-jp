@@ -9,14 +9,14 @@ children: /servers/configuration/
 ---
 
 Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
-format as external configuration file. In this file you can configure things like the port to listen to,
+format in the external configuration file. In this file, you can configure things like the port to listen to,
 or the [modules](/servers/application.html#modules) to be loaded. This format is similar to JSON,
-but it is optimized to be read and written by humans, and supports additional
+but is optimized to be read and written by humans, and supports additional
 features like environment variable substitution.
-In this case, you configure the server engine to use with the `mainClassName` pointing to a particular `DevelopmentEngine`.
+In this case, you configure the server engine to be used with the `mainClassName` pointing to a particular `DevelopmentEngine`.
 
-Ktor also uses a set of lambdas with a typed DSL (Domain Specific Language) to configure the application,
-and to configure the server engine when using `embeddedServer`.
+Ktor also uses a set of lambdas with a typed DSL (Domain Specific Language) to configure the application
+and server engine when using `embeddedServer`.
 
 **Table of contents:**
 
@@ -26,7 +26,7 @@ and to configure the server engine when using `embeddedServer`.
 ## The HOCON file
 {: #hocon-file}
 
-This is the preferred way for configuring Ktor applications, since it allows you
+This is the preferred way of configuring Ktor applications as it allows you
 to easily change the configuration without recompiling your application.
 
 When Ktor is started using a `DevelopmentEngine`, or by calling the `commandLineEnvironment`,
@@ -68,8 +68,8 @@ ktor.deployment.port = 8080
 ktor.application.modules = [ io.ktor.samples.metrics.MetricsApplicationKt.main ]
 ```
 
-Ktor allows you to configure much more: from additional core configurations,
-to Ktor features and even custom configurations for your applications:
+Ktor allows you to configure much more: from additional core configurations
+to Ktor features, and even custom configurations for your applications:
 
 ```kotlin
 ktor {
@@ -119,7 +119,7 @@ There is a [list of the available core configurations](#available-config) in thi
 You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
 {: .note.tip}
 
-There is an [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you might want to install. 
+There is an [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you may want to install. 
 {: .note.tip}
 
 ## Command Line
@@ -132,7 +132,7 @@ your application module.
 If you start the application from the command line with `-config anotherfile.conf`, it will
 load the config file from the specific local file instead of from the resources.
 
-Using switches, you can, for example, override the binded port defined by executing:
+Using switches, you can, for example, override the bound port defined by executing:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
@@ -146,7 +146,7 @@ and being more explicit, it is easier to understand what happens exactly.
 
 `embeddedServer` includes an optional parameter `configure` that allows you to set the configuration for the
 engine specified in the first parameter.
-Independently to the engine used, you will have some available properties to configure:
+Independent to the engine used, you will have some available properties to configure:
 
 ```kotlin
 embeddedServer(AnyEngine, configure = {
@@ -300,16 +300,16 @@ embeddedServer(Tomcat, configure = {
 ```
 
 Those are the official engines developed for Ktor, but it is also possible to [create
-your own engines](/advanced/engines.html) and to provide custom configurations for them. 
+your own engines](/advanced/engines.html) and provide custom configurations for them. 
 {: .note}
 
 ## Available configuration parameters
 {: #available-config}
 
-There is a list of properties that Ktor understand out of the box and that you can
+There is a list of properties which Ktor understands out of the box and that you can
 pass from the command line or the HOCON file. 
 
-**Switch** refers to command line arguments that you pass to the application, so you can, for example, change the binded port by:
+**Switch** refers to command line arguments that you pass to the application, so you can, for example, change the bound port by:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
@@ -333,8 +333,8 @@ General switches and parameters:
 |-----------------|:---------------------------------------|:----------------------|:------------|
 | `-jar=`         |                                        |                       | Path to JAR file |
 | `-config=`      |                                        |                       | Path to config file (instead of `application.conf` from resources) |
-| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`             | Binded host |
-| `-port=`        | `ktor.deployment.port`                 | `80`                  | Binded port |
+| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`             | Bound host |
+| `-port=`        | `ktor.deployment.port`                 | `80`                  | Bound port |
 | `-watch=`       | `ktor.deployment.watch`                | `[]`                  | Package paths to watch for reloading |
 |                 | `ktor.application.id`                  | `Application`         | Application Identifier used for logging |
 |                 | `ktor.deployment.callGroupSize`        | `parallelism`         | Event group size running application code |
@@ -433,8 +433,8 @@ This will look for a `PORT` environment variable, and if not found an exception 
 Exception in thread "main" com.typesafe.config.ConfigException$UnresolvedSubstitution: application.conf @ file:/path/to/application.conf: 3: Could not resolve substitution to a value: ${PORT}
 ```
 
-In the case you want to provide a default value for a property when the environment doesn't exists, 
-you can set the property with the default value, and then set again with the `${?ENV}` syntax:
+In case you want to provide a default value for a property because the environment doesn't exist, 
+you can set the property with the default value, and then set it again with the `${?ENV}` syntax:
 
 ```groovy
 ktor {
@@ -473,7 +473,7 @@ interface ApplicationConfigValue {
 class ApplicationConfigurationException(message: String) : Exception(message)
 ```
 
-Ktor provides two implementations. One based on a map (`MapApplicationConfig`), and other based in HOCON (`HoconApplicationConfig`).
+Ktor provides two implementations. One based on a map (`MapApplicationConfig`), and other based on HOCON (`HoconApplicationConfig`).
 
-You can create and compose config implementations and set them at `applicationEngineEnvironment`, so it is available to all of the
+You can create and compose config implementations and set them at `applicationEngineEnvironment`, so it is available to all the
 application components.
