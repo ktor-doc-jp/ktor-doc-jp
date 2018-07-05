@@ -5,7 +5,7 @@ permalink: /samples/websockets.html
 caption: Trivial Chat Application with WebSockets
 ---
 
-Browse source code on GitHub: [ktor-samples/app/chat](https://github.com/ktorio/ktor-samples/tree/master/app/chat)
+Browse the source code on GitHub: [ktor-samples/app/chat](https://github.com/ktorio/ktor-samples/tree/master/app/chat)
 
 {% include sample.html paths='
     app/chat/src/ChatApplication.kt,
