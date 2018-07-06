@@ -7,7 +7,7 @@ category: quickstart
 {::options toc_levels="1..2" /}
 
 In this guide you will learn how to create an HTML Website using Ktor.
-We are going to create a simple website with HTML rendered at the backend with users, a loging form,
+We are going to create a simple website with HTML rendered at the back-end with users, a login form,
 and keeping a persistent session.
 
 To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [Sessions], [StaticContent],
@@ -37,7 +37,7 @@ The first step is to set up a project. You can follow the [Quick Start](/quickst
 ## Simple routing
 
 First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
-to include any additional artifact.
+to include any additional artifacts.
 
 This feature is installed automatically when using the `routing { }` block.
 
@@ -60,7 +60,7 @@ There is a Ktor feature supporting it.
 
 For now, we are going to store the templates embedded as part of the resources in a `templates` folder.
 
-Create a file called `resources/templates/index.ftl` and put the following content to create a simple HTML list:
+Create a file called `resources/templates/index.ftl` and put in the following content to create a simple HTML list:
 
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
@@ -78,7 +78,7 @@ Create a file called `resources/templates/index.ftl` and put the following conte
 IntelliJ IDEA Ultimate has FreeMarker support with autocompletion and variable hinting.
 {:.note}
 
-Now, let's install the FreeMarker feature and let's create a route serving this template and passing a set of values to it:
+Now, let's install the FreeMarker feature and then create a route serving this template and passing a set of values to it:
 
 ```kotlin
 data class IndexData(val items: List<Int>)
@@ -106,11 +106,11 @@ Nice!
 
 In addition to templates, you will want to serve static content.
 Static content will serve faster, and is compatible with other features like Partial Content that allows
-to resume downloads or partially download files.
+you to resume downloads or partially download files.
 
 For now, we are going to serve a simple `styles.css` file to apply styles to our simple page.
 
-Serving static files doesn't require installing any feature, but it is a plain Route handler.
+Serving static files doesn't require installing any features, but it is a plain Route handler.
 To serve static files at the `/static` url, from `/resources/static`, you would write the following code:
 
 ```kotlin
@@ -130,7 +130,7 @@ body {
 }
 ```
 
-In addition to that, we will have to update our template to include the `style.css` file:
+In addition to this, we will have to update our template to include the `style.css` file:
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
 <html>
@@ -155,7 +155,7 @@ Static files are not only text files! Try to add an image (what about a fancy an
 ## Enabling partial content: large files and videos
 
 Though not really needed for this specific case, if you enable partial content support, people will be able
-to resume larger static files on connections with frequent problems, or allowing seeking support when
+to resume larger static files on connections with frequent problems, or allow seeking support when
 serving and watching videos.
 
 Enabling partial content is straightforward:
@@ -211,13 +211,13 @@ route("/login") {
 ```
 
 As we said, we are accepting `username` with the same `password`, but we are not accepting null values.
-In the case the login is valid, we respond with a single OK for now, while we reuse the template if the login fails
-to display the same form with an error.
+If the login is valid, we respond with a single OK for now, while we reuse the template if the login fails
+to display the same form but with an error.
 
 ## Redirections
 
-In some cases, like route refactoring or forms, we will want to perform redirections (either temporal or permanent).
-In this case we want to temporally redirect to the homepage upon success login, instead of replying with a plain text.
+In some cases, like route refactoring or forms, we will want to perform redirections (either temporary or permanent).
+In this case, we want to temporarily redirect to the homepage upon successful login, instead of replying with plain text.
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -263,7 +263,7 @@ route("/login") {
 ## Sessions
 
 To prevent having to authenticate all the pages, we are going to store the user in a session, and that session will
-be propagated among all pages using a session cookie.
+be propagated to all the pages using a session cookie.
 
 ```kotlin
 data class MySession(val username: String)
@@ -298,9 +298,9 @@ fun Application.module() {
 
 ## Using HTML DSL instead of FreeMarker
 
-You can choose to generate HTML directly from code instead of using a Template Engine.
+You can choose to generate HTML directly from the code instead of using a Template Engine.
 For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact.
-This artifact exposes an extension to respond with HTML blocks:
+This artifact provides an extension to respond with HTML blocks:
 
 ```kotlin
 get("/") { 
@@ -320,10 +320,10 @@ get("/") {
 }
 ```
 
-The main benefits of HTML DSL is that you have fully statically typed access to variables and it is thighly integrated
+The main benefits of an HTML DSL is that you have full statically typed access to variables and it is thoroughly integrated
 with the code base.
 
-The counterpart of all this is that you have to recompile to change the HTML, and you can't search complete HTML blocks.
+The downside of all this is that you have to recompile to change the HTML, and you can't search complete HTML blocks.
 But it is lightning fast, and you can use the [autoreload feature](https://ktor.io/servers/autoreload.html) to recompile
 on change and reload the relevant JVM classes.
 
@@ -331,8 +331,8 @@ on change and reload the relevant JVM classes.
 
 ### Exercise 1
 
-Make a register page and store the user/password datasource inmemory in a hashmap.
+Make a registeration page and store the user/password datasource in memory in a hashmap.
 
 ### Exercise 2
 
-Use a database for store the users.
+Use a database to store the users.
