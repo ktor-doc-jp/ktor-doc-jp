@@ -38,11 +38,11 @@ Ktor has a [start.ktor.io](https://soywiz.github.io/start-ktor-io-proposal/) web
 
 ## Gradle Setup
 
-This section assumes you have some basic knowledge about gradle. If you have never used gradle,
+This section assumes you have some basic knowledge of Gradle. If you have never used Gradle,
 gradle.org provides [several guides](https://guides.gradle.org/building-java-applications/) to help you get started.
 {: .note}
 
-You can set-up a simple Ktor application using gradle like this:
+You can set-up a simple Ktor application using Gradle like this:
 
 ![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
 
@@ -90,21 +90,21 @@ dependencies {
 ```
 {: .compact}
 
-Since Ktor is not 1.0 yet, we have custom maven repositories for distributing our early preview artifacts.
-You have to set up a couple of repositories as shown below, so your tools can find ktor artifacts and dependencies.
+Since Ktor is not yet 1.0, we have custom Maven repositories for distributing our early preview artifacts.
+You have to set up a couple of repositories as shown below, so your tools can find Ktor artifacts and dependencies.
 
 Of course, don't forget to include the actual artifact! For our quickstart, we are using the `ktor-server-netty` artifact.
 That includes Ktor's core, netty, and the ktor-netty connector as transitive dependencies.
 You can, of course, include any additional dependencies that you need.
 
-Since ktor is designed to be modular, you will require additional artifacts and potentially other repositories
-for specific features. You can find the required artifacts (and repositories when required) for each feature in the
+Since Ktor is designed to be modular, you will require additional artifacts and potentially other repositories
+for specific features. You can find the required artifacts (and repositories where required) for each feature in the
 specific feature documentation.
 {:.note}
 
 ## Hello World
 
-A simple hello world in Ktor would look like this:
+A simple hello world in Ktor looks like this:
 
 ![Ktor Hello World](/quickstart/1/ktor_hello_world_main.png)
 
@@ -141,8 +141,8 @@ fun main(args: Array<String>) {
 
 ## Accessing your application
 
-Since you have a main method, you can execute it with your IDE. That will open an HTTP server,
-listening on [http://127.0.0.1:8080](http://127.0.0.1:8080/) You can try opening it with your favorite web browser.
+Since you have a main method, you can execute it with your IDE. That will open a HTTP server,
+listening on [http://127.0.0.1:8080](http://127.0.0.1:8080/), You can try opening it with your favorite web browser.
 
 If that doesn't work, maybe you are using that port already. You can try changing the
 port 8080 (in line 10) and adjust it as needed.
@@ -153,8 +153,8 @@ port 8080 (in line 10) and adjust it as needed.
 At this point you should have a very simple Web Back-end running, so you can make changes,
 and see the results in your browser.
 
-Since you have configured a gradle project with the application plugin and the `mainClassName`,
-you can also run it from a terminal using `./gradlew run` on Linux/Mac, or `gradlew run` on a windows machine.
+Since you have configured a Gradle project with the application plugin and the `mainClassName`,
+you can also run it from a terminal using `./gradlew run` on Linux/Mac, or `gradlew run` on a Windows machine.
 {:.note}
 
 {::comment}
