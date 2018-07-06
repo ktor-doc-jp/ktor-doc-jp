@@ -145,6 +145,17 @@ application.install(Sessions) {
 } 
 ```
 
+You can configure the cookie by providing an additional block. There is a cookie property allowing
+to configure it, for example by adding a [SameSite extension](https://caniuse.com/#search=samesite):
+
+```kotlin
+application.install(Sessions) {
+    cookie<MySession>("SESSION") {
+        cookie.extensions["SameSite"] = "lax"
+    }
+} 
+```
+
 #### Headers
 
 ```kotlin
