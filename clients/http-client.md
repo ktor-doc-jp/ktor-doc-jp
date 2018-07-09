@@ -495,6 +495,25 @@ suspend fun parallelRequests() {
 }
 ```
 
+## Uploading multipart/form-data
+{: #multipart-form-data }
+
+Right now, Ktor HttpClient doesn't include functionality to do this directly, but you can do something like this:
+
+```kotlin
+val result = client.post<HttpResponse>("http://127.0.0.1:$port/handler") {
+    body = MultiPartContent.build {
+        add("user", "myuser")
+        add("password", "password")
+        add("file", byteArrayOf(1, 2, 3, 4), filename = "binary.bin")
+    }
+}  
+```
+
+By including this small boilerplate to your code:
+
+<https://github.com/ktorio/ktor-samples/blob/183dd65e39565d6d09682a9b273937013d2124cc/other/client-multipart/src/MultipartApp.kt#L57>
+
 ## Examples
 
 ### Interchanging JSON: Ktor server / Ktor client
