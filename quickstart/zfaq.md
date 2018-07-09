@@ -125,6 +125,12 @@ route.addPhase(PhaseDefinedInAncestor)
 route.insertPhaseAfter(PhaseDefinedInAncestor, MyNodePhase)
 ```
 
+## I get a `io.ktor.server.engine.BaseApplicationResponse$ResponseAlreadySentException: Response has already been sent`
+{: #response-already-sent }
+
+This means that you, or a feature or interceptor, have already called `call.respond*` functions and you are calling it
+again. 
+
 ## How can I subscribe to ktor events?
 {: #ktor-events }
 
