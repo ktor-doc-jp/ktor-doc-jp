@@ -124,6 +124,8 @@ data class PostSnippet(val snippet: PostSnippet.Text) {
     data class Text(val text: String)
 }
 
+// ...
+
 routing {
     get("/snippets") {
         call.respond(mapOf("snippets" to synchronized(snippets) { snippets.toList() }))
@@ -136,13 +138,51 @@ routing {
 }
 ```
 
-You can use postman or curl to perform a POST call easily:
+Now it is time to actually try our backend.
 
-Postman:
+If you have IntelliJ Ultimate, you can use its built-in powerful HTTP Request client,
+if not, you can also use postman or curl:
 
-![](/quickstart/guides/api/postman.png){:.rounded-shadow}
+### IntelliJ Ultimate:
+{: #first-request-intellij }
 
-CURL:
+IntelliJ Ultimate, along PhpStorm and other IDEs from JetBrains include a
+very nice [Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}.
+
+First you have to create a HTTP Request file (either `api` or `http` extensions)
+![](/quickstart/guides/api/IU-http-new-file.png)
+
+Then you have to type the method, url, headers and payload like this:
+
+![](/quickstart/guides/api/IU-http-request.png)
+
+```
+POST http://127.0.0.1:8080/snippets
+Content-Type: application/json
+
+{"snippet": {"text" : "mysnippet"}}
+```
+
+And then in the play gutter icon from the URL, you can perform the call, and get the response:
+
+![](/quickstart/guides/api/IU-http-response.png)
+
+And that's it!
+
+This allows you to define files (plain or scratches) that include definition for several HTTP requests,
+allowing to include headers, provide a payload inline, or from files, use environment variables defined in a JSON file,
+process the response using JavaScript to perform assertions, or to store some environment variables like
+authentication credentials so they are available to other requests. It supports autocompletion, templates, and
+automatic language injection based on Content-Type, including JSON, XML, etc..
+{: .note}
+
+In addition to easily test your backends inside your editor, it also helps your to document your APIs
+by including a file with the endpoints on it.
+And allows you fetch and locally store responses and visually compare them.
+{: .note}
+
+### CURL:
+{: #first-request-curl }
 
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -163,6 +203,8 @@ curl \
 ```
 
 </td></tr></tbody></table>
+
+---
 
 Let's do the GET request again:
 
@@ -249,10 +291,10 @@ open class SimpleJWT(val secret: String) {
 }
 
 fun Application.module() {
-    val jwt = SimpleJWT("my-super-secret-for-jwt")
+    val simpleJwt = SimpleJWT("my-super-secret-for-jwt")
     install(Authentication) {
         jwt {
-            verifier(jwt.verifier)
+            verifier(simpleJwt.verifier)
             validate {
                 UserIdPrincipal(it.payload.getClaim("name").asString())
             }
@@ -272,6 +314,8 @@ val users = Collections.synchronizedMap(
         .associateBy { it.name }
         .toMutableMap()
 )
+class LoginRegister(val user: String, val password: String)
+
 ```
 
 With all this, we can already create a route for logging or registering users:
@@ -282,12 +326,45 @@ routing {
         val post = call.receive<LoginRegister>()
         val user = users.getOrPut(post.user) { User(post.user, post.password) }
         if (user.password != post.password) error("Invalid credentials")
-        call.respond(mapOf("token" to jwt.sign(user.name)))
+        call.respond(mapOf("token" to simpleJwt.sign(user.name)))
     }
 }
 ```
 
 With all this, we can already try to obtain a JWT token for our user:
+
+{% comment %}
+### IntelliJ
+{% endcomment %}
+
+Using the Editor-Based HTTP client for IntelliJ Ultimate,
+you can make the POST request, and check that the content is valid,
+and store the token in an environment variable:
+
+![](/quickstart/guides/api/IU-http-login-register-request.png)
+
+![](/quickstart/guides/api/IU-http-login-register-response.png)
+
+Now you can make a request using the environment variable `{% raw %}{{auth_token}}{% endraw %}`:
+
+![](/quickstart/guides/api/IU-http-snippets-env-auth_token-request.png)
+
+![](/quickstart/guides/api/IU-http-snippets-env-auth_token-response.png)
+
+If you want to easily test different endpoints in addition to localhost,
+you can create a `http-client.env.json` file and put a map with environments
+and variables like this:
+
+![](/quickstart/guides/api/IU-env/http-client.env.json.png)
+
+After this, you can start using the user-defined `{% raw %}{{host}}{% endraw %}` env variable:
+![](/quickstart/guides/api/IU-env/use_host_env.png)
+
+When trying to run a request, you will be able to choose the environment to use:
+![](/quickstart/guides/api/IU-env/select_env_for_running.png)
+
+{% comment %}
+### Curl
 
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -332,6 +409,8 @@ curl -v \
 
 </td></tr></tbody></table>
 
+{% endcomment %}
+
 ## Associating user to snippets
 
 Since we are posting snippets with an authenticated route, we have access to the generated `Principal` that includes
@@ -370,6 +449,11 @@ routing {
 
 Let's try this:
 
+![](/quickstart/guides/api/IU-final/final-request.png)
+
+![](/quickstart/guides/api/IU-final/final-response.png)
+
+{% comment %}
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
 ```bash
@@ -396,6 +480,9 @@ curl -v \
 ```
 
 </td></tr></tbody></table>
+{% endcomment %}
+
+
 
 Awesome!
 
@@ -433,12 +520,14 @@ routing {
         val post = call.receive<LoginRegister>()
         val user = users.getOrPut(post.user) { User(post.user, post.password) }
         if (user.password != post.password) throw InvalidCredentialsException("Invalid credentials")
-        call.respond(mapOf("token" to jwt.sign(user.name)))
+        call.respond(mapOf("token" to simpleJwt.sign(user.name)))
     }
 }
 ```
 
 Let's try this:
+
+{% comment %}
 
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -466,6 +555,13 @@ curl -v \
 
 </td></tr></tbody></table>
 
+{% endcomment %}
+
+![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-request.png)
+
+![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-response.png)
+
+
 Things are getting better!
 
 ## CORS
@@ -491,6 +587,170 @@ fun Application.module() {
 ```
 
 Now our API is accessible from any host :)
+
+## Full Source
+
+### `application.kt`
+
+```kotlin
+package com.example
+
+import com.auth0.jwt.*
+import com.auth0.jwt.algorithms.*
+import com.fasterxml.jackson.databind.*
+import io.ktor.application.*
+import io.ktor.auth.*
+import io.ktor.auth.jwt.*
+import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.jackson.*
+import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import java.util.*
+
+fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.main(args)
+
+fun Application.module() {
+    val simpleJwt = SimpleJWT("my-super-secret-for-jwt")
+    install(CORS) {
+        method(HttpMethod.Options)
+        method(HttpMethod.Get)
+        method(HttpMethod.Post)
+        method(HttpMethod.Put)
+        method(HttpMethod.Delete)
+        method(HttpMethod.Patch)
+        header(HttpHeaders.Authorization)
+        allowCredentials = true
+        anyHost()
+    }
+    install(StatusPages) {
+        exception<InvalidCredentialsException> { exception ->
+            call.respond(HttpStatusCode.Unauthorized, mapOf("OK" to false, "error" to (exception.message ?: "")))
+        }
+    }
+    install(Authentication) {
+        jwt {
+            verifier(simpleJwt.verifier)
+            validate {
+                UserIdPrincipal(it.payload.getClaim("name").asString())
+            }
+        }
+    }
+    install(ContentNegotiation) {
+        jackson {
+            enable(SerializationFeature.INDENT_OUTPUT) // Pretty Prints the JSON
+        }
+    }
+    routing {
+        post("/login-register") {
+            val post = call.receive<LoginRegister>()
+            val user = users.getOrPut(post.user) { User(post.user, post.password) }
+            if (user.password != post.password) throw InvalidCredentialsException("Invalid credentials")
+            call.respond(mapOf("token" to simpleJwt.sign(user.name)))
+        }
+        route("/snippets") {
+            get {
+                call.respond(mapOf("snippets" to synchronized(snippets) { snippets.toList() }))
+            }
+            authenticate {
+                post {
+                    val post = call.receive<PostSnippet>()
+                    val principal = call.principal<UserIdPrincipal>() ?: error("No principal")
+                    snippets += Snippet(principal.name, post.snippet.text)
+                    call.respond(mapOf("OK" to true))
+                }
+            }
+        }
+    }
+}
+
+data class PostSnippet(val snippet: PostSnippet.Text) {
+    data class Text(val text: String)
+}
+
+data class Snippet(val user: String, val text: String)
+
+val snippets = Collections.synchronizedList(mutableListOf(
+    Snippet(user = "test", text = "hello"),
+    Snippet(user = "test", text = "world")
+))
+
+open class SimpleJWT(val secret: String) {
+    private val algorithm = Algorithm.HMAC256(secret)
+    val verifier = JWT.require(algorithm).build()
+    fun sign(name: String): String = JWT.create().withClaim("name", name).sign(algorithm)
+}
+
+class User(val name: String, val password: String)
+
+val users = Collections.synchronizedMap(
+    listOf(User("test", "test"))
+        .associateBy { it.name }
+        .toMutableMap()
+)
+
+class InvalidCredentialsException(message: String) : RuntimeException(message)
+
+class LoginRegister(val user: String, val password: String)
+```
+{: .compact}
+
+### `my-api.http`
+
+```
+{% raw %}
+# Get all the snippets
+GET {{host}}/snippets
+
+###
+
+# Register a new user
+POST {{host}}/login-register
+Content-Type: application/json
+
+{"user" : "test", "password" : "test"}
+
+> {%
+client.assert(typeof response.body.token !== "undefined", "No token returned");
+client.global.set("auth_token", response.body.token);
+%}
+
+###
+
+# Put a new snippet (requires registering)
+POST {{host}}/snippets
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{"snippet" : {"text": "hello-world-jwt"}}
+
+###
+
+# Try a bad login-register
+POST http://127.0.0.1:8080/login-register
+Content-Type: application/json
+
+{"user" : "test", "password" : "invalid-password"}
+
+###
+{% endraw %}
+```
+{: .compact}
+
+### `http-client.env.json`
+
+```json
+{
+  "localhost": {
+    "host": "http://127.0.0.1:8080"
+  },
+  "prod": {
+    "host": "https://my.domain.com"
+  }
+}
+```
+{: .compact}
 
 ## Exercises
 
