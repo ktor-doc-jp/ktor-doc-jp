@@ -198,7 +198,7 @@ to reverse proxy a user's HTTP, HTTPS, WS, and WSS requests:
 docker network create --driver bridge reverse-proxy
 ```
 
-### Creating an internal Docker network
+### Creating an Nginx container
 
 Now we have to create a container running NGINX doing the reverse proxy:
 
@@ -227,7 +227,7 @@ docker run -d -p 80:80 -p 443:443 \
 
 You can adjust `/home/virtual/nginx*` paths to the path you prefer.
 
-### Creating a NGINX Let's Encrypt companion container
+### Creating a Nginx Let's Encrypt companion container
 
 With the nginx-proxy container, now we can create a companion container,
 that will request and renew certificates:
