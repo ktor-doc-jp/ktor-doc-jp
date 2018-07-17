@@ -284,6 +284,7 @@ fun Application.module() {
 
 Inside our pages, we can try to get the session and produce different results:
 
+```kotlin
 fun Application.module() {
     // ...
     get("/") {
