@@ -45,11 +45,11 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
-apply plugin: 'com.github.johnrengelman.plugin-shadow'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
