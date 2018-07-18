@@ -135,3 +135,11 @@ again.
 {: #ktor-events }
 
 There is a page [explaining the Ktor's application-level event system](/advanced/events.html). 
+
+## I get a `Exception in thread "main" com.typesafe.config.ConfigException$Missing: No configuration setting found for key 'ktor'` exception
+{: #cannot-find-application-conf }
+
+This means that Ktor was not able to find the `application.conf` file. Re-check that it is in the `resources` folder,
+and that the resources folder is marked as such.
+You can consider to set-up a project using the [project generator](/quickstart/generator.html) or the [IntelliJ plugin](/quickstart/intellij-idea/plugin.html)
+to have a working project as base.
