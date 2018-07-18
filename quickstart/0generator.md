@@ -25,5 +25,5 @@ window.addEventListener('message', function(event) {
         history.pushState({}, "", window.location.pathname + "#" + event.data.value.replace(/^#/, ''));
     }
 });
-document.getElementById('generator_id').innerHTML = '<iframe id="iframe_generator" src="{{ site.ktor_init_tools_url }}' + location.hash.replace(/"/g, '\\"') + '" style="border:1px solid #343a40;width:100%;height:500px;"></iframe>';
+document.getElementById('generator_id').innerHTML = '<iframe id="iframe_generator" src="{{ site.ktor_init_tools_url }}' + location.hash.replace(/"/g, '\\"') + '" style="border:1px solid #343a40;width:100%;height:574px;"></iframe>';
 </script>
