@@ -112,17 +112,17 @@ you will just have to update the `@Location` path, which is really convenient.
 ## Subroutes with parameters
 {: #subroutes }
 
-The Location feature also exposes a `location` method to define typed subroutes:
+The Location feature also exposes a ~`location`~ method to define typed subroutes, but as for 0.9.3 you shouldn't use it.
+
+Instead, you have to create classes referencing to another class annotated with `@Location` like this, and register them normally:
 
 ```kotlin
 routing {
-    location<Type> { // /type/{name}
-        get<TypeEdit> { typeEdit -> // /edit
-            // ...
-        }
-        get<TypeList> { typeList -> // /list/{page}
-            // ...
-        }
+    get<Type.Edit> { typeEdit -> // /type/{name}/edit
+        // ...
+    }
+    get<Type.List> { typeList -> // /type/{name}/list/{page}
+        // ...
     }
 }
 ```
@@ -131,24 +131,8 @@ To obtain parameters defined in the superior locations, you just have to include
 those property names in your classes for the internal routes. For example:
 
 ```kotlin
-@Location("/type/{name}") data class Type(val name: String)
-// In these classes we have to include the `name` property matching the parent.
-@Location("/edit") data class TypeEdit(val name: String)
-@Location("/list/{page}") data class TypeList(val name: String, val page: Int)
-```
-
-You can also express the same without sublocations, like this:
-
-```kotlin
-@Location("/type/{name}/edit") data class TypeEdit(val name: String)
-@Location("/type/{name}/list/{page}") data class TypeList(val name: String, val page: Int)
-
-routing {
-    get<TypeEdit> { typeEdit -> // /type/{name}/edit
-        // ...
-    }
-    get<TypeList> { typeList -> // /type/{name}/list/{page}
-        // ...
-    }
+@Location("/type/{name}") data class Type(val name: String) {
+    @Location("/edit") data class TypeEdit(val type: Type)
+    @Location("/list/{page}") data class TypeList(val type: Type, val page: Int)
 }
 ```
