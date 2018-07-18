@@ -296,6 +296,7 @@ fun Application.module() {
         }
     }
 }
+```
 
 ## Using HTML DSL instead of FreeMarker
 
