@@ -143,3 +143,24 @@ This means that Ktor was not able to find the `application.conf` file. Re-check 
 and that the resources folder is marked as such.
 You can consider to set-up a project using the [project generator](/quickstart/generator.html) or the [IntelliJ plugin](/quickstart/intellij-idea/plugin.html)
 to have a working project as base.
+
+## Can I use ktor on Android?
+{: #android-support }
+
+Ktor 0.9.3 and lower is know to work on Android 7 or greater (API 24). It will fail in lower versions like Android 5.
+
+In unsupported versions it would fail with an exception similar to:
+
+```
+E/AndroidRuntime: FATAL EXCEPTION: main Process: com.mypackage.example, PID: 4028 java.lang.NoClassDefFoundError: 
+io.ktor.application.ApplicationEvents$subscribe$1 at io.ktor.application.ApplicationEvents.subscribe(ApplicationEvents.kt:18) at 
+io.ktor.server.engine.BaseApplicationEngine.<init>(BaseApplicationEngine.kt:29) at 
+io.ktor.server.engine.BaseApplicationEngine.<init>(BaseApplicationEngine.kt:15) at 
+io.ktor.server.netty.NettyApplicationEngine.<init>(NettyApplicationEngine.kt:17) at io.ktor.server.netty.Netty.create(Embedded.kt:10) at 
+io.ktor.server.netty.Netty.create(Embedded.kt:8) at io.ktor.server.engine.EmbeddedServerKt.embeddedServer(EmbeddedServer.kt:50) at 
+io.ktor.server.engine.EmbeddedServerKt.embeddedServer(EmbeddedServer.kt:40) at 
+io.ktor.server.engine.EmbeddedServerKt.embeddedServer$default(EmbeddedServer.kt:27)
+```
+
+For more informatio, check [Issue #495](https://github.com/ktorio/ktor/issues/495) and [StackOverflow 
+question](https://stackoverflow.com/questions/49945584/attempting-to-run-an-embedded-ktor-http-server-on-android)
