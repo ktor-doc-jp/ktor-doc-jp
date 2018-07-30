@@ -1,5 +1,5 @@
 ---
-title: REST API
+title: HTTP API
 caption: How to create an API using ktor
 category: quickstart
 ---
@@ -54,7 +54,7 @@ fun Application.module() {
 
 ## Serving JSON content
 
-A REST API usually responds with JSON. You can use the *Content Negotiation* feature with *Jackson* for this:
+A HTTP API usually responds with JSON. You can use the *Content Negotiation* feature with *Jackson* for this:
 
 ```kotlin
 fun Application.module() {
@@ -115,7 +115,7 @@ Would reply with:
 
 ## Handling other HTTP methods
 
-REST APIs use most of the HTTP methods/verbs (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) to perform operations.
+HTTP APIs use most of the HTTP methods/verbs (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) to perform operations.
 Let's create a route to add new snippets. For this, we will need to read the JSON body of the POST request.
 For this we will use `call.receive<Type>()`:
 
@@ -483,12 +483,11 @@ curl -v \
 {% endcomment %}
 
 
-
 Awesome!
 
 ## StatusPages
 
-Now let's refine things a bit. A REST API should use Http Status codes to provide semantic information about errors.
+Now let's refine things a bit. A HTTP API should use Http Status codes to provide semantic information about errors.
 Right now, when an exception is thrown (for example when trying to get a JWT token from an user that already exists,
 but with a wrong password), a 500 server error is returned. We can do it better, and the StatusPages features
 will allow you to do this by capturing specific exceptions and generating the result.
