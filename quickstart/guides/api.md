@@ -140,13 +140,13 @@ routing {
 
 Now it is time to actually try our backend.
 
-If you have IntelliJ Ultimate, you can use its built-in powerful HTTP Request client,
+If you have IntelliJ IDEA Ultimate, you can use its built-in powerful HTTP Request client,
 if not, you can also use postman or curl:
 
-### IntelliJ Ultimate:
+### IntelliJ IDEA Ultimate:
 {: #first-request-intellij }
 
-IntelliJ Ultimate, along PhpStorm and other IDEs from JetBrains include a
+IntelliJ IDEA Ultimate, along PhpStorm and other IDEs from JetBrains include a
 very nice [Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}.
 
 First you have to create a HTTP Request file (either `api` or `http` extensions)
@@ -337,7 +337,7 @@ With all this, we can already try to obtain a JWT token for our user:
 ### IntelliJ
 {% endcomment %}
 
-Using the Editor-Based HTTP client for IntelliJ Ultimate,
+Using the Editor-Based HTTP client for IntelliJ IDEA Ultimate,
 you can make the POST request, and check that the content is valid,
 and store the token in an environment variable:
 
