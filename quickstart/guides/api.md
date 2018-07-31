@@ -20,6 +20,12 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 [ContentNegotiation]: /features/content-negotiation.html
 [Jackson]: /features/content-negotiation/jackson.html
 
+While many frameworks advocate how to create REST API's the majority aren't actually talking about REST APIs but HTTP APIs.
+Ktor, much like many other frameworks can be used to create systems that comply with REST constraints. However,
+this tutorial is not talking about REST but HTTP APIs, i.e. endpoints using HTTP verbs that may or may not return JSON, XML or any other format.
+If you want to learn more about RESTful systems, you can start reading <https://en.wikipedia.org/wiki/Representational_state_transfer>{:target="_blank"}.
+{: .note }
+
 **Table of contents:**
 
 * TOC
