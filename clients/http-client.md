@@ -253,6 +253,25 @@ You can also get the additional response information such as its status, headers
 Similar to the server, Ktor supports features on the client. And it has the same design:
 there is a pipeline for client HTTP requests, and there are interceptors and installable features.
 
+### HttpRedirect
+{: #HttpRedirect }
+
+By default, Ktor HTTP client doesn't follow redirections (except for Apache and configuring it), this feature
+allows to follow `Location` redirects in a way that works with any HTTP engine. Its usage is pretty straightforward
+and the only configurable property is the `maxJumps` (20 by default) that limits how many redirects are tried
+before giving up (to prevent infinite redirects):
+
+```kotlin
+val client = HttpClient(HttpClientEngine) {
+    install(HttpRedirect) {
+        maxJumps = 20
+    }
+}
+``` 
+
+This feature is included in the core of the HttpClient so it is available always along the client.
+{: .note}
+
 ### BasicAuth
 
 This feature sends an `Authorization: Basic` with the specified credentials:
