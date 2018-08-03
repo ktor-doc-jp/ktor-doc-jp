@@ -8,6 +8,9 @@ feature:
     class: io.ktor.client.features.websocket.WebSockets
 ---
 
+To use this feature, you need to include `io.ktor:ktor-client-websocket` artifact.
+{: .note.artifact }
+
 Ktor provides a WebSocket client in addition to supporting [WebSockets at server side](/features/websockets.html). 
 
 Once connected, client and server WebSockets share the same [WebSocketSession](/features/websockets.html#WebSocketSession)
