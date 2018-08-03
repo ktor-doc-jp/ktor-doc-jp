@@ -24,6 +24,42 @@ and we will try to help you!
 
 > `kay-tor`
 
+## How do I put questions/report bugs/contact you/contribute/give feedback, etc.?
+{: #feedback }
+
+Depending on the content, you might consider several channels:
+
+* **GitHub:** Feature request, change suggestions/proposals, bugs and PRs.
+* **Slack:** Questions, troubleshooting, guidance etc.
+* **StackOverflow:** Questions.
+
+**Rationale:**
+
+For questions or troubleshooting we highly recommend you to use Slack or StackOverflow.
+
+Think that using GitHub issues would notify all the people that is subscribed potentially with emails,
+troubleshooting usually requires several questions and answers, that could be a lot of emails
+pread in the time, and maybe the people subscribed want to be informed about bugs, fixes, new things introduced
+or proposed, but maybe are not interested in other things.
+
+If you have enough time or you prefer not to join Slack, you can also ask questions at StackOverflow.
+With slack being an hybrid between chat and forum, we can contact each other faster and troubleshoot things in less time.
+
+When troubleshooting, if we determine that there is a bug, or something to improve, you can report it a GitHub.
+Of course, it is not a good idea either to keep a bug report (once confirmed) just in Slack since it could be forgotten,
+so lets put them in GitHub.
+
+**Pull Requests:**
+
+If you have a functionality or bugfix you think would be worth including in Ktor, you can create a PR.
+
+Have in mind that we usually review and merge PRs in batches, so the PR could be outstanding for a few weeks.
+But still we encourage you to contribute if you can!
+
+If you have a bugfix that need to use right away we recommend you to fork Ktor, compile it yourself,
+and temporarily publish a patched version in your own artifactory, bintray or similar and use that version
+until it is merged and a new version released or prereleased (since the timing might not be aligned with your needs).
+
 ## What does CIO mean?
 {: #cio }
 
