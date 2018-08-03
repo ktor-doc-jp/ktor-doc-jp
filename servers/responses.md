@@ -146,7 +146,11 @@ Sending byte arrays:
 Sending files:
 
 * `call.respondFile(File("/path/to/file"))` - Sends a file
-* `call.respondFile(File("basedir"), "filename") { ... }` - Send a file and configures the [OutgoingContent](#outgoing-content) 
+* `call.respondFile(File("basedir"), "filename") { ... }` - Send a file and configures the [OutgoingContent](#outgoing-content)
+
+Sending URL-encoded forms (`application/x-www-form-urlencoded`):
+
+* Use `Parameters.formUrlEncode`. Check the [Utilities page](/advanced/utilities.html) for more information about this.
 
 When sending files based on the request parameters,
 be especially careful validating and limiting the input.
