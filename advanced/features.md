@@ -2,6 +2,7 @@
 title: Features
 caption: Creating Custom Feature  
 category: advanced
+keywords: plugins
 permalink: /advanced/features.html
 ---
 
