@@ -109,6 +109,12 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.75em;
 }
 
+.blog-post-title-card {
+    /*
+    font-weight: bold;
+    */
+}
+
 .code-snippet {
     white-space: pre;
     font: 1rem monospace;
