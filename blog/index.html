@@ -12,7 +12,9 @@ permalink: /blog
     >
         <div class="col-md-12 px-0">
             <h1 class="display-4"><a href="{{ post.url|relative_url }}" style="color:white;">{{ post.title }}</a></h1>
-            <div class="mb-1"><small>{{ post.date | date_to_long_string }}</small></div>
+            <div class="mb-1">
+                <small>{{ post.date | date_to_long_string }}</small>
+            </div>
             <p class="lead my-3">{{ post.excerpt }}</p>
             <p class="lead mb-0"><a href="{{ post.url|relative_url }}" class="text-white btn btn-primary">Continue
                 reading...</a></p>
@@ -27,16 +29,20 @@ permalink: /blog
     <div class="col-md-4">
         <div class="card flex-md-row mb-4 shadow-sm h-md-500">
             <div class="card-body d-flex flex-column align-items-start" style="padding:0.4rem;">
-                <a class="text-dark" href="{{ post.url|relative_url }}"><img class="img-fluid"
-                                                                             src="{{ post.image|relative_url }}"
-                                                                             alt="Card image cap"></a>
-                <strong class="d-inline-block mb-2 text-primary">{{ post.categories }}</strong>
-                <h3 class="mb-0">
-                    <a class="text-dark" href="{{ post.url|relative_url }}">{{ post.title }}</a>
-                </h3>
-                <div class="mb-1 text-muted">{{ post.date | date_to_long_string }}</div>
-                <p class="card-text mb-auto">{{ post.excerpt }}</p>
-                <a href="{{ post.url|relative_url }}" class="btn btn-light">Continue reading...</a>
+                <a class="text-dark" href="{{ post.url|relative_url }}">
+                    <img class="img-fluid" src="{{ post.image|relative_url }}">
+                </a>
+                <div style="padding:0.3rem;">
+                    {% comment %}
+                    <strong class="d-inline-block mb-2 text-primary">{{ post.categories }}</strong>
+                    {% endcomment %}
+                    <h3 class="mb-0" style="padding-bottom:0.3rem;">
+                        <a class="text-dark" href="{{ post.url|relative_url }}">{{ post.title }}</a>
+                    </h3>
+                    <div class="mb-1 text-muted">{{ post.date | date_to_long_string }}</div>
+                    <p class="card-text mb-auto">{{ post.excerpt }}</p>
+                    <a href="{{ post.url|relative_url }}" class="btn btn-light">Continue reading...</a>
+                </div>
             </div>
         </div>
     </div>
