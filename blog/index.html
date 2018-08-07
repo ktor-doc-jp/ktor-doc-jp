@@ -32,13 +32,13 @@ permalink: /blog
     {% for post in filtered_posts offset:1 %}
     <div class="col-md-4">
         <div class="card flex-md-row mb-4 shadow-sm h-md-500">
-            <div class="card-body d-flex flex-column align-items-start" style="padding:0.4rem;">
+            <div class="post-card-body card-body d-flex flex-column align-items-start">
                 {% if post.image %}
                 <a class="text-dark" href="{{ post.url|relative_url }}">
                     <img class="img-fluid" src="{{ post.image|relative_url }}">
                 </a>
                 {% endif %}
-                <div style="padding:0.3rem;">
+                <div>
                     <h3 class="mb-0 blog-post-title-card" style="padding-bottom:0.3rem;">
                         <a class="text-dark" href="{{ post.url|relative_url }}">{{ post.title }}</a>
                     </h3>

@@ -143,3 +143,21 @@ h1, h2, h3, h4, h5, h6 {
 .blog-post h2 { font-size: 1.8em; }
 .blog-post h3 { font-size: 1.6em; }
 .blog-post h4 { font-size: 1.4em; }
+
+.post-card-body {
+    padding: 1rem 1rem;
+}
+
+.post-card-body {
+    /*
+    font-size: 1em;
+    font-family: Georgia, serif;
+    */
+    line-height: 1.8em;
+}
+
+.post-card-body h3 {
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen;
+    font-size: 1.4em;
+    font-weight: bold;
+}
