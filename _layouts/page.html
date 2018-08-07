@@ -38,7 +38,9 @@ layout: default
                 <li><a class="link" href="{{ section.url | prepend: site.baseurl }}">{{ section.title }}</a></li>
                 {% endif %}
             {% endfor %}
+            {% if site.blog_enabled %}
             <li><a class="link" href="/blog">Blog</a></li>
+            {% endif %}
         </ol>
     </div>
 </header>
