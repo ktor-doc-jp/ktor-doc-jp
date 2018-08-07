@@ -3,7 +3,7 @@ layout: post
 title: "OpenAPI generation in the Ktor plugin and website"
 categories: plugin
 featured: true
-image: /blog/images/openapi_ktor_idea_plugin.svg
+#image: /blog/images/openapi_ktor_idea_plugin.svg
 ---
 
 In this post I'm going to explain how does the Ktor IntelliJ IDEA plugin generate code from Swagger/OpenAPI models

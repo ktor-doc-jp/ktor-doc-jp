@@ -3,15 +3,22 @@ layout: blogbase
 ---
 
 <div class="blog-post">
+    <div style="padding-top:1rem;margin-bottom: 2rem;">
     <a href="{{ '/blog' | relative_url }}"><i class="fas fa-chevron-left"></i> List of posts</a>
+    </div>
 
+    {% if page.image %}
     <img src="{{ page.image | relative_url }}" style="width:100%;height:auto;"/>
-    <h2 class="blog-post-title">{{ page.title }}</h2>
-    <p class="blog-post-meta">{{ page.date| date_to_long_string }}</p>
+    {% endif %}
+
+    <div style="padding-bottom:1rem;">
+        <h2 class="blog-post-title">{{ page.title }}</h2>
+        <p class="blog-post-meta">{{ page.date| date_to_long_string }}</p>
+    </div>
 
     {{ content }}
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top:2rem;padding-top:2rem;border-top:1px solid #ddd;">
         <div class="row">
             <div class="col" style="text-align: left;padding:0;">
                 {% if page.previous.url %}

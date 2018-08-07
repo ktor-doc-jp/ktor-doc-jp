@@ -10,7 +10,7 @@
     <title>Ktor Blog</title>
 
     <link rel="stylesheet" href="{{ '/assets/plugins/bootstrap4/css/bootstrap.css'|relative_url }}" />
-    <link rel="stylesheet" href="{{ '/assets/blog.css'|relative_url }}" />
+    <link rel="stylesheet" href="{{ '/assets/blog/blog.css'|relative_url }}" />
 
     <link rel="stylesheet" href="{{ '/assets/plugins/font-awesome5/css/all.css' }}" />
 
@@ -61,20 +61,7 @@
 
 <script src="{{ '/assets/plugins/jquery-3.3.1.min.js'|relative_url }}"></script>
 <script src="{{ '/assets/plugins/bootstrap4/js/bootstrap.bundle.js'|relative_url }}"></script>
-
-<script type="text/javascript">
-    async function loadSnippet(url, into, lang) {
-        const res = await((await(fetch(url))).text());
-        const html = Prism.highlight(res, Prism.languages[lang], lang);
-        //console.log(res);
-        //$(into).text(res);
-        $(into).html(html);
-    }
-
-    $('.code-snippet').each(function() {
-        loadSnippet($(this).data('src'), this, $(this).data('lang') || 'json');
-    });
-</script>
+<script src="{{ '/assets/blog/blog.js'|relative_url }}"></script>
 
 </body>
 </html>
