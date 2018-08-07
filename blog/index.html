@@ -33,13 +33,10 @@ permalink: /blog
                     <img class="img-fluid" src="{{ post.image|relative_url }}">
                 </a>
                 <div style="padding:0.3rem;">
-                    {% comment %}
-                    <strong class="d-inline-block mb-2 text-primary">{{ post.categories }}</strong>
-                    {% endcomment %}
                     <h3 class="mb-0" style="padding-bottom:0.3rem;">
                         <a class="text-dark" href="{{ post.url|relative_url }}">{{ post.title }}</a>
                     </h3>
-                    <div class="mb-1 text-muted">{{ post.date | date_to_long_string }}</div>
+                    <div class="mb-1 blog-post-meta">{{ post.date | date_to_long_string }}</div>
                     <p class="card-text mb-auto">{{ post.excerpt }}</p>
                     <a href="{{ post.url|relative_url }}" class="btn btn-light">Continue reading...</a>
                 </div>
