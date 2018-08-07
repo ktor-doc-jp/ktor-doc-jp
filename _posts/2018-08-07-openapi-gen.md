@@ -115,10 +115,76 @@ as part of the model.
 The good thing of this, is that using the interface + a JVM Proxy and some tricks, I'm able to create a client
 targeting a specific endpoint without additional code. Which is pretty cool.
  
-### Future ideas
+### Ideas for the future
 
 Would be nice if the client at least, works for MPP projects. But the JVM is the only target right now with full reflective capabilities.
 With all the foundations set, we can change the generated code to something else, or for example to work
 reflectionless by generating the code handling the routes, parsing the parameters, and calling the methods from the interface.
 And the JSON parsing/generation can work using <https://github.com/Kotlin/kotlinx.serialization>. So it should be viable.
 As long as you keep your API as described in the model, the only code you have to change is the one for the server. 
+
+Another possible nice thing to do is to generate a definition for [the HTTP Client integrated with IntelliJ IDEA Ultimate](http://ktor.io/quickstart/guides/api.html#first-request-intellij)
+to test the API directly in the IDE.
+
+### A quick look to the generated code
+
+<!--
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home"><code>swagger-realworld.json</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#profile"><code>application.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#contact"><code>interface.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#"><code>server.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#"><code>client.kt</code></a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+</div>
+-->
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="swagger-realworld-json-tab" data-toggle="tab" href="#swagger-realworld-json" role="tab" aria-controls="swagger-realworld-json" aria-selected="true"><code>swagger-realworld.json</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="application-kt-tab" data-toggle="tab" href="#application-kt" role="tab" aria-controls="application-kt" aria-selected="false"><code>application.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="api-kt-tab" data-toggle="tab" href="#api-kt" role="tab" aria-controls="api-kt" aria-selected="false"><code>api.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="backend-kt-tab" data-toggle="tab" href="#backend-kt" role="tab" aria-controls="backend-kt" aria-selected="false"><code>backend.kt</code></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="frontend-kt-tab" data-toggle="tab" href="#frontend-kt" role="tab" aria-controls="frontend-kt" aria-selected="false"><code>frontend.kt</code></a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="swagger-realworld-json" role="tabpanel" aria-labelledby="swagger-realworld-json-tab">
+    <div class="code-snippet" data-src="{{ '/blog/samples/openapi/swagger.json' }}" data-lang="json"></div>
+  </div>
+  <div class="tab-pane fade show" id="application-kt" role="tabpanel" aria-labelledby="application-kt-tab">
+    <div class="code-snippet" data-src="{{ '/blog/samples/openapi/application.kt' }}" data-lang="kotlin"></div>
+  </div>
+  <div class="tab-pane fade show" id="api-kt" role="tabpanel" aria-labelledby="api-kt-tab">
+    <div class="code-snippet" data-src="{{ '/blog/samples/openapi/swagger-api.kt' }}" data-lang="kotlin"></div>
+  </div>
+  <div class="tab-pane fade show" id="backend-kt" role="tabpanel" aria-labelledby="backend-kt-tab">
+    <div class="code-snippet" data-src="{{ '/blog/samples/openapi/swagger-backend.kt' }}" data-lang="kotlin"></div>
+  </div>
+  <div class="tab-pane fade show" id="frontend-kt" role="tabpanel" aria-labelledby="frontend-kt-tab">
+    <div class="code-snippet" data-src="{{ '/blog/samples/openapi/swagger-frontend.kt' }}" data-lang="kotlin"></div>
+  </div>
+</div>

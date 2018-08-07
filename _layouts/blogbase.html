@@ -15,6 +15,23 @@
     <link rel="stylesheet" href="{{ '/assets/plugins/font-awesome5/css/all.css' }}" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900">
+
+    <link href="{{ '/assets/plugins/prism/prism.css' }}" rel="stylesheet" />
+    <script src="{{ '/assets/plugins/prism/prism.js' }}"></script>
+
+    <style type="text/css">
+        .code-snippet {
+            white-space: pre;
+            font: 1rem monospace;
+            overflow: auto;
+            height: 16rem;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom-left-radius: 0.2rem;
+            border-bottom-right-radius: 0.2rem;
+            padding: 0.4rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -62,6 +79,22 @@
     </footer>
 </div>
 
+<script src="{{ '/assets/plugins/jquery-3.3.1.min.js'|relative_url }}"></script>
 <script src="{{ '/assets/plugins/bootstrap4/js/bootstrap.bundle.js'|relative_url }}"></script>
+
+<script type="text/javascript">
+    async function loadSnippet(url, into, lang) {
+        const res = await((await(fetch(url))).text());
+        const html = Prism.highlight(res, Prism.languages[lang], lang);
+        //console.log(res);
+        //$(into).text(res);
+        $(into).html(html);
+    }
+
+    $('.code-snippet').each(function() {
+        loadSnippet($(this).data('src'), this, $(this).data('lang') || 'json');
+    });
+</script>
+
 </body>
 </html>
