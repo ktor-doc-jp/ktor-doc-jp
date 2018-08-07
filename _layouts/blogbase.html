@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ 'favicon.ico'|absolute_url }}">
+    <link rel="icon" href="{{ 'favicon.ico'|relative_url }}">
 
     <title>Blog Template for Bootstrap</title>
 
-    <link rel="stylesheet" href="{{ '/assets/plugins/bootstrap4/css/bootstrap.css'|absolute_url }}" />
-    <link rel="stylesheet" href="{{ '/assets/blog.css'|absolute_url }}" />
+    <link rel="stylesheet" href="{{ '/assets/plugins/bootstrap4/css/bootstrap.css'|relative_url }}" />
+    <link rel="stylesheet" href="{{ '/assets/blog.css'|relative_url }}" />
 
     <link rel="stylesheet" href="{{ '/assets/plugins/font-awesome5/css/all.css' }}" />
 
@@ -26,7 +26,7 @@
                 <a class="text-muted" href="/feed.xml"><i class="fas fa-rss"></i> RSS</a>
             </div>
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="{{ '/blog'|absolute_url }}"><img src="{{ '/assets/images/ktor_logo.svg' }}" style="width:auto;height:48px;" alt="Ktor" title="Ktor" /> <small>Blog</small></a>
+                <a class="blog-header-logo text-dark" href="{{ '/blog'|relative_url }}"><img src="{{ '/assets/images/ktor_logo.svg' }}" style="width:auto;height:48px;" alt="Ktor" title="Ktor" /> <small>Blog</small></a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <a class="text-muted" href="#">
@@ -41,11 +41,11 @@
     <!--
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-            <a class="p-2 text-muted" href="{{ '/blog'|absolute_url }}">Blog</a>
-            <a class="p-2 text-muted" href="{{ '/blog/releases'|absolute_url }}">Releases</a>
-            <a class="p-2 text-muted" href="{{ '/blog/eap'|absolute_url }}">EAP</a>
-            <a class="p-2 text-muted" href="{{ '/blog/plugin'|absolute_url }}">IntelliJ Plugin</a>
-            <a class="p-2 text-muted" href="{{ '/'|absolute_url }}">Documentation</a>
+            <a class="p-2 text-muted" href="{{ '/blog'|relative_url }}">Blog</a>
+            <a class="p-2 text-muted" href="{{ '/blog/releases'|relative_url }}">Releases</a>
+            <a class="p-2 text-muted" href="{{ '/blog/eap'|relative_url }}">EAP</a>
+            <a class="p-2 text-muted" href="{{ '/blog/plugin'|relative_url }}">IntelliJ Plugin</a>
+            <a class="p-2 text-muted" href="{{ '/'|relative_url }}">Documentation</a>
         </nav>
     </div>
     -->
@@ -59,6 +59,6 @@
     </footer>
 </div>
 
-<script src="{{ '/assets/plugins/bootstrap4/js/bootstrap.bundle.js'|absolute_url }}"></script>
+<script src="{{ '/assets/plugins/bootstrap4/js/bootstrap.bundle.js'|relative_url }}"></script>
 </body>
 </html>
