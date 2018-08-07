@@ -128,32 +128,6 @@ to test the API directly in the IDE.
 
 ### A quick look to the generated code
 
-<!--
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#home"><code>swagger-realworld.json</code></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#profile"><code>application.kt</code></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#contact"><code>interface.kt</code></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#"><code>server.kt</code></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#"><code>client.kt</code></a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-</div>
--->
-
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="swagger-realworld-json-tab" data-toggle="tab" href="#swagger-realworld-json" role="tab" aria-controls="swagger-realworld-json" aria-selected="true"><code>swagger-realworld.json</code></a>
@@ -188,3 +162,5 @@ to test the API directly in the IDE.
     <div class="code-snippet" data-src="{{ '/blog/samples/openapi/swagger-frontend.kt' }}" data-lang="kotlin"></div>
   </div>
 </div>
+
+This is the code the plugin is generating right now. It is not final, so any feedback is welcome!
