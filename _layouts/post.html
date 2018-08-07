@@ -1,5 +1,19 @@
 ---
-layout: default
+layout: blogbase
 ---
 
-{{ content }}
+<div class="blog-post">
+    <img src="{{ page.image | absolute_url }}" style="width:100%;height:auto;" />
+    <h2 class="blog-post-title">{{ page.title }}</h2>
+    <p class="blog-post-meta">{{ page.date| date_to_long_string }}</p>
+
+    {{ content }}
+
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url }}">← Previous: {{ page.previous.title }}</a>
+    {% endif %}
+
+    {% if page.next.url %}
+    <a href="{{ page.next.url }}">Next: {{ page.next.title }} →</a>
+    {% endif %}
+</div>

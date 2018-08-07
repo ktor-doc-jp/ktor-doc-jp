@@ -50,9 +50,13 @@ kramdown:
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-feed
 
 whitelist:
   - jekyll-redirect-from
+  - jekyll-feed
+
+permalink: /blog/:year/:month/:title:output_ext
 
 # these are defaults used for the frontmatter for these file types
 defaults:

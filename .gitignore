@@ -6,3 +6,4 @@ _pdf
 /.idea
 *.iws
 *.iml
+/.gradle

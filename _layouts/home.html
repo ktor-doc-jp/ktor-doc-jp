@@ -21,6 +21,7 @@ layout: default
             {% for section in site.data.navigation.main %}
             <li><a class="link" href="{{ section.url | prepend: site.baseurl }}">{{ section.title }}</a></li>
             {% endfor %}
+            <li><a class="link" href="/blog">Blog</a></li>
         </ol>
     </div>
 </header>
