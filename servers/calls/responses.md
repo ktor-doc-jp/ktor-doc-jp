@@ -2,12 +2,14 @@
 title: Responses
 caption: Generating HTTP Responses  
 category: servers
-permalink: /servers/responses.html
+permalink: /servers/calls/responses.html
 priority: 900
+redirect_from:
+  - /servers/responses.html
 ---
 
 When handling routes, or directly intercepting the pipeline, you
-get a context with an [ApplicationCall](/servers/application.html#applicationcall).
+get a context with an [ApplicationCall](/servers/calls.html).
 That `call` contains a property called `response` that allows you to emit the response.
 
 Also, the call itself has some useful convenience properties and methods 

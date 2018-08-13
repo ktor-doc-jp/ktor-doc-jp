@@ -2,13 +2,15 @@
 title: Requests
 caption: Handling HTTP Requests  
 category: servers
-permalink: /servers/requests.html
+permalink: /servers/calls/requests.html
 keywords: multipart receiving
 priority: 800
+redirect_from:
+  - /servers/requests.html
 ---
 
 When handling routes, or directly intercepting the pipeline, you
-get a context with an [ApplicationCall](/servers/application.html#applicationcall).
+get a context with an [ApplicationCall](/servers/calls.html).
 That `call` contains a property called `request` that includes information about the request.
 
 Also, the call itself has some useful convenience properties and methods that rely on the request.
