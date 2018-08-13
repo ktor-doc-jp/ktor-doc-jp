@@ -161,6 +161,19 @@ Sending chunked content using a Writer:
 * `call.respondWrite { write("hello"); write("world") }` - Sends text using a writer. This is used with the [HTML DSL](#html-dsl)
 * `call.respondWrite(contentType = ..., status = ...) { write("hello"); write("world") }` - Sends text using a writer and specifies a contentType and a status
 
+Sending arbitrary data in chunks using `WriteChannelContent`:
+
+```kotlin
+call.respond(object : OutgoingContent.WriteChannelContent() {
+    override val contentType = ContentType.Application.OctetStream
+    override suspend fun writeTo(channel: ByteWriteChannel) {
+        channel.writeFully(byteArray1)
+        channel.writeFully(byteArray2)
+        // ...
+    }
+})
+```
+
 To specify a default content type for the request:
 
 * `call.defaultTextContentType(contentType: ContentType?): ContentType`
