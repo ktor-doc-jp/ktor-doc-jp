@@ -262,13 +262,9 @@ You usually have to create a `Dockerfile` for monolithic services, and a `docker
 when your container needs to interact with other services, like for example a database or a redis. 
 
 First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, which looks like this:
-```
-FROM openjdk:8-jre-alpine
-RUN mkdir /app
-COPY ./build/libs/my-application.jar /app/my-application.jar
-WORKDIR /app
-CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
-```
+
+{% capture my_include %}{% include docker-sample.md %}{% endcapture %}
+{{ my_include | markdownify }}
 
 For deploying to Docker simply you can check out the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
 

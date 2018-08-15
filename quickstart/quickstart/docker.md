@@ -182,13 +182,8 @@ You can check this [full example](https://github.com/ktorio/ktor-samples/tree/ma
 
 In the root folder of your project create a file named `Dockerfile` with the following contents:
 
-```text
-FROM openjdk:8-jre-alpine
-RUN mkdir /app
-COPY ./build/libs/my-application.jar /app/my-application.jar
-WORKDIR /app
-CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
-```
+{% capture my_include %}{% include docker-sample.md %}{% endcapture %}
+{{ my_include | markdownify }}
 
 Let's see what is what:
 

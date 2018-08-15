@@ -286,13 +286,8 @@ networks:
 
 #### `Dockerfile`
 
-```yaml
-FROM openjdk:8-jre-alpine
-RUN mkdir /app
-COPY ./build/libs/my-application.jar /app/my-application.jar
-WORKDIR /app
-CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
-```
+{% capture my_include %}{% include docker-sample.md %}{% endcapture %}
+{{ my_include | markdownify }}
 
 You can find more information about [how to deploy a docker and the Dockerfile in the deploy section](/servers/deploy.html#docker).
 
