@@ -145,11 +145,19 @@ And it provide some convenience methods for common types:
 * `val inputStream: InputStream = call.receiveStream()` - NOTE that the InputStream API is synchronous and will block
 * `val multipart: MultiPartData = call.receiveMultipart()`
 
-To parse a form urlencoded or with multipart, you can use `receiveParameters`:
+To parse a form urlencoded or with multipart, you can use `receiveParameters` or `receive<Parameters>`:
 
 ```kotlin
 val postParameters: Parameters = call.receiveParameters()
 ```
+
+All those receive* methods are aliases of `call.receive<T>` with the specified type.
+The types `ByteReadChannel`, `ByteArray`, `InputStream`, `MultiPartData`, `String` and `Parameters` are handled by
+`ApplicationReceivePipeline.installDefaultTransformations` that is installed by default.
+
+You can create custom transformers by calling
+`application.receivePipeline.intercept(ApplicationReceivePipeline.Transform) { query ->`
+and then calling `proceedWith(ApplicationReceiveRequest(query.type, transformed))` as does the [ContentNegotiation feature](/features/content-negotiation.html).
 
 All the receive methods consume the payload sent by the client.
 They won't throw an exception if you call them several times,
