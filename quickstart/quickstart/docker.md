@@ -184,8 +184,9 @@ In the root folder of your project create a file named `Dockerfile` with the fol
 
 ```text
 FROM openjdk:8-jre-alpine
-COPY ./build/libs/my-application.jar /root/my-application.jar
-WORKDIR /root
+RUN mkdir /app
+COPY ./build/libs/my-application.jar /app/my-application.jar
+WORKDIR /app
 CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
@@ -200,8 +201,9 @@ from [OpenJDK registry](https://hub.docker.com/_/openjdk/). Alpine Linux benefit
 We also select JRE-only image since we don't need to compile code on the image, only run precompiled classes.
 
 ```text
-COPY ./build/libs/my-application.jar /root/my-application.jar
-WORKDIR /root
+RUN mkdir /app
+COPY ./build/libs/my-application.jar /app/my-application.jar
+WORKDIR /app
 ```
 
 These lines copy your packaged application into the Docker image and sets the working directory to where we copied it.
