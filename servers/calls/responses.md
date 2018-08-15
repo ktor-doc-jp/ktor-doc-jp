@@ -194,6 +194,23 @@ class OutgoingContent {
 }
 ```
 
+## Downloading files
+{: #content-disposition }
+
+You can make files "downloadable", by adding the [`Content-Disposition` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition).
+
+In an untyped way, you can do something like:
+
+```kotlin
+call.response.header(HttpHeaders.ContentDisposition, "attachment; filename=\"myfilename.bin\"")
+```
+
+But Ktor also provides a typed way with proper escaping to generate this header:
+
+```kotlin
+call.response.header(HttpHeaders.ContentDisposition, ContentDisposition.Attachment.withParameter(ContentDisposition.Parameters.FileName, "myfilename.bin").toString())
+```
+
 ## Content negotiation
 {: #content-negotiation}
 
