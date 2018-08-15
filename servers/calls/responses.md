@@ -194,7 +194,7 @@ class OutgoingContent {
 }
 ```
 
-## Downloading files
+## Making files downloadable
 {: #content-disposition }
 
 You can make files "downloadable", by adding the [`Content-Disposition` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition).
