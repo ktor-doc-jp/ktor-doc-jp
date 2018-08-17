@@ -3,6 +3,7 @@ title: Sessions
 caption: Handle Conversations with Sessions
 category: features
 permalink: /features/sessions.html
+children: /features/sessions/
 keywords: custom session serializers, custom session transformers, custom session storage providers
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
@@ -17,10 +18,10 @@ context into the otherwise stateless nature of HTTP. They allow servers to keep 
 with the client during a sequence of HTTP requests and responses.
  
 Different use-cases include: authentication and authorization, user tracking, keeping information
-at client like a shopping cart,  and more.
+at client like a shopping cart, and more.
 
 Sessions are typically implemented by employing `Cookies`, but could also be done using headers for example
-to be consumed by other backends or AJAX requests.
+to be consumed by other backends or an AJAX requests.
 
 They are either client-side when the entire serialized object goes back and forth between the client and the server,
 or server-side when only the session ID is transferred and the associated data is stored entirely in the server. 
@@ -32,45 +33,73 @@ or server-side when only the session ID is transferred and the associated data i
 
 {% include feature.html %}
 
-## Basic installation
-{: #install-basic}
-
-
 ## Installation
-{: #install-advanced}
+{: #installation }
 
-The basic installation of the Sessions feature looks like this.
+Sessions are usually represented as immutable data classes (and session is changed by calling the `.copy` method):
 
 ```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION")
-} 
+data class SampleSession(val name: String, val value: Int)
 ```
 
-## Usage
-{: #usage }
-
-In order to access or set the session content, you use the `call.sessions` property:
-
-To get the session content, you have to call the `call.sessions.get` method receiving as type parameter one
-of the registered session types:
+A simple Sessions installation looks like this:
 
 ```kotlin
-application.routing {
-    get("/") {
-        val mySession: MySession = call.sessions.get<MySession>()
+install(Sessions) {
+    cookie<SampleSession>("COOKIE_NAME")
+}
+```
+
+And a more advanced installation could be like:
+
+```kotlin
+install(Sessions) {
+    cookie<SampleSession>(
+        "SESSION_FEATURE_SESSION_ID",
+        directorySessionStorage(File(".sessions"), cached = true)
+    ) {
+        cookie.path = "/" // Specify cookie's path '/' so it can be used in the whole site
     }
 }
 ```
 
-If the session was not set, the returned value will be null.
+To configure sessions you have to  to specify a [cookie/header](/features/sessions/cookie-header#cookies-headers) name,
+optional [server-side storage](/features/sessions/client-server.html#client-server), and a class associated to the session.
+
+If you want to further customize sessions. Please read the [extending](#extending) section.
+
+Since there are several combinations for configuring sessions, there is a section about [deciding how to configure sessions](#configuring).
 {: .note}
 
-To create or modify current session you just call a `set` function on a `sessions` property with the value of the
+## Usage
+{: #usage }
+
+In order to access or set the session content, you have to use the `call.sessions` property:
+
+To get the session content, you can call the `call.sessions.get` method receiving as type parameter one
+of the registered session types:
+
+```kotlin
+routing {
+    get("/") {
+        // If the session was not set, or is invalid, the returned value is null.
+        val mySession: MySession? = call.sessions.get<MySession>()
+    }
+}
+```
+
+To create or modify current session you just call the `set` method of the `sessions` property with the value of the
 data class: 
 
 ```kotlin
 call.sessions.set(MySession(name = "John", value = 12))
+```
+
+To modify a session (for example incrementing a counter), you have to call the `.copy` method of the `data class`:
+
+```kotlin
+val session = call.sessions.get<MySession>() ?: MySession(name = "Initial", value = 0)  
+call.sessions.set(session.copy(value = session.value + 1))
 ```
 
 When a user logs out, or a session should be cleared for any other reason, you can call the `clear` function:
@@ -79,10 +108,27 @@ When a user logs out, or a session should be cleared for any other reason, you c
 call.sessions.clear<MySession>()
 ```
 
+After calling this, retrieving that session will return null, until set again.
+
+<div markdown='1'>
+When handling requests, you can get, set, or clear your sessions:
+
+```kotlin
+val session = call.sessions.get<SampleSession>() // Gets a session of this type or null if not available
+call.sessions.set(SampleSession(name = "John", value = 12)) // Sets a session of this type
+call.sessions.clear<SampleSession>() // Clears the session of this type 
+```
+</div>
+{: .note.summarizing }
+
 ## Multiple sessions
 {: #multiple-sessions}
 
-Since there could be several conversational states for a single application, you can install multiple session mapping:
+Since there could be several conversational states for a single application, you can install multiple session mappings.
+For example:
+
+* Storing user preferences, or cart information as a client-side cookie.
+* While storing the user login inside a file on the server.
 
 ```kotlin
 application.install(Sessions) {
@@ -91,19 +137,35 @@ application.install(Sessions) {
         transform(SessionTransportTransformerDigest()) // sign the ID that travels to client
     }
 }
-``` 
+```
 
-For multiple session mapping, both type and name should be unique. 
+```kotlin
+install(Sessions) {
+    cookie<SessionCart>("SESSION_CART_LIST") {
+        cookie.path = "/shop" // Just accessible in '/shop/*' subroutes
+    }
+    cookie<SessionLogin>(
+        "SESSION_LOGIN",
+        directorySessionStorage(File(".sessions"), cached = true)
+    ) {
+        cookie.path = "/" // Specify cookie's path '/' so it can be used in the whole site
+        transform(SessionTransportTransformerDigest()) // sign the ID that travels to client
+    }
+}
+```
+
+For multiple session mappings, _both_ type and name should be unique.
+{: .note} 
 
 ## Configuration
 {: #configuration}
 
-But you will want to create sessions and then configure them. You can configure the sessions in several different ways:
+You can configure the sessions in several different ways:
 
 * *Where is the payload stored:* client-side, or server-side.
 * *How is the payload or the session id transferred:* Using cookies or headers.
 * *How are they serialized:* Using an internal format, JSON, a custom engine...
-* *Where is the payload stored in the server:* Using memory, a folder, redis...
+* *Where is the payload stored in the server:* In memory, a folder, redis...
 * *Payload transformations:* Encrypted, authenticated...
 
 Since sessions can be implemented by various techniques, there is an extensive configuration facility to set them up:
@@ -129,357 +191,118 @@ For headers, the receiver is `HeaderSessionBuilder` which allows `serializer` an
 For cookies & headers that are server-side with a `SessionStorage`, additional configuration is `identity` function
 that should generate a new ID when the new session is created.
 
-### Cookies vs Headers sessions
-{: #cookies-headers }
+## Deciding how to configure sessions
+{: #configuring}
 
-Depending on the consumer, you might want to transfer the sessionId or the payload using a cookie,
-or a header. For example, for a website, you will normally use cookies, while for an API you might want to use headers.
+### Cookie vs Header
 
-The Sessions.Configuration provide two methods `cookie` and `header` to select how to transfer the sessions: 
+* Use [**Cookies**](/features/sessions/cookie-header.html#cookies) for plain HTML applications.
+* Use [**Header**](/features/sessions/cookie-header.html#headers) for APIs or for XHR requests if it is simpler for your http clients.
 
-#### Cookies
+### Client vs Server
+
+* Use [**Server Cookies**](/features/sessions/client-server.html#server-cookies) if you want to prevent session replays or want to further increase security
+  * Use `SessionStorageMemory` for development if you want to drop sessions after stopping the server
+  * Use `directorySessionStorage` for production environments or to keep sessions after restarting the server
+* Use [**Client Cookies**](/features/sessions/client-server.html#client-cookies) if you want a simpler approach without the storage on the backend
+  * Use it plain if you want to modify it on the fly at the client for testing purposes and don't care about the modifications
+  * Use it with transform authenticating and optionally encrypting it to prevent modifications
+  * **Do not** use it at all if your session payload is vulnerable to replay attacks. [Security examples here](#security).
+
+## Baked snippets
+
+### Storing the contents of the session in a cookie
+
+Since no SessionStorage is provided as a `cookie` second argument its contents will be stored in the cookie.
 
 ```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION")
-} 
-```
-
-You can configure the cookie by providing an additional block. There is a cookie property allowing
-to configure it, for example by adding a [SameSite extension](https://caniuse.com/#search=samesite):
-
-```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION") {
-        cookie.extensions["SameSite"] = "lax"
+install(Sessions) {
+    val secretHashKey = hex("6819b57a326945c1968f45236589")
+    
+    cookie<SampleSession>("SESSION_FEATURE_SESSION") {
+        cookie.path = "/"
+        transform(SessionTransportTransformerMessageAuthentication(secretHashKey, "HmacSHA256"))
     }
-} 
+}
 ```
 
-#### Headers
+### Storing a session id in a cookie, and storing session contents in-memory
+{: #SessionStorageMemory }
+
+`SessionStorageMemory` don't have parameters at this point.
 
 ```kotlin
-application.install(Sessions) {
-    header<MySession>("SESSION")
-} 
-```
-
-### Client-side/Server-side sessions
-{: #client-server }
-
-Depending on the application, the size of the payload and the security, you might want to put the payload of
-the session in the client or the server.
-
-#### Client-side sessions and transforms
-{: #client}
-
-Without additional arguments for the `cookie` and `header` methods, the session is configured to keep the payload
-at the client. And the full payload will be sent back and forth. In this mode, you can, and should apply
-transforms to encrypt or authenticate sessions:
-
-```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION") {
-        val secretSignKey = hex("000102030405060708090a0b0c0d0e0f")
-        transform(SessionTransportTransformerMessageAuthentication(secretSignKey))
+install(Sessions) {
+    cookie<SampleSession>("SESSION_FEATURE_SESSION_ID", SessionStorageMemory()) {
+        cookie.path = "/"
     }
-} 
+}
 ```
 
-You should only use client-side sessions if your payload can't suffer from replay attacks. Also if you need to prevent
-modifications, ensure that you are transforming the session with at least authentication, but ideally with encryption too.
-This should prevent payload modification if you keep your secret key safe. But remember that if your key is compromised
-and you have to change the key, all the sessions will effectively be invalid.
-{: .note.security }
+Alongside SessionStorage there is a `SessionStorageMemory` class that you can use for development.
+It is a simple implementation that will keep sessions in-memory, thus all the sessions are dropped
+once you shutdown the server and will constantly grow in memory since this implementation does not discard
+the old sessions at all.
 
-##### SessionTransportTransformerDigest
-{: #SessionTransportTransformerDigest}
+This implementation is not intended for production environments.
 
-The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
-a hash of the payload with a salt and verifies it. It uses `SHA-256` as the default
-hashing algorithm, but it can be changed. It doesn't encrypt the payload, but still without the salt people
-shouldn't be able to change it.
+### Storing a session id in a cookie, and storing session contents in a file
+{: #directorySessionStorage }
 
-```kotlin
-// REMEMBER! Change this string and store them safely
-val salt = "my unity salt string"
-cookie<TestUserSession>(cookieName) {
-    transform(SessionTransportTransformerDigest(salt))
-}
-``` 
+You have to include an additional artifact for the `directorySessionStorage` function.
 
-##### SessionTransportTransformerMessageAuthentication
-{: #SessionTransportTransformerMessageAuthentication}
-
-The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
-an authenticated hash of the payload and verifies it. It is similar to SessionTransportTransformerDigest
-but uses a HMAC. It uses `HmacSHA1` as the default authentication algorithm, but it can be changed.
-It doesn't encrypt the payload, but still without the key people shouldn't be able to change it.
+`compile "io.ktor:ktor-server-sessions:$ktor_version" // Required for directorySessionStorage`
 
 ```kotlin
-// REMEMBER! Change this string and store them safely
-val key = hex("03515606058610610561058")
-cookie<TestUserSession>(cookieName) {
-    transform(SessionTransportTransformerMessageAuthentication(key))
-}
-``` 
-
-##### SessionTransportTransformerEncrypt
-{: #SessionTransportTransformerEncrypt}
-
-The `SessionTransportTransformerEncrypt` provides a session transport transformer that encrypts the payload
-and authenticates it. By default it uses `AES` and `HmacSHA256`, but you can configure it. It requires 
-an encryption key and an authentication key compatible in size with the algorithms: 
-
-```kotlin
-// REMEMBER! Change ALL the digits in those hex numbers and store them safely
-val secretEncryptKey = hex("00112233445566778899aabbccddeeff") 
-val secretAuthKey = hex("02030405060708090a0b0c")
-cookie<TestUserSession>(cookieName) {
-    transform(SessionTransportTransformerEncrypt(secretEncryptKey, secretAuthKey))
-}
-``` 
-
-#### Server-side sessions and storages
-{: #server}
-
-If you specify storage, then the session will be configured to be stored on the server using that storage, and
-a sessionId will be transferred between the server and the client instead of the full payload: 
-
-```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION", storage = SessionStorageMemory())
-} 
-```
-
-There are two predefined storages: `SessionStorageMemory`, `DirectoryStorage`. And another composable storage: `CacheStorage`.
-
-`DirectoryStorage` and `CacheStorage` are dependant on the `io.ktor:ktor-server-sessions:$ktor_version` artifact.
-{: .note.artifact } 
-
-### Serializers
-{: #serializer}
-
-You can specify a custom serializer with:
-
-```kotlin
-application.install(Sessions) {
-    cookie<MySession>("SESSION") {
-        serializer = MyCustomSerializer()
+install(Sessions) {
+    cookie<SampleSession>(
+        "SESSION_FEATURE_SESSION_ID",
+        directorySessionStorage(File(".sessions"), cached = true)
+    ) {
+        cookie.path = "/" // Specify cookie's path '/' so it can be used in the whole site
     }
-} 
-```
-
-If you do not specify any serializer, it will use one with an internal optimized format.
-
-#### SessionSerializerReflection
-{: #SessionSerializerReflection}
-
-This is the default serializer, when no serializer is specified:
-
-```kotlin
-cookie<MySession>("SESSION") {
-    serializer = autoSerializerOf()
 }
 ```
 
-#### GsonSessionSerializer
-{: #GsonSessionSerializer}
+As part of the `io.ktor:ktor-server-sessions` artifact, there is a `directorySessionStorage` function
+which utalizes a session storage that will use a folder for storing sessions on disk.
 
-Using JSON instead of the default serializer. Note that the payload will be bigger:
+This function has a first argument of type `File` that is the folder that will store sessions (it will be created
+if it doesn't exist already).
+
+There is also an optional cache argument, which when set, will keep a 60-second in-memory cache to prevent
+calling the OS and reading the session from disk each time.
+
+{% comment %}
+### Storing a session id in a cookie, and storing session contents in redis
+{: #redisStorage }
+
+> <https://github.com/ktorio/ktor/pull/504>{: target="_blank"}
 
 ```kotlin
-cookie<MySession>("SESSION") {
-    serializer = gsonSessionSerializer()
+val redis = RedisClient()
+install(Sessions) {
+    val cookieName = "SESSION"
+    val sessionStorage = RedisSessionStorage(redis, ttlSeconds = 7 * 24 * 3_600) // Sessions lasts up to 7 days
+    cookie<TestSession>(cookieName, sessionStorage)
 }
 ```
 
-This serializes requires the artifact `io.ktor:ktor-gson:$ktor_version`.
-{: .note}
+{% include artifact.html kind="class" class="io.ktor.sessions.RedisSessionStorage" artifact="io.ktor:ktor-server-session-redis:$ktor_version" %}
+
+{% endcomment %}
 
 ## Extending
-{: #extending}
+{: #extending }
 
-Sessions are designed to be extensible, allowing you to provide: custom serializers, transformers, and storage providers.
+Sessions are designed to be extensible, and there are some cases where you might want to further compose
+or change the default sessions behaviour.
 
-### Custom serializers
-{: #extending-serializers}
+For example by using custom encryption or authenticating algorithms for the transport value, or to store
+your session information server-side to a specific database.
 
-The Sessions API provides a `SessionSerializer` interface, that looks like this:
+You can define [custom transformers], [custom serializers] and [custom storages].
 
-```kotlin
-interface SessionSerializer {
-    fun serialize(session: Any): String
-    fun deserialize(text: String): Any
-}
-```
-
-This interface is for a generic serializer, and you can install it like this:
-
-```kotlin
-cookie<MySession>("NAME") {
-    serializer = MyCustomSerializer()
-}
-```
-
-So for example you can create a JSON session serializer using Gson:
-
-```kotlin
-class GsonSessionSerializer(val type: java.lang.reflect.Type, val gson: Gson = Gson(), configure: Gson.() -> Unit = {}) : SessionSerializer {
-    init {
-        configure(gson)
-    }
-
-    override fun serialize(session: Any): String = gson.toJson(session)
-    override fun deserialize(text: String): Any = gson.fromJson(text, type)
-}
-```
-
-And configuring it:
-
-```kotlin
-cookie<MySession>("NAME") {
-    serializer = GsonSessionSerializer(MySession::class.java)
-}
-```
-
-### Custom transform transformers
-{: #extending-transform-transformers}
-
-The Sessions API provides a `SessionTransportTransformer` interface, that looks like this:
-
-```kotlin
-interface SessionTransportTransformer {
-    fun transformRead(transportValue: String): String?
-    fun transformWrite(transportValue: String): String
-}
-```
-
-You can use these transformations to encrypt, authenticate, or transform the Payload.
-You have to implement that interface and add the transformer as usual:
-
-```kotlin
-cookie<MySession>("NAME") {
-    transform(MtSessionTransformer)
-}
-```
-
-### Custom storages
-{: #extending-storages}
-
-The Sessions API provides a `SessionStorage` interface, that looks like this:
-
-```kotlin
-interface SessionStorage {
-    suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit)
-    suspend fun invalidate(id: String)
-    suspend fun <R> read(id: String, consumer: suspend (ByteReadChannel) -> R): R
-}
-```
-
-All three functions are marked as `suspend` and are designed to be fully asynchronous
-and use `ByteWriteChannel` and `ByteReadChannel` from `kotlinx.coroutines.io` that provide
-APIs for reading and writing from an asynchronous Channel.
-
-In your implementations, you have to call the callbacks providing a ByteWriteChannel and a ByteReadChannel
-that you have to provide: it is your responsibility to open and close them.
-You can read more about `ByteWriteChannel` and `ByteReadChannel` in their libraries documentation.
-If you just need to load or store a ByteArray, you can use this snippet which provides a simplified session storage:
-
-```kotlin
-abstract class SimplifiedSessionStorage : SessionStorage {
-    abstract suspend fun read(id: String): ByteArray?
-    abstract suspend fun write(id: String, data: ByteArray?): Unit
-
-    override suspend fun invalidate(id: String) {
-        write(id, null)
-    }
-
-    override suspend fun <R> read(id: String, consumer: suspend (ByteReadChannel) -> R): R {
-        val data = read(id) ?: throw NoSuchElementException("Session $id not found")
-        return consumer(ByteReadChannel(data))
-    }
-
-    override suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit) {
-        return provider(reader(coroutineContext, autoFlush = true) {
-            write(id, channel.readAvailable())
-        }.channel)
-    }
-}
-
-suspend fun ByteReadChannel.readAvailable(): ByteArray {
-    val data = ByteArrayOutputStream()
-    val temp = ByteArray(1024)
-    while (!isClosedForRead) {
-        val read = readAvailable(temp)
-        if (read <= 0) break
-        data.write(temp, 0, read)
-    }
-    return data.toByteArray()
-}
-```
-{: .compact}
-
-With this simplified storage you only have to implement two simpler methods:
-
-```kotlin
-abstract class SimplifiedSessionStorage : SessionStorage {
-    abstract suspend fun read(id: String): ByteArray?
-    abstract suspend fun write(id: String, data: ByteArray?): Unit
-}
-```
-
-So for example, a redis session storage would look like this:
-
-```kotlin
-class RedisSessionStorage(val redis: Redis, val prefix: String = "session_", val ttlSeconds: Int = 3600) :
-    SimplifiedSessionStorage() {
-    private fun buildKey(id: String) = "$prefix$id"
-
-    override suspend fun read(id: String): ByteArray? {
-        val key = buildKey(id)
-        return redis.get(key)?.unhex?.apply {
-            redis.expire(key, ttlSeconds) // refresh
-        }
-    }
-
-    override suspend fun write(id: String, data: ByteArray?) {
-        val key = buildKey(id)
-        if (data == null) {
-            redis.del(buildKey(id))
-        } else {
-            redis.set(key, data.hex)
-            redis.expire(key, ttlSeconds)
-        }
-    }
-}
-```
-
-## Invalidating Client-side sessions
-{: #invalidating-client-sessions }
-
-Since client-side sessions can't be invalidated directly like server sessions. You can manually mark an expiration
-time for the session by including an expiration timestamp as part of your session payload.
-
-For example:
-
-```kotlin
-data class MyExpirableSession(val name: String, val expiration: Long)
-
-fun Application.main() {
-    routing {
-        get("/user/panel") {
-            val session = call.getMyExpirableSession()
-            call.respondText("Welcome ${session.name}")
-        }
-    }
-}
-
-fun ApplicationCall.getMyExpirableSession(): MyExpirableSession {
-    val session = sessions.get<MyExpirableSession>() ?: error("No session found")
-    if (System.currentTimeMillis() > session.expiration) {
-        error("Session expired")
-    }
-    return session
-}
-```
+[custom transformers]: /features/sessions/transformers.html
+[custom serializers]: /features/sessions/serializers.html
+[custom storages]: /features/sessions/storages.html

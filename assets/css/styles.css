@@ -1670,6 +1670,7 @@ code.highlighter-rouge {
 .note.artifact:before { content: "ARTIFACT"; }
 .note.api:before { content: "API"; }
 .note.experimental:before { content: "EXPERIMENTAL"; }
+.note.summarizing:before { content: "SUMMARIZING"; }
 .note.example:before { content: "EXAMPLE"; }
 .note.performance:before { content: "PERFORMANCE NOTE"; font-weight: bold; }
 .note.security:before { content: "SECURITY NOTE"; font-weight: bold; }
