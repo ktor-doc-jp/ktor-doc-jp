@@ -68,6 +68,13 @@ layout: default
                 <div id="doc-header" class="doc-header">
                     <h1 class="doc-title" id="">{{page.caption}}</h1>
                     <!--  <div class="meta"><i class="fa fa-clock-o"></i> Last updated: Jan 25th, 2016</div>-->
+
+                    <div style="float: right;position:relative;top:-0.6em;">
+                        <a href="https://github.com/ktorio/ktorio.github.io/edit/master/{{ page.path }}" class="btn btn-default" target="_blank">
+                            <i class="fa fa-github" aria-hidden="true" style="font-size:1.5em;"></i> Edit Page
+                        </a>
+                    </div>
+
                     {% if page.status != 'todo' %}
                     <p>{% include estimated-read-time.html %}</p>
                     {% endif %}
