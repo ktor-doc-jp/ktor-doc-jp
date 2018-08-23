@@ -140,6 +140,7 @@ Sending plain text:
 * `call.respondText("p { background: red; }", contentType = ContentType.Text.CSS, status = HttpStatusCode.OK) { ... }` - Sending a text specifying the ContentType, the HTTP Status and configuring the [OutgoingContent](#outgoing-content)
 * `call.respondText { "string" }` - Responding a string with a suspend provider
 * `call.respondText(contentType = ..., status = ...) { "string" }` - Responding a string with a suspend provider
+* `call.respond(TextContent("{}", ContentType.Application.Json))` - Responding a string without adding a charset to the `Content-Type` 
 
 Sending byte arrays:
 
