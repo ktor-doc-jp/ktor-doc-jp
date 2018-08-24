@@ -18,11 +18,11 @@ Using the `static` function, we can tell Ktor that we want certain URIs to be tr
 See [Defining a custom root folder](#defining-a-custom-root-folder) to set a different root. 
       
 ```kotlin
-    routing {
-        static("static") {
-            files("css") 
-        }
+routing {
+    static("static") {
+        files("css") 
     }
+}
 ```
 
 The example the above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
@@ -35,15 +35,15 @@ In addition to folders, we can also include specific files using `file`, which c
 
  
 ```kotlin
-    routing {
-        static("static") {
-            files("css")
-            files("js")
-            file("image.png")
-            file("random.txt", "image.png")
-            default("index.html")
-        }
+routing {
+    static("static") {
+        files("css")
+        files("js")
+        file("image.png")
+        file("random.txt", "image.png")
+        default("index.html")
     }
+}
 ```
 
 We can also have default files that can be served using `default`. For instance, on calling
@@ -55,10 +55,10 @@ We can also have default files that can be served using `default`. For instance,
 To specify a different root folder, one other than the working directory, we set the value of `staticRootFolder` which expects a type `File`.
 
 ```kotlin
-    static("custom") {
-        staticRootFolder = File("/system/folder/docs")
-        files("public")
-    }
+static("custom") {
+    staticRootFolder = File("/system/folder/docs")
+    files("public")
+}
 ```
 
 ### Defining subroutes
@@ -66,12 +66,12 @@ To specify a different root folder, one other than the working directory, we set
 We can also define sub-routes, i.e. `/static/themes` for instance
 
 ```kotlin
-    static("static") {
-        files("css")
-        static("themes") {
-            files("data")
-        }
+static("static") {
+    files("css")
+    static("themes") {
+        files("data")
     }
+}
 ```
 
 ### Serving embedded resources
@@ -80,10 +80,10 @@ If you embed your static content as resources into your application, you can ser
 functions:
 
 ```kotlin
-    static("static") {
-        resources("css")
-        resource("favicon.ico")
-    }
+static("static") {
+    resources("css")
+    resource("favicon.ico")
+}
 ```
 
 There is also `defaultResource` similar to `default` for serving a default page for a folder, 
@@ -104,9 +104,25 @@ to each file type is obtained from the `mimelist.csv` resource file which is loc
 The function `static` is defined as
 
 ```kotlin
-    fun Route.static(remotePath: String, configure: Route.() -> Unit) = route(remotePath, configure)
+fun Route.static(remotePath: String, configure: Route.() -> Unit) = route(remotePath, configure)
 ````
 
 which is essentially just another route definition. 
 
+### Handling HEAD requests in static content
+{: #head-requests }
 
+Ktor do not handle `HEAD` requests by default, thus the static content feature do not handle `HEAD` requests either.
+To automatically handle `HEAD` requests for each `GET` route you can install the [`AutoHeadResponse` feature](/features/autoheadresponse.html).
+
+```kotlin
+fun Application.main() {
+    // ...
+    install(AutoHeadResponse) 
+    // ...
+}
+```
+
+Not handling HEAD requests by default, means that if you use `curl -I` or its `curl --head` alias to a GET route
+of your Ktor backend without installing the AutoHeadResponse feature,
+[it would return a 404 Not Found](/quickstart/faq.html#curl-head-not-found).
