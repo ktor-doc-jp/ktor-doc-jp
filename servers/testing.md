@@ -107,6 +107,11 @@ withTestApplication({
 })
 ```
 
+## HttpsRedirect feature
+
+The HttpsRedirect changes how testing is performed.
+Check the [testing section of the HttpsRedirect feature](/features/https-redirect.html) for more information.
+
 ## Example
 
 See full example of application testing in [ktor-samples-testable](https://github.com/Kotlin/ktor/tree/master/ktor-samples/ktor-samples-testable).
