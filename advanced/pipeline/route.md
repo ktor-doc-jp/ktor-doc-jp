@@ -24,7 +24,7 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
     }
     
     // Configure this route with the block provided by the user
-    call(routeWithTimeout)
+    callback(routeWithTimeout)
 
     return routeWithTimeout
 }
