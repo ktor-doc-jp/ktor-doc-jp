@@ -7,10 +7,13 @@ keywords: attributes Passing information among interceptors dependency injector 
 
 Ktor offers an `Attributes` class that acts as a small typed instance container / dependency injector.
 
-The `ApplicationCall` contains a `attributes` property including an instance of this class.
+For the server, the `ApplicationCall` contains an `attributes` property including an instance of this class (`call.attributes`).
 The lifespan of this container is the call: since the request has started, until the response is completely sent.
 
 You can put as many attributes as required per call from an interceptor, and retrieve them later in another interceptor.
+
+In the case of the client, the `HttpRequest` also contains an `attributes` property.
+So from a `HttpClientCall` instance, you can access the attributes with `call.request.attributes`.
 
 ### Basic usage
 
@@ -24,13 +27,13 @@ val MyAttributeKey = AttributeKey<Int>("MyAttributeKey")
 You can later set the attributes with:
 
 ```kotlin
-call.attributes.put(MyAttributeKey, 10)
+attributes.put(MyAttributeKey, 10)
 ```
 
 And retrieve them in another interceptor by calling:
 
 ```kotlin
-call.attributes.get(MyAttributeKey)
+attributes.get(MyAttributeKey)
 ```
 
 ### API reference
