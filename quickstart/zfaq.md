@@ -222,3 +222,16 @@ routing {
 ```
 
 Ktor can automatically handle `HEAD` requests, but requires you to first install the [`AutoHeadResponse` feature](/features/autoheadresponse.html).
+
+## I get an infinite redirect when using the `HttpsRedirect` feature
+{: #infinite-redirect }
+
+The most probable cause is that your backend is behind a reverse-proxy or a load balancer, and that the reverse-proxy
+is making normal HTTP requests to your backend, thus the HttpsRedirect feature inside your Ktor backend believes
+that it is a normal HTTP request and responds with the redirect.
+
+Normally, reverse-proxies send some headers describing the original request (like it was https, or the original IP address),
+and there is a feature [`XForwardedHeaderSupport`](/features/forward-headers.html)
+to parse those headers so the [`HttpsRedirect`](/features/https-redirect.html) feature knows that the original request was HTTPS.
+ 
+
