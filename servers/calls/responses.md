@@ -3,6 +3,7 @@ title: Responses
 caption: Generating HTTP Responses  
 category: servers
 permalink: /servers/calls/responses.html
+keywords: Redirections Location header permanent redirect temporal redirect pushing http2 respondFile respondBytes respondText respond response downloads generating response sending response
 priority: 900
 redirect_from:
   - /servers/responses.html
