@@ -22,13 +22,13 @@ but it can be configured to be a `302 Found` redirect.
 ```kotlin
 fun Application.main() {
     install(HttpsRedirect)
-    // install(XForwardedHeaderSupport) // Required when behind a reverse-proxy
+    // install(XForwardedHeadersSupport) // Required when behind a reverse-proxy
 }
 ```
 
 The code above installs the HttpsRedirect feature with the default configuration.
 
-When behind a reverse-proxy, you will need to install the `ForwardedHeaderSupport` or the `XForwardedHeaderSupport`
+When behind a reverse-proxy, you will need to install the `ForwardedHeaderSupport` or the `XForwardedHeadersSupport`
 feature, for the `HttpsRedirect` feature to properly detect HTTPS requests.
 {: .note}
 
@@ -114,5 +114,5 @@ that the `HttpsRedirect` feature is installed and other things that you are not 
 
 #### I get an infinite redirect when using this feature
 
-Have you installed the `XForwardedHeaderSupport` or the `ForwardedHeaderSupport` feature?
+Have you installed the `XForwardedHeadersSupport` or the `ForwardedHeaderSupport` feature?
 Check [this FAQ entry](/quickstart/faq.html#infinite-redirect) for more details.
