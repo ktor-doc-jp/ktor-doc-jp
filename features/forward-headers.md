@@ -1,19 +1,19 @@
 ---
 title: ForwardedHeaderSupport
-caption: ForwardedHeaderSupport and XForwardedHeadersSupport
+caption: ForwardedHeaderSupport and XForwardedHeaderSupport
 category: features
 permalink: /features/forward-headers.html
 feature:
     artifact: io.ktor:ktor-server-core:$ktor_version
     class: io.ktor.features.ForwardedHeaderSupport
-    class2: io.ktor.features.XForwardedHeadersSupport
+    class2: io.ktor.features.XForwardedHeaderSupport
 ---
 
 This feature allows you to handle reverse proxy headers to get information about the original
 request when it's behind a proxy.
 
 * `ForwardedHeaderSupport` handles the standard `Forwarded` header ([RFC 7239](https://tools.ietf.org/html/rfc7239))
-* `XForwardedHeadersSupport` handles the non-standard (but standard de-facto) `X-Forwarded-Host`/`X-Forwarded-Server`, `X-Forwarded-For`, `X-Forwarded-By`, `X-Forwarded-Proto`/`X-Forwarded-Protocol` and `X-Forwarded-SSL`/`Front-End-Https`
+* `XForwardedHeaderSupport` handles the non-standard (but standard de-facto) `X-Forwarded-Host`/`X-Forwarded-Server`, `X-Forwarded-For`, `X-Forwarded-By`, `X-Forwarded-Proto`/`X-Forwarded-Protocol` and `X-Forwarded-SSL`/`Front-End-Https`
 
 Only install these features if you have a reverse proxy supporting these headers serving your requests.
 In other cases, a client will be able to manipulate these headers.
@@ -40,7 +40,7 @@ install(ForwardedHeaderSupport)
 or 
 
 ```kotlin
-install(XForwardedHeadersSupport)
+install(XForwardedHeaderSupport)
 ```
 
 ## Request information

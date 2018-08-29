@@ -90,7 +90,7 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 {: #proxy-ip }
 
 > The property `call.request.origin` gives connection information about the original caller (the proxy)
-> if the proxy provides proper headers, and the feature `XForwardedHeadersSupport` is installed.
+> if the proxy provides proper headers, and the feature `XForwardedHeaderSupport` is installed.
 
 ## I get the error 'java.lang.IllegalStateException: No instance for key AttributeKey: Locations'
 {: #no-attribute-key-locations }
@@ -231,7 +231,7 @@ is making normal HTTP requests to your backend, thus the HttpsRedirect feature i
 that it is a normal HTTP request and responds with the redirect.
 
 Normally, reverse-proxies send some headers describing the original request (like it was https, or the original IP address),
-and there is a feature [`XForwardedHeadersSupport`](/features/forward-headers.html)
+and there is a feature [`XForwardedHeaderSupport`](/features/forward-headers.html)
 to parse those headers so the [`HttpsRedirect`](/features/https-redirect.html) feature knows that the original request was HTTPS.
  
 

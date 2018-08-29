@@ -55,11 +55,11 @@ val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
 
 You can also access the information about the connection point (either local, or original
-if under a proxy (if the [`XForwardedHeadersSupport` feature](/features/forward-headers.html) is installed),
+if under a proxy (if the [`XForwardedHeaderSupport` feature](/features/forward-headers.html) is installed),
 and the proxy sent header information):
 
 * `val local : RequestConnectionPoint = request.local` - local information 
-* `val origin: RequestConnectionPoint = request.origin` - local / using proxy headers if [`XForwardedHeadersSupport` feature](/features/forward-headers.html) is installed.
+* `val origin: RequestConnectionPoint = request.origin` - local / using proxy headers if [`XForwardedHeaderSupport` feature](/features/forward-headers.html) is installed.
 * `val uri: String = request.uri` - Short cut for `origin.uri`
 * `val document: String = request.document()` - The last component after '/' of the uri
 * `val path: String = request.path()` - The uri without the query string
