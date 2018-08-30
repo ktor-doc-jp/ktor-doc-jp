@@ -235,3 +235,8 @@ and there is a feature [`XForwardedHeaderSupport`](/features/forward-headers.htm
 to parse those headers so the [`HttpsRedirect`](/features/https-redirect.html) feature knows that the original request was HTTPS.
  
 
+## I get a `UnsafeHeaderException: Header Content is controlled by the engine and cannot be set explicitly` exception
+{: #UnsafeHeaderException }
+
+Check the [0.9.4 migration guide](/quickstart/migration/0.9.4.html#UnsafeHeaderException) for more information about how to fix it.
+
