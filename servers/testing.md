@@ -114,8 +114,8 @@ Check the [testing section of the HttpsRedirect feature](/features/https-redirec
 
 ## Example
 
-See full example of application testing in [ktor-samples-testable](https://github.com/Kotlin/ktor/tree/master/ktor-samples/ktor-samples-testable).
-Also, most [`ktor-samples`](https://github.com/Kotlin/ktor/) modules provide
+See full example of application testing in [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable).
+Also, most [`ktor-samples`](https://github.com/ktorio/ktor-samples) modules provide
 examples of how to test specific functionalities.
 
 **build.gradle:**
