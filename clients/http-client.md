@@ -377,7 +377,8 @@ to understand the interception points available.
 ## Supported engines
 {: #engines}
 
-Ktor HttpClient lets you configure the parameters of each engine by calling `Engine.config { }`.
+Ktor HttpClient lets you configure the parameters of each engine by calling `Engine.config { }`, but since 0.9.4,
+the preferred way is to use `HttpClient(MyHttpEngine) { engine { ... } }` instead.
 
 Every engine config has two common properties that can be set:
 
