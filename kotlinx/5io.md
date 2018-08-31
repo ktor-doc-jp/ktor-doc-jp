@@ -24,7 +24,7 @@ Kotlinx-io is OpenSource and you can find it at GitHub: <https://github.com/Kotl
 * [ByteOrder](/kotlinx/io/encoding/byteorder.html) - To express which Endian (Little or Big) to use for converting numbers from/to octets.
 
 ## I/O:
-* [Channels](/kotlinx/io/io/channels.html) - Asynchronous streams without seeking support, consumed once.
+* [Byte Channels](/kotlinx/io/io/channels.html) - Asynchronous byte streams without seeking support, consumed once.
 * [Input/Output](/kotlinx/io/io/input-output.html) - Interfaces with the functionality exposed by IoBuffers and Packets.
 * [IoBuffer](/kotlinx/io/io/iobuffer.html) - A seekable View of a fixed buffer/memory chunk similar to Java’s ByteBuffer.
 * [Packets](/kotlinx/io/io/packets.html) - Synchronous streams without seeking support, constructed once with a potentially unknown size, consumed once.

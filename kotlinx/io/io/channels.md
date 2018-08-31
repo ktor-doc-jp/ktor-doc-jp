@@ -1,6 +1,6 @@
 ---
-title: Channels
-caption: Channels
+title: Byte Channels
+caption: Byte Channels
 category: kotlinx
 toc: true
 priority: 1
