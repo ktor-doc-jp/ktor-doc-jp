@@ -1,0 +1,18 @@
+<h3>Subpages</h3>
+
+<ul>
+    {% assign entries = site.pages | sort: "path" %}
+    {% assign sorted_category_pages = entries | sort: 'title', 'last' %}
+    {% assign sorted_category_pages = sorted_category_pages | sort: 'priority', 'last' %}
+
+    {% for entry in sorted_category_pages %}
+        {% assign slug = entry.url | split: "/" | last %}
+        {% assign current = entry.url | remove: slug %}
+
+        {% if current == include.context %}
+        <li>
+            <a href="{{ entry.url }}">{{ entry.title }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
