@@ -24,15 +24,15 @@ Kotlinx-io is OpenSource and you can find it at GitHub: <https://github.com/Kotl
 * [ByteOrder](/kotlinx/io/encoding/byteorder.html) - To express which Endian (Little or Big) to use for converting numbers from/to octets.
 
 ## I/O:
-* [IoBuffer](/kotlinx/io/io/iobuffer.html) - A seekable View of a fixed buffer/memory chunk similar to Java’s ByteBuffer.
 * [Channels](/kotlinx/io/io/channels.html) - Asynchronous streams without seeking support, consumed once.
-* [Packets](/kotlinx/io/io/packets.html) - Synchronous streams without seeking support, constructed once, consumed once.
+* [Input/Output](/kotlinx/io/io/input-output.html) - Interfaces with the functionality exposed by IoBuffers and Packets.
+* [IoBuffer](/kotlinx/io/io/iobuffer.html) - A seekable View of a fixed buffer/memory chunk similar to Java’s ByteBuffer.
+* [Packets](/kotlinx/io/io/packets.html) - Synchronous streams without seeking support, constructed once with a potentially unknown size, consumed once.
 
 ## Tools:
-* [ObjectPool](/kotlinx/io/tools/objectpool.html) - Generic, lock-free and concurrent ObjectPool.
+* [ObjectPool](/kotlinx/io/tools#objectpool) - Generic, lock-free and concurrent ObjectPool.
 
 ## Platforms:
 * [JVM](/kotlinx/io/platforms.html#jvm) - Tools for conversions between CIO and NIO Buffers, and Java Streams.
 * [JavaScript](/kotlinx/io/platforms.html#js) - Tools for TypedArrays, WebSockets, MessageEvent and XMLHttpRequest.
 * [Native](/kotlinx/io/platforms.html#native) - *No special APIs to interact with K/N primitives yet*
-

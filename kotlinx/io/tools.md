@@ -6,6 +6,7 @@ toc: false
 ---
 
 ## ObjectPool
+{: #objectpool }
 
 `ObjectPool` is a general purpose lock-free concurrent-safe object pool. It is leak-safe: all object that hasn't been
 recycled but collected by GC do not cause any issues with a pool but only allocation penalty.
