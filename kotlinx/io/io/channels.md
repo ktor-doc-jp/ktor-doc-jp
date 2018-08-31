@@ -19,6 +19,7 @@ interface ByteReadChannel {
     val isClosedForRead: Boolean
     val isClosedForWrite: Boolean
     var readByteOrder: ByteOrder
+
     suspend fun readAvailable(dst: ByteArray, offset: Int, length: Int): Int
     suspend fun readAvailable(dst: IoBuffer): Int
     suspend fun readAvailable(dst: ArrayBuffer, offset: Int, length: Int): Int
@@ -36,12 +37,13 @@ interface ByteReadChannel {
     suspend fun readBoolean(): Boolean
     suspend fun readDouble(): Double
     suspend fun readFloat(): Float
-    fun readSession(consumer: ReadSession.() -> Unit)
     suspend fun readSuspendableSession(consumer: suspend SuspendableReadSession.() -> Unit)
     suspend fun <A : Appendable> readUTF8LineTo(out: A, limit: Int): Boolean
     suspend fun readUTF8Line(limit: Int): String?
-    fun cancel(cause: Throwable?): Boolean
     suspend fun discard(max: Long): Long
+
+    fun readSession(consumer: ReadSession.() -> Unit)
+    fun cancel(cause: Throwable?): Boolean
 
     companion object {
         val Empty: ByteReadChannel
@@ -49,6 +51,40 @@ interface ByteReadChannel {
 }
 ```
 
+```kotlin
+interface ReadSession {
+    val availableForRead: Int
+    fun discard(n: Int): Int
+    fun request(atLeast: Int = 1): IoBuffer?
+}
+
+interface SuspendableReadSession : ReadSession {
+    suspend fun await(atLeast: Int = 1): Boolean
+}
+```
+
 ## ByteWriteChannel
 
-WIP
+```kotlin
+interface ByteWriteChannel {
+    val availableForWrite: Int
+    val isClosedForWrite: Boolean
+    val autoFlush: Boolean
+    var writeByteOrder: ByteOrder
+    val closedCause: Throwable?
+    suspend fun writeAvailable(src: ByteArray, offset: Int, length: Int): Int
+    suspend fun writeAvailable(src: IoBuffer): Int
+    suspend fun writeFully(src: ByteArray, offset: Int, length: Int)
+    suspend fun writeFully(src: IoBuffer)
+    suspend fun writeSuspendSession(visitor: suspend WriterSuspendSession.() -> Unit)
+    suspend fun writePacket(packet: ByteReadPacket)
+    suspend fun writeLong(l: Long)
+    suspend fun writeInt(i: Int)
+    suspend fun writeShort(s: Short)
+    suspend fun writeByte(b: Byte)
+    suspend fun writeDouble(d: Double)
+    suspend fun writeFloat(f: Float)
+    fun close(cause: Throwable?): Boolean
+    fun flush()
+}
+```

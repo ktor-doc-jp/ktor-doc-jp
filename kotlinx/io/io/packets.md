@@ -7,7 +7,8 @@ priority: 2
 ---
 
 Packets are small chunks of data representing messages, packets or chunks of information.
-They are built and consumed synchronously.
+They are built and consumed synchronously. And they implement the Input/Output interfaces.
+In difference with IOBuffers, you can build packets without having to know their size beforehand. 
 
 ## Building packets
 
@@ -15,7 +16,7 @@ They are built and consumed synchronously.
 fun buildPacket(headerSizeHint: Int = 0, block: BytePacketBuilder.() -> Unit): ByteReadPacket
 fun BytePacketBuilder(headerSizeHint: Int = 0): BytePacketBuilder
 
-class BytePacketBuilder(headerSizeHint: Int, pool: ObjectPool<IoBuffer>) {
+class BytePacketBuilder(headerSizeHint: Int, pool: ObjectPool<IoBuffer>) : Appendable, Output {
     val size: Int
     val isEmpty: Boolean
     val isNotEmpty: Boolean
@@ -65,3 +66,58 @@ val PACKET_MAX_COPY_SIZE: Int
 ```
 
 ## Reading packets
+
+```kotlin
+class ByteReadPacketBase(head: IoBuffer, pool: ObjectPool<IoBuffer>) : Input {
+    companion object {
+        val Empty: ByteReadPacket
+        val ReservedSize: Int
+    }
+    
+    var byteOrder: ByteOrder = ByteOrder.BIG_ENDIAN
+
+    val remaining: Long
+    val isEmpty: Boolean
+    val isNotEmpty: Boolean
+    val endOfInput: Boolean
+    
+    fun canRead(): Boolean
+    fun hasBytes(n: Int): Boolean
+    fun copy(): ByteReadPacket
+    fun release()
+    fun close()
+
+    fun readByte(): Byte 
+    fun readShort(): Short
+    fun readFloat(): Float
+    fun readDouble(): Double
+    fun readInt(): Int
+    fun readLong(): Long
+    fun readAvailable(dst: ByteArray): Int
+    fun readAvailable(dst: ByteArray, offset: Int, length: Int): Int
+    fun readFully(dst: ByteArray, offset: Int, length: Int)
+    fun discard(n: Int)
+    fun discardExact(n: Int)
+    fun readFully(dst: ShortArray, offset: Int, length: Int)
+    fun readAvailable(dst: ShortArray, offset: Int, length: Int): Int
+    fun readFully(dst: IntArray, offset: Int, length: Int)
+    fun readAvailable(dst: IntArray, offset: Int, length: Int): Int
+    fun readFully(dst: LongArray, offset: Int, length: Int)
+    fun readAvailable(dst: LongArray, offset: Int, length: Int): Int
+    fun readFully(dst: FloatArray, offset: Int, length: Int)
+    fun readAvailable(dst: FloatArray, offset: Int, length: Int): Int
+    fun readFully(dst: DoubleArray, offset: Int, length: Int)
+    fun readAvailable(dst: DoubleArray, offset: Int, length: Int): Int
+    fun readFully(dst: IoBuffer, length: Int)
+    fun readAvailable(dst: IoBuffer, length: Int): Int
+    fun tryPeek(): Int
+    fun discard(n: Long): Long
+    fun readCbuf(cbuf: CharArray, off: Int, len: Int): Int
+    fun readText(out: Appendable, min: Int = 0, max: Int = Int.MAX_VALUE): Int
+    fun readTextExact(out: Appendable, exactCharacters: Int)
+    fun readText(min: Int = 0, max: Int = Int.MAX_VALUE): String
+    fun readTextExact(exactCharacters: Int): String
+}
+
+class EOFException(message: String) : Exception
+```
