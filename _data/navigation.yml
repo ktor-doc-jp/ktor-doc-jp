@@ -5,7 +5,7 @@ main:
     icon_url: '/assets/images/icon_quick-start.svg'
     summary: Setting up the environment and starting up
     color: green
-    icon: gift
+    icon: icon_gift
 
   - title: Servers
     category: servers
@@ -13,7 +13,7 @@ main:
     icon_url: '/assets/images/icon_servers.svg'
     summary: Creating web applications and services
     color: purple
-    icon: cloud
+    icon: icon_cloud
 
   - title: Clients
     category: clients
@@ -21,7 +21,7 @@ main:
     icon_url: '/assets/images/icon_clients.svg'
     summary: Connecting to services and applications
     color: orange
-    icon: link_alt
+    icon: icon_link_alt
 
   - title: Features
     category: features
@@ -29,15 +29,15 @@ main:
     icon_url: '/assets/images/icon_features.svg'
     summary: Customizing applications with extensible features
     color: blue
-    icon: tools
+    icon: icon_tools
 
   - title: Kotlinx
     category: kotlinx
     url: /kotlinx/index.html
-    icon_url: '/assets/images/icon_advanced.svg'
+    icon_url: '/assets/images/icon_kotlinx.svg'
     summary: Kotlinx libraries, a set of multiplatform libraries
     color: pink
-    icon: plus
+    icon: arrow_triangle-right_alt
 
   - title: Samples
     category: samples
@@ -45,7 +45,7 @@ main:
     icon_url: '/assets/images/icon_samples.svg'
     summary: Samples and open source projects
     color: primary
-    icon: toolbox_alt
+    icon: icon_toolbox_alt
 
   - title: Advanced
     category: advanced
@@ -53,4 +53,4 @@ main:
     icon_url: '/assets/images/icon_advanced.svg'
     summary: Advanced topics and implementation details
     color: red
-    icon: cone
+    icon: icon_cone

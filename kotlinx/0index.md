@@ -14,4 +14,4 @@ And coroutines are low-level too.
 These libraries expose a common standard API for multiplatform projects: exposing atomic operations working in all platforms,
 providing coroutine-aware asynchronous tools, or being able to serialize and deserialize from one platform to another.
 
-Kotlinx.* libraries are OpenSource and you can find them at <https://github.com/Kotlin/>
+Kotlinx.* (Kotlin eXtensions) libraries are OpenSource and you can find them at <https://github.com/Kotlin/>

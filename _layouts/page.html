@@ -21,7 +21,7 @@ layout: default
     <div class="container">
         <div class="branding">
             <h1 class="logo">
-                <span aria-hidden="true" class="icon icon_{{ section-icon }}"></span>
+                <span aria-hidden="true" class="icon {{ section-icon }}"></span>
                 <span class="text-highlight">{{ section-title }}</span>
                 {% unless section-is-main-page %}
                 <span class="text-bold">{{ page.title }}</span>
