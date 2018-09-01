@@ -82,7 +82,7 @@ You can mitigate this attack by:
 * Not placing user input (GET, POST or Header/Cookies parameters) as part of the response (either Headers or Bodies) mixed with secrets (including a `Set-Cookie` with a session_id).
 * Add a random amount of bytes to the output for example in an html page, you can just add `<!-- 100~500 random_bytes !-->` making it much harder to guess the secret for an attacker in a reasonable time.
 * Ensure that your website is **completely HTTPS and has HSTS enabled**, and adding a conditional header checking the Referrer page. (If you have a single page without HTTPS, the malicious attacker can use that page to inject code using the same domain as Referrer).
-* Adding [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery){target="_blank"} protection to your pages.
+* Adding [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} protection to your pages.
 
 ```kotlin
 application.install(Compression) {
