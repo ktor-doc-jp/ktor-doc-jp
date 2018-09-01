@@ -72,7 +72,7 @@ gzip {
 
 ### Security with HTTPS
 
-HTTPS with any kind of compression is vulnerable to the [BREACH](https://en.wikipedia.org/wiki/BREACH){target="_blank"} attack.
+HTTPS with any kind of compression is vulnerable to the [BREACH](https://en.wikipedia.org/wiki/BREACH){:target="_blank"} attack.
 This kind of attack allows a malicious attacker to guess a secret (like a session, an auth token, a password,
 or a credit card) from an encrypted HTTPS page in less than a minute.
 
