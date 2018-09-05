@@ -71,10 +71,14 @@ val call = client.request<String> {
 }
 ```
 
-### The `post` and `get` methods
+### The `get`, `post`, `put` and `delete` methods
 
 Similar to `request`, there are several extension methods to perform requests
-with the most common HTTP verbs: `GET` and `POST`.
+with the most common HTTP verbs: `GET`, `POST`, `PUT` and `DELETE`.
+
+`HEAD` and `OPTIONS` have special HTTP semantics, and they do not have shortcut methods, though you can you
+the request and call methods to perform requests with those verbs. 
+{: .note }
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
