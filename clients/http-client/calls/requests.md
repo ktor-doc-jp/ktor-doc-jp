@@ -44,6 +44,7 @@ We cannot live only on *get* requests, Ktor allows you to build complex
 requests with any of the HTTP verbs, with the flexibility to process responses in many ways.
 
 ### The `call` method
+{: #call-method }
 
 The HttpClient `call` method, returns an `HttpClientCall` and allows you to perform
 simple untyped requests.
@@ -59,6 +60,7 @@ println(call.response.readText())
 ```
 
 ### The `request` method
+{: #request-method }
 
 In addition to call, there is a `request` method for performing a typed request,
 [receiving a specific type](#receive) like String, HttpResponse, or an arbitrary class.
@@ -72,12 +74,13 @@ val call = client.request<String> {
 ```
 
 ### The `get`, `post`, `put` and `delete` methods
+{: #shortcut-methods }
 
 Similar to `request`, there are several extension methods to perform requests
 with the most common HTTP verbs: `GET`, `POST`, `PUT` and `DELETE`.
 
 `PATCH`, `HEAD` and `OPTIONS` have special HTTP semantics, and they do not have shortcut methods, though you can you
-the request and call methods to perform requests with those verbs. 
+the [`request`](#request-method) and [`call`](#call-method) methods to perform requests with those verbs. 
 {: .note }
 
 ```kotlin
