@@ -17,10 +17,10 @@
  */
 
 @file:MavenRepository("ktor", "https://kotlin.bintray.com/ktor")
-@file:DependsOn("io.ktor:ktor-server-netty:0.9.2")
-@file:DependsOn("io.ktor:ktor-client-core:0.9.2")
-@file:DependsOn("io.ktor:ktor-client-apache:0.9.2")
-@file:DependsOn("io.ktor:ktor-websockets:0.9.2")
+@file:DependsOn("io.ktor:ktor-server-netty:0.9.4")
+@file:DependsOn("io.ktor:ktor-client-core:0.9.4")
+@file:DependsOn("io.ktor:ktor-client-apache:0.9.4")
+@file:DependsOn("io.ktor:ktor-websockets:0.9.4")
 
 @file:EntryPoint("CheckLinks")
 
@@ -82,7 +82,12 @@ object CheckLinks {
 
 		if (url !in ids) {
 			val response = client.get<HttpResponse>(url)
-			val html = response.readText()
+			val html = try {
+				response.readText()
+			} catch (e: kotlinx.io.charsets.MalformedInputException) {
+				println("[warn] Binary: $url")
+				"" // A Binary or malformed file?
+			}
 			//println("Downloaded: $url")
 			//if (response.status.isOk()) {
 
