@@ -1,6 +1,7 @@
 ---
 title: Multiplatform
 category: clients
+permalink: /clients/http-client/multiplatform.html
 caption: Multiplatform Http Client 
 ---
 

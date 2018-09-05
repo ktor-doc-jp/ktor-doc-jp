@@ -1,6 +1,7 @@
 ---
 title: Testing
 category: clients
+permalink: /clients/http-client/testing.html
 caption: Testing Http Client (MockEngine) 
 ---
 
