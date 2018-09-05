@@ -23,20 +23,12 @@ main:
     color: orange
     icon: icon_link_alt
 
-  - title: Features
-    category: features
-    url: /features/index.html
-    icon_url: '/assets/images/icon_features.svg'
-    summary: Customizing applications with extensible features
-    color: blue
-    icon: icon_tools
-
   - title: Kotlinx
     category: kotlinx
     url: /kotlinx/index.html
     icon_url: '/assets/images/icon_kotlinx.svg'
     summary: Kotlinx libraries, a set of multiplatform libraries
-    color: pink
+    color: blue
     icon: arrow_triangle-right_alt
 
   - title: Samples
