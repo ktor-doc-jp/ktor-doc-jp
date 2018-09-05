@@ -42,38 +42,71 @@ object MigrateFeatures {
     })
 
     suspend fun migrateFeatures() {
-        migrateFolder(base["servers/features"]!!)
-        //for (item in base["servers/features"].list { _, name -> name.endsWith(".md") }) println(item)
+        migrateFolder(base["features"]!!, base["servers/features"]!!)
     }
 
-    suspend fun migrateFolder(folder: File) {
-        if (!folder.exists()) error("$folder do not exists")
+    suspend fun migrateFolder(fromFolder: File, toFolder: File) {
+        if (!fromFolder.exists()) error("$fromFolder do not exists")
 
-        val urlPath = folder.relativeTo(base)
+        val fromRelative = fromFolder.relativeTo(base)
+        val toRelative = toFolder.relativeTo(base)
 
-        for (item in folder.list().filter { it.endsWith(".md") }) {
-            val defaultPermalink = "/$urlPath/$item".replace(".md", ".html")
-            val file = folder[item]
+        println("Processing... $fromRelative -> $toRelative")
+
+        for (baseName in fromFolder.list()) {
+            val relativePath = "/$fromRelative/$baseName"
+            val defaultOldPermalink = relativePath.replace(".md", ".html")
+            val file = fromFolder[baseName]
+
+            if (file.isDirectory) {
+                migrateFolder(fromFolder[baseName], toFolder[baseName])
+                continue
+            }
+
+            if (!file.exists()) {
+                continue
+            }
+
+            if (!baseName.endsWith(".md") && !baseName.endsWith(".html")) {
+                println("  * $relativePath")
+                fromFolder[baseName].copyTo(toFolder[baseName], overwrite = true)
+                continue
+            }
+
+            println("  - $relativePath")
+
             //println("----------")
             //println(defaultPermalink)
             val lines = file!!.readLines()
             val info = parseFrontMatter(lines)
-            val oldPermalink = info["permalink"]?.toString() ?: defaultPermalink
-            val permalinkBasename = oldPermalink.substringAfterLast('/')
 
-            info["category"] = urlPath.path.substringBefore('/')
-            info["redirect_from"] = (((info["redirect_from"] as? List<String>?) ?: listOf()) + listOf(
-                oldPermalink
-            )).distinct()
-            info["permalink"] = "/$urlPath/$permalinkBasename"
-            if (info["children"] != null) {
-                info["children"] = "/$urlPath/$permalinkBasename".replace(".html", "")
+            // Only do stuff it has frontmatter
+            if (info != null) {
+                val oldPermalink = info["permalink"]?.toString() ?: defaultOldPermalink
+                val permalinkBasename = oldPermalink.substringAfterLast('/')
+                val newPermalink = "/$toRelative/$permalinkBasename"
+                val newCategory = toRelative.path.substringBefore('/')
+
+                info["category"] = newCategory
+                if (newPermalink != oldPermalink) {
+                    info["redirect_from"] = (((info["redirect_from"] as? List<String>?) ?: listOf()) + listOf(
+                        oldPermalink
+                    )).distinct()
+                }
+                if (info["permalink"] != null) {
+                    info["permalink"] = newPermalink
+                }
+                if (info["children"] != null) {
+                    info["children"] = "/$toRelative/$permalinkBasename".replace(".html", "") + "/"
+                }
+
+                val newLines = replaceFrontMatter(lines, info)
+                val newContent = newLines.joinToString("\n")
+
+                toFolder[baseName].ensureFolders().writeText(newContent)
+                //println(newContent)
+                //file.writeText(newContent)
             }
-
-            val newLines = replaceFrontMatter(lines, info)
-            val newContent = newLines.joinToString("\n")
-
-            file.writeText(newContent)
         }
     }
 
@@ -91,7 +124,7 @@ object MigrateFeatures {
         return lines
     }
 
-    fun parseFrontMatter(lines: List<String>): LinkedHashMap<String, Any?> {
+    fun parseFrontMatter(lines: List<String>): LinkedHashMap<String, Any?>? {
         if (lines.firstOrNull() == "---") {
             for (n in 1 until lines.size) {
                 if (lines[n] == "---") {
@@ -101,12 +134,15 @@ object MigrateFeatures {
                 }
             }
         }
-        return LinkedHashMap()
+        return null
     }
 }
 
-operator fun File?.get(name: String): File? = when {
-    this == null -> null
+operator fun File.get(name: String): File = when {
     !name.contains('/') -> File(this, name)
     else -> File(this, name.substringBefore('/'))[name.substringAfter('/', "")]
+}
+
+fun File.ensureFolders(): File = this.apply {
+    this.parentFile.mkdirs()
 }
