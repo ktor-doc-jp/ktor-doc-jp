@@ -8,8 +8,10 @@
 {% assign artifact_name = artifact_parts[1] %}
 {% assign artifact_version = artifact_parts[2] %}
 
-<div class="note artifact artifact-small">
-    <div id="artifact">
+{% capture _ignored %}{% increment autoid %}{% endcapture %}
+
+<div class="note artifact artifact-small" id="artifact-info-{{ autoid }}">
+    <div id="artifact-{{ autoid }}">
         {% if include.kind %}
         This {{ include.kind }} is defined
         {% else %}
@@ -38,11 +40,11 @@
     </div>
     {% if artifact_required %}
 <ul class="nav nav-tabs artifact-tabs">
-    <li role="presentation" class="active"><a data-toggle="tab" href="#artifact-gradle">Gradle</a></li>
-    <li role="presentation"><a data-toggle="tab" href="#artifact-maven">Maven</a></li>
+    <li role="presentation" class="active"><a data-toggle="tab" href="#artifact-gradle-{{ autoid }}">Gradle</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#artifact-maven-{{ autoid }}">Maven</a></li>
 </ul>
 <div class="tab-content" style="background: white; padding: 8px; border: 1px solid #ddd; border-top: transparent; position: relative; top: -1px;">
-<div id="artifact-gradle" class="tab-pane fade in active">
+<div id="artifact-gradle-{{ autoid }}" class="tab-pane fade in active">
     {% if include.test %}
     <div><code style="white-space: pre;font-size: 0.9em">dependencies {
     testCompile "{{ include.artifact }}"
@@ -55,7 +57,7 @@
 </code></div>
     {% endif %}
 </div>
-<div id="artifact-maven" class="tab-pane fade in">
+<div id="artifact-maven-{{ autoid }}" class="tab-pane fade in">
 <div><code style="white-space: pre;font-size: 0.9em">&lt;project&gt;
     ...
     &lt;dependencies&gt;
