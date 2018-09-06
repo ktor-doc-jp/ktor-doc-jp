@@ -23,6 +23,8 @@ To use this feature, you need to include `io.ktor:ktor-client-json` artifact.
 The `JsonFeature` has a default serializer based on a ServiceLoader on JVM,
 and a serializer based on [kotlinx.serialization](/kotlinx/serialization.html) for Native.
 
+You can also get the default serializer by calling `io.ktor.client.features.json.defaultSerializer()`
+
 ### Gson
 {: #gson }
 
