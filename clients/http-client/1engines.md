@@ -5,8 +5,31 @@ permalink: /clients/http-client/engines.html
 caption: HTTP Client Engines 
 ---
 
-## Supported engines
-{: #engines}
+Ktor HTTP Client has a common interface for performing HTTP Requests,
+but allows to specify an engine that does the internal job.
+Different engines has different configurations, dependencies an supporting features.
+
+**Table of contents:**
+
+* TOC
+{:toc}
+
+## Default engine
+{: #default}
+
+By calling to the `HttpClient` method without specifying an engine, it uses a default engine.
+
+```kotlin
+val client = HttpClient()
+```
+
+In the case of the JVM, the default engine is resolved with a ServiceLoader, getting the first one available.
+Thus depends on the artifacts you have included.
+
+For native, it uses the predefined one.
+
+## Configuring engines
+{: #configuring}
 
 Ktor HttpClient lets you configure the parameters of each engine by calling `Engine.config { }`, but since 0.9.4,
 the preferred way is to use `HttpClient(MyHttpEngine) { engine { ... } }` instead.
@@ -29,6 +52,8 @@ val client = HttpClient(MyHttpEngine) {
 You can also adjust maximum total connections and maximum connections
 per route in Apache and CIO clients (but not Jetty).
 
+## JVM
+
 ### Apache
 {: #apache}
 
@@ -39,7 +64,7 @@ proxies among other things it is supported by `org.apache.httpcomponents:httpasy
 A sample configuration would look like:
 
 ```kotlin
-val client = HttpClient(Apache){
+val client = HttpClient(Apache) {
     engine {
         followRedirects = true  // Follow HTTP Location redirects - default false. It uses the default number of redirects defined by Apache's HttpClient that is 50.
 
@@ -63,9 +88,7 @@ val client = HttpClient(Apache){
 {: .compact}
 
 
-Artifact `io.ktor:ktor-client-apache:$ktor_version`.\\
-Transitive dependency: `org.apache.httpcomponents:httpasyncclient:4.1.3`.
-{: .note.artifact }
+{% include artifact.html kind="engine" class="io.ktor.client.engine.apache.Apache" artifact="org.apache.httpcomponents:httpasyncclient" %}
 
 ### CIO
 {: #cio}
@@ -78,7 +101,7 @@ CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
 A sample configuration would look like:
 
 ```kotlin
-val client = HttpClient(CIO){
+val client = HttpClient(CIO) {
     engine {
         maxConnectionsCount = 1000 // Maximum number of socket connections.
         endpoint.apply {
@@ -93,12 +116,10 @@ val client = HttpClient(CIO){
 ```
 {: .compact}
 
-Artifact `io.ktor:ktor-client-cio:$ktor_version`.\\
-No additional transitive dependencies.
-{: .note.artifact }
+{% include artifact.html kind="engine" class="io.ktor.client.engine.cio.CIO" artifact="io.ktor:ktor-client-cio:$ktor_version" %}
 
 ### Jetty
-{: .jetty}
+{: #jetty}
 
 Jetty provides an additional `sslContextFactory` for configuring. It only supports HTTP/2 for now.
 
@@ -112,6 +133,68 @@ val client = HttpClient(Jetty) {
 }
 ```
 
-Artifact `io.ktor:ktor-client-jetty:$ktor_version`. \\
-Transitive dependency: `org.eclipse.jetty.http2:http2-client:9.4.8.v20171121`.
-{: .note.artifact }
+{% include artifact.html kind="engine" class="io.ktor.client.engine.jetty.Jetty" artifact="io.ktor:ktor-client-jetty:$ktor_version" transitive="org.eclipse.jetty.http2:http2-client" %}
+
+## JVM and Android
+
+### OkHttp
+{: #okhttp }
+
+Since Ktor 0.9.4, there is a engine based on OkHttp.
+
+```kotlin
+val client = HttpClient(OkHttp) {
+    engine {
+        // https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.Builder.html
+        config { // this: OkHttpClient.Builder ->
+            // ...
+            followRedirects(true)
+            // ...
+        }    
+        
+        // https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html
+        addInterceptor(interceptor)
+        addNetworkInterceptor(interceptor)
+
+    }
+    
+}
+```
+
+{% include artifact.html kind="engine" class="io.ktor.client.engine.okhttp.OkHttp" artifact="io.ktor:ktor-client-okhttp:$ktor_version" transitive="com.squareup.okhttp3:okhttp" %}
+
+## Android
+{: #android }
+
+The Android engine, doesn't have additional dependencies, and uses a ThreadPool with a normal HttpURLConnection,
+to perform the requests. And can be configured like this:
+
+```kotlin
+val client = HttpClient(Android) {
+    engine {
+        connectTimeout = 100_000
+        socketTimeout = 100_000
+    }
+}
+```
+
+{% include artifact.html kind="engine" class="io.ktor.client.engine.android.Android" artifact="io.ktor:ktor-client-android:$ktor_version" %}
+
+## iOS
+{: #ios }
+
+The iOS engine, uses the asynchronous `NSURLSession` internally. And have no additional configuration.
+
+```kotlin
+val client = HttpClient(Ios) {
+}
+```
+
+{% include artifact.html kind="engine" class="io.ktor.client.engine.ios.Ios" artifact="io.ktor:ktor-client-ios:$ktor_version" %}
+
+## Testing
+{: #testing }
+
+### MockEngine
+
+There is a engine specific for testing described in its own page: [MockEngine for testing](/clients/http-client/testing.html).

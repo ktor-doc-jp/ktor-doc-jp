@@ -28,6 +28,13 @@
         {% else %}
             and no additional artifacts are required.
         {% endif %}
+
+        {% if include.transitive %}
+        It includes the <code class="highlighter-rouge">{{ include.transitive }}</code> transitive dependency.
+        {% else %}
+        <!-- It does not include any additional transitive dependencies. -->
+        {% endif %}
+
     </div>
     {% if artifact_required %}
 <ul class="nav nav-tabs artifact-tabs">
@@ -64,7 +71,6 @@
 </div>
 </div>
     {% endif %}
-
 
 </div>
 
