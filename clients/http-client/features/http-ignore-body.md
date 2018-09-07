@@ -2,9 +2,16 @@
 title: HttpIgnoreBody
 category: clients
 caption: HttpIgnoreBody 
+feature:
+  artifact: io.ktor:ktor-client-core:$ktor_version
+  class: io.ktor.client.features.HttpIgnoreBody
 ---
 
-This feature discards the body of the response:
+This feature discards the body of the response.
+
+{% include feature.html %}
+
+## Install
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {

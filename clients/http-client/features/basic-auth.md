@@ -2,11 +2,16 @@
 title: BasicAuth
 category: clients
 caption: BasicAuth 
+feature:
+  artifact: io.ktor:ktor-client-auth-basic:$ktor_version
+  class: io.ktor.client.features.auth.basic.BasicAuth
 ---
 
-### BasicAuth
-
 This feature sends an `Authorization: Basic` with the specified credentials:
+
+{% include feature.html %}
+
+## Install
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
@@ -16,9 +21,6 @@ val client = HttpClient(HttpClientEngine) {
     }
 }
 ```
-
-To use this feature, you need to include the `ktor-client-auth-basic` artifact.
-{: .note.artifact }
 
 This feature implements the IETF's [RFC 7617](https://tools.ietf.org/html/rfc7617).
 {: .note}

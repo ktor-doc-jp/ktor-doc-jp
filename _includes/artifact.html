@@ -1,8 +1,11 @@
-{% if include.artifact != 'io.ktor:ktor-server-core:$ktor_version' %}
-{% assign artifact_required = true %}
-{% else %}
-{% assign artifact_required = false %}
-{% endif %}
+{% case include.artifact %}
+    {% when 'io.ktor:ktor-server-core:$ktor_version' %}
+        {% assign artifact_required = false %}
+    {% when 'io.ktor:ktor-client-core:$ktor_version' %}
+        {% assign artifact_required = false %}
+    {% else %}
+        {% assign artifact_required = true %}
+{% endcase %}
 {% assign artifact_parts = include.artifact | split: ':' %}
 {% assign artifact_group = artifact_parts[0] %}
 {% assign artifact_name = artifact_parts[1] %}
