@@ -84,17 +84,16 @@ object CheckLinks {
 		}
 
 		if (url !in ids) {
-			println("url: $url")
+			//println("url: $url")
 			val response = client.get<HttpResponse>(url)
 			val html = try {
-				//response.readBytes().toString(Charsets.UTF_8)
-				//response.readText()
-				response.readText(Charsets.UTF_8)
+				response.readBytes().toString(Charsets.UTF_8)
+				//response.readText(Charsets.UTF_8) // @TODO: Bug https://github.com/ktorio/ktor/issues/570
 			} catch (e: Throwable) {
 				println("[warn] Binary?: $url")
 				"" // A Binary or malformed file?
 			}
-			println("done")
+			//println("done")
 			//println("Downloaded: $url")
 			//if (response.status.isOk()) {
 
