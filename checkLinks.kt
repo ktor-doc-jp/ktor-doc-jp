@@ -20,14 +20,12 @@
 @file:DependsOn("io.ktor:ktor-server-netty:0.9.4")
 @file:DependsOn("io.ktor:ktor-client-core:0.9.4")
 @file:DependsOn("io.ktor:ktor-client-apache:0.9.4")
-@file:DependsOn("io.ktor:ktor-client-okhttp:0.9.4")
+//@file:DependsOn("io.ktor:ktor-client-okhttp:0.9.4")
 @file:DependsOn("io.ktor:ktor-websockets:0.9.4")
 
 @file:EntryPoint("CheckLinks")
 
 import io.ktor.client.*
-import io.ktor.client.engine.apache.*
-import io.ktor.client.engine.okhttp.*
 import io.ktor.client.request.*
 import io.ktor.client.response.*
 import kotlinx.coroutines.experimental.*
@@ -72,7 +70,8 @@ object CheckLinks {
 		}
 	}
 
-	val client = HttpClient(OkHttp)
+	//val client = HttpClient(io.ktor.client.engine.okhttp.OkHttp)
+	val client = HttpClient(io.ktor.client.engine.apache.Apache)
 
 	suspend fun check(task: Task) {
 		//println("Checking ${task.full}...")
@@ -91,8 +90,8 @@ object CheckLinks {
 				//response.readBytes().toString(Charsets.UTF_8)
 				//response.readText()
 				response.readText(Charsets.UTF_8)
-			} catch (e: kotlinx.io.charsets.MalformedInputException) {
-				println("[warn] Binary: $url")
+			} catch (e: Throwable) {
+				println("[warn] Binary?: $url")
 				"" // A Binary or malformed file?
 			}
 			println("done")
