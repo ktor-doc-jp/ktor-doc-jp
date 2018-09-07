@@ -115,7 +115,7 @@ Also you can [build ktor from source](/advanced/building-from-source.html), and 
 ## How can I be sure of which version of ktor am I using?
 {: #ktor-version-used }
 
-You can use the [`DefaultHeaders` feature](/features/default-headers.html) that will send a
+You can use the [`DefaultHeaders` feature](/servers/features/default-headers.html) that will send a
 Server header with the ktor version in it.
 Something like this should be sent as part of the response headers: `Server: ktor-server-core/0.9.2-alpha-3 ktor-server-core/0.9.2-alpha-3` 
 
@@ -146,7 +146,7 @@ Something like this should be sent as part of the response headers: `Server: kto
 {: #route-not-executing }
 
 Ktor provides a tracing mechanism for the routing feature to help troubleshooting
-routing decisions. Check the [Tracing the routing decisions](/features/routing.html#tracing) section in the Routing page.
+routing decisions. Check the [Tracing the routing decisions](/servers/features/routing.html#tracing) section in the Routing page.
 
 ## I get a `io.ktor.pipeline.InvalidPhaseException: Phase Phase('YourPhase') was not registered for this pipeline`.
 {: #invalid-phase }
@@ -177,7 +177,7 @@ There is a page [explaining the Ktor's application-level event system](/advanced
 
 This means that Ktor was not able to find the `application.conf` file. Re-check that it is in the `resources` folder,
 and that the resources folder is marked as such.
-You can consider to set-up a project using the [project generator](/quickstart/generator.html) or the [IntelliJ plugin](/quickstart/intellij-idea/plugin.html)
+You can consider to set-up a project using the [project generator](/quickstart/generator.html) or the [IntelliJ plugin](/quickstart/quickstart/intellij-idea/plugin.html)
 to have a working project as base.
 
 ## Can I use ktor on Android?
@@ -221,7 +221,7 @@ routing {
 }
 ```
 
-Ktor can automatically handle `HEAD` requests, but requires you to first install the [`AutoHeadResponse` feature](/features/autoheadresponse.html).
+Ktor can automatically handle `HEAD` requests, but requires you to first install the [`AutoHeadResponse` feature](/servers/features/autoheadresponse.html).
 
 ## I get an infinite redirect when using the `HttpsRedirect` feature
 {: #infinite-redirect }
@@ -231,8 +231,8 @@ is making normal HTTP requests to your backend, thus the HttpsRedirect feature i
 that it is a normal HTTP request and responds with the redirect.
 
 Normally, reverse-proxies send some headers describing the original request (like it was https, or the original IP address),
-and there is a feature [`XForwardedHeaderSupport`](/features/forward-headers.html)
-to parse those headers so the [`HttpsRedirect`](/features/https-redirect.html) feature knows that the original request was HTTPS.
+and there is a feature [`XForwardedHeaderSupport`](/servers/features/forward-headers.html)
+to parse those headers so the [`HttpsRedirect`](/servers/features/https-redirect.html) feature knows that the original request was HTTPS.
  
 
 ## I get a `UnsafeHeaderException: Header Content is controlled by the engine and cannot be set explicitly` exception

@@ -12,9 +12,9 @@ so first you should follow the [guide about making a Website](/quickstart/guides
 
 To achieve this, we are going to use the [Routing], [WebSockets] and [Sessions] features.
 
-[Routing]: /features/routing.html
-[WebSockets]: /features/websockets.html
-[Sessions]: /features/sessions.html
+[Routing]: /servers/features/routing.html
+[WebSockets]: /servers/features/websockets.html
+[Sessions]: /servers/features/sessions.html
 
 **Table of contents:**
 
@@ -44,7 +44,7 @@ You can see Frames as WebSocket messages. Frames could be the following types: t
 You will normally handle `Text` and `Binary` frames, and the other will be handled by Ktor in most of the cases
 (though you can use a raw mode).
 
-In its page, you can read more about the [WebSockets feature](/features/websockets.html).  
+In its page, you can read more about the [WebSockets feature](/servers/features/websockets.html).  
 
 ## WebSocket route
 

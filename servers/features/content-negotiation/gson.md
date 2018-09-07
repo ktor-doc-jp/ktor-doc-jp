@@ -13,7 +13,7 @@ redirect_from:
 The GSON feature allows you to handle JSON content in your application easily using
 the [google-gson](https://github.com/google/gson) library.
 
-This feature is a [ContentNegotiation](/features/content-negotiation.html) converter.
+This feature is a [ContentNegotiation](/servers/features/content-negotiation.html) converter.
 
 {% include feature.html %}
 

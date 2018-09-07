@@ -115,7 +115,7 @@ which is essentially just another route definition.
 {: #head-requests }
 
 Ktor do not handle `HEAD` requests by default, thus the static content feature do not handle `HEAD` requests either.
-To automatically handle `HEAD` requests for each `GET` route you can install the [`AutoHeadResponse` feature](/features/autoheadresponse.html).
+To automatically handle `HEAD` requests for each `GET` route you can install the [`AutoHeadResponse` feature](/servers/features/autoheadresponse.html).
 
 ```kotlin
 fun Application.main() {

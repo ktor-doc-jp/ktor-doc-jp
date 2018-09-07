@@ -14,7 +14,7 @@ redirect_from:
 
 By default, it handles primitive types and enums, but it can also be configured to handle additional types. 
 
-If you are using the [Locations feature](/features/locations.html) and want to support
+If you are using the [Locations feature](/servers/features/locations.html) and want to support
 custom types as part of its parameters, you can add new custom converters with this
 service.
 

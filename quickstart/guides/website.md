@@ -13,13 +13,13 @@ and keeping a persistent session.
 To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [Sessions], [StaticContent],
 [FreeMarker], and [HTML DSL] features.
 
-[Routing]: /features/routing.html
-[StatusPages]: /features/status-pages.html
-[Authentication]: /features/authentication.html
-[Sessions]: /features/sessions.html
-[StaticContent]: /features/static-content.html
-[FreeMarker]: /features/templates/freemarker.html
-[HTML DSL]: /features/templates/html-dsl.html
+[Routing]: /servers/features/routing.html
+[StatusPages]: /servers/features/status-pages.html
+[Authentication]: /servers/features/authentication.html
+[Sessions]: /servers/features/sessions.html
+[StaticContent]: /servers/features/static-content.html
+[FreeMarker]: /servers/features/templates/freemarker.html
+[HTML DSL]: /servers/features/templates/html-dsl.html
 
 **Table of contents:**
 

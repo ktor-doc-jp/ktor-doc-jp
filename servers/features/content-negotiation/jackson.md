@@ -13,7 +13,7 @@ redirect_from:
 The Jackson feature allows you to handle JSON content in your application easily using
 the [jackson](https://github.com/FasterXML/jackson) library.
 
-This feature is a [ContentNegotiation](/features/content-negotiation.html) converter.
+This feature is a [ContentNegotiation](/servers/features/content-negotiation.html) converter.
 
 {% include feature.html %}
 

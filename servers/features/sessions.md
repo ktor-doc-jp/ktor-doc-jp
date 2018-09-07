@@ -65,8 +65,8 @@ install(Sessions) {
 }
 ```
 
-To configure sessions you have to  to specify a [cookie/header](/features/sessions/cookie-header#cookies-headers) name,
-optional [server-side storage](/features/sessions/client-server.html#client-server), and a class associated to the session.
+To configure sessions you have to  to specify a [cookie/header](/servers/features/sessions/cookie-header#cookies-headers) name,
+optional [server-side storage](/servers/features/sessions/client-server.html#client-server), and a class associated to the session.
 
 If you want to further customize sessions. Please read the [extending](#extending) section.
 
@@ -198,15 +198,15 @@ that should generate a new ID when the new session is created.
 
 ### Cookie vs Header
 
-* Use [**Cookies**](/features/sessions/cookie-header.html#cookies) for plain HTML applications.
-* Use [**Header**](/features/sessions/cookie-header.html#headers) for APIs or for XHR requests if it is simpler for your http clients.
+* Use [**Cookies**](/servers/features/sessions/cookie-header.html#cookies) for plain HTML applications.
+* Use [**Header**](/servers/features/sessions/cookie-header.html#headers) for APIs or for XHR requests if it is simpler for your http clients.
 
 ### Client vs Server
 
-* Use [**Server Cookies**](/features/sessions/client-server.html#server-cookies) if you want to prevent session replays or want to further increase security
+* Use [**Server Cookies**](/servers/features/sessions/client-server.html#server-cookies) if you want to prevent session replays or want to further increase security
   * Use `SessionStorageMemory` for development if you want to drop sessions after stopping the server
   * Use `directorySessionStorage` for production environments or to keep sessions after restarting the server
-* Use [**Client Cookies**](/features/sessions/client-server.html#client-cookies) if you want a simpler approach without the storage on the backend
+* Use [**Client Cookies**](/servers/features/sessions/client-server.html#client-cookies) if you want a simpler approach without the storage on the backend
   * Use it plain if you want to modify it on the fly at the client for testing purposes and don't care about the modifications
   * Use it with transform authenticating and optionally encrypting it to prevent modifications
   * **Do not** use it at all if your session payload is vulnerable to replay attacks. [Security examples here](#security).
@@ -305,6 +305,6 @@ your session information server-side to a specific database.
 
 You can define [custom transformers], [custom serializers] and [custom storages].
 
-[custom transformers]: /features/sessions/transformers.html
-[custom serializers]: /features/sessions/serializers.html
-[custom storages]: /features/sessions/storages.html
+[custom transformers]: /servers/features/sessions/transformers.html
+[custom serializers]: /servers/features/sessions/serializers.html
+[custom storages]: /servers/features/sessions/storages.html

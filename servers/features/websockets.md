@@ -46,7 +46,7 @@ install(WebSockets) {
 ## Usage
 {: #usage}
 
-Once installed, you can define the `webSocket` routes for the [routing](/features/routing.html) feature:
+Once installed, you can define the `webSocket` routes for the [routing](/servers/features/routing.html) feature:
 
 Instead of the short-lived normal route handlers, webSocket handlers are meant to be long-lived.
 And all the relevant WebSocket methods are suspended so that the function will be suspended in

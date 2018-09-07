@@ -19,7 +19,7 @@ Currently, JVM client and server scenarios are supported, and we are working on 
 environments, and client facilities to native and JavaScript.
 
 {::comment}
-Ktor embraces the strongly typed nature of the Kotlin programming language and provides [strongly typed end-points (Locations)](/features/locations.html) and
+Ktor embraces the strongly typed nature of the Kotlin programming language and provides [strongly typed end-points (Locations)](/servers/features/locations.html) and
 the ability to exchange data with classes shared across platforms.
 {:/comment}
 

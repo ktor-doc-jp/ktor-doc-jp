@@ -12,13 +12,13 @@ We are going to create a simple API to store simple text snippets (like a small 
 To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [JWT Authentication],
 [CORS], [ContentNegotiation] and [Jackson] features.
 
-[Routing]: /features/routing.html
-[StatusPages]: /features/status-pages.html
-[Authentication]: /features/authentication.html
-[JWT Authentication]: /features/authentication/jwt.html
-[CORS]: /features/cors.html
-[ContentNegotiation]: /features/content-negotiation.html
-[Jackson]: /features/content-negotiation/jackson.html
+[Routing]: /servers/features/routing.html
+[StatusPages]: /servers/features/status-pages.html
+[Authentication]: /servers/features/authentication.html
+[JWT Authentication]: /servers/features/authentication/jwt.html
+[CORS]: /servers/features/cors.html
+[ContentNegotiation]: /servers/features/content-negotiation.html
+[Jackson]: /servers/features/content-negotiation/jackson.html
 
 While many frameworks advocate how to create REST API's the majority aren't actually talking about REST APIs but HTTP APIs.
 Ktor, much like many other frameworks can be used to create systems that comply with REST constraints. However,

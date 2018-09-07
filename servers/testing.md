@@ -110,7 +110,7 @@ withTestApplication({
 ## HttpsRedirect feature
 
 The HttpsRedirect changes how testing is performed.
-Check the [testing section of the HttpsRedirect feature](/features/https-redirect.html#testing) for more information.
+Check the [testing section of the HttpsRedirect feature](/servers/features/https-redirect.html#testing) for more information.
 
 ## Example
 

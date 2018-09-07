@@ -24,7 +24,7 @@ that interact with the response.
 ## Context
 {: #context}
 
-When using the [Routing](/features/routing.html) feature, you can access
+When using the [Routing](/servers/features/routing.html) feature, you can access
 the `call` property inside route handlers:
 
 ```kotlin
@@ -91,7 +91,7 @@ Convenience methods to set headers usually set by the infrastructure:
 * `response.contentLength(1024L)` - Sets the `Content-Length`. This is generally automatically set when sending the payload
 * `response.cacheControl(CacheControl.NoCache(CacheControl.Visibility.Private))` - Sets the Cache-Control header in a typed way
 * `response.expires(LocalDateTime.now())` - Sets the `Expires` header
-* `response.contentRange(1024L until 2048L, 4096L)` - Sets the `Content-Range` header (check the [PartialContent](/features/partial-content.html) feature) 
+* `response.contentRange(1024L until 2048L, 4096L)` - Sets the `Content-Range` header (check the [PartialContent](/servers/features/partial-content.html) feature) 
 
 ## HTTP/2 pushing and HTTP/1 `Link `header
 {: #pushing}
@@ -124,7 +124,7 @@ call.respondRedirect("/moved/here", permanent = true)
 
 Remember that once this function is executed, the rest of the function is still executed, so if you have it in a guard
 clause, you should return the function to avoid continuing with the rest of the handler.
-If you want to make redirections that stop the control flow by throwing an exception check out this [sample from status pages](/features/status-pages.html#redirect).
+If you want to make redirections that stop the control flow by throwing an exception check out this [sample from status pages](/servers/features/status-pages.html#redirect).
 {: .note}
 
 ## Sending response content
@@ -133,7 +133,7 @@ Sending generic content (compatible with [Content negotiation](#content-negotiat
 {: #call-respond}
 
 * `call.respond(MyDataClass("hello", "world"))` - Check the [Content Negotiation](#content-negotiation) section
-* `call.respond(HttpStatusCode.NotFound, MyDataClass("hello", "world"))` - Specifies a status code, and sends a payload in a single call. Check [StatusPages](/features/status-pages.html)
+* `call.respond(HttpStatusCode.NotFound, MyDataClass("hello", "world"))` - Specifies a status code, and sends a payload in a single call. Check [StatusPages](/servers/features/status-pages.html)
 
 Sending plain text:
 
@@ -222,15 +222,15 @@ types for the [`call.respond`](#call-respond) methods.
 ### Sending HTML with the DSL
 {: #html-dsl}
 
-Ktor includes an optional [feature to send HTML content using a DSL](/features/templates/html-dsl.html).
+Ktor includes an optional [feature to send HTML content using a DSL](/servers/features/templates/html-dsl.html).
 
 ### Sending HTML with FreeMarker
 {: #html-freemarker}
 
-Ktor includes an optional [feature to send HTML content using FreeMarker](/features/templates/freemarker.html).
+Ktor includes an optional [feature to send HTML content using FreeMarker](/servers/features/templates/freemarker.html).
 
 ### Sending JSON with data classes
 {: #json}
 
-Ktor includes an optional [feature to send JSON content using Content negotiation](/features/content-negotiation/gson.html).
+Ktor includes an optional [feature to send JSON content using Content negotiation](/servers/features/content-negotiation/gson.html).
 

@@ -38,7 +38,7 @@ and thus, you have to change the key, all the previous sessions will be marked i
 
 Client-side Sessions use transformers to manipulate the payload, for example to authenticate and/or encrypt it.
 
-You can check the [transformers page](/features/sessions/transformers.html) for a list of standard available transformers,
+You can check the [transformers page](/servers/features/sessions/transformers.html) for a list of standard available transformers,
 and for more information.
 
 ### Server-side sessions and storages (Sending Session Id)

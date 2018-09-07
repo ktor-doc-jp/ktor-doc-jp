@@ -11,9 +11,9 @@ feature:
 To use this feature, you need to include `io.ktor:ktor-client-websocket` artifact.
 {: .note.artifact }
 
-Ktor provides a WebSocket client in addition to supporting [WebSockets at server side](/features/websockets.html). 
+Ktor provides a WebSocket client in addition to supporting [WebSockets at server side](/servers/features/websockets.html). 
 
-Once connected, client and server WebSockets share the same [WebSocketSession](/features/websockets.html#WebSocketSession)
+Once connected, client and server WebSockets share the same [WebSocketSession](/servers/features/websockets.html#WebSocketSession)
 interface for communication.
 
 Right now, client WebSockets are only available for the CIO Client Engine.

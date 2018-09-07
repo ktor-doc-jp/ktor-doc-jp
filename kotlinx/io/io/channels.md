@@ -8,7 +8,7 @@ priority: 1
 
 ByteChannels are asynchronous streams, potentially large without seeking capabilities.
 They are useful for reading and writing to sockets, or files from the start to the end.
-Usually you read and create chunks of synchronous data called [Packets](/kotlinx/io/packets.html) from it,
+Usually you read and create chunks of synchronous data called [Packets](/kotlinx/io/io/packets.html) from it,
 reducing the amount of suspensions to packets.
 
 ## ByteReadChannel

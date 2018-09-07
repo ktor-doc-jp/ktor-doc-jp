@@ -340,7 +340,7 @@ General switches and parameters:
 |                 | `ktor.deployment.callGroupSize`        | `parallelism`         | Event group size running application code |
 |                 | `ktor.deployment.connectionGroupSize`  | `parallelism / 2 + 1` | Event group size accepting connections |
 |                 | `ktor.deployment.workerGroupSize`      | `parallelism / 2 + 1` | Event group size for processing connections, parsing messages and doing engine's internal work |
-|                 | `ktor.deployment.shutdown.url`         |                       | URL for shutdown the application when defined. Internally uses the [ShutDownUrl feature](/features/shutdown-url.html) |
+|                 | `ktor.deployment.shutdown.url`         |                       | URL for shutdown the application when defined. Internally uses the [ShutDownUrl feature](/servers/features/shutdown-url.html) |
 {: .styled-table #general }
 
 Required when SSL port is defined:

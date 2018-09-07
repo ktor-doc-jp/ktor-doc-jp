@@ -23,7 +23,7 @@ Also, the call itself has some useful convenience properties and methods that re
 ## Context
 {: #context}
 
-When using the [Routing](/features/routing.html) feature, you can access
+When using the [Routing](/servers/features/routing.html) feature, you can access
 the `call` property inside route handlers:
 
 ```kotlin
@@ -55,11 +55,11 @@ val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
 
 You can also access the information about the connection point (either local, or original
-if under a proxy (if the [`XForwardedHeaderSupport` feature](/features/forward-headers.html) is installed),
+if under a proxy (if the [`XForwardedHeaderSupport` feature](/servers/features/forward-headers.html) is installed),
 and the proxy sent header information):
 
 * `val local : RequestConnectionPoint = request.local` - local information 
-* `val origin: RequestConnectionPoint = request.origin` - local / using proxy headers if [`XForwardedHeaderSupport` feature](/features/forward-headers.html) is installed.
+* `val origin: RequestConnectionPoint = request.origin` - local / using proxy headers if [`XForwardedHeaderSupport` feature](/servers/features/forward-headers.html) is installed.
 * `val uri: String = request.uri` - Short cut for `origin.uri`
 * `val document: String = request.document()` - The last component after '/' of the uri
 * `val path: String = request.path()` - The uri without the query string
@@ -157,7 +157,7 @@ The types `ByteReadChannel`, `ByteArray`, `InputStream`, `MultiPartData`, `Strin
 
 You can create custom transformers by calling
 `application.receivePipeline.intercept(ApplicationReceivePipeline.Transform) { query ->`
-and then calling `proceedWith(ApplicationReceiveRequest(query.type, transformed))` as does the [ContentNegotiation feature](/features/content-negotiation.html).
+and then calling `proceedWith(ApplicationReceiveRequest(query.type, transformed))` as does the [ContentNegotiation feature](/servers/features/content-negotiation.html).
 
 All the receive methods consume the payload sent by the client.
 They won't throw an exception if you call them several times,

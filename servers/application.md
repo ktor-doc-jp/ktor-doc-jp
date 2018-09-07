@@ -7,8 +7,8 @@ priority: 0
 ---
 
 A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),
-composed by [modules](#modules) with the application logic, that install [features](#features), like [routing](/features/routing.html),
-[sessions](/features/sessions.html), [compression](/features/compression.html), etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
+composed by [modules](#modules) with the application logic, that install [features](#features), like [routing](/servers/features/routing.html),
+[sessions](/servers/features/sessions.html), [compression](/servers/features/compression.html), etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
 
 Ktor also provides functionality to [handle raw sockets](/servers/raw-sockets.html), but not as part of the Application and
 its pipeline.
@@ -43,7 +43,7 @@ A feature is an object that you can install and configure for a pipeline.
 Ktor includes some standard features, but you can add your own or other features from the community. 
 You can install features in any pipeline, like the application itself, or specific routes.
 
-You can read more about [features](/features/index.html) in its dedicated page.
+You can read more about [features](/servers/features/index.html) in its dedicated page.
 {: .note}
 
 ## Modules

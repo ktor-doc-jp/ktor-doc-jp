@@ -182,9 +182,9 @@ The purpose for intercepting each phase:
 * `Call`: Features and interceptors that are going to complete the call, like the [Routing] feature
 * `Fallback`: Features that process unhandled calls in a normal way, and resolve them somehow, like the [StatusPages] feature.
 
-[Authentication]: /features/authentication.html
-[Routing]: /features/routing.html
-[StatusPages]: /features/status-pages.html
+[Authentication]: /servers/features/authentication.html
+[Routing]: /servers/features/routing.html
+[StatusPages]: /servers/features/status-pages.html
 
 The code looks like this:
 

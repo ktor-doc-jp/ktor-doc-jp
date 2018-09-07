@@ -17,7 +17,7 @@ redirect_from:
 Ktor supports authentication out of the box as a standard pluggable feature.
 It supports mechanisms to read *credentials*, and to authenticate *principals*.
 
-It can be used in some cases along with the [sessions feature](/features/sessions.html)
+It can be used in some cases along with the [sessions feature](/servers/features/sessions.html)
 to keep the login information between requests.
 
 **Table of contents:**
@@ -63,7 +63,7 @@ install(Authentication) {
 }
 ```
 
-After defining one or more authentication providers (named or unnamed), with the [routing feature](/features/routing.html)
+After defining one or more authentication providers (named or unnamed), with the [routing feature](/servers/features/routing.html)
 you can create a route group, that will apply that authentication to all the routes defined in that group:
 
 ```kotlin

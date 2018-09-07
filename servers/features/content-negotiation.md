@@ -96,5 +96,5 @@ class GsonConverter(private val gson: Gson = Gson()) : ContentConverter {
 Ktor provide some content converters out of the box:
 
 * `application/json`
-    * [GsonConverter](/features/content-negotiation/gson.html)
-    * [JacksonConverter](/features/content-negotiation/jackson.html)
+    * [GsonConverter](/servers/features/content-negotiation/gson.html)
+    * [JacksonConverter](/servers/features/content-negotiation/jackson.html)

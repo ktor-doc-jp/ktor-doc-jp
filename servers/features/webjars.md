@@ -25,7 +25,7 @@ as javascript libraries and css as part of your uber-jar.
 ```
 
 This configures the feature to serve any webjars assets on the `/assets/` path. The `zone` argument configures the correct time zone to
-be used with the `Last-Modified` header to support caching (only if [Conditional Headers](/feature/conditional-headers.html) feature is also installed).
+be used with the `Last-Modified` header to support caching (only if [Conditional Headers](/features/conditional-headers.html) feature is also installed).
 
 {% include feature.html %}
 

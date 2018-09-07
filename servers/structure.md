@@ -110,7 +110,7 @@ The easiest way would be to enable an endpoint like `/health_check` that returns
 something like HTTP 200 `OK`, while optionally verifying your dependant services.
 It's completely up to you.
 
-You can also use the [StatusPages feature](/features/status-pages.html) to handle exceptions.
+You can also use the [StatusPages feature](/servers/features/status-pages.html) to handle exceptions.
 
 ```kotlin
 install(StatusPages){
