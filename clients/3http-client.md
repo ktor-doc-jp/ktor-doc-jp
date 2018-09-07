@@ -9,10 +9,10 @@ caption: Http Client
 {::options toc_levels="1..2" /}
 
 In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
-This client supports several [configurable engines](#engines), and has its own set of [features](#features).
+This client supports several [configurable engines](/clients/http-client/engines.html), and has its own set of [features](#features).
 
 The main functionality is available through the `io.ktor:ktor-client-core:$ktor_version` artifact.
-And each engine, is provided in [separate artifacts](#engines).
+And each engine, is provided in [separate artifacts](/clients/http-client/engines.html).
 {: .note.artifact }
 
 **Table of contents:**

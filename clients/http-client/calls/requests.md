@@ -8,8 +8,14 @@ permalink: /clients/http-client/calls/requests.html
 ## Simple requests
 
 The basic usage is *super* simple: you just have to instantiate an `HttpClient` instance,
-specifying an engine, for example [`Apache`](#apache), [`Jetty`](#jetty)
-or [`CIO`](#cio), and start making requests using one of the many convenience methods available.
+specifying an engine, for example
+[`Apache`](/clients/http-client/engines.html#apache),
+[`OkHttp`](/clients/http-client/engines.html#okhttp),
+[`Android`](/clients/http-client/engines.html#android),
+[`Ios`](/clients/http-client/engines.html#ios),
+[`Jetty`](/clients/http-client/engines.html#jetty)
+or [`CIO`](/clients/http-client/engines.html#cio),
+and start making requests using one of the many convenience methods available.
 
 Since Ktor 0.9.3, you can omit the engine, and Ktor will choose an engine among the ones that are available
 from the included artifacts using a ServiceLoader. 
@@ -50,7 +56,7 @@ The HttpClient `call` method, returns an `HttpClientCall` and allows you to perf
 simple untyped requests.
 
 You can read the content using `response: HttpResponse`.
-For further information, check out the [receiving content using HttpResponse](#HttpResponse) section. 
+For further information, check out the [receiving content using HttpResponse](/clients/http-client/calls/responses.html) section. 
 
 ```kotlin
 val call = client.call("http://127.0.0.1:8080/") {
@@ -63,7 +69,7 @@ println(call.response.readText())
 {: #request-method }
 
 In addition to call, there is a `request` method for performing a typed request,
-[receiving a specific type](#receive) like String, HttpResponse, or an arbitrary class.
+[receiving a specific type](/clients/http-client/calls/responses.html#receive) like String, HttpResponse, or an arbitrary class.
 You have to specify the URL and the method when building the request. 
 
 ```kotlin

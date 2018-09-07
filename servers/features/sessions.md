@@ -65,8 +65,8 @@ install(Sessions) {
 }
 ```
 
-To configure sessions you have to  to specify a [cookie/header](/servers/features/sessions/cookie-header#cookies-headers) name,
-optional [server-side storage](/servers/features/sessions/client-server.html#client-server), and a class associated to the session.
+To configure sessions you have to to specify a [cookie/header](/servers/features/sessions/cookie-header.html) name,
+optional [server-side storage](/servers/features/sessions/client-server.html), and a class associated to the session.
 
 If you want to further customize sessions. Please read the [extending](#extending) section.
 
@@ -209,7 +209,7 @@ that should generate a new ID when the new session is created.
 * Use [**Client Cookies**](/servers/features/sessions/client-server.html#client-cookies) if you want a simpler approach without the storage on the backend
   * Use it plain if you want to modify it on the fly at the client for testing purposes and don't care about the modifications
   * Use it with transform authenticating and optionally encrypting it to prevent modifications
-  * **Do not** use it at all if your session payload is vulnerable to replay attacks. [Security examples here](#security).
+  * **Do not** use it at all if your session payload is vulnerable to replay attacks. [Security examples here](/servers/features/sessions/client-server.html#security).
 
 ## Baked snippets
 

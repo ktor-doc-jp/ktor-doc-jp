@@ -7,7 +7,7 @@ permalink: /servers/uploads.html
 priority: 1200
 ---
 
-Ktor supports handling HTTP Uploads. As well as [receiving any other kind of content](/servers/requests.html).
+Ktor supports handling HTTP Uploads. As well as [receiving any other kind of content](/servers/calls/requests.html).
 
 You can check out the [Youkube example](/samples/youkube.html) for a full example of it in action.
 {: .note.example }

@@ -10,14 +10,14 @@ children: /servers/calls/
 
 When handling routes, or directly intercepting the pipeline, you get a context with an ApplicationCall.
 
-The `ApplicationCall` provides access to two main properties [`ApplicationRequest`](/servers/requests.html) and [`ApplicationResponse`](/servers/responses.html).
+The `ApplicationCall` provides access to two main properties [`ApplicationRequest`](/servers/calls/requests.html) and [`ApplicationResponse`](/servers/calls/responses.html).
 As their names indicate, they correspond to the incoming request and outgoing response. In addition to these,
 it also provides an `ApplicationEnvironment`, and some useful functions to help respond to client requests.
 Given that pipelines can be executed asynchronously, `ApplicationCall` also represents the logical execution
 context with `Attributes` to pass data between various parts of the pipeline.
 
 Installing an interceptor into the pipeline is the primary method to alter the processing of an `ApplicationCall`.
-Nearly all Ktor [features](/features) are interceptors that perform various operations in different phases of
+Nearly all Ktor [features](/servers/features) are interceptors that perform various operations in different phases of
 the application call processing. 
 
 ```kotlin
@@ -30,7 +30,7 @@ The code above installs an interceptor into the `Call` phase of an `ApplicationC
 when the request is asking for a root page.  
 
 This is just an example, and usually, page requests are not handled in this way, as there is a [routing](/servers/features/routing) facility that does this
- and more. Also, as mentioned previously, defining interceptor is usually done using [features](#features) with an `install` function.
+ and more. Also, as mentioned previously, defining interceptor is usually done using [features](/servers/features) with an `install` function.
    
 Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
 can potentially execute asynchronously.
