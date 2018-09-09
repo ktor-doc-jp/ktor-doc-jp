@@ -85,7 +85,7 @@ val call = client.request<String> {
 Similar to `request`, there are several extension methods to perform requests
 with the most common HTTP verbs: `GET`, `POST`, `PUT` and `DELETE`.
 
-`PATCH`, `HEAD` and `OPTIONS` have special HTTP semantics, and they do not have shortcut methods, though you can you
+`PATCH`, `HEAD` and `OPTIONS` have special HTTP semantics, and they do not have shortcut methods, though you can use
 the [`request`](#request-method) and [`call`](#call-method) methods to perform requests with those verbs. 
 {: .note }
 
