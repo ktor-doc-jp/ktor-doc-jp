@@ -114,6 +114,39 @@ The `HttpClient` class only offers some basic functionality, and all the methods
 You can check the standard available [HttpClient build extension methods](https://github.com/ktorio/ktor/blob/master/ktor-client/ktor-client-core/src/io/ktor/client/request/builders.kt).
 {: .note.api}
 
+### The `submitForm` and `submitFormWithBinaryData` methods
+{: #submit-form }
+
+There are a couple of convenience extension methods for submitting form information.
+
+The `submitForm` method:
+
+`submitForm(formData: Parameters = Parameters.Empty, encodeInQuery: Boolean = false, block: HttpRequestBuilder.() -> Unit = {})`
+
+It allows to do a request with the `Parameters` encoded in the querystring (`GET` by default),
+or to do a request with the `Parameters` encoded as multipart (`POST` by default) depending on the `encodeInQuery` parameter.
+
+The `submitFormWithBinaryData` method:
+
+`submitFormWithBinaryData(formData: List<PartData>, block: HttpRequestBuilder.() -> Unit = {}): T`
+
+It allows to generate a multipart POST request from a list of `PartData`.
+`PartData` can be `PartData.FormItem`, `PartData.BinaryItem` or `PartData.FileItem`.
+
+To build a list of `PartData`, you can use the `formData` builder:
+
+```kotlin
+val data: List<PartData> = formData {
+    // Can append: String, Number, ByteArray and Input.
+    append("hello", "world")
+    append("number", 10)
+    append("ba", byteArrayOf(1, 2, 3, 4))
+    append("input", inputStream.asInput())
+    // Allow to set headers to the part:
+    append("hello", "world", headersOf("X-My-Header" to "MyValue"))
+}
+```
+
 ### Specifying custom headers
 {: #custom-headers}
 
@@ -193,18 +226,18 @@ If you try to send a class that is inside a function, the feature will send a *n
 ## Uploading multipart/form-data
 {: #multipart-form-data }
 
-Right now, Ktor HttpClient doesn't include functionality to do this directly, but you can do something like this:
+Starting with 0.9.4, Ktor HTTP Client has support for making MultiPart requests.
+The idea is to use the `MultiPartFormDataContent(parts: List<PartData>)` as `OutgoingContent` for the body of the request.
+
+The easiest way is to use the [`submitFormWithBinaryData` method](#submit-form).
+
+Alternatively you can set the body directly:
 
 ```kotlin
-val result = client.post<HttpResponse>("http://127.0.0.1:$port/handler") {
-    body = MultiPartContent.build {
-        add("user", "myuser")
-        add("password", "password")
-        add("file", byteArrayOf(1, 2, 3, 4), filename = "binary.bin")
-    }
-}  
+val request = client.request {
+    method = HttpMethod.Post
+    body = FormDataContent(formData {
+        append("key", "value")
+    })
+}
 ```
-
-By including this small boilerplate to your code:
-
-<https://github.com/ktorio/ktor-samples/blob/183dd65e39565d6d09682a9b273937013d2124cc/other/client-multipart/src/MultipartApp.kt#L57>
