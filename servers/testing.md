@@ -112,6 +112,39 @@ withTestApplication({
 The HttpsRedirect changes how testing is performed.
 Check the [testing section of the HttpsRedirect feature](/servers/features/https-redirect.html#testing) for more information.
 
+## Testing several requests preserving sessions/cookies
+{: #preserving-cookies }
+
+You can easily test several requests in a row keeping the `Cookie` information among them. By using the `cookiesSession` method.
+This method defines a session context that will hold cookies, and exposes a `CookieTrackerTestApplicationEngine.handleRequest`
+extension method to perform requests in that context.
+
+For example:
+
+```kotlin
+@Test
+fun testLoginSuccessWithTracker() = testApp {
+    val password = "mylongpassword"
+    val passwordHash = hash(password)
+    every { dao.user("test1", passwordHash) } returns User("test1", "test1@test.com", "test1", passwordHash)
+
+    cookiesSession {
+        handleRequest(HttpMethod.Post, "/login") {
+            addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+            setBody(listOf("userId" to "test1", "password" to password).formUrlEncode())
+        }.apply {
+            assertEquals(302, response.status()?.value)
+            assertEquals("http://localhost/user/test1", response.headers["Location"])
+            assertEquals(null, response.content)
+        }
+
+        handleRequest(HttpMethod.Get, "/").apply {
+            assertTrue { response.content!!.contains("sign out") }
+        }
+    }
+}
+```
+
 ## Example
 
 See full example of application testing in [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable).
