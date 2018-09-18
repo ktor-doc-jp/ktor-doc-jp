@@ -1,8 +1,10 @@
 ---
 title: POST
 category: samples
-permalink: /samples/post.html
+permalink: /samples/feature/post.html
 caption: Example of Posting Data with Forms
+redirect_from:
+  - /samples/post.html
 ---
 
 Browse the source code on GitHub: [ktor-samples-post](https://github.com/ktorio/ktor-samples/blob/master/feature/post)

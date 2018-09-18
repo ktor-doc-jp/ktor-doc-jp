@@ -1,8 +1,10 @@
 ---
 title: Testable
 category: samples
-permalink: /samples/testable.html
+permalink: /samples/feature/testable.html
 caption: Example of Writing Tests for an Application
+redirect_from:
+  - /samples/testable.html
 ---
 
 Browse the source code on GitHub: [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable)

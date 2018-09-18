@@ -1,8 +1,10 @@
 ---
 title: GSON
 category: samples
-permalink: /samples/gson.html
+permalink: /samples/feature/gson.html
 caption: Example of Serving JSON using GSON
+redirect_from:
+  - /samples/gson.html
 ---
 
 Browse the source code on GitHub: [ktor-samples-gson](https://github.com/ktorio/ktor-samples/tree/master/feature/gson)

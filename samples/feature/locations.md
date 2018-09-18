@@ -1,8 +1,10 @@
 ---
 title: Locations
 category: samples
-permalink: /samples/locations.html
+permalink: /samples/feature/locations.html
 caption: Example of Using Typed Locations
+redirect_from:
+  - /samples/locations.html
 ---
 
 Browse the source code on GitHub: [ktor-samples-locations](https://github.com/ktorio/ktor-samples/tree/master/feature/locations)

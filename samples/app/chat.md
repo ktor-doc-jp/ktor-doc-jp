@@ -1,8 +1,10 @@
 ---
-title: Websockets
+title: Chat
 category: samples
-permalink: /samples/websockets.html
+permalink: /samples/app/chat.html
 caption: Trivial Chat Application with WebSockets
+redirect_from:
+  - /samples/websockets.html
 ---
 
 Browse the source code on GitHub: [ktor-samples/app/chat](https://github.com/ktorio/ktor-samples/tree/master/app/chat)
