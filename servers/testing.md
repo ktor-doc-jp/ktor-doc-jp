@@ -193,9 +193,16 @@ dependencies {
 **Module:**
 ```kotlin
 fun Application.testableModule() {
+    testableModuleWithDependencies(
+        random = SecureRandom()
+    )
+}
+
+fun Application.testableModuleWithDependencies(random: Random) {
     intercept(ApplicationCallPipeline.Call) { call ->
-        if (call.request.uri == "/")
-            call.respondText("Test String")
+        if (call.request.uri == "/") {
+            call.respondText("Random: ${random.nextInt(100)}")
+        }
     }
 }
 ```
@@ -203,10 +210,73 @@ fun Application.testableModule() {
 **Test:**
 ```kotlin
 class ApplicationTest {
-    @Test fun testRequest() = withTestApplication(Application::testableModule) {
+    class ConstantRandom(val value: Int) {
+        override fun next(bits: Int): Int = value
+    }
+
+    @Test fun testRequest() = withTestApplication({
+        testableModule(
+            random = ConstantRandom(7)
+        )
+    }) {
         with(handleRequest(HttpMethod.Get, "/")) {
             assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals("Test String", response.content)
+            assertEquals("Test 7", response.content)
+        }
+        with(handleRequest(HttpMethod.Get, "/index.html")) {
+            assertFalse(requestHandled)
+        }
+    }
+}
+```
+
+## Example with dependencies
+
+In some cases we will need some services and dependencies. Instead of storing them globally, we suggest you
+to create a separate function receiving the service dependencies. This allows you to pass different
+(potentially mocked) dependencies in your tests: 
+
+**build.gradle:**
+```groovy
+// ...
+dependencies {
+    // ...
+    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
+}
+```
+
+**Module:**
+```kotlin
+fun Application.testableModule() {
+    testableModuleWithDependencies(
+        random = SecureRandom()
+    )
+}
+
+fun Application.testableModuleWithDependencies(random: Random) {
+    intercept(ApplicationCallPipeline.Call) { call ->
+        if (call.request.uri == "/") {
+            call.respondText("Random: ${random.nextInt(100)}")
+        }
+    }
+}
+```
+
+**Test:**
+```kotlin
+class ApplicationTest {
+    class ConstantRandom(val value: Int) {
+        override fun next(bits: Int): Int = value
+    }
+
+    @Test fun testRequest() = withTestApplication({
+        testableModule(
+            random = ConstantRandom(7)
+        )
+    }) {
+        with(handleRequest(HttpMethod.Get, "/")) {
+            assertEquals(HttpStatusCode.OK, response.status())
+            assertEquals("Test 7", response.content)
         }
         with(handleRequest(HttpMethod.Get, "/index.html")) {
             assertFalse(requestHandled)
