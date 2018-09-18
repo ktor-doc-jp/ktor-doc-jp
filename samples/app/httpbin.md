@@ -1,8 +1,10 @@
 ---
 title: HttpBin
 category: samples
-permalink: /samples/httpbin.html
+permalink: /samples/app/httpbin.html
 caption: Showcase of Basic Features
+redirect_from:
+  - /samples/httpbin.html
 ---
 
 Browse the source code on GitHub: [ktor-samples-httpbin](https://github.com/ktorio/ktor-samples/tree/master/app/httpbin)
