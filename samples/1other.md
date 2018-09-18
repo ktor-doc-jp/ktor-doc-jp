@@ -7,4 +7,3 @@ children: /samples/other/
 ---
 
 {% include list-children.html %}
-
