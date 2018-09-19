@@ -17,11 +17,11 @@
  */
 
 @file:MavenRepository("ktor", "https://kotlin.bintray.com/ktor")
-@file:DependsOn("io.ktor:ktor-server-netty:0.9.4")
-@file:DependsOn("io.ktor:ktor-client-core:0.9.4")
-@file:DependsOn("io.ktor:ktor-client-apache:0.9.4")
-//@file:DependsOn("io.ktor:ktor-client-okhttp:0.9.4")
-@file:DependsOn("io.ktor:ktor-websockets:0.9.4")
+@file:DependsOn("io.ktor:ktor-server-netty:0.9.5")
+@file:DependsOn("io.ktor:ktor-client-core:0.9.5")
+@file:DependsOn("io.ktor:ktor-client-apache:0.9.5")
+//@file:DependsOn("io.ktor:ktor-client-okhttp:0.9.5")
+@file:DependsOn("io.ktor:ktor-websockets:0.9.5")
 
 @file:EntryPoint("CheckLinks")
 
@@ -88,7 +88,7 @@ object CheckLinks {
 			val response = client.get<HttpResponse>(url)
 			val html = try {
 				response.readBytes().toString(Charsets.UTF_8)
-				//response.readText(Charsets.UTF_8) // @TODO: Bug https://github.com/ktorio/ktor/issues/570
+				//response.readText(Charsets.UTF_8) // @TODO: Bug https://github.com/ktorio/ktor/issues/570 (still remains in 0.9.5)
 			} catch (e: Throwable) {
 				println("[warn] Binary?: $url")
 				"" // A Binary or malformed file?
@@ -102,7 +102,7 @@ object CheckLinks {
 				redirected != null -> {
 					val redirection = redirected.groupValues[1]
 					ids[url] = setOf()
-					println("The url $url is a redirection to $redirection linked in ${task.base}".blue)
+					println("The url $url referenced in ${task.base} is a redirection to $redirection".blue)
 				}
 				response.status.value < 400 -> {
 					val idList = ID_REGEX.findAll(html).map { it.groupValues[1] }
