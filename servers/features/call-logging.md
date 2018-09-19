@@ -43,3 +43,27 @@ everything is logged. And if there are filters, if any of them returns true,
 the call will be logged.
 
 In the example, it will log both: `/section1/*` and `/section2/*` requests.
+
+## MDC
+{: #mdc }
+
+Starting with Ktor 0.9.5, the `CallLogging` feature supports `MDC` from slf4j (Mapped Diagnostic Context)
+to associate information as part of the request.
+
+When installing the CallLogging, you can configure a parameter to associate to the request with the `mdc` method.
+This method requires a key name, and a function provider. The context would be associated
+(and the providers will be called) as part of the `Monitoring` pipeline phase.
+
+```kotlin
+install(CallLogging) {
+    mdc(name) { // call: ApplicationCall -> 
+        "value"
+    }
+    // ...
+}
+```
+
+MDC works by using ThreadLocals, while Ktor uses coroutines that are not bound to a specific Thread.
+This feature uses internally the `kotlinx.coroutines` [ThreadContextElement](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.experimental/-thread-context-element/index.html){: target="_blank"}
+to address it.
+{: .note }
