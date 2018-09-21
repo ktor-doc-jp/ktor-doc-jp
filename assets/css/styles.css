@@ -1913,3 +1913,12 @@ table.compare-table pre.highlight {
 .nomnoml {
     display: none;
 }
+
+pre {
+    background: transparent;
+    border: none;
+}
+
+pre .language-nomnoml {
+    display: none;
+}

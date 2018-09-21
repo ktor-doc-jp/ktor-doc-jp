@@ -61,7 +61,7 @@ certbot certonly -n -d $DOMAIN --email "$EMAIL" --agree-tos --standalone --prefe
 <td markdown="1" style="width:50%;">
 ❌ Error output sample:
 
-```aidl
+```text
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator standalone, Installer None
 Obtaining a new certificate
@@ -97,7 +97,7 @@ IMPORTANT NOTES:
 <td markdown="1" style="width:50%;">
 ✅ Working output sample:
 
-```aidl
+```text
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator standalone, Installer None
 Obtaining a new certificate
@@ -293,4 +293,48 @@ You can find more information about [how to deploy a docker and the Dockerfile i
 
 ### Simplified overview
 
-<div class="nomnoml nomnoml-link">/quickstart/guides/ssl/docker.nomnoml.txt</div>
+```nomnoml
+#direction: right
+#.internet: fill=#fee
+#.network: fill=#efe
+#.http: fill=#6f6
+#.ssl: fill=#6af
+
+[<internet>Internet]
+
+[<http>Nginx
+|port=80 (HTTP, WS)
+|port=443 (HTTPS and WSS)
+|TLS certs per domain
+|VIRTUAL_HOST
+|VIRTUAL_PORT
+]
+
+[App
+|[port=8080 HTTP & WS]
+|[<http>VIRTUAL_HOST=myhost.com]
+|[<http>VIRTUAL_PORT=8080]
+|[<ssl>LETSENCRYPT_HOST=myhost.com]
+|[<ssl>LETSENCRYPT_EMAIL=email@myhost.com]
+]
+
+[<ssl>Let's Encrypt companion
+|LETSENCRYPT_HOST
+|LETSENCRYPT_EMAIL]
+
+[Docker
+|port=80,443
+]
+
+[Let's Encrypt] <- cert request [Let's Encrypt companion]
+
+[App] -:> [reverse-proxy]
+
+[<network>reverse-proxy|network]
+[Nginx] <- [reverse-proxy]
+
+[Internet] <- port 80, 443[Docker]
+[Docker] <- [Nginx]
+
+[Let's Encrypt companion] <-> [Nginx]
+```

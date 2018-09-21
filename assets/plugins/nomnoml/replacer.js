@@ -22,13 +22,9 @@ async function replaceItem($item, url) {
 
 window.addEventListener('load', function() {
     //console.log('loaded!', $);
-    $('.nomnoml').each(function(index, item) {
+    $('pre .language-nomnoml').each(function(index, item) {
         const $item = $(item);
-        if ($item.hasClass("nomnoml-link")) {
-            // noinspection JSIgnoredPromiseFromCall
-            replaceItem($item, $item.text());
-        } else {
-            replaceItemBody($item, $item.text());
-        }
+        const $parent = $item.parent();
+        replaceItemBody($parent, $item.text());
     });
 });

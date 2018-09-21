@@ -167,21 +167,28 @@ pipeline we merge them all.
 Ktor defines a pipeline without subject, and the `ApplicationCall` as context
 defining three phases `Infrastructure`, `Call` and `Fallback` to be executed in that order:
 
-<div class="nomnoml">
+```nomnoml
 #direction: right
 #.call: fill=#af8
 #.fallback: fill=#faa dashed
-[&lt;call&gt;Call]
-[&lt;fallback&gt;Fallback]
-[Infrastructure] then -> [Call]
+[<call>Call]
+[<fallback>Fallback]
+
+[Setup] then -> [Monitoring]
+[Monitoring] then -> [Features]
+[Features] then -> [Call]
 [Call] then -> [Fallback]
-</div>
+```
 
 The purpose for intercepting each phase:
-* `Infrastructure`: For generic features that do not complete the call, like the [Authentication] feature
+* `Setup`: Phase for preparing call and it's attributes for processing (like the [CallId] feature)
+* `Monitoring`: Phase for tracing calls, useful for logging, metrics, error handling and so on (like the [CallLogging] feature)
+* `Features`: Phase for features. Most features should intercept this phase. (like the [Authentication] feature)
 * `Call`: Features and interceptors that are going to complete the call, like the [Routing] feature
 * `Fallback`: Features that process unhandled calls in a normal way, and resolve them somehow, like the [StatusPages] feature.
 
+[CallId]: /servers/features/call-id.html
+[CallLogging]: /servers/features/call-logging.html
 [Authentication]: /servers/features/authentication.html
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
