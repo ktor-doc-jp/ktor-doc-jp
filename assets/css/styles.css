@@ -993,6 +993,7 @@ table.api-docs-table td p {
 /* Sidebar */
 .doc-sidebar {
     width: 200px;
+    float: left;
 }
 
 .doc-menu {
