@@ -152,7 +152,9 @@ for specific phases for the Application pipeline, to process the `request` and e
 The ApplicationCallPipeline defines the following built-in phases for its pipeline:
 
 ```kotlin
-val Infrastructure = PipelinePhase("Infrastructure") // Phase for setting up infrastructure for processing a call
+val Setup = PipelinePhase("Setup") // Phase for preparing the call, and processing attributes
+val Monitoring = PipelinePhase("Monitoring") // Phase for tracing calls: logging, metrics, error handling etc. 
+val Features = PipelinePhase("Features") // Phase for infrastructure features, most intercept at this phase
 val Call = PipelinePhase("Call") // Phase for processing a call and sending a response
 val Fallback = PipelinePhase("Fallback") // Phase for handling unprocessed calls
 ```

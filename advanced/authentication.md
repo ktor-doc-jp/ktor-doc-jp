@@ -7,7 +7,7 @@ permalink: /advanced/authentication.html
 
 Prerequisite reading: [Advanced Pipeline](/advanced/pipeline.html)
 
-`Authentication` feature creates an `AuthenticationPipeline` which is executed right after `Infrastructure` phase
+`Authentication` feature creates an `AuthenticationPipeline` which is executed right after `Features` phase
 in call pipeline. All authentication protocols like basic, digest, oauth are implemented as interceptors on AuthenticationPipeline.
 
 AuthenticationPipeline has two phases:

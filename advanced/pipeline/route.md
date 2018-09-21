@@ -16,8 +16,8 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
             RouteSelectorEvaluation.Constant
     })
 
-    // Intercepts calls from this route at the infrastructure step
-    routeWithTimeout.intercept(ApplicationCallPipeline.Infrastructure) {
+    // Intercepts calls from this route at the features step
+    routeWithTimeout.intercept(ApplicationCallPipeline.Features) {
         withTimeout(time, unit) {
             proceed() // With proceed we can define code to be executed before and after the call
         }

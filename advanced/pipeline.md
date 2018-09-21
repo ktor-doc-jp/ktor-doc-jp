@@ -17,8 +17,8 @@ All the functions are suspending blocks/lambdas, thus the whole pipeline is asyn
 
 Since pipelines contains blocks of code, they can effectively be nested creating sub-pipelines.
 
-Pipelines are being used in ktor as an extension mechanism to plug functionality at the right place.
-For example, a Ktor application defines three main phases: Infrastructure, Call and Fallback.
+Pipelines are being used in Ktor as an extension mechanism to plug functionality at the right place.
+For example, a Ktor application defines five main phases: Setup, Monitoring, Features, Call and Fallback.
 And the routing feature defines its own nested pipeline inside the application's call phase.
 
 ## API
@@ -65,7 +65,7 @@ For example, if you define two phases, and want them to be executed in order, yo
 ```kotlin
 val phase1 = PipelinePhase("MyPhase1")
 val phase2 = PipelinePhase("MyPhase2")
-pipeline.insertPhaseAfter(ApplicationCallPipeline.Infrastructure, phase1)
+pipeline.insertPhaseAfter(ApplicationCallPipeline.Features, phase1)
 pipeline.insertPhaseAfter(phase1, phase2)
 ```
 
@@ -165,7 +165,7 @@ pipeline we merge them all.
 {: #ApplicationCallPipeline }
 
 Ktor defines a pipeline without subject, and the `ApplicationCall` as context
-defining three phases `Infrastructure`, `Call` and `Fallback` to be executed in that order:
+defining five phases `Setup`, `Monitoring`, `Features`, `Call` and `Fallback` to be executed in that order:
 
 ```nomnoml
 #direction: right
@@ -196,12 +196,14 @@ The purpose for intercepting each phase:
 The code looks like this:
 
 ```
-open class ApplicationCallPipeline : Pipeline<Unit, ApplicationCall>(Infrastructure, Call, Fallback) {
+open class ApplicationCallPipeline : Pipeline<Unit, ApplicationCall>(Setup, Monitoring, Features, Call, Fallback) {
     val receivePipeline = ApplicationReceivePipeline()
     val sendPipeline = ApplicationSendPipeline()
 
     companion object {
-        val Infrastructure = PipelinePhase("Infrastructure")
+        val Setup = PipelinePhase("Setup")
+        val Monitoring = PipelinePhase("Monitoring")
+        val Features = PipelinePhase("Features")
         val Call = PipelinePhase("Call")
         val Fallback = PipelinePhase("Fallback")
     }
@@ -212,7 +214,7 @@ This base pipeline is used by the `Application` and the `Routing` feature.
 
 ### Application
 
-A ktor `Application` is a `ApplicationCallPipeline`. This is the main pipeline used for web backend
+A Ktor `Application` is a `ApplicationCallPipeline`. This is the main pipeline used for web backend
 applications handling http requests.
 
 ### Routing

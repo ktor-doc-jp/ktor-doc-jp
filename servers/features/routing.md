@@ -166,7 +166,7 @@ constitutes path from root to the selected node in order from top to bottom.
 route("/portal") {
    route("articles") { … }
    route("admin") {
-      intercept(ApplicationCallPipeline.Infrastructure) { … } // verify admin privileges
+      intercept(ApplicationCallPipeline.Features) { … } // verify admin privileges
       route("article/{id}") { … } // manage article with {id}
       route("profile/{id}") { … } // manage profile with {id}
    }
