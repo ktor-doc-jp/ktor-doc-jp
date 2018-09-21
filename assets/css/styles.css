@@ -1389,6 +1389,16 @@ table.api-docs-table td p {
     display: inline-block;
 }
 
+#cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#cards-wrapper .item {
+    flex: 0 1 33%;
+}
+
 .cards-section {
     padding: 60px 0;
 }
@@ -1556,6 +1566,16 @@ table.api-docs-table td p {
 @media (max-width: 767px) {
     .cards-section .item-inner {
         padding: 30px 15px;
+    }
+
+    #cards-wrapper .item {
+        flex: 0 1 49%;
+    }
+}
+
+@media (max-width: 400px) {
+    #cards-wrapper .item {
+        flex: 0 1 99%;
     }
 }
 
