@@ -547,6 +547,7 @@ select {
 
 .doc-content {
     margin-left: 230px;
+    overflow: hidden;
 }
 
 .doc-section {
