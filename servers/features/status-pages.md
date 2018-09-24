@@ -155,3 +155,5 @@ fun Application.module() {
 class HttpRedirectException(val location: String, val permanent: Boolean = false) : RuntimeException()
 fun redirect(location: String, permanent: Boolean = false): Nothing = throw HttpRedirectException(location, permanent)
 ```
+
+There is a more advanced example showing this in the [redirect-with-exception](/samples/other/redirect-with-exception.html) sample. 
