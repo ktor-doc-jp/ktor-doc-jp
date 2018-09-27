@@ -12,12 +12,12 @@ Right now, the supported platforms are JVM, Android and iOS, but in future versi
 
 ### Android
 
-For Android, in your project's `build.gradle` you just have include the following artifact to your `dependendices` block:
+For Android, in your project's `build.gradle` (or `build.gradle.kts`) you just have include the following artifact to your `dependendices` block:
 
 ```kotlin
 dependencies {
     // ...
-    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation("io.ktor:ktor-client-android:$ktor_version")
     // ...
 }
 ```
@@ -32,7 +32,7 @@ to android, you have to put this artifact as part of the `dependencies` block.
 ```kotlin
 dependencies {
     // ...
-    implementation "io.ktor:ktor-client-ios:$ktor_version"
+    implementation("io.ktor:ktor-client-ios:$ktor_version")
     // ...
 }
 ```
@@ -52,7 +52,7 @@ Ktor HTTP Client exposes a common module that can be used for such projects:
 ```kotlin
 dependencies {
     // ...
-    implementation "io.ktor:ktor-client:$ktor_version"
+    implementation("io.ktor:ktor-client:$ktor_version")
 }
 ```
 
