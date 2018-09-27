@@ -35,9 +35,9 @@ else by code.
 You can use [logback](https://logback.qos.ch/),
 which is the successor of log4j, as a SLF4J provider:
 
-Gradle's `build.gradle`:
+Gradle's `build.gradle` or `build.gradle.kts`:
 ```groovy
-compile "ch.qos.logback:logback-classic:1.2.1"
+compile("ch.qos.logback:logback-classic:1.2.3")
 ```
 
 Mavens's `pom.xml`:
