@@ -56,7 +56,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 group = "Example"
 version = "1.0-SNAPSHOT"
 
-val ktorVersion = "{{ site.ktor_version }}"
+val ktor_version = "{{ site.ktor_version }}"
 
 plugins {
     application
@@ -85,7 +85,7 @@ application {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
-    compile("io.ktor:ktor-server-netty:$ktorVersion")
+    compile("io.ktor:ktor-server-netty:$ktor_version")
     compile("ch.qos.logback:logback-classic:1.2.3")
     testCompile(group = "junit", name = "junit", version = "4.12")
 }
