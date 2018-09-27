@@ -50,12 +50,12 @@
 <div id="artifact-gradle-{{ autoid }}" class="tab-pane fade in active">
     {% if include.test %}
     <div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    testCompile "{{ include.artifact }}"
+    testCompile("{{ include.artifact }}")
 }
 </code></div>
     {% else %}
 <div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    compile "{{ include.artifact }}"
+    compile("{{ include.artifact }}")
 }
 </code></div>
     {% endif %}
