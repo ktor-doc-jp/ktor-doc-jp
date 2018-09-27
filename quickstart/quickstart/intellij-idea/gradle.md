@@ -55,8 +55,8 @@ You can check this in IntelliJ IDEA in the main menu:
     ![Ktor IntelliJ: Project Structure](/quickstart/intellij-idea/project-structure.png)
 
 7.  Update your `build.gradle` file with the artifact and repositories for the classes to be available:
-    * Include `compile "io.ktor:ktor-server-netty:$ktor_version"`, in your `build.gradle`'s `dependencies` block
-    * Include  `maven { url "http://kotlin.bintray.com/ktor" }` and `jcenter()` in your `repositories` block
+    * Include `compile("io.ktor:ktor-server-netty:$ktor_version")`, in your `build.gradle`'s `dependencies` block
+    * Include  `maven { url = uri("http://kotlin.bintray.com/ktor") }` and `jcenter()` in your `repositories` block
 
     ![Ktor IntelliJ: Build Gradle](/quickstart/intellij-idea/build-gradle.png)
 
