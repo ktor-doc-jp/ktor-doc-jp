@@ -48,6 +48,8 @@ You can set-up a simple Ktor application using Gradle like this:
 
 {% capture gradle-kotlin-build %}
 ```kotlin
+// build.gradle.kts
+
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -93,6 +95,8 @@ dependencies {
 
 {% capture gradle-groovy-build %}
 ```groovy
+// build.gradle
+
 group 'Example'
 version '1.0-SNAPSHOT'
 
