@@ -23,7 +23,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-io-common:$kotlinx_io_version" // Common
+    implementation("org.jetbrains.kotlinx:kotlinx-io-common:$kotlinx_io_version") // Common
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinx_io_version" // JVM
+    implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinx_io_version") // JVM
 }
 ```
 
@@ -39,7 +39,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-io-js:$kotlinx_io_version" // JS
+    implementation("org.jetbrains.kotlinx:kotlinx-io-js:$kotlinx_io_version") // JS
 }
 ```
 
@@ -47,6 +47,6 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-io-native:$kotlinx_io_version" // Native
+    implementation("org.jetbrains.kotlinx:kotlinx-io-native:$kotlinx_io_version") // Native
 }
 ```
