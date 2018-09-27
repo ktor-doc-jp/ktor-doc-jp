@@ -186,7 +186,7 @@ examples of how to test specific functionalities.
 // ...
 dependencies {
     // ...
-    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
+    testCompile("io.ktor:ktor-server-test-host:$ktor_version")
 }
 ```
 
@@ -241,7 +241,7 @@ to create a separate function receiving the service dependencies. This allows yo
 // ...
 dependencies {
     // ...
-    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
+    testCompile("io.ktor:ktor-server-test-host:$ktor_version")
 }
 ```
 

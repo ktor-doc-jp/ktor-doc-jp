@@ -190,7 +190,7 @@ If you configure the ContentNegotiation to use gson,
 you will need to include the `ktor-gson` artifact:
 
 ```kotlin
-compile "io.ktor:ktor-gson:$ktor_version"
+compile("io.ktor:ktor-gson:$ktor_version")
 ```
 
 Then you can, as an example, do:

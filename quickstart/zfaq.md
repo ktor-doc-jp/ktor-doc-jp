@@ -72,7 +72,7 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 > Ensure that you are including the ktor artifact. For example, for gradle and Netty engine it would be:
 > ```kotlin
 > dependencies {
->     compile "io.ktor:ktor-server-netty:$ktor_version"
+>     compile("io.ktor:ktor-server-netty:$ktor_version")
 > }
 > ```
 > * For gradle, check: <http://ktor.io/quickstart/gradle.html#engine>

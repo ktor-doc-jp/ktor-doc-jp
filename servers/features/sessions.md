@@ -253,7 +253,7 @@ This implementation is not intended for production environments.
 
 You have to include an additional artifact for the `directorySessionStorage` function.
 
-`compile "io.ktor:ktor-server-sessions:$ktor_version" // Required for directorySessionStorage`
+`compile("io.ktor:ktor-server-sessions:$ktor_version") // Required for directorySessionStorage`
 
 ```kotlin
 install(Sessions) {
