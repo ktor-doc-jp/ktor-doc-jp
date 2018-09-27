@@ -166,13 +166,30 @@ ktor {
 
 Then we delete the main function from `BlogApp.kt` and change `fun Application.module()` to `fun Application.main()`.  However, if we run the application now, it will fail with an error message like "Top-level function 'main' not found in package blog."  Our `Application.main()` function is now a function extension and does not qualify as a top-level main function.   
 
-This requires us to indicate a new main class as IntelliJ IDEA will no longer be able to find it automatically.  In `build.gradle` we add:
+This requires us to indicate a new main class as IntelliJ IDEA will no longer be able to find it automatically.  In `build.gradle(.kts)` we add:
 
+{% capture gradle-groovy-build %}
 ```groovy
 apply plugin: 'application'
 
 mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
 ```
+{% endcapture %}
+
+{% capture gradle-kotlin-build %}
+```kotlin
+plugins {
+    application
+    // ...
+}
+
+application {
+    mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+}
+```
+{% endcapture %}
+
+{% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
 And then go to `Run -> Edit Configurations` select the `blog.BlogAppKt` configuration and change its Main class to:
 `io.ktor.server.netty.DevelopmentEngine`
