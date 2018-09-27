@@ -1944,3 +1944,12 @@ pre {
 pre .language-nomnoml {
     display: none;
 }
+
+.artifact-tab-content {
+    background: white;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-top: transparent;
+    position: relative;
+    top: -1px;
+}
