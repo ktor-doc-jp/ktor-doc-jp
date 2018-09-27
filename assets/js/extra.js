@@ -245,7 +245,7 @@ $(document).ready(function() {
     };
     hashChanged();
 
-    $('.artifact-tabs a').click(function (e) {
+    $('.artifact-tabs a, .gradle-tabs a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     })

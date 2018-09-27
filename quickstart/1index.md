@@ -46,7 +46,52 @@ You can set-up a simple Ktor application using Gradle like this:
 
 ![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
 
-Text version:
+{% capture gradle-kotlin-build %}
+```kotlin
+import org.jetbrains.kotlin.gradle.dsl.Coroutines
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+group = "Example"
+version = "1.0-SNAPSHOT"
+
+val ktorVersion = "{{ site.ktor_version }}"
+
+plugins {
+    application
+    kotlin("jvm") version "{{ site.kotlin_version }}"
+}
+
+kotlin.experimental.coroutines = Coroutines.ENABLE
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType<KotlinCompile>().all {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+application {
+    mainClassName = "MainKt"
+}
+
+dependencies {
+    compile(kotlin("stdlib-jdk8"))
+    compile("io.ktor:ktor-server-netty:$ktorVersion")
+    compile("ch.qos.logback:logback-classic:1.2.3")
+    testCompile(group = "junit", name = "junit", version = "4.12")
+}
+```
+{: .compact}
+{% endcapture %}
+
+{% capture gradle-groovy-build %}
 ```groovy
 group 'Example'
 version '1.0-SNAPSHOT'
@@ -84,11 +129,15 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "ch.qos.logback:logback-classic:1.2.1"
+    compile "ch.qos.logback:logback-classic:1.2.3"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
 {: .compact}
+{% endcapture %}
+
+Text version:
+{% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
 Since Ktor is not yet 1.0, we have custom Maven repositories for distributing our early preview artifacts.
 You have to set up a couple of repositories as shown below, so your tools can find Ktor artifacts and dependencies.
