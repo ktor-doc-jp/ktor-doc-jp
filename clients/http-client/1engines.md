@@ -88,7 +88,7 @@ val client = HttpClient(Apache) {
 {: .compact}
 
 
-{% include artifact.html kind="engine" class="io.ktor.client.engine.apache.Apache" artifact="io.ktor:ktor-client-apache" transitive="org.apache.httpcomponents:httpasyncclient" %}
+{% include artifact.html kind="engine" class="io.ktor.client.engine.apache.Apache" artifact="io.ktor:ktor-client-apache:$ktor_version" transitive="org.apache.httpcomponents:httpasyncclient" %}
 
 ### CIO
 {: #cio}
