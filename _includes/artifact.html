@@ -44,10 +44,24 @@
     {% if artifact_required %}
 <ul class="nav nav-tabs artifact-tabs">
     <li role="presentation" class="active"><a data-toggle="tab" href="#artifact-gradle-{{ autoid }}">Gradle</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#artifact-gradle-kotlin-{{ autoid }}">Gradle Kotlin DSL</a></li>
     <li role="presentation"><a data-toggle="tab" href="#artifact-maven-{{ autoid }}">Maven</a></li>
 </ul>
 <div class="tab-content artifact-tab-content">
 <div id="artifact-gradle-{{ autoid }}" class="tab-pane fade in active">
+    {% if include.test %}
+    <div><code style="white-space: pre;font-size: 0.9em">dependencies {
+    testCompile "{{ include.artifact }}"
+}
+</code></div>
+    {% else %}
+<div><code style="white-space: pre;font-size: 0.9em">dependencies {
+    compile "{{ include.artifact }}"
+}
+</code></div>
+    {% endif %}
+</div>
+<div id="artifact-gradle-kotlin-{{ autoid }}" class="tab-pane fade in">
     {% if include.test %}
     <div><code style="white-space: pre;font-size: 0.9em">dependencies {
     testCompile("{{ include.artifact }}")
