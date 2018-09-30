@@ -70,9 +70,9 @@ Convenience `cookies` instance to set `Set-Cookie` headers:
 
 Getting and changing the HTTP Status:
 
-* `request.status(HttpStatusCode.OK)` - Sets the HttpStatusCode to a predefined standard one
-* `request.status(HttpStatusCode(418, "I'm a tea pot"))` - Sets the HttpStatusCode to a custom status code
-* `val status: HttpStatusCode? = request.status()` - Gets the currently set HttpStatusCode if set
+* `response.status(HttpStatusCode.OK)` - Sets the HttpStatusCode to a predefined standard one
+* `response.status(HttpStatusCode(418, "I'm a tea pot"))` - Sets the HttpStatusCode to a custom status code
+* `val status: HttpStatusCode? = response.status()` - Gets the currently set HttpStatusCode if set
 
 * `response.contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))` - Typed way for setting the Content-Type (for `ContentType.Application.Json` the default charset is UTF_8 without making it explicit)
 * `response.contentType("application/json; charset=UTF-8")` - Untyped way for setting the Content-Type header
