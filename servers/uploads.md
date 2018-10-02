@@ -29,7 +29,7 @@ multipart.forEachPart { part ->
         is PartData.FileItem -> {
             val ext = File(part.originalFileName).extension
             val file = File(uploadDir, "upload-${System.currentTimeMillis()}-${session.userId.hashCode()}-${title.hashCode()}.$ext")
-            part.streamProvider().use { its -> file.outputStream().buffered().use { its.copyToSuspend(it) } }
+            part.streamProvider().use { input -> file.outputStream().buffered().use { output -> input.copyToSuspend(output) } }
             videoFile = file
         }
     }
