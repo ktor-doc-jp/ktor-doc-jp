@@ -58,6 +58,24 @@ override fun Route.toString() = when {
 }
 ```
 
+### How to intercept route truncation processing
+```kotlin
+    intercept(ApplicationCallPipeline.Setup) {
+
+        if (call.request.path() == "/admin/book") {
+            call.respondText {
+                "intercept book"
+            }
+            /*
+            Truncate the route response. If there is no finish() function,
+            the route /book will still respond to the processing, and the pipeline will be unwritable.
+            */
+            return@intercept finish()
+        } 
+
+    }
+```
+
 ### Hooking before and after routing 
 
 You can globally intercept the routing calls by using the events `Routing.RoutingCallStarted` and `Routing.RoutingCallFinished`:
