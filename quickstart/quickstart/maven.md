@@ -169,7 +169,7 @@ to use them to avoid warnings:
 Ktor can run in many environments, such as Netty, Jetty or any other
 Servlet-compatible Application Container such as Tomcat.
 
-This example shows how to configure Ktor with Nett.
+This example shows how to configure Ktor with Netty.
 For other engines see [artifacts](/quickstart/artifacts.html) for a list of
 available artifacts.
 
