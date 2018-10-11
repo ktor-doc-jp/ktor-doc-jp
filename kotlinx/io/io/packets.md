@@ -13,6 +13,9 @@ In difference with IOBuffers, you can build packets without having to know their
 ## Building packets
 
 ```kotlin
+// To make this less verbose:
+//   NumArray = ByteArray | ShortArray | CharArray | IntArray | LongArray | FloatArray | DoubleArray 
+
 fun buildPacket(headerSizeHint: Int = 0, block: BytePacketBuilder.() -> Unit): ByteReadPacket
 fun BytePacketBuilder(headerSizeHint: Int = 0): BytePacketBuilder
 
@@ -40,11 +43,7 @@ class BytePacketBuilder(headerSizeHint: Int, pool: ObjectPool<IoBuffer>) : Appen
     final override fun writeByte(v: Byte)
     final override fun writeDouble(v: Double)
     final override fun writeFloat(v: Float)
-    override fun writeFully(src: ShortArray, offset: Int, length: Int)
-    override fun writeFully(src: IntArray, offset: Int, length: Int)
-    override fun writeFully(src: LongArray, offset: Int, length: Int)
-    override fun writeFully(src: FloatArray, offset: Int, length: Int)
-    override fun writeFully(src: DoubleArray, offset: Int, length: Int)
+    override fun writeFully(src: NumArray, offset: Int, length: Int)
     override fun writeFully(src: IoBuffer, length: Int)
     override fun fill(n: Long, v: Byte)
     override fun append(c: Char): BytePacketBuilderBase
@@ -98,16 +97,8 @@ class ByteReadPacket(head: IoBuffer, pool: ObjectPool<IoBuffer>) : Input {
     fun readFully(dst: ByteArray, offset: Int, length: Int)
     fun discard(n: Int)
     fun discardExact(n: Int)
-    fun readFully(dst: ShortArray, offset: Int, length: Int)
-    fun readAvailable(dst: ShortArray, offset: Int, length: Int): Int
-    fun readFully(dst: IntArray, offset: Int, length: Int)
-    fun readAvailable(dst: IntArray, offset: Int, length: Int): Int
-    fun readFully(dst: LongArray, offset: Int, length: Int)
-    fun readAvailable(dst: LongArray, offset: Int, length: Int): Int
-    fun readFully(dst: FloatArray, offset: Int, length: Int)
-    fun readAvailable(dst: FloatArray, offset: Int, length: Int): Int
-    fun readFully(dst: DoubleArray, offset: Int, length: Int)
-    fun readAvailable(dst: DoubleArray, offset: Int, length: Int): Int
+    fun readFully(dst: NumArray, offset: Int, length: Int)
+    fun readAvailable(dst: NumArray, offset: Int, length: Int): Int
     fun readFully(dst: IoBuffer, length: Int)
     fun readAvailable(dst: IoBuffer, length: Int): Int
     fun tryPeek(): Int
