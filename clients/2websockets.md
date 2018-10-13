@@ -4,14 +4,13 @@ category: clients
 permalink: /clients/websockets.html
 caption: WebSockets  
 feature:
-    artifact: io.ktor:ktor-client-websocket:$ktor_version
+    artifact: io.ktor:ktor-client-websocket:$ktor_version,io.ktor:ktor-client-cio:$ktor_version
     class: io.ktor.client.features.websocket.WebSockets
 ---
 
-To use this feature, you need to include `io.ktor:ktor-client-websocket` artifact.
-{: .note.artifact }
+{% include feature.html %}
 
-Ktor provides a WebSocket client in addition to supporting [WebSockets at server side](/servers/features/websockets.html). 
+Ktor provides a WebSocket client only supporting the CIO engine in addition to supporting [WebSockets at server side](/servers/features/websockets.html). 
 
 Once connected, client and server WebSockets share the same [WebSocketSession](/servers/features/websockets.html#WebSocketSession)
 interface for communication.

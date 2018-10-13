@@ -6,10 +6,8 @@
     {% else %}
         {% assign artifact_required = true %}
 {% endcase %}
-{% assign artifact_parts = include.artifact | split: ':' %}
-{% assign artifact_group = artifact_parts[0] %}
-{% assign artifact_name = artifact_parts[1] %}
-{% assign artifact_version = artifact_parts[2] %}
+
+{% assign artifacts = include.artifact | split: ',' %}
 
 {% capture _ignored %}{% increment autoid %}{% endcapture %}
 
@@ -55,21 +53,26 @@
 }
 </code></div>
     {% else %}
-<div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    compile "{{ include.artifact }}"
+<div>
+
+<code style="white-space: pre;font-size: 0.9em">dependencies {
+{% for artifact in artifacts %}    compile "{{ artifact }}"
+{% endfor -%}
 }
-</code></div>
+</code>
+</div>
     {% endif %}
 </div>
 <div id="artifact-gradle-kotlin-{{ autoid }}" class="tab-pane fade in">
     {% if include.test %}
     <div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    testCompile("{{ include.artifact }}")
+    testCompile("{{ include.test }}")
 }
 </code></div>
     {% else %}
 <div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    compile("{{ include.artifact }}")
+{% for artifact in artifacts %}    compile("{{ artifact }}")
+{% endfor -%}
 }
 </code></div>
     {% endif %}
@@ -78,12 +81,18 @@
 <div><code style="white-space: pre;font-size: 0.9em">&lt;project&gt;
     ...
     &lt;dependencies&gt;
+{%- for artifact in artifacts -%}
+    {%- assign artifact_parts = include.artifact | split: ':' -%}
+    {%- assign artifact_group = artifact_parts[0] -%}
+    {%- assign artifact_name = artifact_parts[1] -%}
+    {%- assign artifact_version = artifact_parts[2] %}
         &lt;dependency&gt;
             &lt;groupId&gt;{{ artifact_group }}&lt;/groupId&gt;
             &lt;artifactId&gt;{{ artifact_name }}&lt;/artifactId&gt;
             &lt;version&gt;${ktor.version}&lt;/version&gt;
             &lt;scope&gt;{% if include.test %}test{% else %}compile{% endif %}&lt;/scope&gt;
         &lt;/dependency&gt;
+{%- endfor %}
     &lt;/dependencies&gt;
 &lt;/project&gt;
 </code></div>
