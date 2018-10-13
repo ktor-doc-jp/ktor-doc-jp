@@ -21,6 +21,7 @@ This functionality is exposed through the `io.ktor:ktor-network:$ktor_version` a
 
 In order to create either server or client sockets, you have to use the `aSocket` builder,
 with a mandatory `ActorSelectorManager`: `aSocket(selector)`. For example: `aSocket(ActorSelectorManager(ioCoroutineDispatcher))`.
+As for `1.0.0-alpha-1` `ioCoroutineDispatcher` has been deprecated and you have to use `Dispatchers.IO` instead. 
 
 Then use:
 
@@ -92,7 +93,7 @@ fun main(args: Array<String>) {
                 
                 try {
                     while (true) {
-                        val line = input.readASCIILine()
+                        val line = input.readUTF8Line()
                         
                         println("${socket.remoteAddress}: $line")
                         output.writeBytes("$line\r\n")
@@ -149,7 +150,7 @@ fun main(args: Array<String>) {
         val output = socket.openWriteChannel(autoFlush = true)
 
         output.writeBytes("hello\r\n")
-        val response = input.readASCIILine()
+        val response = input.readUTF8Line()
         println("Server said: '$response'")
     }
 }
@@ -171,7 +172,7 @@ runBlocking {
     w.write("\r\n")
     w.flush()
     val r = socket.openReadChannel()
-    println(r.readASCIILine())
+    println(r.readUTF8Line())
 }
 ```
 
