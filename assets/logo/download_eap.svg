@@ -4,7 +4,7 @@ layout: none
 search: exclude
 ---
 
-{%- assign version = site.ktor_version -%}
+{%- assign version = site.ktor_version_eap -%}
 {%- assign length = version | size -%}
 {%- assign pixels_left = 65 -%}
 {%- assign pixels_right = length | times: 7.5 -%}
