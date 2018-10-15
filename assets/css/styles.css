@@ -1953,3 +1953,17 @@ pre .language-nomnoml {
     position: relative;
     top: -1px;
 }
+
+p {
+    line-height: 1.7;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+h3, h3 a, h3 a.anchored-heading {
+    font-weight: bold;
+    font-style: italic;
+    color: #666;
+}
