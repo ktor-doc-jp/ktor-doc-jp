@@ -1971,3 +1971,7 @@ h3, h3 a, h3 a.anchored-heading {
     font-style: italic;
     color: #666;
 }
+
+.search-separator {
+    color: #aaa;
+}

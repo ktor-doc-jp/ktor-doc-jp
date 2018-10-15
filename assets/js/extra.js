@@ -165,6 +165,21 @@ $(document).ready(function() {
 // Prefetch
     fetchSearchOnce();
 
+    //const arrow = "↬⇒";
+    const sectionSeparator = " <span class='search-separator'>↬</span> ";
+
+    function getHeadings(h) {
+        const hlevel = parseInt(h.tagName.substr(1));
+        const $h = $(h);
+        const prevAll = $h.prevAll(`h${hlevel - 1}`);
+        const prev = prevAll[0];
+        if (prev === undefined) {
+            return [h];
+        } else {
+            return getHeadings(prev).concat([h]);
+        }
+    }
+
     async function updateSearchResults() {
         let query = $('#search-input').val().trim();
         let containsHash = query.indexOf('#') >= 0;
@@ -185,13 +200,14 @@ $(document).ready(function() {
         let filteredResults = filteredResultsAll.slice(0, 10);
 
         $(".doc-content").find("h2,h3,h4,h5,h6").filter("[id]").each(function () {
-            const id = $(this).attr('id');
-            const headerText = $(this).text();
-
-            const searchTextLC = `${headerText} ${id}`.normalizeForSearch();
+            const $this = $(this);
+            const id = $this.attr('id');
+            const headings = getHeadings(this);
+            const searchTextLC = headings.map((v) => ($(v).text() + " " + id).normalizeForSearch()).join(" ");
+            const headerRealHtml = headings.map((v) => $(v).text().escapeHTML()).join(sectionSeparator);
 
             if (searchTextLC.match(querySearchForSection)) {
-                lines.push(`<a href='#${id.escapeHTML()}'># ${headerText.escapeHTML()}</a>`);
+                lines.push(`<a href='#${id.escapeHTML()}'># ${headerRealHtml}</a>`);
             }
         });
 
@@ -212,7 +228,7 @@ $(document).ready(function() {
             const active = (n === 0) ? ' active' : '';
             const google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
             const hash = isHash ? ' hash' : '';
-            console.log(line);
+            //console.log(line);
             outLines.push(`<li class="${active}${google}${hash}">${line}</li>`);
         }
         if (outLines.length === 0) {
