@@ -41,7 +41,7 @@ intercept(ApplicationCallPipeline.Call) {
 }
 ```
 
-## Request information (URL, method, scheme, protocol, host, path, httpVersion, remoteHost, clientIp)
+## Request information
 {: #info }
 
 As part of the `request`, you can get access to its internal context:
@@ -50,6 +50,9 @@ As part of the `request`, you can get access to its internal context:
 val call: ApplicationCall = request.call
 val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
+
+### URL, method, scheme, protocol, host, path, httpVersion, remoteHost, clientIp
+{# info-url }
 
 ```kotlin
 val version: String = request.httpVersion // "HTTP/1.1"
