@@ -52,7 +52,7 @@ val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
 
 ### URL, method, scheme, protocol, host, path, httpVersion, remoteHost, clientIp
-{# info-url }
+{: # info-url }
 
 ```kotlin
 val version: String = request.httpVersion // "HTTP/1.1"
