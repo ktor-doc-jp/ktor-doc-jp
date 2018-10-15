@@ -208,9 +208,12 @@ $(document).ready(function() {
         let outLines = [];
         for (let n = 0; n < lines.length; n++) {
             const line = lines[n];
-            let active = (n === 0) ? ' active' : '';
-            let google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
-            outLines.push(`<li class="${active}${google}">${line}</li>`);
+            const isHash = line.indexOf(">#") >= 0;
+            const active = (n === 0) ? ' active' : '';
+            const google = (line.indexOf('google.com/search') >= 0) ? ' google-search' : '';
+            const hash = isHash ? ' hash' : '';
+            console.log(line);
+            outLines.push(`<li class="${active}${google}${hash}">${line}</li>`);
         }
         if (outLines.length === 0) {
             outLines.push('<li>No results found</li>');

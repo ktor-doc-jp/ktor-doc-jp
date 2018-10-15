@@ -1863,6 +1863,10 @@ h1 a.anchored-heading:hover {
     border-top: 1px dotted #eee;
 }
 
+.search-results-inline-container .search-results li.hash {
+    font-weight: bold;
+}
+
 .search-results-inline-container .search-results li.google-search:only-child {
     border-top: none;
 }
