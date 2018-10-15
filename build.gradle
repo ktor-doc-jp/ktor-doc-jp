@@ -1,5 +1,13 @@
+apply plugin: 'idea'
+
 task check() {
 	doLast {
 		println("Placeholder")
+	}
+}
+
+idea {
+	module {
+		excludeDirs = [file('.idea'), file('_site')]
 	}
 }
