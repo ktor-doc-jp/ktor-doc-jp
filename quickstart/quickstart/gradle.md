@@ -35,6 +35,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -48,6 +49,7 @@ sourceCompatibility = 1.8
 
 repositories {
     jcenter()
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 dependencies {
@@ -152,6 +154,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -178,6 +181,7 @@ kotlin {
 repositories {
     jcenter()
     maven { url "https://dl.bintray.com/kotlin/ktor" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 dependencies {

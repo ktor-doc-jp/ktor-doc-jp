@@ -69,6 +69,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
+    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
 }
 
 java {
@@ -106,6 +107,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -128,6 +130,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url "https://dl.bintray.com/kotlin/ktor" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 dependencies {
