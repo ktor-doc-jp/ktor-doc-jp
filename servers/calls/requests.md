@@ -163,7 +163,7 @@ val postParameters: Parameters = call.receiveParameters()
 ```
 
 ### Receive Typed Objects, Content-Type and JSON
-{: #payload-content-negotiation }
+{: #typed-objects }
 
 The call also supports receiving generic objects:
 

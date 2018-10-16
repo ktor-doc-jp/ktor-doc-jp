@@ -394,6 +394,9 @@ $(document).ready(function() {
                 comparerBy((it) => String(it.search))
             ))
             .filter((it) => String(it.search).match(querySearch))
+            .sorted(composeComparers(
+                comparerBy((it) => String(it.search).regexIndexOf(querySearch))
+            ))
         ;
 
         let filteredResults = filteredResultsAll.slice(0, 10);
@@ -524,3 +527,25 @@ function sectionPriority(category) {
     }
     return 7;
 }
+
+String.prototype.regexIndexOf = function(regex, startpos) {
+    var indexOf = this.substring(startpos || 0).search(regex);
+    return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
+};
+
+String.prototype.regexLastIndexOf = function(regex, startpos) {
+    regex = (regex.global) ? regex : new RegExp(regex.source, "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : ""));
+    if(typeof (startpos) == "undefined") {
+        startpos = this.length;
+    } else if(startpos < 0) {
+        startpos = 0;
+    }
+    var stringToWorkWith = this.substring(0, startpos + 1);
+    var lastIndexOf = -1;
+    var nextStop = 0;
+    while((result = regex.exec(stringToWorkWith)) != null) {
+        lastIndexOf = result.index;
+        regex.lastIndex = ++nextStop;
+    }
+    return lastIndexOf;
+};
