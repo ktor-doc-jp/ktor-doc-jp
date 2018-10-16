@@ -1,6 +1,6 @@
 ---
 title: Google OAuth
-caption: How to implement an OAuth login with Google
+caption: "Guides: How to implement an OAuth login with Google"
 category: quickstart
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Chat
-caption: How to implement a chat with WebSockets
+caption: "Guides: How to implement a chat with WebSockets"
 category: quickstart
 ---
 

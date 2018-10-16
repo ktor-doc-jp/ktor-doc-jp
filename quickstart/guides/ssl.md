@@ -1,6 +1,6 @@
 ---
 title: SSL
-caption: How to get a free certificate and use SSL with Ktor
+caption: "Guides: How to get a free certificate and use SSL with Ktor"
 category: quickstart
 keywords: tls ssl https let's encrypt letsencrypt
 ---
