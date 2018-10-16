@@ -395,7 +395,7 @@ $(document).ready(function() {
             ))
             .filter((it) => String(it.search).match(querySearch))
             .sorted(composeComparers(
-                comparerBy((it) => String(it.search).regexIndexOf(querySearch))
+                comparerBy((it) => it.search.length >= 0 ? String(it.search).regexIndexOf(querySearch) : 0)
             ))
         ;
 
@@ -414,7 +414,7 @@ $(document).ready(function() {
         });
 
         for (const result of filteredResults) {
-            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span style="color:#777;">${result.categoryName.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
+            lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}"><span class="search-section ${result.categoryName.escapeHTML()}">${result.categoryName.escapeHTML()}</span> - ${result.title.escapeHTML()} - ${result.caption.escapeHTML()}</a>`);
         }
         if (filteredResults.length < filteredResultsAll.length) {
             const invisibleLinks = filteredResultsAll.length - filteredResults.length;

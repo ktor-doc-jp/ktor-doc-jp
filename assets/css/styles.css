@@ -1985,3 +1985,11 @@ h3, h3 a, h3 a.anchored-heading {
     left: -2px;
     */
 }
+
+.search-section { color: #777; font-weight: bold; }
+.search-section.Quick.Start { color: #75c181; }
+.search-section.Servers { color: #8A40A7; }
+.search-section.Clients { color: #F88C30; }
+.search-section.Kotlinx { color: #58bbee; }
+.search-section.Samples { color: #40babd; }
+.search-section.Advanced { color: #f77b6b; }
