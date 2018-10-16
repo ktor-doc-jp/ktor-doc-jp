@@ -1975,3 +1975,13 @@ h3, h3 a, h3 a.anchored-heading {
 .search-separator {
     color: #aaa;
 }
+
+.highlight.highlighter {
+    background: yellow;
+    border-radius: 0.4em;
+    /*
+    padding: 2px;
+    position: relative;
+    left: -2px;
+    */
+}
