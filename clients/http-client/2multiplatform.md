@@ -12,7 +12,7 @@ Right now, the supported platforms are JVM, Android and iOS, but in future versi
 
 ### Android
 
-For Android, in your project's `build.gradle` (or `build.gradle.kts`) you just have include the following artifact to your `dependendices` block:
+For Android, in your project's `build.gradle` (or `build.gradle.kts`) you just have include the following artifact to your `dependencies` block:
 
 ```kotlin
 dependencies {
