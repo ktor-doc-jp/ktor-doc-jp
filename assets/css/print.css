@@ -1,0 +1,26 @@
+.github_edit_page {
+    display: none;
+}
+
+#search-input, #search-form {
+    display: none;
+}
+
+header#header {
+    display: none;
+}
+footer.footer {
+    display: none;
+}
+
+.estimated-read-time {
+    display: none;
+}
+
+.compact {
+    max-height: 2000px !important;
+}
+
+.category-list-list {
+    display: none;
+}
