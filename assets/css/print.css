@@ -24,3 +24,11 @@ footer.footer {
 .category-list-list {
     display: none;
 }
+
+.doc-sidebar {
+    display: none;
+}
+
+.doc-content {
+    margin-left: 0;
+}
