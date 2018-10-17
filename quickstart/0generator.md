@@ -3,6 +3,7 @@ title: Generator
 caption: Generate a Ktor project 
 category: quickstart
 permalink: /quickstart/generator.html
+skip_pdf: true
 redirect_from:
   - /quickstart/quickstart/generator.html
 ---

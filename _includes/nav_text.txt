@@ -1,0 +1,21 @@
+{%- assign next_level = include.level | plus: 1 -%}
+{%- assign entries = site.pages | sort: "path" -%}
+{%- capture newLine %}
+{% endcapture -%}
+{%- for entry in entries -%}
+    {%- assign slug = entry.url | split: "/" | last -%}
+    {%- assign current = entry.url | remove: slug -%}
+
+    {%- if current == include.context -%}{%- unless entry.redirect.from -%}
+
+        {%- if entry.skip_pdf != true -%}
+            {{- entry.url | absolute_url -}}{{ newLine }}
+        {%- endif -%}
+
+        {%- if entry.children -%}
+            {% include nav_text.txt context=entry.children level=next_level %}
+        {%- endif -%}
+
+    {%- endunless -%}{%- endif -%}
+{%- endfor -%}
+

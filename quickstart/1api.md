@@ -3,6 +3,7 @@ title: API Docs
 caption: API Documentation 
 category: quickstart
 permalink: /quickstart/api.html
+skip_pdf: true
 ---
 
 <!--<https://api.ktor.io/>-->

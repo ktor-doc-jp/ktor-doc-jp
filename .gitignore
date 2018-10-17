@@ -7,3 +7,4 @@ _pdf
 *.iws
 *.iml
 /.gradle
+*.pdf

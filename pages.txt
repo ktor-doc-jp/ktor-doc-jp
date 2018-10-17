@@ -1,0 +1,10 @@
+---
+layout: none
+permalink: /pages.txt
+---
+
+{%- for item in site.data.navigation.main -%}
+{%- assign slug = item.url | split: "/" | last -%}
+{%- assign item_url = item.url | remove: slug -%}
+{%- include nav_text.txt context=item_url level=0 -%}
+{%- endfor -%}
