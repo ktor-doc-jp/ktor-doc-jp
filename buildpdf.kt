@@ -4,10 +4,11 @@ import java.net.*
 
 // https://builds.wkhtmltopdf.org/0.12.6-dev/
 fun main(args: Array<String>) {
-    val pages = downloadText("http://127.0.0.1:4000/pages.txt").lines().filter { it.isNotBlank() }
+    val pages = downloadText("http://127.0.0.1:4000/pages.txt").lines().map { it.trim() }.filter { it.isNotBlank() }
 
     val wargs = buildList<String> {
         add("-l")
+        add("--disable-javascript")
         add("--print-media-type")
         add("toc")
         for (page in pages) {
