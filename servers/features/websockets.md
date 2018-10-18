@@ -216,3 +216,40 @@ fun testConversation() {
 }
 ```
 {: .compact}
+
+## FAQ
+
+### Standard Events: `onConnect`, `onMessage`, `onClose` and `onError`
+{: #standard-events}
+
+How do the [standard events from the WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) maps to Ktor?
+
+* `onConnect` happens at the start of the block.
+* `onMessage` happens after successfully reading a message (for example with `incoming.receive()`) or using `consumeEach`.
+* `onClose` happens when the `incoming` channel is closed. That would complete the `consumeEach` function, or throw a `ClosedReceiveChannelException` when trying to receive a message`.
+* `onError` is equivalent to other other exceptions.
+
+In both `onClose` and `onError`, the [`closeReason` property](https://api.ktor.io/1.0.0-beta-1/io.ktor.http.cio.websocket/-default-web-socket-session/close-reason.html) is set.
+
+To illustrate this:
+
+```kotlin
+webSocket("/echo") {
+    println("onConnect")
+    try {
+        while (true) {
+            val text = (incoming.receive() as Frame.Text).readText()
+            println("onMessage")
+            received += text
+            outgoing.send(Frame.Text(text))
+        }
+    } catch (e: ClosedReceiveChannelException) {
+        println("onClose ${closeReason.await()}")
+    } catch (e: Throwable) {
+        println("onError ${closeReason.await()}")
+        e.printStackTrace()
+    }
+}
+```
+
+In this sample, the infinite loop is only exited with an exception is risen: either a `ClosedReceiveChannelException` or another exception.
