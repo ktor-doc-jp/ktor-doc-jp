@@ -30,9 +30,7 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 
 The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
 
-[**Open the pre-configured generator form**](javascript:$('#start_ktor_io_form').toggle())
-
-<iframe src="{{ site.ktor_init_tools_url }}#dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:574px;display:none;"></iframe>
+{% include preconfigured-form.html hash="dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" %}
 
 ## Simple routing
 

@@ -35,9 +35,7 @@ If you want to learn more about RESTful systems, you can start reading <https://
 
 The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
 
-[**Open the pre-configured generator form**](javascript:$('#start_ktor_io_form').toggle())
-
-<iframe src="{{ site.ktor_init_tools_url }}#dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:500px;display:none;"></iframe>
+{% include preconfigured-form.html hash="dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" %}
 
 ## Simple routing
 
