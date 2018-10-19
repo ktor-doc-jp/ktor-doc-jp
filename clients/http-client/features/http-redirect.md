@@ -16,11 +16,13 @@ before giving up (to prevent infinite redirects).
 
 ## Install
 
+This feature is installed by default.
+
+## Prevent installing
+
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
-    install(HttpRedirect) {
-        maxJumps = 20
-    }
+    followRedirects = false
 }
 ``` 
 
