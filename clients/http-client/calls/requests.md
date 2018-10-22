@@ -214,8 +214,27 @@ val client = HttpClient(Apache) {
 
 client.post<Unit> {
     url(URL("http://127.0.0.1:8080/"))
-    contentType(ContentType.Application.Json) // Required
     body = HelloWorld(hello = "world")
+}
+```
+
+Alternatively (using the integrated `JsonSerializer`):
+
+```kotlin
+val json = io.ktor.client.features.json.defaultSerializer()
+client.post<Unit>() {
+    url(URL("http://127.0.0.1:8080/"))
+    body = json.write(HelloWorld(hello = "world")) // Generates an OutgoingContent
+}
+```
+
+Or using Jackson (JVM only):
+
+```kotlin
+val json = jacksonObjectMapper()
+client.post<Unit> {
+    url(URL("http://127.0.0.1:8080/"))
+    body = TextContent(json.writeValueAsString(userData), contentType = ContentType.Application.Json)
 }
 ```
 
