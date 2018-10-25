@@ -57,16 +57,16 @@ and you won't be able to modify either the status or the headers/cookies.
 
 As part of the `response`, you can get access to its internal context:
 
-* `val call: ApplicationCall = request.call`
-* `val pipeline: ApplicationSendPipeline = request.pipeline`
+* `val call: ApplicationCall = response.call`
+* `val pipeline: ApplicationSendPipeline = response.pipeline`
 
 Headers:
 
-* `val headers: ResponseHeaders = request.headers`
+* `val headers: ResponseHeaders = response.headers`
 
 Convenience `cookies` instance to set `Set-Cookie` headers:
 
-* `val cookies: ResponseCookies = request.headers`
+* `val cookies: ResponseCookies = response.cookies`
 
 Getting and changing the HTTP Status:
 
