@@ -81,9 +81,9 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 ## Does ktor provide a way to catch ipc signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
 {: #sigterm }
 
-> If you are running a `DevelopmentEngine`, it will be handled automatically.
+> If you are running a `DevelopmentEngine`/`EngineMain`, it will be handled automatically.
 >
-> Otherwise you will have to [handle it manually](https://github.com/ktorio/ktor/blob/80f8c7bf352ac8075b8922b7f1aa94d7dc2ffdce/ktor-server/ktor-server-cio/src/io/ktor/server/cio/DevelopmentEngine.kt#L12).
+> Otherwise you will have to [handle it manually](https://github.com/ktorio/ktor/blob/6c724f804bd6f25158d284d05c49235c67573019/ktor-server/ktor-server-cio/src/io/ktor/server/cio/EngineMain.kt#L18).
 > You can use `Runtime.getRuntime().addShutdownHook` JVM's facility.
 
 ## How do I get the client IP behind a proxy?

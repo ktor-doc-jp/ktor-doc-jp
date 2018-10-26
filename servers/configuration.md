@@ -1,7 +1,7 @@
 ---
 title: Configuration
 caption: Configuring the Server
-keywords: hocon json config DevelopmentEngine embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
+keywords: hocon json config DevelopmentEngine EngineMain embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
 category: servers
 permalink: /servers/configuration.html
 priority: 200
@@ -13,10 +13,13 @@ format in the external configuration file. In this file, you can configure thing
 or the [modules](/servers/application.html#modules) to be loaded. This format is similar to JSON,
 but is optimized to be read and written by humans, and supports additional
 features like environment variable substitution.
-In this case, you configure the server engine to be used with the `mainClassName` pointing to a particular `DevelopmentEngine`.
+In this case, you configure the server engine to be used with the `mainClassName` pointing to a particular `EngineMain`.
 
 Ktor also uses a set of lambdas with a typed DSL (Domain Specific Language) to configure the application
 and server engine when using `embeddedServer`.
+
+Starting with Ktor 1.0.0-beta-2, the `DevelopmentEngine` class has been renamed to `EngineMain`, for older versions just rename it.
+{: .note }
 
 **Table of contents:**
 
@@ -29,17 +32,17 @@ and server engine when using `embeddedServer`.
 This is the preferred way of configuring Ktor applications as it allows you
 to easily change the configuration without recompiling your application.
 
-When Ktor is started using a `DevelopmentEngine`, or by calling the `commandLineEnvironment`,
+When Ktor is started using a `EngineMain`, or by calling the `commandLineEnvironment`,
 it tries to load a HOCON file called `application.conf` from the application resources.
 You can change the location of the file using [command line arguments](#command-line).
 
 <div markdown="1" class="note" style="margin-bottom: 1em;">
 Available development engines that you can use as `mainClassName`:
 
-* `io.ktor.server.cio.DevelopmentEngine`
-* `io.ktor.server.tomcat.DevelopmentEngine`
-* `io.ktor.server.jetty.DevelopmentEngine`
-* `io.ktor.server.netty.DevelopmentEngine`
+* `io.ktor.server.cio.EngineMain`
+* `io.ktor.server.tomcat.EngineMain`
+* `io.ktor.server.jetty.EngineMain`
+* `io.ktor.server.netty.EngineMain`
 
 </div>
 
@@ -126,7 +129,7 @@ There is an [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/104
 {: #command-line}
 
 When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/src/io/ktor/server/engine/CommandLine.kt)
-(any `DevelopmentEngine` main) there are several switches and configuration parameters you can use to configure
+(any `EngineMain` main) there are several switches and configuration parameters you can use to configure
 your application module.
 
 If you start the application from the command line with `-config anotherfile.conf`, it will
@@ -361,7 +364,7 @@ You can use `-P:` to specify parameters that don't have a specific switch. For e
 ## Reading the configuration from code
 {: #accessing-config}
 
-If you are using a `DevelopmentEngine` instead of an `embeddedServer`, the HOCON file is loaded,
+If you are using a `EngineMain` instead of an `embeddedServer`, the HOCON file is loaded,
 and you are able to access its configuration properties.
 
 You can also define arbitrary property paths to configure your application.
@@ -378,7 +381,7 @@ It is possible to access the HOCON `application.conf` configuration too, by usin
 embeddedServer(Netty, commandLineEnvironment(args + arrayOf("-port=8080"))).start(true)
 ```
 
-Or by redirecting it to the specific `DevelopmentEngine.main`:
+Or by redirecting it to the specific `EngineMain.main`:
 
 ```kotlin
 val moduleName = Application::module.javaMethod!!.let { "${it.declaringClass.name}.${it.name}" }

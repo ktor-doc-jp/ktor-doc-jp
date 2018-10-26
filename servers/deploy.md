@@ -54,7 +54,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
+mainClassName = 'io.ktor.server.netty.EngineMain'
 ```
 {: .compact }
 
@@ -76,7 +76,7 @@ a fat JAR using netty as an engine:
         <archive>
             <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>io.ktor.server.netty.DevelopmentEngine</mainClass>
+                <mainClass>io.ktor.server.netty.EngineMain</mainClass>
             </manifest>
         </archive>
     </configuration>
@@ -211,7 +211,7 @@ For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployme
 
 If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](#heroku)),
 you can use proguard to shrink it. If you are using gradle, it is pretty straightforward to use the
-`proguard-gradle` plugin. You only have to remember to keep: your main module method, the DevelopmentEngine
+`proguard-gradle` plugin. You only have to remember to keep: your main module method, the EngineMain
 class, and the Kotlin reflect classes. You can then fine-tune it as required:
 
 ```groovy
@@ -233,7 +233,7 @@ task minimizedJar(type: proguard.gradle.ProGuardTask, dependsOn: shadowJar) {
     dontwarn
 
     def keepClasses = [
-            'io.ktor.server.netty.DevelopmentEngine', // The DevelopmentEngine you use, netty in this case.
+            'io.ktor.server.netty.EngineMain', // The EngineMain you use, netty in this case.
             'kotlin.reflect.jvm.internal.**',
             'io.ktor.samples.hello.HelloApplicationKt', // The class containing your module defined in the application.conf
             'kotlin.text.RegexOption'

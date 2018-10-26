@@ -102,7 +102,7 @@ apply plugin: 'kotlin'
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 
-mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+mainClassName = "io.ktor.server.netty.EngineMain"
 
 sourceSets {
     main.kotlin.srcDirs = [ 'src' ]

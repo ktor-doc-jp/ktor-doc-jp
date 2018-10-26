@@ -174,7 +174,7 @@ This requires us to indicate a new main class as IntelliJ IDEA will no longer be
 
 apply plugin: 'application'
 
-mainClassName = 'io.ktor.server.netty.DevelopmentEngine'
+mainClassName = 'io.ktor.server.netty.EngineMain'
 ```
 {% endcapture %}
 
@@ -188,7 +188,7 @@ plugins {
 }
 
 application {
-    mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+    mainClassName = "io.ktor.server.netty.EngineMain"
 }
 ```
 {% endcapture %}
@@ -196,6 +196,6 @@ application {
 {% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
 And then go to `Run -> Edit Configurations` select the `blog.BlogAppKt` configuration and change its Main class to:
-`io.ktor.server.netty.DevelopmentEngine`
+`io.ktor.server.netty.EngineMain`
 
 Now when we run the new configuration, the application will start again.

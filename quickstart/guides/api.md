@@ -612,7 +612,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import java.util.*
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.main(args)
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
     val simpleJwt = SimpleJWT("my-super-secret-for-jwt")

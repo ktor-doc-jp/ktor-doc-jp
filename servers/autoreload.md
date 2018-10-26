@@ -114,7 +114,7 @@ fun Application.mymodule() {
 ## Using the `application.conf`
 {: #configuration-file}
 
-When using a configuration file, for example with a [`DevelopmentEngine`](/servers/engine.html) to either run
+When using a configuration file, for example with a [`EngineMain`](/servers/engine.html) to either run
 from the command line or hosted within a server container: 
 
 To enable this feature, add `watch` keys to `ktor.deployment` configuration. 
@@ -161,8 +161,8 @@ You can then use another terminal to run the application with `gradle run`.
 Consider the following example:
 
 You can run the application by using either a `build.gradle` or directly within your IDE.
-Executing the main method in the example file, or by executing: `io.ktor.server.netty.DevelopmentEngine.main`.
-DevelopmentEngine using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
+Executing the main method in the example file, or by executing: `io.ktor.server.netty.EngineMain.main`.
+EngineMain using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
 
 `Main.kt`:
 ```kotlin
@@ -177,7 +177,7 @@ import io.ktor.server.netty.*
 
 // Exposed as: `static void io.ktor.exercise.autoreload.MainKt.main(String[] args)`
 fun main(args: Array<String>) {
-    //io.ktor.server.netty.main(args) // Manually using Netty's DevelopmentEngine
+    //io.ktor.server.netty.main(args) // Manually using Netty's EngineMain
     embeddedServer(
         Netty, watchPaths = listOf("solutions/exercise4"), port = 8080,
         module = Application::module

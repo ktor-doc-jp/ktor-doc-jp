@@ -49,8 +49,8 @@ Running applications in a development environment such as IntelliJ IDEA, is supp
 
 1. Create a new Run Configuration using "Application" as a template
 2. For the main class use one of the following engines
-  * Netty: use `io.ktor.server.netty.DevelopmentEngine` 
-  * Jetty: use `io.ktor.server.jetty.DevelopmentEngine` 
+  * Netty: use `io.ktor.server.netty.EngineMain` 
+  * Jetty: use `io.ktor.server.jetty.EngineMain` 
 3. Specify the Module to be used
 4. Save the Configuration by giving it a name
 

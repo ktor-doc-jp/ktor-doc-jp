@@ -22,7 +22,7 @@ about its generic infrastructure.
 You can run a Ktor application in several ways:
 
 * With a plain `main` by calling `embeddedServer`
-* Running a `DevelopmentEngine` `main` function and [using a HOCON `application.conf` configuration file](/servers/configuration.html)
+* Running a `EngineMain` `main` function and [using a HOCON `application.conf` configuration file](/servers/configuration.html)
 * [As a Servlet within a web server](https://github.com/ktorio/ktor-samples/tree/master/deployment)
 * As part of a test using `withTestApplication` from the [`ktor-server-test-host`](https://github.com/ktorio/ktor/tree/master/ktor-server/ktor-server-test-host) artifact
 
@@ -68,9 +68,9 @@ When you run your own main method and call the `embeddedServer` function,
 you provide a specific `ApplicationEngineFactory` and
 an `ApplicationEngineEnvironment` is then created or provided.
 
-### DevelopmentEngine
+### EngineMain
 
-Ktor defines one `DevelopmentEngine` class, per each supported server engine.
+Ktor defines one `EngineMain` class, per each supported server engine.
 This class defines a `main` method that can be executed to run the application.
 By using `commandLineEnvironment` it will load the [HOCON `application.conf`](/servers/configuration.html)
 file from your resources and will use extra arguments to determine which modules to install
@@ -78,10 +78,10 @@ and how to configure the server.
 
 Those classes are normally declared in `CommandLine.kt` source files.
 
-* CIO: [`io.ktor.server.cio.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-cio/src/io/ktor/server/cio/DevelopmentEngine.kt)
-* Jetty: [`io.ktor.server.jetty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-jetty/src/io/ktor/server/jetty/DevelopmentEngine.kt)
-* Netty: [`io.ktor.server.netty.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-netty/src/io/ktor/server/netty/DevelopmentEngine.kt)
-* Tomcat: [`io.ktor.server.tomcat.DevelopmentEngine.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tomcat/src/io/ktor/server/tomcat/DevelopmentEngine.kt)
+* CIO: [`io.ktor.server.cio.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-cio/src/io/ktor/server/cio/EngineMain.kt)
+* Jetty: [`io.ktor.server.jetty.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-jetty/src/io/ktor/server/jetty/EngineMain.kt)
+* Netty: [`io.ktor.server.netty.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-netty/src/io/ktor/server/netty/EngineMain.kt)
+* Tomcat: [`io.ktor.server.tomcat.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tomcat/src/io/ktor/server/tomcat/EngineMain.kt)
 
 ### [TestApplicationEngine](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-test-host/src/io/ktor/server/testing/TestApplicationEngine.kt)
 

@@ -18,7 +18,7 @@ import io.ktor.auth.jwt.*
 import com.auth0.jwt.*
 import com.auth0.jwt.algorithms.*
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.DevelopmentEngine.main(args)
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
     val myjwt = MyJWT(secret = environment.config.property("jwt.secret").getString())
