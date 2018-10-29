@@ -33,7 +33,7 @@ a generic servlet. It also contains a TestEngine for setting up application test
   * `ktor-freemarker` integrates Ktor with [Freemarker templates](/servers/features/templates/freemarker.html)
   * `ktor-velocity` integrates Ktor with [Velocity templates](/servers/features/templates/velocity.html)
   * `ktor-gson` integrates with [Gson](/servers/features/content-negotiation/gson.html) adding JSON content negotiation
-  * `ktor-jackson` integrates with [Jackson](/servers/features/content-negotiation/gson.html) adding JSON content negotiation
+  * `ktor-jackson` integrates with [Jackson](/servers/features/content-negotiation/jackson.html) adding JSON content negotiation
   * `ktor-html-builder` integrates Ktor with [kotlinx.html builders](/servers/features/templates/html-dsl.html)
   * `ktor-locations` contains experimental support for [typed locations](/servers/features/locations.html)
   * `ktor-metrics` adds the ability to add some [metrics](/servers/features/metrics.html) to the server
