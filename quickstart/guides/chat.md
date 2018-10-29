@@ -142,7 +142,7 @@ routing {
     
     webSocket("/chat") { // this: DefaultWebSocketSession
         val client = ChatClient(this)
-        wsConnections += client
+        clients += client
         try {
             while (true) {
                 val frame = incoming.receive()
@@ -158,7 +158,7 @@ routing {
                 }
             }
         } finally {
-            wsConnections -= client
+            clients -= client
         }
     }
 }
