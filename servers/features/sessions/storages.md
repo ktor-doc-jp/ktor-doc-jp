@@ -61,7 +61,7 @@ abstract class SimplifiedSessionStorage : SessionStorage {
     }
 
     override suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit) {
-        return provider(reader(getCoroutineContext(), autoFlush = true) {
+        return provider(CoroutineScope(Dispatchers.IO).reader(coroutineContext, autoFlush = true) {
             val data = ByteArrayOutputStream()
             val temp = ByteArray(1024)
             while (!channel.isClosedForRead) {
