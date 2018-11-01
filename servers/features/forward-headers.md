@@ -1,6 +1,6 @@
 ---
 title: ForwardedHeaderSupport
-caption: ForwardedHeaderSupport and XForwardedHeaderSupport
+caption: XForwardedHeaderSupport (Reverse Proxy Support)
 category: servers
 permalink: /servers/features/forward-headers.html
 feature:
@@ -9,6 +9,7 @@ feature:
   class2: io.ktor.features.XForwardedHeaderSupport
 redirect_from:
 - /features/forward-headers.html
+keywords: nginx reverseproxy
 ---
 
 This feature allows you to handle reverse proxy headers to get information about the original
