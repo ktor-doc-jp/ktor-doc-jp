@@ -6,6 +6,7 @@ permalink: /quickstart/generator.html
 skip_pdf: true
 redirect_from:
   - /quickstart/quickstart/generator.html
+reviewed: 1.0.0
 ---
 
 <!--<https://ktor.io/start>-->
