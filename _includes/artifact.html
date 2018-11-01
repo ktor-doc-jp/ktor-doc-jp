@@ -11,8 +11,8 @@
 
 {% capture _ignored %}{% increment autoid %}{% endcapture %}
 
-<div class="note artifact artifact-small" id="artifact-info-{{ autoid }}">
-    <div id="artifact-{{ autoid }}">
+<div class="note artifact artifact-small exclude-anchor" id="artifact-info-{{ autoid }}">
+    <div class="note-inner" id="artifact-{{ autoid }}">
         {% if include.kind %}
         This {{ include.kind }} is defined
         {% else %}

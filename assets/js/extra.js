@@ -236,7 +236,7 @@ $(document).ready(function() {
             .html(heading.html())
         );
     });
-    $(".note").filter("[id]")
+    $(".note,.note-inner").filter("[id]").not(".exclude-anchor")
         .each(function() {
             $(this).addClass('anchored-note')
         })
