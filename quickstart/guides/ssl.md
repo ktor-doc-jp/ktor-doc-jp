@@ -93,6 +93,8 @@ IMPORTANT NOTES:
    also contain certificates and private keys obtained by Certbot so
    making regular backups of this folder is ideal.
 ```
+{: .error}
+
 </td>
 <td markdown="1" style="width:50%;">
 ✅ Working output sample:
@@ -120,6 +122,8 @@ IMPORTANT NOTES:
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
    Donating to EFF:                    https://eff.org/donate-le
 ```
+{: .success}
+
 </td>
 </tr>
 </table>
