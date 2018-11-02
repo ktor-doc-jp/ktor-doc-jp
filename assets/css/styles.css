@@ -1993,3 +1993,15 @@ h3, h3 a, h3 a.anchored-heading {
 .search-section.Kotlinx { color: #58bbee; }
 .search-section.Samples { color: #40babd; }
 .search-section.Advanced { color: #f77b6b; }
+
+.code-scroll {
+    min-height: 200px;
+    height: 50vh;
+    overflow: auto;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.code-scroll pre.highlight {
+    border-left: none;
+}

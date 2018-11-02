@@ -593,8 +593,8 @@ Now our API is accessible from any host :)
 
 ## Full Source
 
-### `application.kt`
 
+{% capture application-kt %}
 ```kotlin
 package com.example
 
@@ -697,10 +697,11 @@ class InvalidCredentialsException(message: String) : RuntimeException(message)
 
 class LoginRegister(val user: String, val password: String)
 ```
-{: .compact}
+{% endcapture %}
 
-### `my-api.http`
 
+
+{% capture my-api-http %}
 ```
 {% raw %}
 # Get all the snippets
@@ -739,10 +740,9 @@ Content-Type: application/json
 ###
 {% endraw %}
 ```
-{: .compact}
+{% endcapture %}
 
-### `http-client.env.json`
-
+{% capture http-client-env-json %}
 ```json
 {
   "localhost": {
@@ -753,7 +753,13 @@ Content-Type: application/json
   }
 }
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="application.kt" tab1-content=application-kt
+    tab2-title="my-api.http" tab2-content=my-api-http
+    tab3-title="http-client.env.json" tab3-content=http-client-env-json
+%}
 
 ## Exercises
 
