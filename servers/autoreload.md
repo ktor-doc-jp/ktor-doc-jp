@@ -163,8 +163,7 @@ You can run the application by using either a `build.gradle` or directly within 
 Executing the main method in the example file, or by executing: `io.ktor.server.netty.EngineMain.main`.
 EngineMain using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
 
-### `Main.kt`:
-
+{% capture main-kt %}
 ```kotlin
 package io.ktor.exercise.autoreload
 
@@ -193,8 +192,9 @@ fun Application.module() {
     }
 }
 ```
+{% endcapture %}
 
-### `application.conf`:
+{% capture application-conf %}
 ```kotlin
 ktor {
     deployment {
@@ -207,5 +207,12 @@ ktor {
     }
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="main.kt" tab1-content=main-kt
+    tab2-title="application.conf" tab2-content=application-conf
+%}
+
 
 As you can see, you need to specify a list of strings to match the classloaders you want to watch –in this case only `solutions/exercise4`– which should then be reloaded upon modification.
