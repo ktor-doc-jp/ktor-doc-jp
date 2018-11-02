@@ -7,19 +7,18 @@ keywords: >-
     create custom engine ApplicationEngine
 ---
 
-Ktor's HTTP client and server provide a common interface while allowing
-to use several different engines to perform or to handle HTTP requests.
+Ktor's HTTP client and server provide a common interface while allowing use of several different engines to perform and handle HTTP requests.
 
-Ktor includes several artifacts with several engines:
-* For the server: `Netty`, `Jetty`, `Tomcat`, `CIO`, `TestEngine`.
-* For the client: `ApacheEngine`, `JettyHttp2Engine`, `CIOEngine`, `TestHttpClientEngine`.
+Ktor includes several artifacts and engines:
+* For the server: `Netty`, `Jetty`, `Tomcat`, `CIO`, `TestEngine`
+* For the client: `ApacheEngine`, `JettyHttp2Engine`, `CIOEngine`, `TestHttpClientEngine`
 
 ## Server's `ApplicationEngine`
 {: #server}
 
 ### API
 
-A simplified version of the ApplicationEngine looks like this:
+A simplified version of the `ApplicationEngine` looks like this:
 
 ```kotlin
 interface ApplicationEngineFactory<
@@ -78,16 +77,13 @@ abstract class BaseApplicationEngine(
 
 ### The `ApplicationEngineFactory`
 
-Each implementation of the `ApplicationEngineFactory` along the a subtyped `ApplicationEngine.Configuration`
-are the public exposed APIs for each engine.
+Each implementation of the `ApplicationEngineFactory` along with a subtyped `ApplicationEngine.Configuration` define the publicly exposed APIs for each engine.
 
 ```kotlin
 fun ApplicationEngineFactory.create(environment: ApplicationEngineEnvironment, configure: TConfiguration.() -> Unit): TEngine
 ```
 
-The `ApplicationEngineFactory.create` is in charge of instantiating the right subtyped `ApplicationEngine.Configuration`,
-and call the provided `configure: TConfiguration.() -> Unit` lambda that should mutate the configuration object,
-and constructs an implementation of the `ApplicationEngine` probably subtype of `BaseApplicationEngine`.
+The `ApplicationEngineFactory.create` instantiates the correct subtyped `ApplicationEngine.Configuration` and calls the provided `configure: TConfiguration.() -> Unit` lambda that should mutate the configuration object. It also constructs an implementation of the `ApplicationEngine`, most likely a subtype of `BaseApplicationEngine`.
 
 For example:
 
@@ -111,20 +107,14 @@ class MyApplicationEngineFactory
 
 ### The `ApplicationEngine` and `BaseApplicationEngine`
 
-The interface `ApplicationEngine`, with an abstract implementation `BaseApplicationEngine` is the one in charge
-of starting and stopping the application. It holds the `ApplicationEngineEnvironment` and the constructed
-configuration of the application.
+The interface `ApplicationEngine` with an abstract implementation of `BaseApplicationEngine` starts and stops the application. It holds the `ApplicationEngineEnvironment` as well as the constructed configuration of the application.
 
 This class has two methods:
 
-* The `start` method: it should connect to the `ApplicationEngineEnvironment.connectors` that come from the environment,
-  start the environment, and to start and configure the engine to trigger an execute of the `application` pipeline
-  for each HTTP request with an `ApplicationCall`.
-* The `stop` method: should stop the engine, the environment and to unregister all the things registered by the start method.
+* The `start` method: connects to the `ApplicationEngineEnvironment.connectors` (from the environment), starts the environment, and starts and configures the engine to trigger execution of the `application` pipeline for each HTTP request with an `ApplicationCall`
+* The `stop` method: stops the engine and the environment, and unregisters all items registered by the `start` method
 
-The `BaseApplicationEngine` exposes an `ApplicationEngineEnvironment` passed to the constructor, while
-creates an `EnginePipeline` used as intermediary to pre-intercept the application pipeline. It also installs 
-default transformations the the receive and end pipelines and logs the defined connection endpoints.
+The `BaseApplicationEngine` exposes an `ApplicationEngineEnvironment` passed to the constructor and creates an `EnginePipeline`, which is used as an intermediary to pre-intercept the application pipeline. It also installs default transformations in the send and receive pipelines, and logs the defined connection endpoints.
 
 For example:
 

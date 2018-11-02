@@ -12,13 +12,13 @@ Ktor is an OpenSource project hosted at GitHub:
 We usually provide binary version previews at bintray:
 <https://bintray.com/kotlin/ktor/ktor>
 
-In addition, you can use jitpack to get bleeding edge artifacts compiled from master:
+Additionally, you can use jitpack to get bleeding edge artifacts compiled from master:
 <https://jitpack.io/#ktorio/ktor>
 
-## Downloading the sources
+## Downloading the source
 {: #get-git-sources}
 
-You can get the lastest version of Ktor using GIT to clone Ktor's repository:
+You can get the latest version of Ktor using git to clone Ktor's repository:
 
 ```
 git clone https://github.com/ktorio/ktor.git
@@ -36,13 +36,13 @@ which should work with any supported system with a JDK installed:
 ./gradlew build
 ```
 
-Right now Ktor doesn't compile with Java 9. So for now, you should stick to Java 8.
+Ktor doesn't yet compile with Java 9, so you should stick with Java 8.
 {: .note }
 
 ## Installing locally
 {: #installing}
 
-Ktor provides a gradle install task, that installs ktor artifacts in your
+Ktor provides a gradle install task that installs Ktor artifacts in your
 local maven repository:
 
 ```
@@ -64,7 +64,7 @@ An exception occurred applying plugin request [id: 'me.champeau.gradle.jmh', ver
    > Could not generate a proxy class for class me.champeau.gradle.JMHPluginExtension.
 ```
 
-You might have forgotten to use the gradle wrapper (`./gradlew`) or your default installed
+You might have forgotten to use the gradle wrapper (`./gradlew`), or your default installed
 gradle version is lower than 4.3.
 
-To ensure that it works, please use the gradle wrapper instead.
+Always use the gradle wrapper for best results!

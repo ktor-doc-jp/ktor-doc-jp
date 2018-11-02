@@ -4,7 +4,7 @@ category: advanced
 caption: Interception per route
 ---
 
-If you want to just intercept some calls for a specific route, you have to create a Route node and intercept that node.
+If you just want to intercept some calls for a specific route, you have to create a `Route` node and intercept that node.
 
 For example, for creating a timeout for a route, you could do the following:
 
@@ -30,9 +30,9 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
 }
 ```
 
-### Intercepting any Route node
+### Intercepting any `Route` node
 
-Route class defines an intercept method, that applies to that route node or any other inner route:
+The `Route` class defines an intercept method that applies to that route node or any other inner route:
 
 ```kotlin
 /// Installs an interceptor into this route which will be called when this or a child route is selected for a call
@@ -42,13 +42,12 @@ fun Route.intercept(phase: PipelinePhase, block: PipelineInterceptor<Unit, Appli
 ### Getting the route being handled
 {: #route-from-call }
 
-You can get the route being handled by casting the `call: ApplicationCall` to `RoutingApplicationCall` that 
-has a `route: Route` property.
+You can get the route being handled by casting the `call: ApplicationCall` to `RoutingApplicationCall` that has a `route: Route` property.
 
 ### Getting the route path
 {: #route-path }
 
-`Route` overrides the `toString()` to generate a path to the route of the toString, looking something like:
+`Route` overrides the `toString()` method to generate a path to the route, something like:
 
 ```kotlin
 override fun Route.toString() = when {

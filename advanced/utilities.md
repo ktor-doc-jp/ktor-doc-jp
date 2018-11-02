@@ -12,13 +12,12 @@ keywords: >-
 
 Ktor exposes a few extension methods for parsing and generating url-encoded strings (`application/x-www-form-urlencoded`).
 
-URL-encoded strings looks like this: `param=value&other=hi`.
+URL-encoded strings look like: `param=value&other=hi`.
 
 ### Parsing:
 {: #url-encoded-parse}
 
-There is an extension method for `String` that allows to get a parsed `Parameters` object from it. You can limit
-the maximum number of parsed parameters with the optional `limit` parameter.
+There is an extension method for `String` that allows you to get a parsed `Parameters` object from it. You can limit the maximum number of parsed parameters with the optional `limit` parameter.
 
 ```kotlin
 fun String.parseUrlEncodedParameters(defaultEncoding: Charset = Charsets.UTF_8, limit: Int = 1000): Parameters
@@ -27,7 +26,7 @@ fun String.parseUrlEncodedParameters(defaultEncoding: Charset = Charsets.UTF_8, 
 ### Encoding:
 {: #url-encoded-encode}
 
-Either from a List of Pairs of strings or a `Parameters` instance, you can generate an url-encoded string.
+You can generate a URL-encoded string either from a List of Pairs of Strings or a `Parameters` instance: 
 
 ```kotlin
 fun List<Pair<String, String?>>.formUrlEncode(): String
@@ -36,7 +35,7 @@ fun Parameters.formUrlEncode(): String
 fun Parameters.formUrlEncodeTo(out: Appendable)
 ```
 
-You can construct a URL-encoded string, from `List<Pair<String, String>>` like this:
+You can construct a URL-encoded string from `List<Pair<String, String>>` like this:
 
 ```kotlin
 listOf(
@@ -45,8 +44,7 @@ listOf(
 ).formUrlEncode()
 ```
 
-You can also construct it from a `Parameters` instance, that you can instantiate by using the `Parameters.build` builder, and then calling the `formUrlEncode` extension,
-or with the `parametersOf()` builder method:
+You can also construct it from a `Parameters` instance that you can instantiate by using the `Parameters.build` builder and then calling the `formUrlEncode` extension, or with the `parametersOf()` builder method:
 
 ```kotlin
 Parameters.build {
@@ -55,7 +53,7 @@ Parameters.build {
 }.formUrlEncode()
 ```
 
-The `parametersOf` builder has several signatures and there is `Parameters` operator overloading for `+` to join two `Parameters` instances:
+The `parametersOf` builder has several signatures, and there is `Parameters` operator overloading (`+`) to join two `Parameters` instances:
 
 ```kotlin
 parametersOf("a" to "b1", "a" to "b2").formUrlEncode()
@@ -63,7 +61,7 @@ parametersOf("a" to "b1", "a" to "b2").formUrlEncode()
 parametersOf("a", listOf("b1", "b2")).formUrlEncode()
 ```
 
-From a normal `Map<String, String>`, you can also construct a URL encoded string, but you will have first to make a list from it:
+From a normal `Map<String, String>` you can also construct a URL-encoded string, but first you will have to create a List from it:
 
 ```kotlin
 mapOf(
@@ -72,8 +70,7 @@ mapOf(
 ).toList().formUrlEncode()
 ```
 
-URL encoded strings allow to have repeated keys, if you use a `Map<String, String>` as base, you won't be able to
-represent repeated keys.
+URL-encoded strings allow you to have repeated keys. If you use a `Map<String, String>` as base, you won't be able to represent repeated keys.
 {: .note}
 
 You can also construct it from a `Map<String, List<String>>` by *flatMapping* it first:
@@ -85,8 +82,7 @@ mapOf(
 ).flatMap { map -> map.value.map { map.key to it } }.formUrlEncode()
 ```
 
-In the case you want to avoid constructing a whole String with the content,
-and want to write to somewhere directly, you can use the `formUrlEncodeTo` methods instead.
+In case you want to avoid constructing a whole String with the content and instead want to write to somewhere directly, you can use the `formUrlEncodeTo` method.
 
 #### Responding URL-encoded
 

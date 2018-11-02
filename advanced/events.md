@@ -9,17 +9,14 @@ keywords: >-
     subscribing unsubscribing raising raise events dispatching
 ---
 
-At server-side, in addition to handling requests, Ktor exposes a mechanism to produce and consume
+On the server-side, in addition to handling requests, Ktor exposes a mechanism to produce and consume
 global events.
 
-For example, when the application has started, it is starting, or has stopped, an event is produced and you can
-subscribe or unsubscribe to those events to execute code when that happens.
-To do that, associated to the application environment, there is a `monitor: ApplicationEvents` instance
-acting as an event dispatcher.
+For example, when the application is starting, has started, or has stopped, an event is produced. You can subscribe to or unsubscribe from these events and trigger code execution. The `monitor: ApplicationEvents` instance, associated with the application environment, acts as the event dispatcher.
 
-The `ApplicationEvents` dispatches typed `EventDefinition<T>` along an object `T`.
+The `ApplicationEvents` dispatches typed `EventDefinition<T>` along with an object `T`.
 
-You can get the monitor along the application instance by executing `application.environment.monitor`.
+You can get the monitor along with the application instance by executing `application.environment.monitor`.
 
 ### API
 
@@ -55,9 +52,7 @@ val ApplicationStopped: EventDefinition<Application>
 
 ### Subscribing to events and raising them
 
-You can subscribe to events by calling the `subscribe` method from the monitor. The subscribe method returns a
-`DisposableHandle` that you can call to cancel the subscription. Additionally you can call the `unsubscribe`
-method with the same method handle to cancel the subscription.
+You can subscribe to events by calling the `subscribe` method from the monitor. The subscribe method returns a `DisposableHandle` that you can call to cancel the subscription. Additionally, you can call the `unsubscribe` method with the same method handle to cancel the subscription.
 
 Using the disposable:
 
@@ -86,7 +81,7 @@ application.environment.monitor.subscribe(ApplicationStarting, ::starting) // su
 application.environment.monitor.unsubscribe(ApplicationStarting, ::starting) // unsubscribe
 ```
 
-If you want to create custom events and dispatching/raising them:
+If you want to create custom events and dispatch or raise them:
 
 ```kotlin
 class MySubject
