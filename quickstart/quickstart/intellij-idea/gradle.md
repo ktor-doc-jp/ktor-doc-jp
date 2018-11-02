@@ -174,7 +174,8 @@ This requires us to indicate a new main class as IntelliJ IDEA will no longer be
 
 apply plugin: 'application'
 
-mainClassName = 'io.ktor.server.netty.EngineMain'
+//mainClassName = 'io.ktor.server.netty.DevelopmentEngine' // For versions < 1.0.0-beta-3
+mainClassName = 'io.ktor.server.netty.EngineMain' // Starting with 1.0.0-beta-3
 ```
 {% endcapture %}
 
