@@ -13,7 +13,7 @@ so it can be run a standalone application directly using Java:
 This is the preferred way for running it in a container like [docker](/servers/deploy/containers.html#docker), when deploying to [heroku](/servers/deploy/hosting/heroku.html)
 or when being reverse-proxied with [nginx](/servers/deploy/containers.html#nginx). 
 
-### Gradle
+## Gradle
 {: #fat-jar-gradle}
 
 When using Gradle, you can use the `shadow` gradle plugin to generate it. For example,
@@ -38,7 +38,7 @@ apply plugin: 'application'
 mainClassName = 'io.ktor.server.netty.EngineMain' // Starting with 1.0.0-beta-3
 ```
 
-### Maven
+## Maven
 {: #fat-jar-maven}
 
 When using Maven, you can generate a fat JAR archive with the `maven-assembly-plugin`. For example, to generate

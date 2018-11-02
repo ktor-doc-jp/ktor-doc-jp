@@ -128,7 +128,6 @@ remote: Verifying deploy... done.
 To https://git.heroku.com/demo-demo-12345.git
  * [new branch]      master -> master
 ```
-{: .compact }
 
 Now you can execute `heroku open` to open your application in your browser:
 

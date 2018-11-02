@@ -75,9 +75,7 @@ layout: default
                         </a>
                     </div>
 
-                    {% if page.status != 'todo' %}
                     <p>{% include estimated-read-time.html %}</p>
-                    {% endif %}
                 </div>
                 {% endif %}
                 {% if page.status == 'todo' %}

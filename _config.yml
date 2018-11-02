@@ -7,8 +7,8 @@ title: Ktor
 description: "Ktor"
 url: http://ktor.io
 
-ktor_version: 1.0.0-beta-3
-ktor_version_eap: 1.0.0-beta-3
+ktor_version: 1.0.0
+ktor_version_eap: 1.0.0
 kotlin_version: 1.3.0
 
 ktor_init_tools_url: https://ktor.io/ktor-init-tools/

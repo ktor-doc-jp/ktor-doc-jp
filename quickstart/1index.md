@@ -28,14 +28,6 @@ the ability to exchange data with classes shared across platforms.
 * TOC
 {:toc}
 
-{::comment}
-## start.ktor.io
-
-Ktor has a [start.ktor.io](https://soywiz.github.io/start-ktor-io-proposal/) website to quickly generate a ZIP with a skeleton for your application:
-
-<iframe src="https://soywiz.github.io/start-ktor-io-proposal/" style="border:1px solid #aaa;width:100%;height:450px;"></iframe>
-{:/comment}
-
 ## Gradle Setup
 
 This section assumes you have some basic knowledge of Gradle. If you have never used Gradle,
@@ -63,13 +55,8 @@ plugins {
     kotlin("jvm") version "{{ site.kotlin_version }}"
 }
 
-kotlin.experimental.coroutines = Coroutines.ENABLE
-
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
-    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
 }
 
 java {
@@ -107,7 +94,6 @@ buildscript {
 
     repositories {
         mavenCentral()
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -124,13 +110,8 @@ sourceCompatibility = 1.8
 compileKotlin { kotlinOptions.jvmTarget = "1.8" }
 compileTestKotlin { kotlinOptions.jvmTarget = "1.8" }
 
-kotlin { experimental { coroutines "enable" } }
-
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url "https://dl.bintray.com/kotlin/ktor" }
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 dependencies {
@@ -193,7 +174,6 @@ fun main(args: Array<String>) {
     server.start(wait = true)
 }
 ```
-{: .compact}
 
 ## Accessing your application
 

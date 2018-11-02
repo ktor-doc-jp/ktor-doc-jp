@@ -10,7 +10,7 @@ production machine.
 Ktor doesn't impose any way for doing this, but here are some guidelines you can use, in
 case you were wondering about it.
 
-### HOCON & ENV
+## HOCON & ENV
 {: #proposal }
 
 You can use the `application.conf` file to set a variable that will hold the environment, then check that variable
@@ -20,7 +20,7 @@ Then in production you set the `KTOR_ENV=prod`
 
 For example:
 
-**application.conf:**
+### application.conf:
 
 ```
 ktor {

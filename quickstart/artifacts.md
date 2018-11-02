@@ -6,13 +6,14 @@ category: quickstart
 priority: 1
 redirect_from:
   - /artifacts.html
+ktor_version_review: 1.0.0-beta-3
 ---
 
 Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. 
 The typical Ktor application would require `ktor-server-core` and a corresponding engine depending on whether it's self-hosted
  or using an Application Server. 
 
-All artifacts in Ktor belong to `io.ktor` group and hosted on [Bintray](https://bintray.com/kotlin/ktor)
+All artifacts in Ktor belong to `io.ktor` group and hosted on JCenter and Maven Central. Pre-release versions are published at [Bintray](https://bintray.com/kotlin/ktor)
 
 [![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}})](https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}})
     

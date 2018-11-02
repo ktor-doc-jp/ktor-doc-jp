@@ -146,7 +146,7 @@ Performing post-processing steps...done.
 
 Update done!
 ```
-{: .compact}
+{: .compact }
 
 For your project, you can use gradle and the official `appengine-gradle-plugin`. So a `build.gradle` would look like this:
 
@@ -195,7 +195,6 @@ kotlin.experimental.coroutines = 'enable'
 
 task run(dependsOn: appengineRun)
 ```
-{: .compact}
 
 Once everything is configured, you can now run the application locally, using the gradle task `appengineRun`:
 
@@ -247,7 +246,6 @@ Please enter your numeric choice:  1
 Creating App Engine application in project [demo-demo-123456] and region [europe-west2]....done.
 Success! The app is now created. Please use `gcloud app deploy` to deploy your first app.
 ```
-{: .compact}
 
 Now we can deploy the application using `gradle appengineDeploy`:
 
@@ -297,7 +295,7 @@ To view your application in the web browser run:
 BUILD SUCCESSFUL in 42s
 6 actionable tasks: 2 executed, 4 up-to-date
 ```
-{: .compact}
+{: .compact }
 
 Now you can view your application in your browser with `gcloud app browse`. It will open
 the application. In this case: https://demo-demo-123456.appspot.com

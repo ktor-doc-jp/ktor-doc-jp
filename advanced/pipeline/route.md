@@ -39,12 +39,12 @@ The `Route` class defines an intercept method that applies to that route node or
 fun Route.intercept(phase: PipelinePhase, block: PipelineInterceptor<Unit, ApplicationCall>)
 ```
 
-### Getting the route being handled
+## Getting the route being handled
 {: #route-from-call }
 
 You can get the route being handled by casting the `call: ApplicationCall` to `RoutingApplicationCall` that has a `route: Route` property.
 
-### Getting the route path
+## Getting the route path
 {: #route-path }
 
 `Route` overrides the `toString()` method to generate a path to the route, something like:
@@ -57,7 +57,7 @@ override fun Route.toString() = when {
 }
 ```
 
-### How to intercept route truncation processing
+## How to intercept route truncation processing
 ```kotlin
     intercept(ApplicationCallPipeline.Setup) {
 
@@ -75,7 +75,7 @@ override fun Route.toString() = when {
     }
 ```
 
-### Hooking before and after routing 
+## Hooking before and after routing 
 
 You can globally intercept the routing calls by using the events `Routing.RoutingCallStarted` and `Routing.RoutingCallFinished`:
 

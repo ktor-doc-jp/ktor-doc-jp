@@ -12,7 +12,7 @@ and it's equivalent in .NET would be the [Encoding](https://msdn.microsoft.com/e
 
 Some example of charsets could be `UTF-8`, `ASCII`, `ISO-8859-1`(`LATIN1`), or `SHIFT_JIS`, among others.
 
-### Instantiating a Charset
+## Instantiating a Charset
 
 kotlinx-io has a object called Charsets with some common used charsets (right now only UTF-8):
 
@@ -26,7 +26,7 @@ It is also possible to construct a charset from its name:
 val charset = Charset.forName("utf-8")
 ```
 
-### Encoding a decoding Strings
+## Encoding a decoding Strings
 
 The easiest way for encoding/decoding Strings using charsets is to use the extension methods available for String and ByteArray.
 
@@ -54,7 +54,7 @@ val string = "今日は！"
 val utf8Encoded = string.toByteArray(Charsets.UTF_8)
 ```
 
-### Performance-aware API
+## Performance-aware API
 
 In order to be able to reuse memory, reduce copying, reuse of object and reduce garbage collection, the Charset API
 offers a way to create encoders and decoders offering APIs to encode from `CharSequence` to `Output`, and vice versa.
@@ -68,7 +68,7 @@ val charsetEncoder = charset.newEncoder()
 charsetEncoder.encode("HELLO", 1, 2, output)
 ``` 
 
-### Further details about Charsets
+## Further details about Charsets
 
 Some charsets represent characters as single-byte, other represents characters with several fixed bytes per characters,
 and others are variable.
@@ -83,7 +83,7 @@ JavaScript exposes Strings with 32-bit CodePoints, while Java and Native exposes
 
 For now, kotlinx-io only implements UTF_8, but allows to add custom charsets by extending the Charset class.
 
-### Exposed API
+## Exposed API
 
 ```kotlin
 object Charsets {

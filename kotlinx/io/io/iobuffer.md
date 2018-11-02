@@ -8,8 +8,6 @@ priority: 0
 
 Fixed size buffers in memory implementing the [Input and Output](/kotlinx/io/io/input-output.html) interfaces.
 
-### IOBuffer
-
 ```kotlin
 // To make this less verbose:
 //   NumArray = ByteArray | ShortArray | CharArray | IntArray | LongArray | FloatArray | DoubleArray 

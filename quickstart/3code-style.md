@@ -6,13 +6,13 @@ permalink: /quickstart/code-style.html
 toc: false
 ---
 
-### Official Code Convention
+## Official Code Convention
 
 Ktor as well as other official Kotlin libraries use the [official Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html).
 
 You can use the official coding standard by adding `kotlin.code.style=official` to your `gradle.properties` file.
 
-### With Star Imports
+## With Star Imports
 
 The Official Coding Conventions dont't define what's the recommended way of using imports.
 The IntelliJ default is to include star (`*`) imports after importing at least 5 symbols from a package. But in Ktor we use and recommend using star imports always.

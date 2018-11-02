@@ -9,8 +9,7 @@ priority: 0
 [Input](#input) and [Output](#output) interfaces are synchronous interfaces for reading and writing binary data.
 They are implemented by [IOBuffer](/kotlinx/io/io/iobuffer.html#iobuffer), [BytePacketBuilder](/kotlinx/io/io/packets.html#building-packets) and [ByteReadPacket](/kotlinx/io/io/packets.html#reading-packets).
 
-### Input 
-{: #input}
+## Input 
 
 ```kotlin
 // To make this less verbose:
@@ -51,8 +50,7 @@ inline fun Input.takeWhile(block: (IoBuffer) -> Boolean)
 inline fun Input.takeWhileSize(initialSize: Int = 1, block: (IoBuffer) -> Int)
 ```
 
-### Output
-{: #output} 
+## Output
 
 ```kotlin
 // To make this less verbose:
