@@ -12,7 +12,7 @@ Often, restarting the server can take some time, so Ktor provides a basic auto-r
 reloads your Application classes.
 
 Autoreload [*doesn't* work in Java 9](https://github.com/ktorio/ktor/issues/359). If you want to use it,
-please stick to JDK 8 for now.
+please stick to **JDK 8** for now.
 {: .note }
 {: #java9 }
 
@@ -74,7 +74,8 @@ Exception in thread "main" java.lang.RuntimeException: Module function provided 
 
 To fix this error, you just have to extract your lambda body to an Application extension method (module) just like this:
 
-Code that *won't* work:
+{% capture left %}
+❌ Code that *won't* work:
 ```kotlin
 fun main(args: Array<String>) {
     // ERROR! Module function provided as lambda cannot be unlinked for reload
@@ -88,8 +89,10 @@ fun main(args: Array<String>) {
 }
 ```
 {: .error }
+{% endcapture %}
 
-Code that will work:
+{% capture right %}
+✅ Code that will work:
 ```kotlin
 fun main(args: Array<String>) {
     embeddedServer(
@@ -109,6 +112,9 @@ fun Application.mymodule() {
 }
 ```
 {: .success }
+{% endcapture %}
+
+{% include two-column.html left=left right=right %}
 
 ## Using the `application.conf`
 {: #configuration-file}
