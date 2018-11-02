@@ -33,7 +33,7 @@ The options configuration method, allows you to define code to optionally select
 from a provided `outgoingContent: OutgoingContent`.
 You can, for example, use the `Content-Type` of the outgoing message to determine which Cache-Control to use.
 
-### CachingOptions and CacheControl
+## CachingOptions and CacheControl
 
 The `options` high order function requires you to return a `CachingOption` that describes a `CacheControl`
 plus an optional expiring time:

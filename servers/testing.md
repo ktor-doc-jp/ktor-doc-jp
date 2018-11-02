@@ -89,7 +89,6 @@ val call = handleRequest(HttpMethod.Post, "/upload") {
     ))
 }
 ```
-{: .compact}
 
 ## Defining configuration properties in tests
 
@@ -175,68 +174,18 @@ fun CookieTrackerTestApplicationEngine.handleRequest(
 }
 ```
 
-## Example
+
+## Example with dependencies
 
 See full example of application testing in [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable).
 Also, most [`ktor-samples`](https://github.com/ktorio/ktor-samples) modules provide
 examples of how to test specific functionalities.
 
-**build.gradle:**
-```groovy
-// ...
-dependencies {
-    // ...
-    testCompile("io.ktor:ktor-server-test-host:$ktor_version")
-}
-```
-
-**Module:**
-```kotlin
-fun Application.testableModule() {
-    testableModuleWithDependencies(
-        random = SecureRandom()
-    )
-}
-
-fun Application.testableModuleWithDependencies(random: Random) {
-    intercept(ApplicationCallPipeline.Call) { call ->
-        if (call.request.uri == "/") {
-            call.respondText("Random: ${random.nextInt(100)}")
-        }
-    }
-}
-```
-
-**Test:**
-```kotlin
-class ApplicationTest {
-    class ConstantRandom(val value: Int) {
-        override fun next(bits: Int): Int = value
-    }
-
-    @Test fun testRequest() = withTestApplication({
-        testableModule(
-            random = ConstantRandom(7)
-        )
-    }) {
-        with(handleRequest(HttpMethod.Get, "/")) {
-            assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals("Test 7", response.content)
-        }
-        with(handleRequest(HttpMethod.Get, "/index.html")) {
-            assertFalse(requestHandled)
-        }
-    }
-}
-```
-
-## Example with dependencies
-
 In some cases we will need some services and dependencies. Instead of storing them globally, we suggest you
 to create a separate function receiving the service dependencies. This allows you to pass different
 (potentially mocked) dependencies in your tests: 
 
-**build.gradle:**
+{% capture build-gradle %}
 ```groovy
 // ...
 dependencies {
@@ -244,8 +193,9 @@ dependencies {
     testCompile("io.ktor:ktor-server-test-host:$ktor_version")
 }
 ```
+{% endcapture %}
 
-**Module:**
+{% capture module-kt %}
 ```kotlin
 fun Application.testableModule() {
     testableModuleWithDependencies(
@@ -261,8 +211,9 @@ fun Application.testableModuleWithDependencies(random: Random) {
     }
 }
 ```
+{% endcapture %}
 
-**Test:**
+{% capture test-kt %}
 ```kotlin
 class ApplicationTest {
     class ConstantRandom(val value: Int) {
@@ -284,3 +235,10 @@ class ApplicationTest {
     }
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="test.kt"      tab1-content=test-kt
+    tab2-title="module.kt"    tab2-content=module-kt
+    tab3-title="build.gradle" tab3-content=build-gradle
+%}

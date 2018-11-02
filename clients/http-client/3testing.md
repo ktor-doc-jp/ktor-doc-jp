@@ -11,7 +11,7 @@ and generates a response.
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.mock.MockEngine" artifact="io.ktor:ktor-client-mock:$ktor_version" test="true" %}
 
-### Usage
+## Usage
 
 The usage is very simple: the MockEngine class has a [`operator invoke`](https://kotlinlang.org/docs/reference/operator-overloading.html#invoke) method,
 that receives a block/callback that will handle the request. This callback receives an `HttpRequest` as this, a `HttpClientCall` as a parameter,

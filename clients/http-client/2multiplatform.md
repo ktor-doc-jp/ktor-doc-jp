@@ -10,7 +10,7 @@ that was introduced in [Kotlin 1.2](https://blog.jetbrains.com/kotlin/2017/11/ko
 
 Right now, the supported platforms are JVM, Android and iOS, but in future versions, there will be more supported.
 
-### Android
+## Android
 
 For Android, in your project's `build.gradle` (or `build.gradle.kts`) you just have include the following artifact to your `dependencies` block:
 
@@ -24,7 +24,7 @@ dependencies {
 
 You can then use Android Studio, or gradle to build your project.
 
-### iOS
+## iOS
 
 In the case of iOS, you have to use [Kotlin/Native](https://github.com/JetBrains/kotlin-native), and analogously
 to android, you have to put this artifact as part of the `dependencies` block. 
@@ -42,7 +42,7 @@ written either in Swift or Objective-C that includes that framework.
 So you first have to build the framework using the gradle tasks exposed by Kotlin/Native,
 and then open or build the XCode project. 
 
-### Common
+## Common
 
 For [multiplatform projects](https://kotlinlang.org/docs/reference/multiplatform.html) that for example
 share code between Android and iOS, we can create a common module.
@@ -56,7 +56,7 @@ dependencies {
 }
 ```
 
-### Samples
+## Samples
 
 There is a full sample using the common client in the ktor-samples repository:
 
@@ -65,14 +65,14 @@ There is a full sample using the common client in the ktor-samples repository:
 You can use this project as reference. This project also expose some experimental gradle tasks to build, install and run the
 Android and iOS applications directly from gradle.
 
-Android:
+### Android:
 
 * `:client-mpp-android:emulatorList` - lists all the available emulators
 * `:client-mpp-android:emulatorStart` - starts the emulator (this would block gradle for now, so better to do in a separate terminal)
 * `:client-mpp-android:emulatorInstall` - install the application inside the emulator
 * `:client-mpp-android:emulatorRun` - executes the application inside the emulator
 
-iOS:
+### iOS:
 
 * `:client-mpp-ios:startSimulator` - starts the simulator
 * `:client-mpp-ios:shutdownSimulator` - shutdowns the simulator

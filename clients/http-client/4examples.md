@@ -5,7 +5,7 @@ permalink: /clients/http-client/examples.html
 caption: HTTP Client Examples 
 ---
 
-### Interchanging JSON: Ktor server / Ktor client
+## Interchanging JSON: Ktor server / Ktor client
 {: #example-json }
 
 ```kotlin

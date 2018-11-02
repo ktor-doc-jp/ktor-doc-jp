@@ -26,7 +26,7 @@ install(Sessions) {
 ```
 
 
-### Custom SessionStorage
+## Custom SessionStorage
 
 `SessionStorage` is in charge of storing and retrieving session payload. The interface is *suspendable*,
 so you can, and should if it is possible, transfer the data asynchronously.

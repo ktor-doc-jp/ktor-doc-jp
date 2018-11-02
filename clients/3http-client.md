@@ -33,7 +33,7 @@ and your function will be suspended until done. If you want to perform several r
 in the same block, you can use `launch` or `async` functions and later get the results.
 For example:
 
-*Sequential requests:*
+### Sequential requests:
 
 ```kotlin
 suspend fun sequentialRequests() {
@@ -49,7 +49,7 @@ suspend fun sequentialRequests() {
 }
 ```
 
-*Parallel requests:*
+### Parallel requests:
 
 ```kotlin
 suspend fun parallelRequests() {

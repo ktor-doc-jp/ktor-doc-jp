@@ -1,6 +1,6 @@
 {% capture _ignored %}{% increment autoid %}{% endcapture %}
 
-<div id="build-script-{{ autoid }}">
+<div id="tabbed-code-{{ autoid }}">
     <ul class="nav nav-tabs code-tabs">
         <li role="presentation" class="active"><a data-toggle="tab" href="#code-tab1-{{ autoid }}" class="file-tab">{{ include.tab1-title }}</a></li>
         {% if include.tab2-title %}<li role="presentation"><a data-toggle="tab" href="#code-tab2-{{ autoid }}" class="file-tab">{{ include.tab2-title }}</a></li>{% endif %}
@@ -8,9 +8,9 @@
         {% if include.tab4-title %}<li role="presentation"><a data-toggle="tab" href="#code-tab4-{{ autoid }}" class="file-tab">{{ include.tab4-title }}</a></li>{% endif %}
     </ul>
     <div class="tab-content code-tabs-content">
-        <div id="code-tab1-{{ autoid }}" class="tab-pane fade in active code-scroll"><div class="tab-content-title">{{ include.tab1-title }}</div>{{ include.tab1-content | markdownify }}</div>
-        {% if include.tab2-content %}<div id="code-tab2-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab2-title }}</div>{{ include.tab2-content | markdownify }}</div>{% endif %}
-        {% if include.tab3-content %}<div id="code-tab3-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab3-title }}</div>{{ include.tab3-content | markdownify }}</div>{% endif %}
-        {% if include.tab4-content %}<div id="code-tab4-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab4-title }}</div>{{ include.tab4-content | markdownify }}</div>{% endif %}
+        <div id="code-tab1-{{ autoid }}" class="tab-pane fade in active code-scroll"><div class="tab-content-title">{{ include.tab1-title }}</div><div class="tab-content-content">{{ include.tab1-content | markdownify }}</div></div>
+        {% if include.tab2-content %}<div id="code-tab2-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab2-title }}</div><div class="tab-content-content">{{ include.tab2-content | markdownify }}</div></div>{% endif %}
+        {% if include.tab3-content %}<div id="code-tab3-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab3-title }}</div><div class="tab-content-content">{{ include.tab3-content | markdownify }}</div></div>{% endif %}
+        {% if include.tab4-content %}<div id="code-tab4-{{ autoid }}" class="tab-pane fade in code-scroll"><div class="tab-content-title">{{ include.tab4-title }}</div><div class="tab-content-content">{{ include.tab4-content | markdownify }}</div></div>{% endif %}
     </div>
 </div>

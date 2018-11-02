@@ -6,7 +6,7 @@ redirect_from:
 - /features/sessions/serializers.html
 ---
 
-### Serializers
+## Serializers
 {: #serializer}
 
 You can specify a custom serializer with:
@@ -21,7 +21,7 @@ application.install(Sessions) {
 
 If you do not specify any serializer, it will use one with an internal optimized format.
 
-#### SessionSerializerReflection
+### SessionSerializerReflection
 {: #SessionSerializerReflection}
 
 This is the default serializer, when no serializer is specified:
@@ -32,7 +32,7 @@ cookie<MySession>("SESSION") {
 }
 ```
 
-#### GsonSessionSerializer
+### GsonSessionSerializer
 {: #GsonSessionSerializer}
 
 Using JSON instead of the default serializer. Note that the payload will be bigger:
@@ -47,7 +47,7 @@ This serializes requires the artifact `io.ktor:ktor-gson:$ktor_version`.
 {: .note}
 
 
-### Custom serializers
+## Custom serializers
 {: #extending-serializers}
 
 The Sessions API provides a `SessionSerializer` interface, that looks like this:
@@ -70,7 +70,9 @@ cookie<MySession>("NAME") {
 So for example you can create a JSON session serializer using Gson:
 
 ```kotlin
-class GsonSessionSerializer(val type: java.lang.reflect.Type, val gson: Gson = Gson(), configure: Gson.() -> Unit = {}) : SessionSerializer {
+class GsonSessionSerializer(
+    val type: java.lang.reflect.Type, val gson: Gson = Gson(), configure: Gson.() -> Unit = {}
+) : SessionSerializer {
     init {
         configure(gson)
     }

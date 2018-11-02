@@ -17,7 +17,8 @@ Ktor by default provides an interceptor for implementing proper support for Cros
 
 {% include feature.html %}
 
-### Basic
+## Basic
+
 First of all, install the CORS feature into your application.
 
 ```kotlin
@@ -39,7 +40,7 @@ The default configuration to the CORS feature handles only `GET`, `POST` and `HE
   HttpHeaders.Pragma
 ```
 
-### Advanced
+## Advanced
 
  - [source code](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/features/CORS.kt)
  - [tests](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tests/test/io/ktor/tests/http/CORSTest.kt)
@@ -66,7 +67,7 @@ fun Application.main() {
 }
 ```
 
-### Configuration
+## Configuration
 
 - `method("HTTP_METHOD")` : Includes this method to the white list of Http methods to use CORS.
 - `header("header-name")` : Includes this header to the white list of headers to use CORS.
