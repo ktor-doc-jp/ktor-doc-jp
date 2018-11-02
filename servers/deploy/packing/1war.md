@@ -11,7 +11,7 @@ It also serves when deploying to [google app engine](#google-app-engine).
 
 To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` which looks like this:
 
-### `webapp/WEB-INF/web.xml`:
+{% capture web-xml %}
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
@@ -49,8 +49,9 @@ To generate a war file, you can use the gretty gradle plugin. You also need a `W
 
 </web-app>
 ```
+{% endcapture %}
 
-### `build.gradle`:
+{% capture build-gradle %}
 ```groovy
 buildscript {
     ext.gretty_version = '2.0.0'
@@ -102,6 +103,12 @@ afterEvaluate {
     run.dependsOn(tasks.findByName("appRun"))
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="webapp/WEB-INF/web.xml" tab1-content=web-xml
+    tab2-title="build.gradle" tab2-content=build-gradle
+%}
 
 This gradle buildscript defines [several tasks](http://akhikhl.github.io/gretty-doc/Gretty-tasks) that
 you can use to run your application.
