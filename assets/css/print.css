@@ -32,3 +32,28 @@ footer.footer {
 .doc-content {
     margin-left: 0;
 }
+
+.code-tabs {
+    display: none;
+}
+
+.tab-content-title {
+    display: block !important;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1.5em;
+    background: #eee;
+    width: 100%;
+    color: black;
+    padding: 0.2em 0.7em;
+}
+
+.code-tabs-content .tab-pane {
+    display: block;
+}
+
+.code-scroll {
+    height: auto;
+    max-height: inherit;
+    min-height: auto;
+    border: 1px solid #eee;
+}

@@ -2005,3 +2005,13 @@ h3, h3 a, h3 a.anchored-heading {
 .code-scroll pre.highlight {
     border-left: none;
 }
+
+a.file-tab {
+    white-space: pre;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+}
+
+.tab-content-title {
+    display: none;
+}
