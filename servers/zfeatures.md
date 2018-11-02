@@ -21,7 +21,7 @@ response, `Routing` which allows us to define routes to handle requests, etc.
 
 ### Features
 
-{% include category-list.html %}
+{% include list-children.html %}
 
 ### Installing
 
