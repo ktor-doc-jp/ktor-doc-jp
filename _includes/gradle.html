@@ -1,17 +1,4 @@
-{% capture _ignored %}{% increment autoid %}{% endcapture %}
-
-<div id="build-script-{{ autoid }}">
-    <ul class="nav nav-tabs gradle-tabs">
-        <li role="presentation" class="active"><a data-toggle="tab" href="#build-script-groovy-{{ autoid }}">Groovy</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#build-script-kotlin-{{ autoid }}">Kotlin</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="build-script-groovy-{{ autoid }}" class="tab-pane fade in active">
-        {{ include.gradle-groovy | markdownify }}
-        </div>
-
-        <div id="build-script-kotlin-{{ autoid }}" class="tab-pane fade in">
-        {{ include.gradle-kotlin | markdownify }}
-        </div>
-    </div>
-</div>
+{% include tabbed-code.html
+    tab1-title="Groovy" tab1-content=include.gradle-groovy
+    tab2-title="Kotlin" tab2-content=include.gradle-kotlin
+%}

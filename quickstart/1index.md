@@ -78,7 +78,6 @@ dependencies {
     testCompile(group = "junit", name = "junit", version = "4.12")
 }
 ```
-{: .compact}
 {% endcapture %}
 
 {% capture gradle-groovy-build %}
@@ -121,7 +120,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
-{: .compact}
 {% endcapture %}
 
 Text version:
