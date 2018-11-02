@@ -61,7 +61,6 @@ fun Application.mymodule() {
     }
 }
 ```
-{: .compact}
 
 When using `watchPaths` you should *not* use a lambda to configure the server, but to provide a method reference to your
 Application module.
@@ -88,7 +87,7 @@ fun main(args: Array<String>) {
     }.start(true)
 }
 ```
-{: .compact.error }
+{: .error }
 
 Code that will work:
 ```kotlin
@@ -109,7 +108,7 @@ fun Application.mymodule() {
     }
 }
 ```
-{: .compact.success }
+{: .success }
 
 ## Using the `application.conf`
 {: #configuration-file}
@@ -164,7 +163,8 @@ You can run the application by using either a `build.gradle` or directly within 
 Executing the main method in the example file, or by executing: `io.ktor.server.netty.EngineMain.main`.
 EngineMain using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
 
-`Main.kt`:
+### `Main.kt`:
+
 ```kotlin
 package io.ktor.exercise.autoreload
 
@@ -193,9 +193,8 @@ fun Application.module() {
     }
 }
 ```
-{: .compact}
 
-`application.conf`:
+### `application.conf`:
 ```kotlin
 ktor {
     deployment {
@@ -208,6 +207,5 @@ ktor {
     }
 }
 ```
-{: .compact}
 
 As you can see, you need to specify a list of strings to match the classloaders you want to watch –in this case only `solutions/exercise4`– which should then be reloaded upon modification.
