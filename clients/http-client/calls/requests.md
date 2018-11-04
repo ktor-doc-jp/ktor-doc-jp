@@ -44,6 +44,20 @@ extension method like `HttpClient.get` to do a `GET` request to receive
 the specified type directly (for example `String`).
 {: .note}
 
+After you finish working with the client, it should be closed in order to properly stop the underlying engine.
+
+```kotlin
+client.close()
+```
+
+If you want to use a client to make only one request consider `use`-ing it. The client will be automatically closed once the passed block has been executed.
+
+```kotlin
+val bytes = HttpClient(Apache).use { client ->
+    client.call("http://127.0.0.1:8080/").response.readBytes()
+}
+```
+
 ## Custom requests
 
 We cannot live only on *get* requests, Ktor allows you to build complex
