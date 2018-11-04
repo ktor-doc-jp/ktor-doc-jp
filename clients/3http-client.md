@@ -44,6 +44,8 @@ suspend fun sequentialRequests() {
     
     // Once the previous request is done, get the content of an URL.
     val bytes2 = client.call("https://127.0.0.1:8080/b").response.readBytes() // Suspension point.
+    
+    client.close()
 }
 ```
 
@@ -61,6 +63,8 @@ suspend fun parallelRequests() {
     // requests are done.
     val bytes1 = req1.await() // Suspension point.
     val bytes2 = req2.await() // Suspension point.
+    
+    client.close()
 }
 ```
 
