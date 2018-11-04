@@ -132,7 +132,7 @@ When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master
 (any `EngineMain` main) there are several switches and configuration parameters you can use to configure
 your application module.
 
-If you start the application from the command line with `-config anotherfile.conf`, it will
+If you start the application from the command line with `-config=anotherfile.conf`, it will
 load the config file from the specific local file instead of from the resources.
 
 Using switches, you can, for example, override the bound port defined by executing:
