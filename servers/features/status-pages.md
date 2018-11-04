@@ -37,7 +37,7 @@ There are three main configuration options provided to StatusPages:
 The exception configuration can provide simple interception patterns for calls that result in a thrown exception. In the most basic case, a 500 HTTP status code can be configured for any exceptions.
 
 ```kotlin
-install(StatusPages){
+install(StatusPages) {
     exception<Throwable> { cause ->
         call.respond(HttpStatusCode.InternalServerError)
     }
@@ -47,13 +47,14 @@ install(StatusPages){
 More specific responses can allow for more complex user interactions.
 
 ```kotlin
-install(StatusPages){
+install(StatusPages) {
     exception<AuthenticationException> { cause ->
         call.respond(HttpStatusCode.Unauthorized)
     }
     exception<AuthorizationException> { cause ->
         call.respond(HttpStatusCode.Forbidden)
     }
+}
 ```
 
 These customizations can work well when paired with custom status code responses, e.g. providing a login page when a user has not authenticated.
@@ -136,7 +137,7 @@ So when doing redirections inside guard clauses, you have to return the function
 routing {
     get("/") {
         if (condition) {
-            return@gget call.respondRedirect("/invalid", permanent = false)
+            return@get call.respondRedirect("/invalid", permanent = false)
         }
         call.respondText("Normal response")
     }
