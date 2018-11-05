@@ -63,6 +63,115 @@ You can check this in IntelliJ IDEA in the main menu:
 For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/quickstart/gradle.html) section. 
 {: .note}
 
+## Gradle Setup
+
+This section assumes you have some basic knowledge of Gradle. If you have never used Gradle,
+gradle.org provides [several guides](https://guides.gradle.org/building-java-applications/) to help you get started.
+{: .note}
+
+You can set-up a simple Ktor application using Gradle like this:
+
+![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
+
+{% capture gradle-kotlin-build %}
+```kotlin
+// build.gradle.kts
+
+import org.jetbrains.kotlin.gradle.dsl.Coroutines
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+group = "Example"
+version = "1.0-SNAPSHOT"
+
+val ktor_version = "{{ site.ktor_version }}"
+
+plugins {
+    application
+    kotlin("jvm") version "{{ site.kotlin_version }}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType<KotlinCompile>().all {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+application {
+    mainClassName = "MainKt"
+}
+
+dependencies {
+    compile(kotlin("stdlib-jdk8"))
+    compile("io.ktor:ktor-server-netty:$ktor_version")
+    compile("ch.qos.logback:logback-classic:1.2.3")
+    testCompile(group = "junit", name = "junit", version = "4.12")
+}
+```
+{% endcapture %}
+
+{% capture gradle-groovy-build %}
+```groovy
+// build.gradle
+
+group 'Example'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '{{ site.kotlin_version }}'
+    ext.ktor_version = '{{ site.ktor_version }}'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'MainKt'
+
+sourceCompatibility = 1.8
+compileKotlin { kotlinOptions.jvmTarget = "1.8" }
+compileTestKotlin { kotlinOptions.jvmTarget = "1.8" }
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "ch.qos.logback:logback-classic:1.2.3"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+```
+{% endcapture %}
+
+Text version:
+{% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
+
+Since Ktor is not yet 1.0, we have custom Maven repositories for distributing our early preview artifacts.
+You have to set up a couple of repositories as shown below, so your tools can find Ktor artifacts and dependencies.
+
+Of course, don't forget to include the actual artifact! For our quickstart, we are using the `ktor-server-netty` artifact.
+That includes Ktor's core, netty, and the ktor-netty connector as transitive dependencies.
+You can, of course, include any additional dependencies that you need.
+
+Since Ktor is designed to be modular, you will require additional artifacts and potentially other repositories
+for specific features. You can find the required artifacts (and repositories where required) for each feature in the
+specific feature documentation.
+{:.note}
+
 ## Create the App
 
 Select the `src/main/kotlin` directory and create a new package.  We will call it `blog`.

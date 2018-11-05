@@ -19,10 +19,11 @@ the project.
 
 Creating a new project a `Ktor` section will appear:
 
-1. In a first step, you can configure the project to generate and select features to install:
-   ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png)
-2. In a second step, you can configure the project artifacts:
-   ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png)
+1) In a first step, you can configure the project to generate and select features to install:
+![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png)
+
+2) In a second step, you can configure the project artifacts:
+![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png)
 
 ### Installing the plugin
 
@@ -32,8 +33,7 @@ You can get the plugin from:
 * Inside IntelliJ: `IntelliJ IDEA` → `Preferences...` → `Plugins` → `Install JetBrains Plugin...` → `Ktor` → `Install`
 * IntelliJ Welcome Screen: `Configure` → `Plugins` → `Install JetBrains Plugin...` → `Ktor` → `Install`
 
-![](/quickstart/quickstart/intellij-idea/plugin/install0.png)
-![](/quickstart/quickstart/intellij-idea/plugin/install1.png){:style="float:right;"}
+![](/quickstart/quickstart/intellij-idea/plugin/install01.png)
 
 <div style="clear:both;"></div>
 

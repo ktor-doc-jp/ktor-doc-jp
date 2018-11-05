@@ -6,6 +6,7 @@ toc: true
 permalink: /quickstart/index.html
 children: /quickstart/quickstart/
 priority: -100
+ktor_version_review: 1.0.0-beta-3
 ---
 
 ![Ktor logo](/assets/images/ktor_logo.svg){:style="width:134px;height:56px;"}
@@ -15,133 +16,34 @@ Modern connected applications need to be asynchronous to provide the best experi
 awesome facilities to do it in an easy and straightforward way. 
 
 While not yet entirely there, the goal of Ktor is to provide an end-to-end multiplatform application framework for connected applications. 
-Currently, JVM client and server scenarios are supported, and we are working on bringing server facilities to native
+Currently, JVM client and server scenarios are supported, as well as JavaScript, iOS and Android clients, and we are working on bringing server facilities to native
 environments, and client facilities to native and JavaScript.
-
-{::comment}
-Ktor embraces the strongly typed nature of the Kotlin programming language and provides [strongly typed end-points (Locations)](/servers/features/locations.html) and
-the ability to exchange data with classes shared across platforms.
-{:/comment}
 
 **Table of contents:**
 
 * TOC
 {:toc}
 
-## Gradle Setup
+## Set a Ktor project
 
-This section assumes you have some basic knowledge of Gradle. If you have never used Gradle,
-gradle.org provides [several guides](https://guides.gradle.org/building-java-applications/) to help you get started.
-{: .note}
+You can set up a Ktor project using [Maven](/quickstart/quickstart/maven.html), [Gradle](/quickstart/quickstart/gradle.html), [start.ktor.io](/quickstart/generator.html#) and the [IntelliJ Plugin](/quickstart/quickstart/intellij-idea/plugin.html).
 
-You can set-up a simple Ktor application using Gradle like this:
+The plugin allows you to create a Ktor project as well as [start.ktor.io](/quickstart/generator.html#), but with the additional convenience of being fully integrated in the IDE.
+If you don't have the plugin yet, there is a page about [how to install the plugin](/quickstart/quickstart/intellij-idea/plugin.html).
 
-![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
+1) In a first step, you can configure the project to generate and select features to install:
+![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png){: width="100%" }
 
-{% capture gradle-kotlin-build %}
-```kotlin
-// build.gradle.kts
+2) In a second step, you can configure the project artifacts:
+![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png){: width="100%" }
 
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-group = "Example"
-version = "1.0-SNAPSHOT"
-
-val ktor_version = "{{ site.ktor_version }}"
-
-plugins {
-    application
-    kotlin("jvm") version "{{ site.kotlin_version }}"
-}
-
-repositories {
-    mavenCentral()
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks.withType<KotlinCompile>().all {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClassName = "MainKt"
-}
-
-dependencies {
-    compile(kotlin("stdlib-jdk8"))
-    compile("io.ktor:ktor-server-netty:$ktor_version")
-    compile("ch.qos.logback:logback-classic:1.2.3")
-    testCompile(group = "junit", name = "junit", version = "4.12")
-}
-```
-{% endcapture %}
-
-{% capture gradle-groovy-build %}
-```groovy
-// build.gradle
-
-group 'Example'
-version '1.0-SNAPSHOT'
-
-buildscript {
-    ext.kotlin_version = '{{ site.kotlin_version }}'
-    ext.ktor_version = '{{ site.ktor_version }}'
-
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'application'
-
-mainClassName = 'MainKt'
-
-sourceCompatibility = 1.8
-compileKotlin { kotlinOptions.jvmTarget = "1.8" }
-compileTestKotlin { kotlinOptions.jvmTarget = "1.8" }
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "ch.qos.logback:logback-classic:1.2.3"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-```
-{% endcapture %}
-
-Text version:
-{% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
-
-Since Ktor is not yet 1.0, we have custom Maven repositories for distributing our early preview artifacts.
-You have to set up a couple of repositories as shown below, so your tools can find Ktor artifacts and dependencies.
-
-Of course, don't forget to include the actual artifact! For our quickstart, we are using the `ktor-server-netty` artifact.
-That includes Ktor's core, netty, and the ktor-netty connector as transitive dependencies.
-You can, of course, include any additional dependencies that you need.
-
-Since Ktor is designed to be modular, you will require additional artifacts and potentially other repositories
-for specific features. You can find the required artifacts (and repositories where required) for each feature in the
-specific feature documentation.
-{:.note}
+And that's it. A new project will be created and opened inside your IDE.
 
 ## Hello World
 
 A simple hello world in Ktor looks like this:
 
-![Ktor Hello World](/quickstart/1/ktor_hello_world_main.png)
+![Ktor Hello World](/quickstart/1/ktor_hello_world_main.png){: width="100%" }
 
 1. Here you define a plain callable *main method*.
 2. Then you create an embedded *server using Netty* as the back-end that will listen on *port 8080*.
@@ -149,7 +51,7 @@ A simple hello world in Ktor looks like this:
 4. Actual routes: In this case, it will handle a *GET request* for the path `/demo`, and will reply with a `HELLO WORLD!` message.
 5. Actually *start the server* and wait for connections.
 
-Text version:
+{% capture main-kt %}
 ```kotlin
 import io.ktor.application.*
 import io.ktor.http.*
@@ -172,13 +74,19 @@ fun main(args: Array<String>) {
     server.start(wait = true)
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="Main.kt" tab1-content=main-kt
+%}
+
 
 ## Accessing your application
 
 Since you have a main method, you can execute it with your IDE. That will open a HTTP server,
 listening on [http://127.0.0.1:8080](http://127.0.0.1:8080/), You can try opening it with your favorite web browser.
 
-If that doesn't work, maybe you are using that port already. You can try changing the
+If that doesn't work, maybe your computer is using that port already. You can try changing the
 port 8080 (in line 10) and adjust it as needed.
 {: .note}
 
