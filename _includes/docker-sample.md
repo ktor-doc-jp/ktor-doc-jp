@@ -1,4 +1,4 @@
-```text
+```dockerfile
 FROM openjdk:8-jre-alpine
 
 ENV APPLICATION_USER ktor

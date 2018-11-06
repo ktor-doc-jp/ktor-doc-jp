@@ -107,14 +107,6 @@ You have to add both to the `repositories` block in the `pom.xml` file:
 ```xml
 <repositories>
     <repository>
-        <id>ktor</id>
-        <url>http://dl.bintray.com/kotlin/ktor</url>
-    </repository>
-    <repository>
-        <id>kotlinx</id>
-        <url>http://dl.bintray.com/kotlin/kotlinx</url>
-    </repository>
-    <repository>
         <id>jcenter</id>
         <url>http://jcenter.bintray.com</url>
     </repository>
@@ -275,14 +267,6 @@ When you are done, the `pom.xml` file should look like:
     </build>
 
     <repositories>
-        <repository>
-            <id>ktor</id>
-            <url>http://dl.bintray.com/kotlin/ktor</url>
-        </repository>
-        <repository>
-            <id>kotlinx</id>
-            <url>http://dl.bintray.com/kotlin/kotlinx</url>
-        </repository>
         <repository>
             <id>jcenter</id>
             <url>http://jcenter.bintray.com</url>

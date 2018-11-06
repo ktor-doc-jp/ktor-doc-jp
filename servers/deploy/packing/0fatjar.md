@@ -23,7 +23,6 @@ to generate a fat JAR using netty as an engine:
 buildscript {
     repositories {
         jcenter()
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'

@@ -1996,10 +1996,14 @@ h3, h3 a, h3 a.anchored-heading {
 
 .code-scroll {
     min-height: 200px;
-    height: 50vh;
+    max-height: 50vh;
     overflow: auto;
     border: 1px solid #ddd;
     border-top: none;
+}
+
+.code-scroll-height {
+    height: 50vh;
 }
 
 .code-scroll pre.highlight {

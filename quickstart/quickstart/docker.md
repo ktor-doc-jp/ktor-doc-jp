@@ -23,7 +23,7 @@ In this page we will guide you through creating a docker image and publishing an
 * TOC
 {:toc}
 
-### Package an application using Gradle
+## Package an application using Gradle
 
 In this tutorial, we will use the Gradle [shadow plugin](https://github.com/johnrengelman/shadow).
 It packages all the output classes, resources, and all the required dependencies into a single JAR file,
@@ -80,7 +80,7 @@ For more information about configuring this plugin see [documentation for the pl
 So a full `build.gradle` file would look like this:
 
 
-**`build.gradle`**:
+{% capture build-gradle %}
 ```groovy
 buildscript {
     ext.kotlin_version = '{{site.kotlin_version}}'
@@ -90,7 +90,6 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -111,8 +110,6 @@ sourceSets {
 
 repositories {
     jcenter()
-    maven { url "http://kotlin.bintray.com/ktor" }
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 dependencies {
@@ -130,9 +127,9 @@ shadowJar {
     version = null
 }
 ```
-{: .compact}
+{% endcapture %}
 
-**`resources/application.conf`**:
+{% capture resources-application-conf %}
 ```groovy
 ktor {
     deployment {
@@ -144,9 +141,9 @@ ktor {
     }
 }
 ```
-{: .compact}
+{% endcapture %}
 
-**`src/HelloApplication.kt`**:
+{% capture src-hello-application-kt %}
 ```kotlin
 package io.ktor.samples.hello
 
@@ -175,21 +172,31 @@ fun Application.main() {
     }
 }
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="build.gradle" tab1-content=build-gradle
+    tab2-title="resources/application.conf" tab2-content=resources-application-conf
+    tab3-title="src/HelloApplication.kt" tab3-content=src-hello-application-kt
+%}
+
 
 You can check this [full example](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker) at the ktor-samples repository.
 {: .note }
 
-### Prepare Docker image
+## Prepare Docker image
 
 In the root folder of your project create a file named `Dockerfile` with the following contents:
 
-{% capture my_include %}{% include docker-sample.md %}{% endcapture %}
-{{ my_include | markdownify }}
+{% capture dockerfile %}{% include docker-sample.md %}{% endcapture %}
+{% include tabbed-code.html
+    tab1-title="Dockerfile" tab1-content=dockerfile
+    no-height="true"
+%}
 
 Let's see what is what:
 
-```text
+```dockerfile
 FROM openjdk:8-jre-alpine
 ```
 
@@ -197,7 +204,7 @@ This line tells Docker to base an image on a pre-built image with [Alpine Linux]
 from [OpenJDK registry](https://hub.docker.com/_/openjdk/). Alpine Linux benefit is that the image is pretty small. 
 We also select JRE-only image since we don't need to compile code on the image, only run precompiled classes.
 
-```text
+```dockerfile
 RUN mkdir /app
 COPY ./build/libs/my-application.jar /app/my-application.jar
 WORKDIR /app
@@ -205,29 +212,29 @@ WORKDIR /app
 
 These lines copy your packaged application into the Docker image and sets the working directory to where we copied it.
 
-```text
+```dockerfile
 CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
 The last line instructs Docker to run `java` with G10s GC, 4G of memory and your packaged application. 
 
-### Building and running the Docker image
+## Building and running the Docker image
 
 Build an application package:
 
-```
+```bash
 ./gradlew build
 ```
 
 Build and tag an image:
 
-```
+```bash
 docker build -t my-application .
 ```
 
 Start an image:
 
-```
+```bash
 docker run -m512M --cpus 2 -it -p 8080:8080 --rm ktor-docker-sample-application
 ```
 
@@ -248,11 +255,11 @@ garbage piling up.
 For more information about running a docker image please consult [docker run](https://docs.docker.com/engine/reference/run) 
 documentation.
 
-### Pushing docker image 
+## Pushing docker image 
 
 Once your application is running locally successfully, it might be a time to deploy it:
 
-```text
+```bash
 docker tag my-application hub.example.com/docker/registry/tag
 docker push hub.example.com/docker/registry/tag
 ```
@@ -264,6 +271,6 @@ We won't go into details here since your configuration might require authenticat
 and even special tools. Please consult your organization or cloud platform, or 
 check [docker push](https://docs.docker.com/engine/reference/commandline/push/) documentation.
 
-### Sample
+## Sample
 
 You can check a [full sample](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker) at the ktor-samples repository.
