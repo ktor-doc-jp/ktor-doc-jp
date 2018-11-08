@@ -16,17 +16,25 @@ checking the `ETag` or `LastModified` properties of the `Resource` or `FinalCont
 properties to what client indicates it is having. If the conditions allow it, the entire content is not sent and a
 "304 Not Modified" response is sent instead. 
 
+{% include feature.html %}
+
+## Configuration
+
+You can install and use `ConditionalHeaders` without additional configuration:
+
 ```kotlin
 install(ConditionalHeaders)
 ```
 
-{% include feature.html %}
+It also allows to configure a lambda to fetch a version list from the generated `OutgoingContent` passed as parameter of the lambda:
 
-### Configuration
+```kotlin
+install(ConditionalHeaders) {
+    version { content -> listOf(EntityTagVersion("tag1")) }
+}
+```
 
-This feature doesn't have any configuration object, but a configuration script is executed if present.
-
-### Extensibility
+## Extensibility
 
 `Version` interface implementations are attached to the `Resource` instances, and you can return custom implementations
 with your own logic. Please note that `FinalContent` is only checked for `ETag` and `LastModified` headers.
