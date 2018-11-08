@@ -114,9 +114,7 @@ you will just have to update the `@Location` path, which is really convenient.
 ## Subroutes with parameters
 {: #subroutes }
 
-The Location feature also exposes a ~`location`~ method to define typed subroutes, but as for 0.9.3 you shouldn't use it.
-
-Instead, you have to create classes referencing to another class annotated with `@Location` like this, and register them normally:
+You have to create classes referencing to another class annotated with `@Location` like this, and register them normally:
 
 ```kotlin
 routing {

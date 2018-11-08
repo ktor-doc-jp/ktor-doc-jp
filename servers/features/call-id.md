@@ -10,8 +10,6 @@ feature:
 
 The CallId feature allows to identify a request/call and can work along the [CallLogging](/servers/features/call-logging.html) feature.
 
-It has been introduced in Ktor 0.9.5.
-
 ### Generating Call IDs 
 
 ```kotlin

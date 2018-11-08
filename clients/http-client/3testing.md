@@ -5,7 +5,7 @@ permalink: /clients/http-client/testing.html
 caption: Testing Http Client (MockEngine) 
 ---
 
-Since Ktor 0.9.3, we expose a `MockEngine` for the HttpClient. This engine allows to simulate HTTP calls without
+Ktor exposes a `MockEngine` for the HttpClient. This engine allows to simulate HTTP calls without
 actually connecting to the endpoint. It allows to set a code block, that can handle the request,
 and generates a response.
 

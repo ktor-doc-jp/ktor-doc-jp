@@ -98,13 +98,6 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 > You get this error if you try to use the locations feature without actually installing it. Check the locations feature:
 > <https://ktor.io/features/locations.html>
 
-## I get a 406 error with a client not sending an Accept header. With WRK I'm getting Non-2xx responses after adding JSON support
-{: #missing-accept-issue }
-
-> There is a [known issue](https://github.com/ktorio/ktor/issues/38) in Ktor <= 0.9.1,
-> that when a client does not send an Accept header, the content negotiation assumes that there is no accepting anything.
-> Since 0.9.2-alpha-1, ktor assumes it should accept everything when no Accept header is sent.
-
 ## How can I test the latest commits on master?
 {: #bleeding-edge }
 
@@ -117,7 +110,7 @@ Also you can [build ktor from source](/advanced/building-from-source.html), and 
 
 You can use the [`DefaultHeaders` feature](/servers/features/default-headers.html) that will send a
 Server header with the ktor version in it.
-Something like this should be sent as part of the response headers: `Server: ktor-server-core/0.9.2-alpha-3 ktor-server-core/0.9.2-alpha-3` 
+Something like this should be sent as part of the response headers: `Server: ktor-server-core/1.0.0 ktor-server-core/1.0.0` 
 
 ## Website accessibility tips and tricks
 {: #website-tricks }
@@ -183,7 +176,7 @@ to have a working project as base.
 ## Can I use ktor on Android?
 {: #android-support }
 
-Ktor 0.9.3 and lower is know to work on Android 7 or greater (API 24). It will fail in lower versions like Android 5.
+Ktor is know to work on Android 7 or greater (API 24). It will fail in lower versions like Android 5.
 
 In unsupported versions it would fail with an exception similar to:
 
@@ -233,10 +226,3 @@ that it is a normal HTTP request and responds with the redirect.
 Normally, reverse-proxies send some headers describing the original request (like it was https, or the original IP address),
 and there is a feature [`XForwardedHeaderSupport`](/servers/features/forward-headers.html)
 to parse those headers so the [`HttpsRedirect`](/servers/features/https-redirect.html) feature knows that the original request was HTTPS.
- 
-
-## I get a `UnsafeHeaderException: Header Content is controlled by the engine and cannot be set explicitly` exception
-{: #UnsafeHeaderException }
-
-Check the [0.9.4 migration guide](/quickstart/migration/0.9.4.html#UnsafeHeaderException) for more information about how to fix it.
-

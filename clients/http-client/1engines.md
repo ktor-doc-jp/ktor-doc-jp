@@ -31,8 +31,7 @@ For native, it uses the predefined one.
 ## Configuring engines
 {: #configuring}
 
-Ktor HttpClient lets you configure the parameters of each engine by calling `Engine.config { }`, but since 0.9.4,
-the preferred way is to use `HttpClient(MyHttpEngine) { engine { ... } }` instead.
+Ktor HttpClient lets you configure the parameters of each engine by calling `HttpClient(MyHttpEngine) { engine { ... } }`.
 
 Every engine config has two common properties that can be set:
 
@@ -140,7 +139,7 @@ val client = HttpClient(Jetty) {
 ### OkHttp
 {: #okhttp }
 
-Since Ktor 0.9.4, there is a engine based on OkHttp.
+There is a engine based on OkHttp:
 
 ```kotlin
 val client = HttpClient(OkHttp) {

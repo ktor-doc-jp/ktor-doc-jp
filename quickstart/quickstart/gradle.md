@@ -28,6 +28,7 @@ it following the [IntelliJ guide](/quickstart/quickstart/intellij-idea.html).
 
 The initial file looks like this:
 
+{% capture build-gradle %}
 ```groovy
 group 'Example'
 version '1.0-SNAPSHOT'
@@ -57,7 +58,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="build.gradle" tab1-content=build-gradle
+%}
 
 ## Add Ktor dependencies and configure build settings
 {: #ktor-dependencies}
@@ -140,6 +145,7 @@ compile "io.ktor:ktor-server-netty:$ktor_version"
 
 When you are done, the `build.gradle` file should look like this:
 
+{% capture build-gradle %}
 ```groovy
 group 'Example'
 version '1.0-SNAPSHOT'
@@ -183,6 +189,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="build.gradle" tab1-content=build-gradle
+%}
 
 You can now run Gradle (just `gradle` or `./gradlew` if using the wrapper)
 to fetch dependencies and verify everything is set up correctly.
@@ -359,7 +370,7 @@ Select that directory and create a new kotlin file under it named `BlogApp`
 
 Copy and paste in the most basic setup for an app so that it looks like:
 
-
+{% capture blog-app %}
 ```kotlin
 package blog
 
@@ -380,6 +391,12 @@ fun main(args: Array<String>) {
     }.start(wait = true)
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="BlogApp.kt" tab1-content=blog-app
+    no-height="true"
+%}
 
 ![Ktor IntelliJ: Program](/quickstart/intellij-idea/program.png)
 
@@ -406,6 +423,7 @@ and referring to that from an embeddedServer call in the main function.
 
 Change your code in BlogApp.kt to the following to try this:
 
+{% capture blog-app %}
 ```kotlin
 package blog
 
@@ -431,11 +449,18 @@ fun main(args: Array<String>) {
     embeddedServer(Netty, 8080, watchPaths = listOf("BlogAppKt"), module = Application::module).start()
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="BlogApp.kt" tab1-content=blog-app
+    no-height="true"
+%}
 
 ## IntelliJ: Extract out Configuration Data
 
 Although we can designate some application configuration data in the main function embeddedServer call, we can provide more flexibility for future deployments and changes by extracting this out to a separate configuration file.  In the `src/main/resources` directory we will create a new text file named `application.conf` with the following content:
 
+{% capture application-conf %}
 ```kotlin
 ktor {
     deployment {
@@ -447,6 +472,12 @@ ktor {
     }
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="application.conf" tab1-content=application-conf
+    no-height="true"
+%}
 
 Then we delete the main function from `BlogApp.kt` and change `fun Application.module()` to `fun Application.main()`.  However, if we run the application now, it will fail with an error message like "Top-level function 'main' not found in package blog."  Our `Application.main()` function is now a function extension and does not qualify as a top-level main function.   
 

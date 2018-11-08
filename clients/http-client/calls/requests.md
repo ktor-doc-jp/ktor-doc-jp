@@ -17,7 +17,7 @@ specifying an engine, for example
 or [`CIO`](/clients/http-client/engines.html#cio),
 and start making requests using one of the many convenience methods available.
 
-Since Ktor 0.9.3, you can omit the engine, and Ktor will choose an engine among the ones that are available
+You can omit the engine, and Ktor will choose an engine among the ones that are available
 from the included artifacts using a ServiceLoader. 
 
 First you need to instantiate the client:   
@@ -259,7 +259,7 @@ If you try to send a class that is inside a function, the feature will send a *n
 ## Uploading multipart/form-data
 {: #multipart-form-data }
 
-Starting with 0.9.4, Ktor HTTP Client has support for making MultiPart requests.
+Ktor HTTP Client has support for making MultiPart requests.
 The idea is to use the `MultiPartFormDataContent(parts: List<PartData>)` as `OutgoingContent` for the body of the request.
 
 The easiest way is to use the [`submitFormWithBinaryData` method](#submit-form).

@@ -24,6 +24,7 @@ Maven is a build automation tool used primarily for Java projects.
 It reads project configuration from `pom.xml` files.
 Here is a basic `pom.xml` file for building Kotlin applications:
 
+{% capture pom-xml %}
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -93,7 +94,11 @@ Here is a basic `pom.xml` file for building Kotlin applications:
     </build>
 </project>
 ```
-{: .compact }
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="pom.xml" tab1-content=pom-xml
+%}
 
 ## Add Ktor dependencies and configure build settings
 {: #ktor-dependencies}
@@ -183,6 +188,7 @@ application on top of it:
 
 When you are done, the `pom.xml` file should look like:
 
+{% capture pom-xml %}
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -274,7 +280,11 @@ When you are done, the `pom.xml` file should look like:
     </repositories>
 </project>
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="pom.xml" tab1-content=pom-xml
+%}
 
 You can now run `mvn package` to fetch dependencies and verify everything is set up correctly.
 

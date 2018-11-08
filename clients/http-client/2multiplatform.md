@@ -5,7 +5,7 @@ permalink: /clients/http-client/multiplatform.html
 caption: Multiplatform Http Client 
 ---
 
-Starting with Ktor 0.9.4, the HTTP Client supports several platforms, using the experimental [multiplatform support](https://kotlinlang.org/docs/reference/multiplatform.html)
+The HTTP Client supports several platforms, using the experimental [multiplatform support](https://kotlinlang.org/docs/reference/multiplatform.html)
 that was introduced in [Kotlin 1.2](https://blog.jetbrains.com/kotlin/2017/11/kotlin-1-2-released/).
 
 Right now, the supported platforms are JVM, Android and iOS, but in future versions, there will be more supported.
