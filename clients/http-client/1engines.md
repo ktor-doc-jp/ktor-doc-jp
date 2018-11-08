@@ -191,6 +191,19 @@ val client = HttpClient(Ios) {
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.ios.Ios" artifact="io.ktor:ktor-client-ios:$ktor_version" %}
 
+## Js (JavaScript)
+
+The `Js` engine, uses the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API internally. And have no additional configuration.
+
+```kotlin
+val client = HttpClient(Js) {
+}
+```
+
+You can also call the `JsClient()` function to get the `Js` engine singleton.
+
+{% include artifact.html kind="engine" class="io.ktor.client.engine.js.Js" artifact="io.ktor:ktor-client-js:$ktor_version" %}
+
 ## Testing
 {: #testing }
 
