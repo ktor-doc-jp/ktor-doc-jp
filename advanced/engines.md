@@ -14,13 +14,11 @@ Ktor includes several artifacts and engines:
 * For the server: `Netty`, `Jetty`, `Tomcat`, `CIO`, `TestEngine`
 * For the client: `ApacheEngine`, `JettyHttp2Engine`, `CIOEngine`, `TestHttpClientEngine`
 
-## Server's `ApplicationEngine`
-{: #server}
-
-### API
+## `ApplicationEngine` API
 
 A simplified version of the `ApplicationEngine` looks like this:
 
+{% capture application-engine-interface %}
 ```kotlin
 interface ApplicationEngineFactory<
     out TEngine : ApplicationEngine,
@@ -74,9 +72,14 @@ abstract class BaseApplicationEngine(
     val application: Application
 }
 ```
-{:.compact}
+{% endcapture %}
 
-### The `ApplicationEngineFactory`
+{% include tabbed-code.html
+    tab1-title="ApplicationEngineInterface.kt" tab1-content=application-engine-interface
+%}
+
+
+## `ApplicationEngineFactory`
 
 Each implementation of the `ApplicationEngineFactory` along with a subtyped `ApplicationEngine.Configuration` define the publicly exposed APIs for each engine.
 
@@ -106,16 +109,20 @@ class MyApplicationEngineFactory
 }
 ```
 
-### The `ApplicationEngine` and `BaseApplicationEngine`
+## `BaseApplicationEngine`
 
-The interface `ApplicationEngine` with an abstract implementation of `BaseApplicationEngine` starts and stops the application. It holds the `ApplicationEngineEnvironment` as well as the constructed configuration of the application.
+The interface `ApplicationEngine` with an abstract implementation of `BaseApplicationEngine` starts and stops the application.
+It holds the `ApplicationEngineEnvironment` as well as the constructed configuration of the application.
 
 This class has two methods:
 
-* The `start` method: connects to the `ApplicationEngineEnvironment.connectors` (from the environment), starts the environment, and starts and configures the engine to trigger execution of the `application` pipeline for each HTTP request with an `ApplicationCall`
-* The `stop` method: stops the engine and the environment, and unregisters all items registered by the `start` method
+* The `start` method: connects to the `ApplicationEngineEnvironment.connectors` (from the environment), starts the environment,
+and starts and configures the engine to trigger execution of the `application` pipeline for each HTTP request with an `ApplicationCall`.
+* The `stop` method: stops the engine and the environment, and unregisters all items registered by the `start` method.
 
-The `BaseApplicationEngine` exposes an `ApplicationEngineEnvironment` passed to the constructor and creates an `EnginePipeline`, which is used as an intermediary to pre-intercept the application pipeline. It also installs default transformations in the send and receive pipelines, and logs the defined connection endpoints.
+The `BaseApplicationEngine` exposes an `ApplicationEngineEnvironment` passed to the constructor and creates an `EnginePipeline`,
+which is used as an intermediary to pre-intercept the application pipeline. It also installs default transformations in the send and receive pipelines,
+and logs the defined connection endpoints.
 
 For example:
 

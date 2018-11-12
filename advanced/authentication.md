@@ -15,8 +15,8 @@ in the call pipeline. All authentication protocols such as basic, digest, oauth 
 
 `AuthenticationPipeline` has two phases:
 
-* `CheckAuthentication` – phase for checking if a user is already authenticated before all authentication mechanisms kick in
-* `RequestAuthentication` – phase for authentication mechanisms to plug into
+* `CheckAuthentication` – phase for checking if a user is already authenticated before all authentication mechanisms kick in.
+* `RequestAuthentication` – phase for authentication mechanisms to plug into.
 
 The subject of the pipeline is an `AuthenticationContext` instance.
 

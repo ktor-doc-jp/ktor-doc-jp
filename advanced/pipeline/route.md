@@ -2,9 +2,10 @@
 title: Route interception
 category: advanced
 caption: Interception per route
+ktor_version_review: 1.0.0
 ---
 
-If you just want to intercept some calls for a specific route, you have to create a `Route` node and intercept that node.
+If you just want to intercept some calls for a specific route, you have to create a `Route` node (usually by calling `createChild`) and intercept that node.
 
 For example, for creating a timeout for a route, you could do the following:
 
@@ -30,7 +31,7 @@ fun Route.routeTimeout(time: Long, unit: TimeUnit = TimeUnit.SECONDS, callback: 
 }
 ```
 
-### Intercepting any `Route` node
+## Intercepting any `Route` node
 
 The `Route` class defines an intercept method that applies to that route node or any other inner route:
 
@@ -57,21 +58,18 @@ override fun Route.toString() = when {
 }
 ```
 
-## How to intercept route truncation processing
+## How to intercept preventing additional executions
+
 ```kotlin
     intercept(ApplicationCallPipeline.Setup) {
-
         if (call.request.path() == "/admin/book") {
             call.respondText {
                 "intercept book"
             }
-            /*
-            Truncate the route response. If there is no finish() function,
-            the route /book will still respond to the processing, and the pipeline will be unwritable.
-            */
+            // Truncate the route response. If there is no finish() function,
+            // the route /book will still respond to the processing, and the pipeline will be unwritable.
             return@intercept finish()
         } 
-
     }
 ```
 

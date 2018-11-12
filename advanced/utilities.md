@@ -1,16 +1,17 @@
 ---
 title: Utilities
-caption: Utilities exposed by ktor
+caption: Utilities exposed by Ktor (URL-Encoding)
 category: advanced
 permalink: /advanced/utilities.html
 keywords: >-
     utilities formUrlEncode url-encoded application/x-www-form-urlencoded map to URL encoded string list to url encoded string Parameters parametersOf ApplicationCall.respondUrlEncoded
+ktor_version_review: 1.0.0
 ---
 
 ## Handling URL-encoded properties
 {: #url-encoded}
 
-Ktor exposes a few extension methods for parsing and generating url-encoded strings (`application/x-www-form-urlencoded`).
+Ktor exposes a few extension methods for parsing and generating url-encoded strings (in the `application/x-www-form-urlencoded` mimetype format).
 
 URL-encoded strings look like: `param=value&other=hi`.
 
@@ -71,6 +72,7 @@ mapOf(
 ```
 
 URL-encoded strings allow you to have repeated keys. If you use a `Map<String, String>` as base, you won't be able to represent repeated keys.
+In this case consider using `parametersOf`, `List` or `Parameters.build`.
 {: .note}
 
 You can also construct it from a `Map<String, List<String>>` by *flatMapping* it first:

@@ -3,6 +3,7 @@ title: Attributes
 category: advanced
 caption: Passing information among interceptors
 keywords: attributes Passing information among interceptors dependency injector instance container
+ktor_version_review: 1.0.0
 ---
 
 Ktor offers an `Attributes` class that acts as a small typed instance container/dependency injector.

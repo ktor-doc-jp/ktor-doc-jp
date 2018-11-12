@@ -4,6 +4,7 @@ category: advanced
 permalink: /advanced/pipeline.html
 caption: Internal Pipeline Machinery
 children: /advanced/pipeline/
+ktor_version_review: 1.0.0
 ---
 
 {% include nomnoml-support.html %}
@@ -20,7 +21,7 @@ Pipelines are used in Ktor as an extension mechanism to plug functionality in at
 
 ## API
 
-The simplified API of pipelines (without some generics, only public members, no bodies) looks like this:
+The simplified API of pipelines (without some generics, only public members and no bodies) looks like this:
 
 ```kotlin
 class PipelinePhase(val name: String)
@@ -209,7 +210,7 @@ applications handling http requests.
 
 ### Routing
 
-The [routing feature](features/routing.html) defines a nested pipeline attached to the Call phase in the Application pipeline.
+The [routing feature](/features/routing.html) defines a nested pipeline attached to the Call phase in the Application pipeline.
 You can get the routing root node pipeline by calling `val routing = application.routing {}`.
 Each node in the `Route` tree defines its own pipeline that is later merged per each route.
 
@@ -224,4 +225,4 @@ Ktor also defines other pipelines in some other features.
 
 ## Samples   
 
-See [`PipelineTest`](https://github.com/ktorio/ktor/blob/master/ktor-utils/test/io/ktor/tests/utils/PipelineTest.kt) for examples.
+See [`PipelineTest`](https://github.com/ktorio/ktor/blob/5f40b062457817870b3ecfa62b539782db2e65db/ktor-utils/ktor-utils-jvm/test/io/ktor/tests/utils/PipelineTest.kt) for examples.
