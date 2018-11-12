@@ -56,14 +56,13 @@ install(Sessions) {
 }
 ```
 
-**Notes about security:**
-
 * Serving a session without transform allows people to see the contents of the session clearly and then to modify it.
 * Serving a session with an Authentication transform means people can see the contents, but it prevents them from modifying it as long
   as you keep your secret hash key safe and use a secure algorithm. It is also possible to use old session strings to go back
   to a previous state.
 * Serving a session with an Encrypt transform prevents people from determining the actual contents and modifying it,
   but it is still vulnerable to exploitation and being returned to previous states.
+{: .note.security }
   
 It is possible to store a timestamp or a nonce encryption and authentication, but you will have to limit the
 session time or verify it at the server, reducing the benefits of this mode.

@@ -36,7 +36,7 @@ In particular, `get` is an alias to `route(HttpMethod.Get, path) { handle(body) 
 
 {% include feature.html %}
 
-### Routing Tree
+## Routing Tree
 
 Routing is organized in a tree with a recursive matching system that is capable of handling quite complex rules
 for request processing. The Tree is built with nodes and selectors. The Node contains handlers and interceptors, 
@@ -75,7 +75,7 @@ Builder functions:
 * `optionalParam(name)` – adds matcher that captures the value of a query parameter if it exists
 * `header(name, value)` – adds matcher that for a specific value of HTTP header, see below about [quality](#quality)
 
-### Path
+## Path
 
 Building routing tree by hand would be very inconvenient. Thus there is `route` function that covers most of the use cases in a 
  simple way, using _path_.
@@ -93,7 +93,7 @@ route("/foo") {
 }
 ```
 
-##### Parameters
+#### Parameters
 Path can also contain _parameters_ that match specific path segment and capture its value into `parameters` properties
 of an application call:
 
@@ -106,7 +106,7 @@ get("/user/{login}") {
 When user agent requests `/user/john` using GET method, this route is matched and `parameters` property
 will have `"login"` key with value `"john"`.
 
-##### Optional, Wildcard, Tailcard
+#### Optional, Wildcard, Tailcard
 
 Parameters and path segments can be optional or capture entire reminder of URI.
 
@@ -123,7 +123,7 @@ get("/user/{login}/{fullname?}") { … }
 get("/resources/{path...}") { … } 
 ```
 
-### Quality
+## Quality
 
 It is not unlikely that several routes can match to the same HTTP request.
 
@@ -156,7 +156,7 @@ get("/settings") { … }
 The parameter is considered to have a lower quality than a constant string, so that even if `/settings` matches both,
 the second route will be selected.  
 
-### Interception
+## Interception
 
 When routing node is selected, the routing system builds a special pipeline to execute the node.
 This pipeline consists of handler(s) for the selected node and any interceptors installed into nodes that
@@ -180,7 +180,7 @@ if the current user has enough privilege to access admin pages.
 Other examples could be installing JSON serialisation into `/api` section, 
 loading user from the database in `/user/{id}` section and placing it into call's attributes, etc. 
 
-### Extensibility
+## Extensibility
   
 The `ktor-server-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
 you can easily add your own selectors to fit in even more complex logic. Implement `RouteSelector` and create
@@ -188,7 +188,7 @@ a builder function similar to built-in.
 
 Path parsing is not extensible.
 
-### Tracing the routing decisions
+## Tracing the routing decisions
 {: #tracing }
 
 If you have problems trying to figure out why your route is not being executed,

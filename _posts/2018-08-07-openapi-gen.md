@@ -122,7 +122,7 @@ reflectionless by generating the code handling the routes, parsing the parameter
 And the JSON parsing/generation can work using <https://github.com/Kotlin/kotlinx.serialization>. So it should be viable.
 As long as you keep your API as described in the model, the only code you have to change is the one for the server. 
 
-Another possible thing to do which would be nice is to generate a definition for [the HTTP Client integrated with IntelliJ IDEA Ultimate](http://ktor.io/quickstart/guides/api.html#first-request-intellij)
+Another possible thing to do which would be nice is to generate a definition for [the HTTP Client integrated with IntelliJ IDEA Ultimate](https://ktor.io/quickstart/guides/api.html#first-request-intellij)
 to test the API directly in the IDE.
 
 ### A quick look to the generated code

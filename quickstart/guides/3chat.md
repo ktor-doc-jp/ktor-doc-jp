@@ -2,19 +2,21 @@
 title: Chat
 caption: "Guides: How to implement a chat with WebSockets"
 category: quickstart
+permalink: /quickstart/guides/chat.html
+ktor_version_review: 1.0.0
 ---
 
-In this tutorial, you will learn to make a Chat application using Ktor.
+In this tutorial, you will learn how to make a Chat application using Ktor.
 We are going to use WebSockets for a real-time bidirectional communication.
-
-This is an advanced tutorial and you are required to have some basic concepts about Ktor,
-so first you should follow the [guide about making a Website](/quickstart/guides/website.html).
 
 To achieve this, we are going to use the [Routing], [WebSockets] and [Sessions] features.
 
 [Routing]: /servers/features/routing.html
 [WebSockets]: /servers/features/websockets.html
 [Sessions]: /servers/features/sessions.html
+
+This is an advanced tutorial and it assumes you have some basic knowledge about Ktor,
+so you should follow the [guide about making a Website](/quickstart/guides/website.html) first.
 
 **Table of contents:**
 
@@ -33,21 +35,20 @@ or use the following form to create one:
 WebSockets is a subprotocol of HTTP. It starts as a normal HTTP request with an upgrade request header,
 and the connection switches to be a bidirectional communication instead of a request response one.
 
-The smallest unit of transmission that can be sent as part of the WebSocket protocol, is a `Frame`.
-For a single message, TCP can be fragmented in several packets. A WebSocket Frame defines a type and a length,
-thus could be transmitted in several TCP packets, but will be reassembled into a single Frame.
+The smallest unit of transmission that can be sent as part of the WebSocket protocol, is a `Frame`. A WebSocket Frame defines a type, a length and a payload that might be binary or text.
+Internally those frames might be transparently sent in several TCP packets. 
 
 You can see Frames as WebSocket messages. Frames could be the following types: text, binary, close, ping and pong.
 
 You will normally handle `Text` and `Binary` frames, and the other will be handled by Ktor in most of the cases
-(though you can use a raw mode).
+(though you can use a raw mode where you can handle those extra frame types yourself).
 
 In its page, you can read more about the [WebSockets feature](/servers/features/websockets.html).  
 
 ## WebSocket route
 
-This first step is to create a route for the WebSocket. In this case we are going to define the `/chat` route.
-We are going to start with an echo WebSocket route, that will send you back the same messages that you send to it.
+This first step is to create a route for the WebSocket. In this case we are going to define the `/chat` route,
+but initially, we are going to make that route to act as an "echo" WebSocket route, that will send you back the same text messages that you send to it.
 
 `webSocket` routes are intended to be long-lived. Since it is a suspend block and uses lightweight Kotlin coroutines,
 it is fine and you can handle (depending on the machine and the complexity) hundreds of thousands of connections
@@ -57,11 +58,11 @@ at once, while keeping your code easy to read and to write.
 routing {
     webSocket("/chat") { // this: DefaultWebSocketSession
         while (true) {
-            val frame = incoming.receive()
+            val frame = incoming.receive() // suspend
             when (frame) {
                 is Frame.Text -> {
                     val text = frame.readText()
-                    outgoing.send(Frame.Text(text))
+                    outgoing.send(Frame.Text(text)) // suspend
                 }
             }
         }
@@ -96,7 +97,7 @@ routing {
 
 Now that we have a set of connections, we can iterate over them and use the session
 to send the frames we need.
-Everytime a user send a message, we are going to propagate to all the connected clients.
+Everytime a user sends a message, we are going to propagate to all the connected clients.
 
 ```kotlin
 routing {

@@ -4,10 +4,13 @@ caption: Building Ktor From Source
 category: advanced
 keywords: git compiling compile ktor from source
 permalink: /advanced/building-from-source.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor is an OpenSource project hosted at GitHub:
 <https://github.com/ktorio/ktor>
+
+Release versions are available at both jcenter and maven central.
 
 We usually provide binary version previews at bintray:
 <https://bintray.com/kotlin/ktor/ktor>
@@ -36,9 +39,6 @@ which should work with any supported system with a JDK installed:
 ./gradlew build
 ```
 
-Ktor doesn't yet compile with Java 9, so you should stick with Java 8.
-{: .note }
-
 ## Installing locally
 {: #installing}
 
@@ -46,7 +46,7 @@ Ktor provides a gradle install task that installs Ktor artifacts in your
 local maven repository:
 
 ```
-./gradlew install
+./gradlew publishToMavenLocal
 ```
 
 ## Troubleshooting
@@ -67,4 +67,4 @@ An exception occurred applying plugin request [id: 'me.champeau.gradle.jmh', ver
 You might have forgotten to use the gradle wrapper (`./gradlew`), or your default installed
 gradle version is lower than 4.3.
 
-Always use the gradle wrapper for best results!
+Always use the gradle wrapper for consistent results!

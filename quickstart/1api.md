@@ -4,7 +4,7 @@ caption: API Documentation
 category: quickstart
 permalink: /quickstart/api.html
 skip_pdf: true
-ktor_version_review: 1.0.0-beta-3
+ktor_version_review: 1.0.0
 ---
 
 <!--<https://api.ktor.io/>-->

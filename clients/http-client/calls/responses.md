@@ -23,7 +23,7 @@ you can also specify a class for deserializing it.
 val helloWorld = client.get<HelloWorld>("http://127.0.0.1:8080/")
 ```
 
-#### The `HttpResponse` class
+### The `HttpResponse` class
 {: #HttpResponse }
 
 From an `HttpResponse`, you can get the response content easily:
@@ -38,19 +38,19 @@ From an `HttpResponse`, you can get the response content easily:
 
 You can also get the additional response information such as its status, headers, internal state, etc.:
 
-*Basic*:
+### *Basic*:
 
 * `val status: HttpStatusCode = response.status`
 * `val headers: Headers = response.headers`
 
-*Advanced*:
+### *Advanced*:
 * `val call: HttpClientCall = response.call`
 * `val version: HttpProtocolVersion = response.version`
 * `val requestTime: Date = response.requestTime`
 * `val responseTime: Date = response.responseTime`
 * `val executionContext: Job = response.executionContext`
 
-*Extensions for headers*:
+### *Extensions for headers*:
 * `val contentType: ContentType? = response.contentType()`
 * `val charset: Charset? = response.charset()`
 * `val lastModified: Date? = response.lastModified()`

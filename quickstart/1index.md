@@ -6,7 +6,7 @@ toc: true
 permalink: /quickstart/index.html
 children: /quickstart/quickstart/
 priority: -100
-ktor_version_review: 1.0.0-beta-3
+ktor_version_review: 1.0.0
 ---
 
 ![Ktor logo](/assets/images/ktor_logo.svg){:style="width:134px;height:56px;"}

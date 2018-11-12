@@ -3,12 +3,15 @@ title: Authentication
 caption: Developing Custom Authentication
 category: advanced
 permalink: /advanced/authentication.html
+ktor_version_review: 1.0.0
 ---
 
-Prerequisite reading: [Advanced Pipeline](/advanced/pipeline.html)
+Requires reading first [Advanced Pipeline](/advanced/pipeline.html) and the [Authentication Feature](/servers/features/authentication.html).
 
 `Authentication` feature creates an `AuthenticationPipeline` which is executed right after the `Features` phase
 in the call pipeline. All authentication protocols such as basic, digest, oauth are implemented as interceptors on `AuthenticationPipeline`.
+
+## Phases:
 
 `AuthenticationPipeline` has two phases:
 
@@ -17,7 +20,7 @@ in the call pipeline. All authentication protocols such as basic, digest, oauth 
 
 The subject of the pipeline is an `AuthenticationContext` instance.
 
-Protocol:
+## Protocol:
 
 * Auth provider interceptor tries to find a `Principal` in the context of the current call.
 * If the principal is found, it is returned, and the pipeline is finished.
@@ -25,7 +28,7 @@ Protocol:
 * At the end of the pipeline, if there is no principal, we start calling challenges in order.
 * Whichever challenge succeeds first wins. 
 
-Example Flow:
+## Example Flow:
 
 * Basic auth examines the `Authorization` header. 
 * If it's missing or invalid, or the user is not recognized, a 401 Unauthorized is sent back to the client, and the current call ends.

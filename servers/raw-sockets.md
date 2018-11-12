@@ -165,6 +165,7 @@ fun main(args: Array<String>) {
 
 {% include tabbed-code.html
     tab1-title="echo-client.kt" tab1-content=echo-client-kt
+    no-height="true"
 %}
 
 ## Secure Sockets (SSL/TLS)

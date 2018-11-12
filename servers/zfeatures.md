@@ -19,11 +19,11 @@ response, `Routing` which allows us to define routes to handle requests, etc.
 * TOC
 {:toc}
 
-### Features
+## Features
 
 {% include list-children.html %}
 
-### Installing
+## Installing
 
 A feature is "installed" into the [Application](/application) using the `install` function
 
@@ -39,7 +39,7 @@ fun Application.main() {
 }
 ```
 Some common feature such as `Routing` come with helper functions, which are defined as extension functions to `Application`, making the code
-somewhat more fluent. For instance, instead of writing
+somewhat more fluent. For instance, instead of writing:
 
 ```kotlin
     install(Routing) {
@@ -49,7 +49,7 @@ somewhat more fluent. For instance, instead of writing
     }
 ```
 
-we could simply write
+we could simply write:
 
 ```kotlin
     routing {
@@ -59,13 +59,13 @@ we could simply write
     }
 ```
 
-### Built-in Features
+## Built-in Features
 
 Ktor comes with a number of ready-made features that can be installed into your application:
 
 > Some features might need you to add an extra dependency to your project. See the feature pages for more details.
 
-### Custom features
+## Custom features
 
 You can develop your own features and reuse them across your Ktor applications. 
 Refer to [Advanced Features](/advanced/features) for more information.

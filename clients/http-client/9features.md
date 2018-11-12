@@ -11,7 +11,7 @@ there is a pipeline for client HTTP requests, and there are interceptors and ins
 
 {% include children_list.html context=page.children %}
 
-### Creating Custom Features
+## Creating Custom Features
 
 If you want to create features, you can use the [standard features](https://github.com/ktorio/ktor/tree/master/ktor-client/ktor-client-core/src/io/ktor/client/features) as a reference.
 

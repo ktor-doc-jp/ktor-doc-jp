@@ -6,8 +6,8 @@ permalink: /quickstart/migration.html
 children: /quickstart/migration/
 redirect_from:
   - /quickstart/changelog.html
-priority: 99
 toc: false
+ktor_version_review: 1.0.0
 ---
 
 {% include list-children.html %}

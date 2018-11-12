@@ -2,6 +2,8 @@
 title: HTTP API
 caption: "Guides: How to create an API using ktor"
 category: quickstart
+permalink: /quickstart/guides/api.html
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..2" /}
@@ -39,12 +41,12 @@ The first step is to set up a project. You can follow the [Quick Start](/quickst
 
 ## Simple routing
 
-First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
-to include any additional artifact.
+First of all, we are going to use the [routing feature](/servers/features/routing.html). This feature is part of the Ktor's core, so you won't need
+to include any additional artifacts.
 
-This feature is installed automatically when using the `routing { }` block.
+This feature is installed automatically when using the `routing { }` DSL block.
 
-Let's start creating a simple GET route that responds with 'OK':
+Let's start creating a simple GET route that responds with `OK` by using the `get` method available inside the `routing` block:
 
 ```kotlin
 fun Application.module() {
@@ -58,7 +60,7 @@ fun Application.module() {
 
 ## Serving JSON content
 
-A HTTP API usually responds with JSON. You can use the *Content Negotiation* feature with *Jackson* for this:
+A HTTP API usually responds with JSON. You can use the [Content Negotiation](/servers/features/content-negotiation.html) feature with [Jackson](/servers/features/content-negotiation/jackson.html) for this:
 
 ```kotlin
 fun Application.module() {
@@ -72,7 +74,7 @@ fun Application.module() {
 }
 ```
 
-To respond to a call with a JSON. You have to call the `call.respond` method with an arbitrary object.
+To respond to a request with a JSON, you have to call the `call.respond` method with an arbitrary object.
 
 ```kotlin
 routing {
@@ -82,10 +84,10 @@ routing {
 }
 ```
 
-Now the browser should respond to `http://127.0.0.1:8080/snippets` with `{"OK":true}`
+Now the browser or client should respond to `http://127.0.0.1:8080/snippets` with `{"OK":true}`
 
 If you get an error like `Response pipeline couldn't transform '...' to the OutgoingContent`, check that you have
-installed the ContentNegotiation feature with Jackson.
+installed the [ContentNegotiation](/servers/features/content-negotiation.html) feature with Jackson.
 {: .note}
 
 You can also use typed objects as part of the reply (but ensure that your classes are not defined
@@ -335,7 +337,7 @@ routing {
 }
 ```
 
-With all this, we can already try to obtain a JWT token for our user:
+Now we can already try to obtain a JWT token for our user:
 
 {% comment %}
 ### IntelliJ
@@ -415,7 +417,7 @@ curl -v \
 
 {% endcomment %}
 
-## Associating user to snippets
+## Associating users to snippets
 
 Since we are posting snippets with an authenticated route, we have access to the generated `Principal` that includes
 the username. So we should be able to access that user and associate it to the snippet.
@@ -491,7 +493,7 @@ Awesome!
 
 ## StatusPages
 
-Now let's refine things a bit. A HTTP API should use Http Status codes to provide semantic information about errors.
+Now let's refine things a bit. A HTTP API should use HTTP Status codes to provide semantic information about errors.
 Right now, when an exception is thrown (for example when trying to get a JWT token from an user that already exists,
 but with a wrong password), a 500 server error is returned. We can do it better, and the StatusPages features
 will allow you to do this by capturing specific exceptions and generating the result.
@@ -529,36 +531,6 @@ routing {
 ```
 
 Let's try this:
-
-{% comment %}
-
-<table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
-
-```bash
-curl -v \
-  --request POST \
-  --header "Content-Type: application/json" \
-  --data '{"user" : "test", "password" : "invalid-password"}' \
-  http://127.0.0.1:8080/login-register
-```
-
-</td><td markdown="1">
-
-```bash
-< HTTP/1.1 401 Unauthorized
-< Content-Length: 53
-< Content-Type: application/json; charset=UTF-8
-```
-```json
-{
-  "OK" : false,
-  "error" : "Invalid credentials"
-}
-```
-
-</td></tr></tbody></table>
-
-{% endcomment %}
 
 ![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-request.png)
 
@@ -767,7 +739,7 @@ After following this guide, as an exercise, you can try to do the following exer
 
 ### Exercise 1
 
-Add unique ids to each snippet and add a DELETE http verb to /snippets allowing an authenticated user to delete
+Add unique ids to each snippet and add a DELETE http verb to `/snippets` allowing an authenticated user to delete
 her snippets.  
 
 ### Exercise 2

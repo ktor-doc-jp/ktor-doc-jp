@@ -14,24 +14,24 @@ Ktor can automatically provide responses to `HEAD` requests for existing routes 
 
 {% include feature.html %}
 
-### Usage
+## Usage
 
 To enable automatic `HEAD` responses, install the `AutoHeadResponse` feature
 
 
 ```kotlin
 fun Application.main() {
-  ...
+  // ...
   install(AutoHeadResponse) 
-  ...
+  // ...
 }
 ```
 
-### Configuration options
+## Configuration options
 
 None.
 
-### Under the covers
+## Under the covers
 
 This feature automatically responds to `HEAD` requests by routing as if it were `GET` response and discarding 
 the body. Since any `FinalContent` produced by the system has lazy content semantics, it does not incur in any performance

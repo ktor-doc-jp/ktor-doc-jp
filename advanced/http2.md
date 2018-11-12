@@ -26,6 +26,7 @@ keytool -keystore test.jks -genkeypair -alias testkey -keyalg RSA -keysize 4096 
 
 The next step is configuring Ktor to use your keystore. See the example application.conf:
 
+{% capture application-conf %}
 ```
 ktor {
     deployment {
@@ -48,7 +49,13 @@ ktor {
     }
 }
 ```
-{:.compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="application.conf" tab1-content=application-conf
+    no-height="true"
+%}
+
 
 ## ALPN implementation
 
@@ -93,7 +100,6 @@ In Maven you could use `maven-dependency-plugin` (goal `copy-dependencies`) or `
     </plugins>
 </build>
 ```
-{: .compact}
 
 If all of the above is done properly, Jetty will log that ssl, alpn, and h2 are enabled:
 
@@ -135,7 +141,6 @@ and then  native implementation (statically linked BoringSSL library, a fork of 
         <classifier>${tc.native.classifier}</classifier>
     </dependency>
 ```
-{: .compact}
 
 where `tc.native.classifier` should be one of the following: `linux-x86_64`, `osx-x86_64` or `windows-x86_64`.
 

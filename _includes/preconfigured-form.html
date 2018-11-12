@@ -1,3 +1,9 @@
-<p style="font-weight: bold;"><a href="javascript:void($('#start_ktor_io_form').toggle())">Open the pre-configured generator form</a></p>
+<script type="text/javascript">
+    function toggle_start_ktor_io_form(e) {
+        $('#start_ktor_io_form').toggle();
+        $('#start_ktor_io_form_link').toggleClass('closed');
+    }
+</script>
+<p style="font-weight: bold;"><a href="javascript:void(toggle_start_ktor_io_form())" id="start_ktor_io_form_link" class="closeable-link closed">the pre-configured generator form</a></p>
 
 <iframe src="{{ site.ktor_init_tools_url }}#{{ include.hash }}&show-only-marked-server-dependencies&show-only-marked-client-dependencies" id="start_ktor_io_form" style="border:1px solid #343a40;width:100%;height:574px;display:none;"></iframe>

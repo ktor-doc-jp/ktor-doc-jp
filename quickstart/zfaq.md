@@ -6,6 +6,7 @@ permalink: /quickstart/faq.html
 priority: 100
 redirect_from:
   - /servers/faq.html
+ktor_version_review: 1.0.0
 ---
 
 In this section, we provide answers to the questions you frequently ask us.
@@ -24,7 +25,7 @@ and we will try to help you!
 
 > `kay-tor`
 
-## How do I put questions/report bugs/contact you/contribute/give feedback, etc.?
+## How do I put questions, report bugs, contact you, contribute, give feedback, etc.?
 {: #feedback }
 
 Depending on the content, you might consider several channels:
@@ -39,8 +40,8 @@ For questions or troubleshooting we highly recommend you to use Slack or StackOv
 
 Think that using GitHub issues would notify all the people that is subscribed potentially with emails,
 troubleshooting usually requires several questions and answers, that could be a lot of emails
-pread in the time, and maybe the people subscribed want to be informed about bugs, fixes, new things introduced
-or proposed, but maybe are not interested in other things.
+spread in the time, and maybe the people subscribed want to be informed about bugs, fixes, new things introduced
+or proposed, but maybe they are not interested in other things.
 
 If you have enough time or you prefer not to join Slack, you can also ask questions at StackOverflow.
 With slack being an hybrid between chat and forum, we can contact each other faster and troubleshoot things in less time.
@@ -58,13 +59,13 @@ But still we encourage you to contribute if you can!
 
 If you have a bugfix that need to use right away we recommend you to fork Ktor, compile it yourself,
 and temporarily publish a patched version in your own artifactory, bintray or similar and use that version
-until it is merged and a new version released or prereleased (since the timing might not be aligned with your needs).
+until it is merged and a new version released (since the timing might not be aligned with your needs).
 
 ## What does CIO mean?
 {: #cio }
 
 CIO stands for Coroutine-based I/O. Usually we call it to an engine that uses Kotlin and Coroutines to implement
-the logic implementing an IETF RFC or another protocol without relying on external JVM libraries.
+the logic implementing an IETF RFC or another protocol without relying on external JVM-based libraries.
 
 ## Ktor imports are not being resolved. Imports are in red.
 {: #ktor-artifact }
@@ -75,10 +76,10 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 >     compile("io.ktor:ktor-server-netty:$ktor_version")
 > }
 > ```
-> * For gradle, check: <http://ktor.io/quickstart/gradle.html#engine>
-> * For maven, check: <http://ktor.io/quickstart/maven.html>
+> * For gradle, check: <https://ktor.io/quickstart/gradle.html#engine>
+> * For maven, check: <https://ktor.io/quickstart/maven.html>
 
-## Does ktor provide a way to catch ipc signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
+## Does ktor provide a way to catch IPC signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
 {: #sigterm }
 
 > If you are running a `DevelopmentEngine`/`EngineMain`, it will be handled automatically.
@@ -103,26 +104,27 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 
 You can use jitpack to get builds from master that are not yet released:
 <https://jitpack.io/#ktorio/ktor>
-Also you can [build ktor from source](/advanced/building-from-source.html), and use your mavenLocal repository for the artifact.  
+Also you can [build Ktor from source](/advanced/building-from-source.html), and use your `mavenLocal` repository for the artifact
+or to upload your artifacts to your own artifactory/bintray.  
 
-## How can I be sure of which version of ktor am I using?
+## How can I be sure of which version of Ktor am I using?
 {: #ktor-version-used }
 
 You can use the [`DefaultHeaders` feature](/servers/features/default-headers.html) that will send a
-Server header with the ktor version in it.
-Something like this should be sent as part of the response headers: `Server: ktor-server-core/1.0.0 ktor-server-core/1.0.0` 
+Server header with the Ktor version on it.
+Something similar to `Server: ktor-server-core/1.0.0 ktor-server-core/1.0.0` should be sent as part of the response headers. 
 
 ## Website accessibility tips and tricks
 {: #website-tricks }
 
 > You can use the keys <kbd>s</kbd> (search), <kbd>t</kbd> (github file finder flavor) or <kbd>#</kbd> to access the search in any page
 > of the documentation website.
-> The <kbd>#</kbd> version will limit the search to the sections in the current page.
+> The <kbd>#</kbd> version will limit the search to the heading sections in the current page.
 
-> In the search you can either select the options with the mouse or fingers, or using the keyboard arrows <kbd>↑</kbd> <kbd>↓</kbd>
+> In the search you can either select the options with the mouse (or fingers on touch devices), or using the keyboard arrows <kbd>↑</kbd> <kbd>↓</kbd>
 > and the return key <kbd>⏎</kbd> to go to the currently selected page.
 
-> This search only uses page titles, and keywords for the search. It is also possible to do a google search
+> This search only uses page titles, and keywords for the search. It is also possible to do a Google search
 > in the `ktor.io` domain to do a full text search on all its contents. 
 
 > Long code fragments that are folded, can be expanded by either clicking on
@@ -133,7 +135,7 @@ Something like this should be sent as part of the response headers: `Server: kto
 > with <kbd>cmd</kbd> + <kbd>c</kbd> on mac, or <kbd>ctrl</kbd> + <kbd>c</kbd> in other operating systems.
 
 > You can click on the headings and some notes, to get an anchored link to the sections.
-> After clicking, you can copy the new url in your browser including the `#` to link to a specific section.
+> After clicking, you can copy the new url in your browser including the `#` to link to a specific section in that page.
 
 ## My route is not being executed, how can I debug it?
 {: #route-not-executing }
@@ -160,7 +162,7 @@ route.insertPhaseAfter(PhaseDefinedInAncestor, MyNodePhase)
 This means that you, or a feature or interceptor, have already called `call.respond*` functions and you are calling it
 again. 
 
-## How can I subscribe to ktor events?
+## How can I subscribe to Ktor events?
 {: #ktor-events }
 
 There is a page [explaining the Ktor's application-level event system](/advanced/events.html). 
@@ -176,7 +178,7 @@ to have a working project as base.
 ## Can I use ktor on Android?
 {: #android-support }
 
-Ktor is know to work on Android 7 or greater (API 24). It will fail in lower versions like Android 5.
+Ktor is known to work on Android 7 or greater (API 24). It will fail in lower versions like Android 5.
 
 In unsupported versions it would fail with an exception similar to:
 
@@ -216,13 +218,17 @@ routing {
 
 Ktor can automatically handle `HEAD` requests, but requires you to first install the [`AutoHeadResponse` feature](/servers/features/autoheadresponse.html).
 
+```kotlin
+install(AutoHeadResponse) 
+```
+
 ## I get an infinite redirect when using the `HttpsRedirect` feature
 {: #infinite-redirect }
 
-The most probable cause is that your backend is behind a reverse-proxy or a load balancer, and that the reverse-proxy
+The most probable cause is that your backend is behind a reverse-proxy or a load balancer, and that this intermediary
 is making normal HTTP requests to your backend, thus the HttpsRedirect feature inside your Ktor backend believes
 that it is a normal HTTP request and responds with the redirect.
 
-Normally, reverse-proxies send some headers describing the original request (like it was https, or the original IP address),
+Normally, reverse-proxies send some headers describing the original request (like it was HTTPS, or the original IP address),
 and there is a feature [`XForwardedHeaderSupport`](/servers/features/forward-headers.html)
 to parse those headers so the [`HttpsRedirect`](/servers/features/https-redirect.html) feature knows that the original request was HTTPS.

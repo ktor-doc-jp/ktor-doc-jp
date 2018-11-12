@@ -1,13 +1,15 @@
 ---
-title: Application
+title: First App
 caption: Creating Your First Application
 category: quickstart
-permalink: /quickstart/application.html
-priority: 0
+permalink: /quickstart/guides/application.html
+redirect_from:
+- /quickstart/application.html
+ktor_version_review: 1.0.0
 ---
 
-This tutorial will help guide you through the steps needed to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
-Ktor applications can be built using common build systems such as [Maven](https://kotlinlang.org/docs/reference/using-maven.html) or [Gradle](https://kotlinlang.org/docs/reference/using-gradle.html).
+In this tutorial you will learn how to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
+Ktor applications can be built using common build systems such as [Maven](/quickstart/quickstart/maven.html) or [Gradle](/quickstart/quickstart/gradle.html).
 
 **Table of contents:**
 
@@ -17,16 +19,16 @@ Ktor applications can be built using common build systems such as [Maven](https:
 ## Including the right dependencies
 {: #dependencies }
 
-Ktor is split up into several groups of modules,
-allowing you to include only the functionality that you will need.
- 
-For a list of these modules, please check the [Artifacts](/quickstart/artifacts.html) page.
-In this case, you only need to include `ktor-server-netty`.  
+Ktor is split up into several groups of artifacts,
+allowing you to include only the functionality that you will need. And thus reducing the size of a fat-jar containing all the code, and the startup time.
 
-These dependencies are hosted on [Bintray](https://bintray.com/kotlin/ktor) and as such the right
-repositories need to be added to your build script.
+In this case, you only need to include the artifact `ktor-server-netty`.
+For a list of all the artifacts available, please check the [Artifacts](/quickstart/artifacts.html) page.  
 
-For a more detailed guide on setting up build files with different build systems see:
+Release versions of these dependencies are available at jcenter and maven central.
+For pre-releases we host them on [Bintray kotlin/ktor](https://bintray.com/kotlin/ktor).
+
+For a more detailed guide on setting up build files with different build systems check:
 
 * [Setting up Gradle Build](/quickstart/quickstart/gradle.html)
 * [Setting up Maven Build](/quickstart/quickstart/maven.html)
@@ -34,22 +36,22 @@ For a more detailed guide on setting up build files with different build systems
 ## Creating a self-hosted Application
 {: #self-hosted}
 
-Ktor allows applications to run within an Application Server compatible with Servlets such as Tomcat,
-or as an embedded application, using Jetty or Netty.
+Ktor allows applications to run within an Application Server compatible with Servlets, such as Tomcat,
+or as an embedded application, using Jetty, Netty or CIO.
 
-In this tutorial, you will learn how to self-host an application using Netty.
+In this tutorial, we are going to create a self-hosted application using Netty.
 
-You can start by creating an `embeddedServer`, passing in the engine factory as the first argument,
+You can start by calling the `embeddedServer` function, passing in the engine factory as the first argument,
 the port as the second argument and the actual application code as the fourth argument (third argument
-is the host which is 0.0.0.0 by default).
+is the host which is `0.0.0.0` by default).
 
 The code below defines a single route that responds to the `GET` verb on the URL `/` with
 the text `Hello, world!`
 
-After defining the routes, you have to start the server by calling `server.start`,
-passing as argument a boolean to indicate whether you want the main thread
-of the application to block.
+After defining the routes, you have to start the server by calling the `server.start` method,
+passing as argument a boolean to indicate whether you want the main thread of the application to block.
 
+{% capture main-kt %}
 ```kotlin
 import io.ktor.application.*
 import io.ktor.http.*
@@ -69,6 +71,14 @@ fun main(args: Array<String>) {
     server.start(wait = true)
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="Main.kt" tab1-content=main-kt
+    no-height="true"
+%}
+
+&nbsp;
 
 If your server is just listening for HTTP requests and do not want to do anything else after that in the setup,
 you will normally call the server.start with `wait = true`.

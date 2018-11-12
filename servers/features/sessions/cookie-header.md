@@ -6,13 +6,10 @@ redirect_from:
 - /features/sessions/cookie-header.html
 ---
 
-## Transfer using Cookies or Custom Headers
-{: #cookies-headers }
-
 You can either use cookies or custom HTTP headers for sessions. The code is roughly the same but you have to
 call either the `cookie` or `header` method, depending on where you want to send the session information.
 
-### Cookies vs Headers sessions
+## Cookies vs Headers sessions
 {: #cookies-headers }
 
 Depending on the consumer, you might want to transfer the sessionId or the payload using a cookie,
@@ -20,7 +17,7 @@ or a header. For example, for a website, you will normally use cookies, while fo
 
 The Sessions.Configuration provide two methods `cookie` and `header` to select how to transfer the sessions: 
 
-#### Cookies
+### Cookies
 
 ```kotlin
 application.install(Sessions) {
@@ -53,7 +50,7 @@ install(Sessions) {
 }
 ```
 
-#### Headers
+### Headers
 
 The Header method is intended for APIs, both for using in JavaScript XHR requests and for requesting them
 from the server side. It is usually easier for API clients to read and generate custom headers than to handle
@@ -71,7 +68,7 @@ application.install(Sessions) {
 } 
 ```
 
-### Custom storages
+## Custom storages
 {: #extending-storages}
 
 The Sessions API provides a `SessionStorage` interface, that looks like this:

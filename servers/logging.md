@@ -59,6 +59,7 @@ helpful as they could be.
 If the default logging is not enough, you can put a `logback.xml` or `logback-test.xml` (that has higher priority) file in your `src/main/resources` folder
 to adjust the logging if it is not useful to you. For example:
 
+{% capture logback-xml %}
 ```xml
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -75,6 +76,12 @@ to adjust the logging if it is not useful to you. For example:
     <logger name="io.netty" level="INFO"/>
 </configuration>
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="logback.xml" tab1-content=logback-xml
+    no-height="true"
+%}
 
 After it is added, if you stop your app, and run it again, after going
 to localhost:8080 in your browser, 

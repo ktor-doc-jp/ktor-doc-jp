@@ -5,15 +5,17 @@ permalink: /quickstart/coroutines.html
 caption: Coroutines
 redirect_from:
   - /advanced/kotlinx.coroutines.html
+ktor_version_review: 1.0.0
 ---
 
-Ktor makes heavy use of Kotlin coroutines for linear-like asynchronous programming.
-Ktor uses and exposes [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines).
+Ktor makes heavy use of Kotlin 1.3 stable coroutines.
 
-So it is a good idea to familiarize yourself with a few concepts.
+Coroutines is a basic Kotlin mechanism (also called `suspend` functions), that among other things allows to do asynchronous programming that is linearly written like plain code
+instead of the traditional callback-based approach.
 
-## Official Documentation
+Other modern languages expose a similar, but more specific mechanism called await-async. The Kotlin approach is more generic and flexible and it is less verbose and less error-prone
+since the default behaviour when calling an asynchronous (`suspend`) function is to suspend the caller too.
 
-* **[Guide to kotlinx.coroutines by example](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md)**
-* [Guide to reactive streams with coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/coroutines-guide-reactive.md)
-* [Guide to UI programming with coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md)
+Ktor uses a standard library from JetBrains called [kotlinx.coroutines](/kotlinx/coroutines.html).
+
+Since Ktor is fully asynchronous and intensively uses coroutines, it is a good idea to familiarize yourself with those concepts.

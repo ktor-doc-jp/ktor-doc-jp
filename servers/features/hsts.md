@@ -22,19 +22,19 @@ for the given period of time.
 
 {% include feature.html %}
 
-### Usage
+## Usage
 
 ```kotlin
 fun Application.main() {
-  ...
+  // ...
   install(HSTS) 
-  ...
+  // ...
 }
 ```
 
 The code above installs HSTS with the default configuration.  
 
-### Configuration
+## Configuration
 
 * `maxAge` (default is 1 year): duration to tell the client to keep the host in a list of known HSTS hosts
 * `includeSubDomains` (default is true): adds includeSubDomains directive, which applies this policy to this domain and any subdomains

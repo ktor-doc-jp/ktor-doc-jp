@@ -13,12 +13,12 @@ Ktor applications can be self-hosted or hosted on an Application Server. This se
 * TOC
 {:toc}
 
-### Running an application in an external host
+## Running an application in an external host
 
 When you need to run a Ktor application in an independently maintained host (for instance Tomcat), you will need an `application.conf` file
 to tell Ktor how to start your application. 
 
-#### Defining the configuration
+### Defining the configuration
 
 In the resources folder, create a file named `application.conf` with the following contents
 
@@ -37,15 +37,15 @@ ktor {
 Replace `my.company.MyApplication` with your application's package, and `ApplicationKt` with the name of the
 file your `Application.main` function is contained in.
 
-#### Deploying the hosted application
+### Deploying the hosted application
 
 // TODO 
 
-### Running the application from inside the IDE
+## Running the application from inside the IDE
 
 Running applications in a development environment such as IntelliJ IDEA, is supported by using development engines. 
 
-##### IntelliJ IDEA 
+#### IntelliJ IDEA 
 
 1. Create a new Run Configuration using "Application" as a template
 2. For the main class use one of the following engines
@@ -59,7 +59,7 @@ any application servers.
 
 See also: [Configuration](configuration)
 
-### Use automatic reloading
+## Use automatic reloading
 
 Ktor can automatically reload the application when changes to the class files are detected, i.e. when you build the Application.
 Enable this feature by adding `watch` configuration to `application.conf`:

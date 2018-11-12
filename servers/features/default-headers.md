@@ -15,7 +15,7 @@ to avoid building complex strings on each response.
 
 {% include feature.html %}
 
-### Usage
+## Usage
 
 ```kotlin
 fun Application.main() {
@@ -27,7 +27,7 @@ fun Application.main() {
 
 This will add `Date` and `Server` headers to each HTTP response.
 
-### Configuration
+## Configuration
  
 * `header(name, value)` will add another header to the list of default headers
 

@@ -16,8 +16,12 @@ when your container needs to interact with other services, like for example a da
 
 First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, which looks like this:
 
-{% capture my_include %}{% include docker-sample.md %}{% endcapture %}
-{{ my_include | markdownify }}
+{% capture docker-file %}{% include docker-sample.md %}{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="Dockerfile" tab1-content=docker-file
+    no-height="true"
+%}
 
 For deploying to Docker simply you can check out the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
 
@@ -33,6 +37,7 @@ using let's encrypt.
 After configuring the nginx-proxy and letsencrypt-nginx-proxy-companion, your docker-compose.yml file
 (without additional services) might look like this:
 
+{% capture docker-compose-yml %}
 ```yaml
 version: '2'
 services:
@@ -57,6 +62,12 @@ networks:
     external:
       name: reverse-proxy
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="docker-compose.yml" tab1-content=docker-compose-yml
+    no-height="true"
+%}
 
 You can start it with `docker-compose up -d` and it will be restarted if the service fails or
 after a system reboot.

@@ -18,7 +18,7 @@ The `ApplicationEvents` dispatches typed `EventDefinition<T>` along with an obje
 
 You can get the monitor along with the application instance by executing `application.environment.monitor`.
 
-### API
+## API
 
 The simplified API for the `monitor: ApplicationEvents` looks like this:
 
@@ -38,7 +38,7 @@ interface DisposableHandle {
 }
 ```
 
-### Predefined EventDefinitions
+## Predefined EventDefinitions
 
 Ktor provides some predefined events that are dispatched by the engine:
 
@@ -50,9 +50,11 @@ val ApplicationStopping: EventDefinition<Application>
 val ApplicationStopped: EventDefinition<Application>
 ```
 
-### Subscribing to events and raising them
+## Subscribing to events and raising them
 
-You can subscribe to events by calling the `subscribe` method from the monitor. The subscribe method returns a `DisposableHandle` that you can call to cancel the subscription. Additionally, you can call the `unsubscribe` method with the same method handle to cancel the subscription.
+You can subscribe to events by calling the `subscribe` method from the monitor.
+The subscribe method returns a `DisposableHandle` that you can call to cancel the subscription.
+Additionally, you can call the `unsubscribe` method with the same method handle to cancel the subscription.
 
 Using the disposable:
 
@@ -89,6 +91,6 @@ val MyEventDefinition = EventDefinition<MySubject>()
 monitor.raise(MyEventDefinition, MySubject())
 ```
 
-### Examples
+## Examples
 
 You can check the [`CallLogging` feature source code](https://github.com/ktorio/ktor/blob/45d7487b82b9dfc281a8c56c1dd3989ccf67bb5d/ktor-server/ktor-server-core/src/io/ktor/features/CallLogging.kt) that includes code subscribing to events from the application.

@@ -3,6 +3,8 @@ title: SSL
 caption: "Guides: How to get a free certificate and use SSL with Ktor"
 category: quickstart
 keywords: tls ssl https let's encrypt letsencrypt
+permalink: /quickstart/guides/ssl.html
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..2" /}
@@ -19,7 +21,7 @@ You can buy a certificate and configure Ktor to use it,
 **or** you can use Let's Encrypt to automatically get a **free certificate** to serve `https://` and `wss://` requests
 with Ktor.
 In this page you will discover how to do it, by either configuring Ktor to directly serve the SSL certificate
-for a single domain or by using Docker with nginx to serve different applications in different machines on
+for a single domain or by using Docker with nginx to serve different applications in different containers on
 a single machine easily.
 
 ## Option1: With Ktor serving SSL directly
@@ -33,8 +35,8 @@ If that machine is behind routers, you will need to configure the router to DMZ 
 or to redirect at least the port 80 (HTTP) to that machine, and later you will probably want to configure the
 port 443 (HTTPS) too.
 
-Let's Encrypt can always access the PORT 80 of your public IP, even if you configure Ktor to bind to another port,
-you have to configure your routes to redirect the port 80 to the correct local ip and port of the machine
+Let's Encrypt will always access the PORT 80 of your public IP, even if you configure Ktor to bind to another port,
+you have to configure your routes to redirect the port 80 to the correct local IP and port of the machine
 hosting ktor.
 {: .note }
 
@@ -181,9 +183,9 @@ If everything went well, Ktor should be listening on port 8889 in HTTP and liste
 {: #docker}
 
 When using Docker with multiple domains, you might want to use the [nginx-proxy] image and the [letsencrypt-nginx-proxy-companion]
-image to serve multiple domains/subdomains in a single machine/ip and to automatically provide HTTPS, using let’s encrypt.
+image to serve multiple domains/subdomains on a single machine/ip and to automatically provide HTTPS, using Let’s Encrypt.
 
-In this case you create a container with NGINX, potentially listening to port 80 and 443, an internal network
+In this case you create a container with NGINX, potentially listening to port `80` and `443`, an internal network
 accessible only between containers so nginx can connect and reverse proxy your websites (including websockets),
 and a NGINX companion handling the domain certificates by introspecting the configured Docker containers. 
 
@@ -245,7 +247,7 @@ docker run -d \
     jrcs/letsencrypt-nginx-proxy-companion
 ```
 
-* `--restart=always` as NGINX image, to restart on boot.
+* `--restart=always` as the NGINX image, to restart on boot.
 * `--network=reverse-proxy` it need to be on the same network as the NGINX proxy container to communicate with it.
 * `--volumes-from nginx` it makes accessible the same volumes as the NGINX container so it can write the `.well-known` challenge inside `/usr/share/nginx/html`.
 * `-v certs:rw` it requires write access to write the private key and certificates to be available from NGINX.
@@ -339,3 +341,8 @@ You can find more information about [how to deploy a docker and the Dockerfile i
 
 [Let's Encrypt companion] <-> [Nginx]
 ```
+
+### The XForwardedHeaderSupport feature
+
+In this case you are using nginx acting as reverse-proxy for your requests. If you want to get information about the original requests,
+instead of the proxied nginx request, you will have to use the [XForwardedHeaderSupport](/servers/features/forward-headers.html) feature.

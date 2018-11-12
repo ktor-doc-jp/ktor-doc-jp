@@ -20,4 +20,4 @@ keytool -import -v -trustcacerts -alias keyAlias -file server.cer -keystore cace
 
 ## SSL
 
-You can check the [SSL guide](/quickstart/guides/ssl.html).
+You can check the [SSL guide](/quickstart/guides/ssl.html) for more details.

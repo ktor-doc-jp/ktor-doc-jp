@@ -2,12 +2,16 @@
 title: Google OAuth
 caption: "Guides: How to implement an OAuth login with Google"
 category: quickstart
+permalink: /quickstart/guides/oauth.html
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..2" /}
 
-In this guide we are going to implement a login using OAuth. You should already have some notion of Ktor.
-For example, you can make the [Website guide](/quickstart/guides/website.html)
+In this guide we are going to implement a login using OAuth.
+
+This is an advanced tutorial and it assumes you have some basic knowledge about Ktor,
+so you should follow the [guide about making a Website](/quickstart/guides/website.html) first.
 
 **Table of contents:**
 
@@ -39,7 +43,7 @@ by several host names separated by spaces or tabs.
 
 ### MacOS/Linux
 
-In MacOS and Linux computers, you can find the host file in `/etc/hosts`. You will need root access to edit it.
+In MacOS and Linux (Unix) computers, you can find the host file in `/etc/hosts`. You will need root access to edit it.
 
 ```sudo nano /etc/hosts```
 or
@@ -47,11 +51,11 @@ or
 
 ### Windows
 
-In Windows, the host file is held here `%SystemRoot%\System32\drivers\etc\hosts`. You will need admin privileges
+In Windows, the host file is held at `%SystemRoot%\System32\drivers\etc\hosts`. You will need admin privileges
 to edit this file. For example, you can use Notepad++ opened as administrator.
 
 You can also paste `%SystemRoot%\System32\drivers\etc` in the Windows Explorer the path and then right click
-in the hosts file to edit it. The structure is the same as MacOS/Linux.
+in the hosts file to edit it. The structure of this file is the same as MacOS/Linux.
 
 ## Google Developers Console
 
@@ -77,20 +81,20 @@ But first, we have to Configure the OAuth consent screen:
 ![](/quickstart/guides/oauth/8.png){:.rounded-shadow}
 
 Now we can create the OAuth credentials, with the following information:
-* **Authorized JavaScript origins:** http://me.mydomain.com:8080
-* **Authorized redirect URIs:** http://me.mydomain.com:8080/login
+* **Authorized JavaScript origins:** `http://me.mydomain.com:8080`
+* **Authorized redirect URIs:** `http://me.mydomain.com:8080/login`
 
 Press the `Create` button.
 
 ![](/quickstart/guides/oauth/9.png){:.rounded-shadow}
 
-You can change these values later, or add additional authorized urls by editing the credentials.
+You can change these values later, or add additional authorized URLs by editing the credentials.
 
 You will see a modal dialog with the following:
 
-OAuth client
-* Here is your client ID: xxxxxxxxxxx.apps.googleusercontent.com
-* Here is your client secret: yyyyyyyyyyy
+**OAuth client**
+* `Here is your client ID: xxxxxxxxxxx.apps.googleusercontent.com`
+* `Here is your client secret: yyyyyyyyyyy`
 
 ![](/quickstart/guides/oauth/10.png){:.rounded-shadow}
 
@@ -98,7 +102,7 @@ OAuth client
 
 First we have to define the settings for our OAuth provider. We have to replace the `clientId` and `clientSecret`
 with the values obtained from the previous step. Depending on what we need from the user, we can adjust the `defaultScopes`
-list to something else `profile` will have access to id, full name, and picture but not to the email or anything else:
+list to something else. The `profile` scope will have access to the user id, full name, and picture, but not to the email or anything else:
 
 ```kotlin
 val googleOauthProvider = OAuthServerSettings.OAuth2ServerSettings(
@@ -118,7 +122,7 @@ Remember to adjust the defaultScopes to just request what you really need for th
 
 We also have to install the OAuth feature and configure it. We need to provide a HTTP client instance, a provider lookup
 where we determine the provider from the call (we don't need to put logic here since we are just supporting Google for this guide) and
-a urlProvider giving the redirection url that must match the one specified as authorized redirection in the Google Developers Console, in this case `http://me.mydomain.com:8080/login`:
+a `urlProvider` giving the redirection U$L that must match the one specified as authorized redirection in the Google Developers Console, in this case `http://me.mydomain.com:8080/login`:
 
 ```kotlin
 install(Authentication) {
@@ -192,6 +196,7 @@ to do arithmetic with them.
 
 A simple embedded application would look like this:
 
+{% capture oauth-kt %}
 ```kotlin
 val googleOauthProvider = OAuthServerSettings.OAuth2ServerSettings(
     name = "google",
@@ -260,6 +265,13 @@ private fun ApplicationCall.redirectUrl(path: String): String {
     return "$protocol://$hostPort$path"
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="OAuthApp.kt" tab1-content=oauth-kt
+%}
+
+&nbsp;
 
 ## Testing
 

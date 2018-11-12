@@ -1934,6 +1934,7 @@ table.compare-table pre.highlight {
     box-shadow: 0px 0px 10px #999;
     border-radius: 8px;
     margin-bottom: 8px;
+    margin-left: 8px; /* To compensate .doc-content overflow hidden, or the shadow looks strange */
 }
 
 .nomnoml {
@@ -2022,4 +2023,16 @@ a.file-tab {
 
 .doc-content ol, .doc-content ul {
     padding-left: 1.1em;
+}
+
+a.closeable-link:before {
+    content: '▼ Close ';
+}
+
+a.closeable-link.closed:before {
+    content: '► Open ';
+}
+
+ol.note, ul.note {
+    padding-left: 2em;
 }

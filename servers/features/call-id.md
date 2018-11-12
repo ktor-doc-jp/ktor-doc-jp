@@ -10,7 +10,7 @@ feature:
 
 The CallId feature allows to identify a request/call and can work along the [CallLogging](/servers/features/call-logging.html) feature.
 
-### Generating Call IDs 
+## Generating Call IDs 
 
 ```kotlin
 install(CallId) {
@@ -44,7 +44,7 @@ install(CallId) {
 }
 ```
 
-### Extending [CallLogging](/servers/features/call-logging.html)
+## Extending [CallLogging](/servers/features/call-logging.html)
 {: #call-logging-interop }
 
 The CallId feature includes a `callIdMdc` extension method to be used when configuring the CallLogging.
