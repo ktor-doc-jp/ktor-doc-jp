@@ -137,7 +137,6 @@ interface WebSocketSession {
     fun terminate() // Initiate connection termination immediately. Termination may complete asynchronously.
 }
 ```
-{: .compact }
 
 If you need information about the connection. For example the client ip, you have access
 to the call property. So you can do things like `call.request.origin.host` inside
@@ -181,41 +180,48 @@ sealed class Frame {
 You can test WebSocket conversations by using the `handleWebSocketConversation`
 method inside a `withTestApplication` block.
 
+{% capture test-kt %}
 ```kotlin
-@Test
-fun testConversation() {
-    withTestApplication {
-        application.install(WebSockets)
-
-        val received = arrayListOf<String>()
-        application.routing {
-            webSocket("/echo") {
-                try {
-                    while (true) {
-                        val text = (incoming.receive() as Frame.Text).readText()
-                        received += text
-                        outgoing.send(Frame.Text(text))
+class MyAppTest {
+    @Test
+    fun testConversation() {
+        withTestApplication {
+            application.install(WebSockets)
+    
+            val received = arrayListOf<String>()
+            application.routing {
+                webSocket("/echo") {
+                    try {
+                        while (true) {
+                            val text = (incoming.receive() as Frame.Text).readText()
+                            received += text
+                            outgoing.send(Frame.Text(text))
+                        }
+                    } catch (e: ClosedReceiveChannelException) {
+                        // Do nothing!
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
                     }
-                } catch (e: ClosedReceiveChannelException) {
-                    // Do nothing!
-                } catch (e: Throwable) {
-                    e.printStackTrace()
                 }
             }
-        }
-
-        handleWebSocketConversation("/echo") { incoming, outgoing ->
-            val textMessages = listOf("HELLO", "WORLD")
-            for (msg in textMessages) {
-                outgoing.send(Frame.Text(msg))
-                assertEquals(msg, (incoming.receive() as Frame.Text).readText())
+    
+            handleWebSocketConversation("/echo") { incoming, outgoing ->
+                val textMessages = listOf("HELLO", "WORLD")
+                for (msg in textMessages) {
+                    outgoing.send(Frame.Text(msg))
+                    assertEquals(msg, (incoming.receive() as Frame.Text).readText())
+                }
+                assertEquals(textMessages, received)
             }
-            assertEquals(textMessages, received)
         }
     }
 }
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="test.kt" tab1-content=test-kt
+%}
 
 ## FAQ
 

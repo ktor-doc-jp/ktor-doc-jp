@@ -4,12 +4,13 @@ category: clients
 permalink: /clients/http-client.html
 children: /clients/http-client/
 caption: Http Client 
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..2" /}
 
 In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
-This client supports several [configurable engines](/clients/http-client/engines.html), and has its own set of [features](#features).
+This client supports several [configurable engines](/clients/http-client/engines.html), and has its own set of [features](/clients/http-client/features.html).
 
 The main functionality is available through the `io.ktor:ktor-client-core:$ktor_version` artifact.
 And each engine, is provided in [separate artifacts](/clients/http-client/engines.html).
@@ -53,18 +54,20 @@ suspend fun sequentialRequests() {
 
 ```kotlin
 suspend fun parallelRequests() {
-    val client = HttpClient(Apache)
+    val client1 = HttpClient(Apache)
+    val client2 = HttpClient(Apache)
     
     // Start two requests asynchronously.
-    val req1 = async { client.call("https://127.0.0.1:8080/a").response.readBytes() }
-    val req2 = async { client.call("https://127.0.0.1:8080/b").response.readBytes() }
+    val req1 = async { client1.call("https://127.0.0.1:8080/a").response.readBytes() }
+    val req2 = async { client2.call("https://127.0.0.1:8080/b").response.readBytes() }
     
     // Get the request contents without blocking threads, but suspending the function until both
     // requests are done.
     val bytes1 = req1.await() // Suspension point.
     val bytes2 = req2.await() // Suspension point.
     
-    client.close()
+    client2.close()
+    client1.close()
 }
 ```
 

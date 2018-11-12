@@ -3,6 +3,7 @@ title: Requests
 caption: HTTP Client Requests
 category: clients
 permalink: /clients/http-client/calls/requests.html
+ktor_version_review: 1.0.0
 ---
 
 ## Simple requests
@@ -18,7 +19,8 @@ or [`CIO`](/clients/http-client/engines.html#cio),
 and start making requests using one of the many convenience methods available.
 
 You can omit the engine, and Ktor will choose an engine among the ones that are available
-from the included artifacts using a ServiceLoader. 
+from the included artifacts using a ServiceLoader on the JVM, or the default implementation
+in the other platforms. 
 
 First you need to instantiate the client:   
 
@@ -50,7 +52,7 @@ After you finish working with the client, it should be closed in order to proper
 client.close()
 ```
 
-If you want to use a client to make only one request consider `use`-ing it. The client will be automatically closed once the passed block has been executed.
+If you want to use a client to make only one request consider `use`-ing it. The client will be automatically closed once the passed block has been executed:
 
 ```kotlin
 val bytes = HttpClient(Apache).use { client ->
@@ -93,15 +95,11 @@ val call = client.request<String> {
 }
 ```
 
-### The `get`, `post`, `put` and `delete` methods
+### The `get`, `post`, `put`, `delete`, `patch`, `head` and `options` methods
 {: #shortcut-methods }
 
 Similar to `request`, there are several extension methods to perform requests
-with the most common HTTP verbs: `GET`, `POST`, `PUT` and `DELETE`.
-
-`PATCH`, `HEAD` and `OPTIONS` have special HTTP semantics, and they do not have shortcut methods, though you can use
-the [`request`](#request-method) and [`call`](#call-method) methods to perform requests with those verbs. 
-{: .note }
+with the most common HTTP verbs: `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD` and `OPTIONS`.
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
