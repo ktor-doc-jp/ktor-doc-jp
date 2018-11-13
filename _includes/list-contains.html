@@ -1,7 +1,7 @@
 <ul>
 {% for other in site.pages -%}
-{%- if other.url contains include.starts -%}
+{%- if other.url contains include.starts -%}{%- unless other.redirect %}
     <li><a href="{{ other.url | prepend: site.baseurl }}">{{ other.caption }}</a></li>
-{% endif -%}
+{% endunless -%}{% endif -%}
 {%- endfor %}
 </ul>

@@ -78,6 +78,7 @@ fun main(args: Array<String>) {
 
 {% include tabbed-code.html
     tab1-title="Main.kt" tab1-content=main-kt
+    no-height="true"
 %}
 
 
