@@ -4,6 +4,7 @@ caption: Client/Server Sessions
 category: servers
 redirect_from:
 - /features/sessions/client-server.html
+ktor_version_review: 1.0.0
 ---
 
 ## Client-side/Server-side sessions (Session Content vs Session Id)

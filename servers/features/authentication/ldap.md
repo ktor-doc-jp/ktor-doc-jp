@@ -7,6 +7,7 @@ feature:
   package: io.ktor.auth.ldap
 redirect_from:
 - /features/authentication/ldap.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor supports LDAP (Lightweight Directory Access Protocol) for credential authentication.

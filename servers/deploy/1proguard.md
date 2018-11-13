@@ -3,6 +3,7 @@ title: Proguard
 caption: Proguard
 category: servers
 permalink: /servers/deploy/proguard.html
+ktor_version_review: 1.0.0
 ---
 
 If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](#heroku)),

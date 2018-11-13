@@ -8,6 +8,7 @@ feature:
   class: io.ktor.routing.Routing
 redirect_from:
 - /features/static-content.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor has built-in support for serving static content. This can come in useful when you want to serve style sheets, scripts, images, etc. 

@@ -4,6 +4,7 @@ caption: Session Storages
 category: servers
 redirect_from:
 - /features/sessions/storages.html
+ktor_version_review: 1.0.0
 ---
 
 There are two predefined storages: `SessionStorageMemory`, `DirectoryStorage`. And another composable storage: `CacheStorage`.
@@ -46,31 +47,8 @@ If the storage doesn't provide a meaningful way to store information as a stream
 a simplified adaptor that just reads and writes it using `ByteArray`. It can also be used as an example to know
 how to deal with the API in its primitive stream-based version.
 
-```kotlin
-abstract class SimplifiedSessionStorage : SessionStorage {
-    abstract suspend fun read(id: String): ByteArray?
-    abstract suspend fun write(id: String, data: ByteArray?): Unit
+{% capture simplified-session-storage-sample-kt %}{% include simplified-session-storage-sample.md %}{% endcapture %}
 
-    override suspend fun invalidate(id: String) {
-        write(id, null)
-    }
-
-    override suspend fun <R> read(id: String, consumer: suspend (ByteReadChannel) -> R): R {
-        val data = read(id) ?: throw NoSuchElementException("Session $id not found")
-        return consumer(ByteReadChannel(data))
-    }
-
-    override suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit) {
-        return provider(CoroutineScope(Dispatchers.IO).reader(coroutineContext, autoFlush = true) {
-            val data = ByteArrayOutputStream()
-            val temp = ByteArray(1024)
-            while (!channel.isClosedForRead) {
-                val read = channel.readAvailable(temp)
-                if (read <= 0) break
-                data.write(temp, 0, read)
-            }
-            write(id, data.toByteArray())
-        }.channel)
-    }
-}
-```
+{% include tabbed-code.html
+    tab1-title="SimplifiedSessionStorage.kt" tab1-content=simplified-session-storage-sample-kt
+%}

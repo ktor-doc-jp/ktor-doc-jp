@@ -3,6 +3,7 @@ title: Fat JAR
 caption: Fat JAR
 category: servers
 permalink: /servers/deploy/packing/fatjar.html
+ktor_version_review: 1.0.0
 ---
 
 A *fat-jar* (or *uber-jar*) archive is sa normal jar file single archive packing all the dependencies together
@@ -19,6 +20,7 @@ or when being reverse-proxied with [nginx](/servers/deploy/containers.html#nginx
 When using Gradle, you can use the `shadow` gradle plugin to generate it. For example,
 to generate a fat JAR using netty as an engine:
 
+{% capture build-gradle %}
 ```groovy
 buildscript {
     repositories {
@@ -36,6 +38,12 @@ apply plugin: 'application'
 //mainClassName = 'io.ktor.server.netty.DevelopmentEngine' // For versions < 1.0.0-beta-3
 mainClassName = 'io.ktor.server.netty.EngineMain' // Starting with 1.0.0-beta-3
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="build.gradle" tab1-content=build-gradle
+    no-height="true"
+%}
 
 ## Maven
 {: #fat-jar-maven}
@@ -43,6 +51,7 @@ mainClassName = 'io.ktor.server.netty.EngineMain' // Starting with 1.0.0-beta-3
 When using Maven, you can generate a fat JAR archive with the `maven-assembly-plugin`. For example, to generate
 a fat JAR using netty as an engine:
 
+{% capture pom-xml %}
 ```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -70,3 +79,9 @@ a fat JAR using netty as an engine:
     </executions>
 </plugin>
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="pom.xml" tab1-content=pom-xml
+    no-height="true"
+%}

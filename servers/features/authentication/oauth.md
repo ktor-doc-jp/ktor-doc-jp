@@ -4,6 +4,7 @@ caption: OAuth authentication
 category: servers
 redirect_from:
 - /features/authentication/oauth.html
+ktor_version_review: 1.0.0
 ---
 
 OAuth defines a mechanism for authentication using external providers like Google or Facebook safely.
@@ -20,6 +21,7 @@ A simplified OAuth 2.0 workflow:
 
 *Example*:
 
+{% capture oauth-sample-kt %}
 ```kotlin
 @Location("/login/{type?}") class login(val type: String = "")
 
@@ -62,7 +64,12 @@ routing {
     }
 }
 ```
-{: .compact}
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="AuthSample.kt" tab1-content=oauth-sample-kt
+    no-height="true"
+%}
 
 Depending on the OAuth version, you will get a different Principal
 

@@ -104,6 +104,7 @@ ktor {
 
 After that you can just write a normal plain Ktor module: 
 
+{% capture module-kt %}
 ```kotlin
 package io.ktor.samples.http2
 
@@ -143,7 +144,12 @@ fun Application.main() {
     }
 }
 ```
-{: .compact }
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="Module.kt" tab1-content=module-kt
+    no-height="true"
+%}
 
 ## Accessing your server
 

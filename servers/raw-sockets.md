@@ -3,7 +3,6 @@ title: Sockets
 caption: Raw Sockets  
 category: servers
 permalink: /servers/raw-sockets.html
-priority: 700
 ---
 
 In addition to HTTP handling for the [server](/servers/application.html) and the [client](/clients/http-client.html), Ktor supports client and server, TCP and UDP raw sockets.

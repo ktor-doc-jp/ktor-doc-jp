@@ -4,7 +4,6 @@ caption: Handling HTTP Uploads
 category: servers
 keywords: multipart receiving reading files
 permalink: /servers/uploads.html
-priority: 1200
 ---
 
 Ktor supports handling HTTP Uploads. As well as [receiving any other kind of content](/servers/calls/requests.html).

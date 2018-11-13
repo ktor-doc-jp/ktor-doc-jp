@@ -4,7 +4,6 @@ caption: Building Complex Servers
 category: servers
 permalink: /servers/structure.html
 keywords: routing, routes, structuring, growing, dependency injection, guice, external configuration, 
-priority: 1000
 ---
 
 Depending on the complexity of the code of your server, you might want to structure your code

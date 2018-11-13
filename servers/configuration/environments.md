@@ -2,6 +2,7 @@
 title: Environments
 caption: How to differentiate between environments
 category: servers
+ktor_version_review: 1.0.0
 ---
 
 You might want to do different things depending on whether your server is running locally or on your

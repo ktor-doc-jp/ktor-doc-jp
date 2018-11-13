@@ -5,7 +5,6 @@ permalink: /servers/deploy.html
 keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku nginx war fat-jar docker packing proguard
 caption: Deployment 
 children: /servers/deploy/
-priority: 300
 ---
 
 {::options toc_levels="1..3" /}

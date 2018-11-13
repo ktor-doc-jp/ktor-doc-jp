@@ -10,6 +10,7 @@ feature:
 redirect_from:
 - /features/forward-headers.html
 keywords: nginx reverseproxy
+ktor_version_review: 1.0.0
 ---
 
 This feature allows you to handle reverse proxy headers to get information about the original

@@ -3,7 +3,6 @@ title: Samples
 category: samples
 permalink: /samples/index.html
 caption: Sample Projects
-priority: -1
 ---
 
 Ktor comes with a number of examples in its repository, which cover many features and use cases.

@@ -8,7 +8,6 @@ redirect_from:
   - /quickstart/gradle.html
   - /quickstart/quickstart/intellij-idea/gradle.html
   - /quickstart/quickstart/intellij-idea/plugin.html
-priority: 0
 ---
 
 In this guide, we will show you how to create a `build.gradle` file
@@ -96,20 +95,7 @@ and double-quoted strings, to be able to interpolate variables like
 versions, you have to use double-quoted strings.
 {: .note.tip }
 
-As for Kotlin 1.2x, coroutines are still an experimental feature, 
-so you will need to tell the compiler that it is okay
-to use them to avoid warnings:
-
-```groovy
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-```
-
-You also need to tell the Kotlin compiler to generate bytecode
-compatible with Java 8:
+You need to tell the Kotlin compiler to generate bytecode compatible with Java 8:
 {: #java8}
 
 ```groovy

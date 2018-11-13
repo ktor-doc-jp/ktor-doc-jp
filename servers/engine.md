@@ -3,7 +3,6 @@ title: Running
 caption: Running Server Application 
 category: servers
 permalink: /servers/engine.html
-priority: 400
 ---
 
 Ktor applications can be self-hosted or hosted on an Application Server. This section shows you how to host Ktor applications externally.

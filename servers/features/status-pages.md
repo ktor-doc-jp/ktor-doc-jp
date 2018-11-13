@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.StatusPages
 redirect_from:
 - /features/status-pages.html
+ktor_version_review: 1.0.0
 ---
 
 The `StatusPages` feature allows Ktor applications to respond appropriately to any failure state. 

@@ -8,6 +8,7 @@ feature:
   class: io.ktor.server.engine.ShutDownUrl.ApplicationCallFeature
 redirect_from:
 - /features/shutdown-url.html
+ktor_version_review: 1.0.0
 ---
 
 This feature enables a URL that when accessed, shutdowns the server.

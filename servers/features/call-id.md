@@ -6,6 +6,7 @@ permalink: /servers/features/call-id.html
 feature:
   artifact: io.ktor:ktor-server-core:$ktor_version
   class: io.ktor.features.CallId
+ktor_version_review: 1.0.0
 ---
 
 The CallId feature allows to identify a request/call and can work along the [CallLogging](/servers/features/call-logging.html) feature.

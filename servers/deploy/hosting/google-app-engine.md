@@ -3,6 +3,7 @@ title: GAE
 caption: Google App Engine
 category: servers
 permalink: /servers/deploy/hosting/google-app-engine.html
+ktor_version_review: 1.0.0
 ---
 
 You can check out a full google appengine sample, here:

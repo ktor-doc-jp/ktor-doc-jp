@@ -9,6 +9,7 @@ feature:
   class: io.ktor.features.HttpsRedirect
 redirect_from:
 - /features/https-redirect.html
+ktor_version_review: 1.0.0
 ---
 
 This feature will make all the affected HTTP calls perform a redirect to its

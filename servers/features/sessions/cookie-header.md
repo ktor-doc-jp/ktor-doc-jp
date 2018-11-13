@@ -4,6 +4,7 @@ caption: Cookie/Header Sessions
 category: servers
 redirect_from:
 - /features/sessions/cookie-header.html
+ktor_version_review: 1.0.0
 ---
 
 You can either use cookies or custom HTTP headers for sessions. The code is roughly the same but you have to
@@ -90,39 +91,12 @@ that you have to provide: it is your responsibility to open and close them.
 You can read more about `ByteWriteChannel` and `ByteReadChannel` in their libraries documentation.
 If you just need to load or store a ByteArray, you can use this snippet which provides a simplified session storage:
 
-```kotlin
-abstract class SimplifiedSessionStorage : SessionStorage {
-    abstract suspend fun read(id: String): ByteArray?
-    abstract suspend fun write(id: String, data: ByteArray?): Unit
+{% capture simplified-session-storage-sample-kt %}{% include simplified-session-storage-sample.md %}{% endcapture %}
 
-    override suspend fun invalidate(id: String) {
-        write(id, null)
-    }
+{% include tabbed-code.html
+    tab1-title="SimplifiedSessionStorage.kt" tab1-content=simplified-session-storage-sample-kt
+%}
 
-    override suspend fun <R> read(id: String, consumer: suspend (ByteReadChannel) -> R): R {
-        val data = read(id) ?: throw NoSuchElementException("Session $id not found")
-        return consumer(ByteReadChannel(data))
-    }
-
-    override suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit) {
-        return provider(reader(coroutineContext, autoFlush = true) {
-            write(id, channel.readAvailable())
-        }.channel)
-    }
-}
-
-suspend fun ByteReadChannel.readAvailable(): ByteArray {
-    val data = ByteArrayOutputStream()
-    val temp = ByteArray(1024)
-    while (!isClosedForRead) {
-        val read = readAvailable(temp)
-        if (read <= 0) break
-        data.write(temp, 0, read)
-    }
-    return data.toByteArray()
-}
-```
-{: .compact}
 
 With this simplified storage you only have to implement two simpler methods:
 

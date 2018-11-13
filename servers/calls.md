@@ -4,8 +4,8 @@ caption: ApplicationCall
 keywords: calls requests responses
 category: servers
 permalink: /servers/calls.html
-priority: 200
 children: /servers/calls/
+ktor_version_review: 1.0.0
 ---
 
 When handling routes, or directly intercepting the pipeline, you get a context with an ApplicationCall.
@@ -35,4 +35,4 @@ This is just an example, and usually, page requests are not handled in this way,
 Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
 can potentially execute asynchronously.
  
-See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s
+See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s.

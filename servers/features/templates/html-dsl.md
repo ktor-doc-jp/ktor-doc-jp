@@ -8,6 +8,7 @@ feature:
 redirect_from:
 - /features/html-dsl.html
 - /features/templates/html-dsl.html
+ktor_version_review: 1.0.0
 ---
 
 This feature integrates with [kotlinx.html](https://github.com/Kotlin/kotlinx.html)

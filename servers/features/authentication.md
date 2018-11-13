@@ -10,6 +10,7 @@ feature:
   class: io.ktor.auth.Authentication
 redirect_from:
 - /features/authentication.html
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..2" /}

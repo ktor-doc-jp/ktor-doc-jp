@@ -5,7 +5,6 @@ category: quickstart
 permalink: /quickstart/quickstart/docker.html
 redirect_from:
   - /quickstart/docker.html
-priority: 0
 ---
 
 [Docker](https://www.docker.com) is a container platform:

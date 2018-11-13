@@ -8,6 +8,7 @@ feature:
   class: io.ktor.routing.Routing
 redirect_from:
 - /features/routing.html
+ktor_version_review: 1.0.0
 ---
 
 Routing is a feature that is installed into an Application to simplify and structure page request handling.

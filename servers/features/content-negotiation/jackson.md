@@ -8,6 +8,7 @@ feature:
 redirect_from:
 - /features/jackson.html
 - /features/content-negotiation/jackson.html
+ktor_version_review: 1.0.0
 ---
 
 The Jackson feature allows you to handle JSON content in your application easily using

@@ -3,7 +3,6 @@ title: Clients
 category: clients
 permalink: /clients/index.html
 caption: Clients
-priority: -1 
 ktor_version_review: 1.0.0
 ---
 

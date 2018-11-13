@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.PartialContent
 redirect_from:
 - /features/partial-content.html
+ktor_version_review: 1.0.0
 ---
 
 This feature adds support for handling Partial Content requests:

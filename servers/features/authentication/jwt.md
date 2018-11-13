@@ -8,6 +8,7 @@ feature:
   method: io.ktor.auth.jwt.jwt
 redirect_from:
 - /features/authentication/jwt.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating JSON-encoded payloads.

@@ -3,7 +3,6 @@ title: Artifacts
 caption: List of Artifacts  
 permalink: /quickstart/artifacts.html
 category: quickstart
-priority: 1
 redirect_from:
   - /artifacts.html
 ktor_version_review: 1.0.0

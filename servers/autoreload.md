@@ -119,7 +119,7 @@ fun Application.mymodule() {
 ## Using the `application.conf`
 {: #configuration-file}
 
-When using a configuration file, for example with a [`EngineMain`](/servers/engine.html) to either run
+When using a configuration file, for example with an [`EngineMain`](/servers/engine.html) to either run
 from the command line or hosted within a server container: 
 
 To enable this feature, add `watch` keys to `ktor.deployment` configuration. 
@@ -145,6 +145,9 @@ These classes are then loaded with a special `ClassLoader` that is recycled when
 don't expect it to be reloaded automatically. It cannot work because core classes are loaded before the auto-reload kicks in. 
 The exclusion can potentially be smaller, but it is hard to analyze all the transitive closure of types loaded during
 startup.
+{: .note}
+
+Classpath entries look like `file:///path/to/project/build/classes/myproject.jar`, so `to/project` would match, but `com.mydomain` would not.
 {: .note}
 
 ## Recompiling automatically on source changes

@@ -4,6 +4,7 @@ caption: Session Serializers
 category: servers
 redirect_from:
 - /features/sessions/serializers.html
+ktor_version_review: 1.0.0
 ---
 
 ## Serializers

@@ -11,6 +11,7 @@ feature:
   class: io.ktor.sessions.Sessions
 redirect_from:
 - /features/sessions.html
+ktor_version_review: 1.0.0
 ---
 
 {::options toc_levels="1..3" /}

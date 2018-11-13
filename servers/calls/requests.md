@@ -4,9 +4,9 @@ caption: Handling HTTP Requests
 category: servers
 permalink: /servers/calls/requests.html
 keywords: multipart receiving
-priority: 800
 redirect_from:
   - /servers/requests.html
+ktor_version_review: 1.0.0
 ---
 
 When handling routes, or directly intercepting the pipeline, you

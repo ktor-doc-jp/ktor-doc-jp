@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.Compression
 redirect_from:
 - /features/compression.html
+ktor_version_review: 1.0.0
 ---
 
 Compression feature adds the ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce the

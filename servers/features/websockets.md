@@ -8,6 +8,7 @@ feature:
   class: io.ktor.websocket.WebSockets
 redirect_from:
 - /features/websockets.html
+ktor_version_review: 1.0.0
 ---
 
 This feature adds WebSockets support to Ktor.

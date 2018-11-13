@@ -9,6 +9,7 @@ feature:
 children: /servers/features/content-negotiation/
 redirect_from:
 - /features/content-negotiation.html
+ktor_version_review: 1.0.0
 ---
 
 This feature provides automatic content conversion according to `Content-Type` and `Accept` headers.

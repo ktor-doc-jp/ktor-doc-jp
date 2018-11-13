@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.CORS
 redirect_from:
 - /features/cors.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).

@@ -4,6 +4,7 @@ caption: Packing
 category: servers
 permalink: /servers/deploy/packing.html
 children: /servers/deploy/packing/
+ktor_version_review: 1.0.0
 ---
 
 When deploying, normally you will want to generate a single archive with all your

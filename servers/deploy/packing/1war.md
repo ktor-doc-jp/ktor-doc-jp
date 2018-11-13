@@ -3,6 +3,7 @@ title: WAR
 caption: WAR (Servlet Container)
 category: servers
 permalink: /servers/deploy/packing/war.html
+ktor_version_review: 1.0.0
 ---
 
 A WAR archive allows you to easily deploy your application inside your web container / servlet container,

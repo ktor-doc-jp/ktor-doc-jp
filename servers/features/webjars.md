@@ -8,6 +8,7 @@ feature:
   class: io.ktor.Webjars
 redirect_from:
 - /features/webjars.html
+ktor_version_review: 1.0.0
 ---
 
 This feature enable serving static content provided by [webjars](https://www.webjars.org/). It allows you to package your assets such

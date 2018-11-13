@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.DataConversion
 redirect_from:
 - /features/data-conversion.html
+ktor_version_review: 1.0.0
 ---
 
 `DataConversion` is a feature that allows to serialize and deserialize a list of values.

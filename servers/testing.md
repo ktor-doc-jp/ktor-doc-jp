@@ -3,7 +3,6 @@ title: Testing
 category: servers
 permalink: /servers/testing.html
 caption: Testing Server Applications 
-priority: 1100
 redirect_from:
   - /application/testing.html
 ---

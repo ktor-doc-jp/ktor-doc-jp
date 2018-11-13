@@ -8,6 +8,7 @@ feature:
 redirect_from:
 - /features/gson.html
 - /features/content-negotiation/gson.html
+ktor_version_review: 1.0.0
 ---
 
 The GSON feature allows you to handle JSON content in your application easily using

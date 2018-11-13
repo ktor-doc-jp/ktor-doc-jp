@@ -3,6 +3,7 @@ title: Heroku
 caption: Heroku
 category: servers
 permalink: /servers/deploy/hosting/heroku.html
+ktor_version_review: 1.0.0
 ---
 
 There is a quickstart repository for Heroku: <https://github.com/orangy/ktor-heroku-start>

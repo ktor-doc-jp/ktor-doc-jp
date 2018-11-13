@@ -9,6 +9,7 @@ feature:
 redirect_from:
 - /features/freemarker.html
 - /features/templates/freemarker.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor includes support for [FreeMarker](http://freemarker.org/) templates through the FreeMarker

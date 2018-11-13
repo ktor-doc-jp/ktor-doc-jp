@@ -4,6 +4,7 @@ caption: Digest authentication
 category: servers
 redirect_from:
 - /features/authentication/digest.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor supports [HTTP digest authentication](https://en.wikipedia.org/wiki/Digest_access_authentication).

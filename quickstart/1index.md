@@ -5,7 +5,6 @@ category: quickstart
 toc: true
 permalink: /quickstart/index.html
 children: /quickstart/quickstart/
-priority: -100
 ktor_version_review: 1.0.0
 ---
 

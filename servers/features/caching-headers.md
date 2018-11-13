@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.CachingHeaders
 redirect_from:
 - /features/caching-headers.html
+ktor_version_review: 1.0.0
 ---
 
 The CachingOptions feature adds the ability to send the headers `Cache-Control` and `Expires`

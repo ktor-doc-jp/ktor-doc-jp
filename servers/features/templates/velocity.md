@@ -9,6 +9,7 @@ feature:
 redirect_from:
 - /features/velocity.html
 - /features/templates/velocity.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor includes support for [Velocity](http://velocity.apache.org/) templates through the Velocity

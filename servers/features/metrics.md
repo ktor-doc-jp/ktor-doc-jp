@@ -8,6 +8,7 @@ feature:
   class: io.ktor.metrics.Metrics
 redirect_from:
 - /features/metrics.html
+ktor_version_review: 1.0.0
 ---
 
 The Metrics feature allows you to configure the [Metrics](http://metrics.dropwizard.io/4.0.0/)

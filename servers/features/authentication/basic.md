@@ -4,6 +4,7 @@ caption: Basic and Form authentication
 category: servers
 redirect_from:
 - /features/authentication/basic.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor supports two methods of authentication with the user and raw password as credentials:

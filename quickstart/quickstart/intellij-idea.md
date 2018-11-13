@@ -6,7 +6,6 @@ toc: true
 permalink: /quickstart/quickstart/intellij-idea.html
 redirect_from:
   - /quickstart/intellij-idea.html
-priority: 0
 ---
 
 There is a [IntelliJ plugin adding a project wizard for Ktor projects](https://plugins.jetbrains.com/plugin/10823-ktor){:target="_blank"}.

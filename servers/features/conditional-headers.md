@@ -9,6 +9,7 @@ feature:
   class: io.ktor.features.ConditionalHeaders
 redirect_from:
 - /features/conditional-headers.html
+ktor_version_review: 1.0.0
 ---
 
 ConditionalHeaders feature adds the ability to avoid sending content if the client already has the same content. It does so by

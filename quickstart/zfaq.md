@@ -3,7 +3,6 @@ title: FAQ
 caption: Frequently Asked Questions 
 category: quickstart
 permalink: /quickstart/faq.html
-priority: 100
 redirect_from:
   - /servers/faq.html
 ktor_version_review: 1.0.0

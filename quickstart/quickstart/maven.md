@@ -6,7 +6,6 @@ toc: true
 permalink: /quickstart/quickstart/maven.html
 redirect_from:
   - /quickstart/maven.html
-priority: 0
 ---
 
 In this guide, we will show you how to create a Maven `pom.xml` file
@@ -139,25 +138,6 @@ Now you have to add `ktor-server-core` artifact using the `ktor.version` you spe
     <artifactId>ktor-server-core</artifactId>
     <version>${ktor.version}</version>
 </dependency>
-```
-
-As for Kotlin 1.2x, coroutines are still an experimental feature
-in Kotlin, so you will need to tell the compiler that it is okay
-to use them to avoid warnings:
-
-```xml
-<plugin>
-    <groupId>org.jetbrains.kotlin</groupId>
-    
-    …
-    
-    <configuration>
-        <jvmTarget>1.8</jvmTarget>
-        <args>
-            <arg>-Xcoroutines=enable</arg>
-        </args>
-    </configuration>
-</plugin>
 ```
 
 ## Choose your engine and configure it

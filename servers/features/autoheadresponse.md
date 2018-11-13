@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.AutoHeadResponse
 redirect_from:
 - /features/autoheadresponse.html
+ktor_version_review: 1.0.0
 ---
 
 Ktor can automatically provide responses to `HEAD` requests for existing routes that have the `GET` verb defined. 

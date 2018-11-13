@@ -9,6 +9,7 @@ feature:
   class: io.ktor.features.HSTS
 redirect_from:
 - /features/hsts.html
+ktor_version_review: 1.0.0
 ---
 
 This feature will add the required _HTTP Strict Transport Security_ headers to the request according to the [RFC 6797](https://tools.ietf.org/html/rfc6797).

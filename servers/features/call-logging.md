@@ -8,6 +8,7 @@ feature:
   class: io.ktor.features.CallLogging
 redirect_from:
 - /features/call-logging.html
+ktor_version_review: 1.0.0
 ---
 
 You might want to log client requests: and the Call Logging feature does just that.
