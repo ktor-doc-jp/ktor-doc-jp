@@ -4,7 +4,7 @@ caption: Saving Time with Automatic Reloading
 category: servers
 permalink: /servers/autoreload.html
 keywords: autoreload watchpaths
-priority: 100
+ktor_version_review: 1.0.0
 ---
 
 During development, it is important to have a fast feedback loop cycle. 

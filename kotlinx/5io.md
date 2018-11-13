@@ -5,7 +5,7 @@ category: kotlinx
 toc: true
 children: /kotlinx/io/
 permalink: /kotlinx/io.html
-priority: 1
+ktor_version_review: 1.0.0
 ---
 
 The official multiplatform asynchronous I/O for Kotlin. It depends on [kotlinx.coroutines] and [kotlinx.atomicfu].
@@ -13,11 +13,10 @@ The official multiplatform asynchronous I/O for Kotlin. It depends on [kotlinx.c
 [kotlinx.atomicfu]: /kotlinx/atomicfu.html
 [kotlinx.coroutines]: /kotlinx/coroutines.html
 
-Kotlin provides two killer features: multiplatform projects (including common projects) and coroutines. But multiplatform doesn’t provide any special functionality, only let’s you to use the exposed APIs from each platform. And coroutines are low-level too.
+This project exposes common functionality for doing I/O in a way that works in all the targets and uses coroutines
+to expose a non-blocking API that can be written as plain linear code easily.
 
-This project exposes common functionality for doing I/O in a way that works in all the targets and uses coroutines to expose a non-blocking API that can be written as plain synchronous code easily.
-
-Kotlinx-io is OpenSource and you can find it at GitHub: <https://github.com/Kotlin/kotlinx-io>
+`kotlinx-io` is OpenSource and you can find it at GitHub: <https://github.com/Kotlin/kotlinx-io>
 
 ## Encoding:
 * [Charset](/kotlinx/io/encoding/charset.html) - Decoding/encoding Strings from/to ByteArrays.

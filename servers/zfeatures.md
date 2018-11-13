@@ -5,9 +5,10 @@ category: servers
 permalink: /servers/features.html
 children: /servers/features/
 keywords: installing features install features
-priority: -1
 redirect_from:
 - /features/index.html
+- /servers/features/index.html
+ktor_version_review: 1.0.0
 ---
 
 A Ktor application typically consists of a series of features. You can think of features as functionality 
@@ -25,7 +26,7 @@ response, `Routing` which allows us to define routes to handle requests, etc.
 
 ## Installing
 
-A feature is "installed" into the [Application](/application) using the `install` function
+A feature is installed into the [Application](/application) by calling the `install` function:
 
 ```kotlin
 fun Application.main() {
@@ -38,6 +39,7 @@ fun Application.main() {
     }
 }
 ```
+
 Some common feature such as `Routing` come with helper functions, which are defined as extension functions to `Application`, making the code
 somewhat more fluent. For instance, instead of writing:
 
@@ -63,7 +65,8 @@ we could simply write:
 
 Ktor comes with a number of ready-made features that can be installed into your application:
 
-> Some features might need you to add an extra dependency to your project. See the feature pages for more details.
+Some features might need you to add an extra dependency to your project. See the feature pages for more details.
+{: .note }
 
 ## Custom features
 

@@ -4,11 +4,11 @@ caption: Kotlinx Libraries
 category: kotlinx
 permalink: /kotlinx/index.html
 toc: true
-priority: -100
+ktor_version_review: 1.0.0
 ---
 
 Kotlin provides two killer features: multiplatform projects (including common projects) and coroutines.
-But multiplatform doesn't provide any special functionality, only let's you to use the exposed APIs from each platform.
+But multiplatform doesn't provide any special functionality by itself, only lets you to use the exposed APIs from each platform.
 And coroutines are low-level too.
 
 These libraries expose a common standard API for multiplatform projects: exposing atomic operations working in all platforms,

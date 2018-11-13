@@ -3,7 +3,7 @@ title: Charset
 caption: Charset
 category: kotlinx
 toc: true
-priority: 1
+ktor_version_review: 1.0.0
 ---
 
 A Charset is a class that is in charge of serializing and deserializing characters.
@@ -14,7 +14,7 @@ Some example of charsets could be `UTF-8`, `ASCII`, `ISO-8859-1`(`LATIN1`), or `
 
 ## Instantiating a Charset
 
-kotlinx-io has a object called Charsets with some common used charsets (right now only UTF-8):
+`kotlinx-io` has an object called `Charsets` with some common used charsets (right now only `UTF-8`):
 
 ```kotlin
 val charset = Charsets.UTF_8
@@ -26,13 +26,11 @@ It is also possible to construct a charset from its name:
 val charset = Charset.forName("utf-8")
 ```
 
-## Encoding a decoding Strings
+## Encoding and decoding Strings
 
-The easiest way for encoding/decoding Strings using charsets is to use the extension methods available for String and ByteArray.
+The easiest way for encoding/decoding Strings using charsets is to use the extension methods available for `String` and `ByteArray`.
 
 For example, if we have a `ByteArray` representing a UTF-8 encoded string, you can:
-
-> This API is not yet available.
 
 ```kotlin
 val utf8Encoded: ByteArray = byteArrayOf(0xE4.toByte(), 0xBB.toByte(), 0x8A.toByte(), 0xE6.toByte(), 0x97.toByte(), 0xA5.toByte(), 0xE3.toByte(), 0x81.toByte(), 0xAF.toByte(), 0xEF.toByte(), 0xBC.toByte(), 0x81.toByte())
@@ -46,8 +44,7 @@ val string = String(utf8Encoded, charset = Charsets.UTF_8)
 val substring = String(utf8Encoded, 0, 10, charset = Charsets.UTF_8)
 ```
 
-
-And from a String, you can generate a ByteArray representing it in the specific charset:
+And from a `String`, you can generate a ByteArray representing it in the specific charset:
 
 ```kotlin
 val string = "今日は！"
@@ -56,10 +53,10 @@ val utf8Encoded = string.toByteArray(Charsets.UTF_8)
 
 ## Performance-aware API
 
-In order to be able to reuse memory, reduce copying, reuse of object and reduce garbage collection, the Charset API
+In order to be able to reduce copying, reuse of object and memory and reduce garbage collection, the Charset API
 offers a way to create encoders and decoders offering APIs to encode from `CharSequence` to `Output`, and vice versa.
 
-For encoding a slice of a String without slicing it into a Output, you can:
+For encoding a slice of a `String` without slicing it into an `Output`, you can:
 
 ```kotlin
 val output: Output
@@ -72,16 +69,16 @@ charsetEncoder.encode("HELLO", 1, 2, output)
 
 Some charsets represent characters as single-byte, other represents characters with several fixed bytes per characters,
 and others are variable.
-Not all the charsets can represent the whole Unicode character sets.
+Not all the charsets can represent the whole Unicode character set.
 
 The most widely used charset is UTF-8, which allows to represent most 7-bit ASCII characters as single byte,
-but allows to represent the whole Unicode character sets. By being encoded by a variable length of bytes,
-getting the length of a String represented as UTF-8 requires decoding the whole content, thus making
-seeking, slicing and getting length linear-time.
+but allows to represent the whole Unicode character set. By being encoded by a variable length of bytes,
+getting the length of a `String` represented as UTF-8 requires decoding the whole content,
+thus requiring linear time for seeking, slicing and getting length.
 
 JavaScript exposes Strings with 32-bit CodePoints, while Java and Native exposes 16-bit Chars using [Surrogate Pairs](https://en.wikipedia.org/wiki/UTF-16#U+10000_to_U+10FFFF) for higher values.  
 
-For now, kotlinx-io only implements UTF_8, but allows to add custom charsets by extending the Charset class.
+For now, kotlinx-io only implements `UTF_8`, but allows to add custom charsets by extending the `Charset` class.
 
 ## Exposed API
 

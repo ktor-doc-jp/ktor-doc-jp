@@ -4,7 +4,7 @@ caption: "kotlinx.coroutines: Multiplatform Coroutine Library"
 category: kotlinx
 toc: true
 permalink: /kotlinx/coroutines.html
-priority: 1
+ktor_version_review: 1.0.0
 ---
 
 `kotlinx.coroutines` is OpenSource and you can find it at GitHub:

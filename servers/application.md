@@ -3,7 +3,7 @@ title: Application
 category: servers
 permalink: /servers/application.html
 caption: What is an Application? 
-priority: 0
+ktor_version_review: 1.0.0
 ---
 
 A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),
@@ -39,7 +39,7 @@ Check the [dedicated page about ApplicationCall](/servers/calls.html).
 
 ## Features
 
-A feature is an object that you can install and configure for a pipeline.
+A feature is a singleton (usually a companion object) that you can install and configure for a pipeline.
 Ktor includes some standard features, but you can add your own or other features from the community. 
 You can install features in any pipeline, like the application itself, or specific routes.
 
@@ -56,9 +56,7 @@ You have to specify the modules to load when the server starts in [the `applicat
 
 A simple module function would look like this:
 
-**Main.kt:**
-{: .filename}
-
+{% capture main-kt %}
 ```kotlin
 package com.example.myapp
 
@@ -70,6 +68,14 @@ fun Application.mymodule() {
     }
 }
 ```
+{% endcapture %}
+
+{% include tabbed-code.html
+    tab1-title="Main.kt" tab1-content=main-kt
+    no-height="true"
+%}
+
+Of course, you can split the module function in several smaller functions or classes.
 
 Modules are referenced by their fully qualified name: the fully qualified name of the class and the method name,
 separated by a dot (`.`).

@@ -4,6 +4,7 @@ permalink: /index.html
 layout: home
 landing_page: true
 caption: Connected Applications with Kotlin
+ktor_version_review: 1.0.0
 ---
 
 Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful [Kotlin programming language](https://kotlinlang.org). 

@@ -4,6 +4,7 @@ caption: Platforms
 category: kotlinx
 toc: false
 permalink: /kotlinx/io/platforms.html
+ktor_version_review: 1.0.0
 ---
 
 Platform-specific functionality to deal with each platform APIs.
@@ -85,8 +86,6 @@ fun XMLHttpRequest.responsePacket(): ByteReadPacket = when (responseType)
 ```
 
 
-
 ## Native
 
-No special APIs to interact with K/N primitives yet
-
+No special APIs to interact with K/N primitives at this point

@@ -3,12 +3,13 @@ title: Packets
 caption: Packets
 category: kotlinx
 toc: true
-priority: 2
+ktor_version_review: 1.0.0
 ---
 
-Packets are small chunks of data representing messages, packets or chunks of information.
+Packets are small chunks of data representing messages, headers or chunks of information.
 They are built and consumed synchronously. And they implement the [Input/Output](/kotlinx/io/io/input-output.html) interfaces.
-In difference with IOBuffers, you can build packets without having to know their size beforehand. 
+
+Unlike [`IOBuffer`](/kotlinx/io/io/iobuffer.html), you can build packets without having to know their size beforehand. 
 
 ## Building packets
 

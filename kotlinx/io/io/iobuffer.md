@@ -3,10 +3,10 @@ title: IoBuffer
 caption: IoBuffer
 category: kotlinx
 toc: true
-priority: 0
+ktor_version_review: 1.0.0
 ---
 
-Fixed size buffers in memory implementing the [Input and Output](/kotlinx/io/io/input-output.html) interfaces.
+`IoBuffer`s are fixed size buffers in memory implementing the [Input and Output](/kotlinx/io/io/input-output.html) interfaces:
 
 ```kotlin
 // To make this less verbose:

@@ -3,8 +3,8 @@ title: Setup
 caption: Setup
 category: kotlinx
 toc: false
-priority: 0
 permalink: /kotlinx/io/setup.html
+ktor_version_review: 1.0.0
 ---
 
 ## Gradle

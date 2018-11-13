@@ -3,13 +3,13 @@ title: Byte Channels
 caption: Byte Channels
 category: kotlinx
 toc: true
-priority: 1
+ktor_version_review: 1.0.0
 ---
 
-ByteChannels are asynchronous streams, potentially large without seeking capabilities.
+`ByteChannel`s are asynchronous streams, potentially large without seeking capabilities.
 They are useful for reading and writing to sockets, or files from the start to the end.
-Usually you read and create chunks of synchronous data called [Packets](/kotlinx/io/io/packets.html) from it,
-reducing the amount of suspensions to packets.
+Usually you read and create chunks of synchronous data called [Packets](/kotlinx/io/io/packets.html) from them,
+reducing the amount of suspensions to the number of packets read/written.
 
 ## ByteReadChannel
 

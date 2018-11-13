@@ -3,7 +3,7 @@ title: Input/Output
 caption: Input/Output
 category: kotlinx
 toc: true
-priority: 0
+ktor_version_review: 1.0.0
 ---
 
 [Input](#input) and [Output](#output) interfaces are synchronous interfaces for reading and writing binary data.
