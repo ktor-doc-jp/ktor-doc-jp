@@ -50,7 +50,7 @@ fun main(args: Array<String>) {
         watchPaths = listOf("solutions/exercise4"),
         port = 8080,
         module = Application::mymodule
-    ).apply { start(wait = true) 
+    ).apply { start(wait = true) }
 }
 
 fun Application.mymodule() {
