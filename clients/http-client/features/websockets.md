@@ -9,6 +9,6 @@ feature:
 ---
 
 This feature enables bi-directional WebSocket connections with the server.
-You can read more about it in its [dedicate WebSockets page](/clients/websockets.html). 
+You can read more about it in its [dedicated WebSockets page](/clients/websockets.html). 
 
 {% include feature.html %}
