@@ -6,7 +6,7 @@ permalink: /servers/deploy/packing/fatjar.html
 ktor_version_review: 1.0.0
 ---
 
-A *fat-jar* (or *uber-jar*) archive is sa normal jar file single archive packing all the dependencies together
+A *fat-jar* (or *uber-jar*) archive is a normal jar file single archive packing all the dependencies together
 so it can be run a standalone application directly using Java:
 
 `java -jar yourapplication.jar`
