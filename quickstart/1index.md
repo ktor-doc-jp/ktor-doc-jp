@@ -23,7 +23,7 @@ environments, and client facilities to other native targets.
 * TOC
 {:toc}
 
-## Set a Ktor project
+## Set up a Ktor project
 
 You can set up a Ktor project using [Maven](/quickstart/quickstart/maven.html), [Gradle](/quickstart/quickstart/gradle.html), [start.ktor.io](/quickstart/generator.html#) and the [IntelliJ Plugin](/quickstart/quickstart/intellij-idea/plugin.html).
 
