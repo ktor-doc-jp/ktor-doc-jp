@@ -15,8 +15,7 @@ This feature allows you to configure some defaults for all the requests for a sp
 ## Installation
 
 When configuring the client, there is an extension method provided by this feature to set come defaults for this client.
-For example if you want to add a hacer to all the requests, or to just configure the host, port and method
-to just set the path. 
+For example if you want to add an header to all the requests, or configure the host, port and method or just set the path. 
 
 ```kotlin
 val client = HttpClient(engine).config {
