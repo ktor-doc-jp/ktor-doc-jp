@@ -234,7 +234,7 @@ docker build -t my-application .
 Start an image:
 
 ```bash
-docker run -m512M --cpus 2 -it -p 8080:8080 --rm ktor-docker-sample-application
+docker run -m512M --cpus 2 -it -p 8080:8080 --rm my-application
 ```
 
 With this command, we start Docker in a foreground mode. It will wait for the server to exit, it
