@@ -292,7 +292,7 @@ networks:
 {% capture my_include %}{% include docker-sample.md %}{% endcapture %}
 {{ my_include | markdownify }}
 
-You can find more information about [how to deploy a docker and the Dockerfile in the deploy section](/servers/deploy.html#docker).
+You can find more information about [how to deploy a docker and the Dockerfile](/quickstart/quickstart/docker.html).
 
 ### Simplified overview
 

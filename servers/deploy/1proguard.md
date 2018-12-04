@@ -6,7 +6,7 @@ permalink: /servers/deploy/proguard.html
 ktor_version_review: 1.0.0
 ---
 
-If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](#heroku)),
+If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](/servers/deploy/hosting/heroku)),
 you can use proguard to shrink it. If you are using gradle, it is pretty straightforward to use the
 `proguard-gradle` plugin. You only have to remember to keep: your main module method, the EngineMain
 class, and the Kotlin reflect classes. You can then fine-tune it as required:

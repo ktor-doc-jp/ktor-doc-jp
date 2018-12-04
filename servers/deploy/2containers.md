@@ -15,7 +15,7 @@ lightweight environment, with its own isolated filesystem, operating system, and
 You usually have to create a `Dockerfile` for monolithic services, and a `docker-compose.yml` 
 when your container needs to interact with other services, like for example a database or a redis. 
 
-First you have to create a [fat-jar file](#fat-jar) with your application. And a `Dockerfile`, which looks like this:
+First you have to create a [fat-jar file](/servers/deploy/packing/fatjar) with your application. And a `Dockerfile`, which looks like this:
 
 {% capture docker-file %}{% include docker-sample.md %}{% endcapture %}
 
@@ -81,7 +81,7 @@ and will contact your server via plain HTTP.
 ## Tomcat
 {: #tomcat}
 
-You have to generate a [war file](#war) and put it in the Tomcat `webapps` folder.
+You have to generate a [war file](/servers/deploy/packing/war) and put it in the Tomcat `webapps` folder.
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/tomcat-war>
@@ -90,7 +90,7 @@ For a complete example, check:
 ## Jetty
 {: #jetty}
 
-You have to generate a [war file](#war) and put it in the Jetty `webapps` folder.
+You have to generate a [war file](/servers/deploy/packing/war) and put it in the Jetty `webapps` folder.
 
 For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>

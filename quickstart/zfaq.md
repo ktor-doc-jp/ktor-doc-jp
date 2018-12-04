@@ -5,7 +5,7 @@ category: quickstart
 permalink: /quickstart/faq.html
 redirect_from:
   - /servers/faq.html
-ktor_version_review: 1.0.0
+ktor_version_review: 1.0.1
 ---
 
 In this section, we provide answers to the questions you frequently ask us.

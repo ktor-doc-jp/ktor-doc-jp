@@ -5,7 +5,7 @@ permalink: /quickstart/artifacts.html
 category: quickstart
 redirect_from:
   - /artifacts.html
-ktor_version_review: 1.0.0
+ktor_version_review: 1.0.1
 ---
 
 Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. 
