@@ -17,7 +17,7 @@ or when being reverse-proxied with [nginx](/servers/deploy/containers.html#nginx
 ## Gradle
 {: #fat-jar-gradle}
 
-When using Gradle, you can use the `shadow` gradle plugin to generate it. For example,
+When using Gradle, you can use the [`shadow`](https://imperceptiblethoughts.com/shadow/) gradle plugin to generate it. For example,
 to generate a fat JAR using netty as an engine:
 
 {% capture build-gradle %}
@@ -37,6 +37,13 @@ apply plugin: 'application'
 
 //mainClassName = 'io.ktor.server.netty.DevelopmentEngine' // For versions < 1.0.0-beta-3
 mainClassName = 'io.ktor.server.netty.EngineMain' // Starting with 1.0.0-beta-3
+
+// This task will generate your fat JAR and put it in the ./build/libs/ directory
+shadowJar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
 ```
 {% endcapture %}
 
