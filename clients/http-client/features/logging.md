@@ -3,7 +3,7 @@ title: Logging
 category: clients
 caption: Logging
 feature:
-  artifact: io.ktor:ktor-client-features:ktor-client-logging:$ktor_version
+  artifact: io.ktor:ktor-client-logging:$ktor_version
   class: io.ktor.client.features.logging.Logging
 ---
 
