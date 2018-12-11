@@ -7,7 +7,7 @@ caption: HTTP Client Engines
 
 Ktor HTTP Client has a common interface for performing HTTP Requests,
 but allows to specify an engine that does the internal job.
-Different engines has different configurations, dependencies an supporting features.
+Different engines have different configurations, dependencies and supporting features.
 
 **Table of contents:**
 
