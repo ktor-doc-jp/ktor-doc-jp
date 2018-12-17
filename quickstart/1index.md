@@ -25,7 +25,7 @@ environments, and client facilities to other native targets.
 
 ## Set up a Ktor project
 
-You can set up a Ktor project using [Maven](/quickstart/quickstart/maven.html), [Gradle](/quickstart/quickstart/gradle.html), [start.ktor.io](/quickstart/generator.html#) and the [IntelliJ Plugin](/quickstart/quickstart/intellij-idea/plugin.html).
+You can set up a Ktor project using [Maven](/quickstart/quickstart/maven.html), [Gradle](/quickstart/quickstart/gradle.html), [start.ktor.io](/quickstart/generator.html#) and the [IntelliJ Plugin](/quickstart/quickstart/intellij-idea.html).
 
 The plugin allows you to create a Ktor project as well as [start.ktor.io](/quickstart/generator.html#), but with the additional convenience of being fully integrated in the IDE.
 If you don't have the plugin yet, there is a page about [how to install the plugin](/quickstart/quickstart/intellij-idea/plugin.html).
