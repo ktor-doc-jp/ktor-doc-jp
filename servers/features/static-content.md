@@ -28,7 +28,7 @@ routing {
 }
 ```
 
-The example the above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
+The example above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
  are located - anything that is in the folder `css` will be served. In essence, this means that a request such as
  
 
