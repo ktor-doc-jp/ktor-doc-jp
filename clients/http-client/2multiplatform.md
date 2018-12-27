@@ -52,7 +52,7 @@ Ktor HTTP Client exposes a common module that can be used for such projects:
 ```kotlin
 dependencies {
     // ...
-    implementation("io.ktor:ktor-client:$ktor_version")
+    implementation("io.ktor:ktor-client-core:$ktor_version")
 }
 ```
 
