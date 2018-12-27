@@ -39,7 +39,7 @@ See an [example](#example) on this page.
 When building the request, you have to add a `Content-Type` header:
 
 ```kotlin
-addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())`
+addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
 ```
 
 And then set the `bodyChannel`, for example, by calling the `setBody` method:
@@ -49,7 +49,10 @@ setBody("name1=value1&name2=value%202")
 ```
 
 Ktor provides an extension method to build afrom url encoded `name1=value1&name2=value%202...`:
-`fun List<Pair<String, String>>.formUrlEncode(): String`.
+
+```kotlin
+fun List<Pair<String, String>>.formUrlEncode(): String
+```
 
 So a complete example to build a post request urlencoded could be:
 
