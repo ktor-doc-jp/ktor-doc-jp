@@ -38,7 +38,7 @@ val loginProviders = listOf(
 install(Authentication) {
     oauth("oauth1") {
         client = HttpClient(Apache)
-        providerLookup = { loginProviders[it.type] }
+        providerLookup = { loginProviders[application.locations.resolve<login>(login::class, this).type] }
         urlProvider = { url(login(it.name)) }
     }
 }
