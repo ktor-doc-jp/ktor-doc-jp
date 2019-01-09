@@ -36,7 +36,7 @@ val loginProviders = listOf(
 )
 
 install(Authentication) {
-    oauth("oauth1") {
+    oauth("gitHubOAuth") {
         client = HttpClient(Apache)
         providerLookup = { loginProviders[it.type] }
         urlProvider = { url(login(it.name)) }
@@ -44,7 +44,7 @@ install(Authentication) {
 }
 
 routing {
-    authenticate("oauth1") {
+    authenticate("gitHubOAuth") {
         location<login>() {
             param("error") {
                 handle {
