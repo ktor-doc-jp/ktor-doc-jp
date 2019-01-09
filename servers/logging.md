@@ -90,6 +90,9 @@ you should see a log message now in the IDEA run pane, something like:
 2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
 ```
 
+You can install the [Call Logging](/servers/features/call-logging.html) feature to catch and log requests.
+{: .note}
+
 To understand how to change the `logback.xml` configuration file
 and change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
 
