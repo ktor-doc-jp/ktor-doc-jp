@@ -1,7 +1,7 @@
 ---
-title: ExceptSuccess
+title: ExpectSuccess
 category: clients
-caption: ExceptSuccess 
+caption: ExpectSuccess 
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.ExpectSuccess
