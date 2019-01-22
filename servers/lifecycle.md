@@ -96,7 +96,7 @@ Associated with the environment is a monitor instance that Ktor uses to raise ap
 You can use it to subscribe to events. For example, you can subscribe to a stop application event
 to shutdown specific services or finalize some resources.
 
-A list of [Ktor defined events](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/ApplicationEnvironment.kt):  
+A list of [Ktor defined events](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationEvents.kt):  
 
 ```kotlin
 val ApplicationStarting = EventDefinition<Application>()
