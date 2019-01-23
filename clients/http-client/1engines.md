@@ -207,7 +207,7 @@ You can also call the `JsClient()` function to get the `Js` engine singleton.
 ## Curl
 {: #curl }
 
-There is a engine based on Curl:
+There is an engine based on Curl:
 
 ```kotlin
 val client = HttpClient(Curl)
