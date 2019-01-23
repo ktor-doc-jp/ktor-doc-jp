@@ -2,7 +2,7 @@
 title: Engines
 category: clients
 permalink: /clients/http-client/engines.html
-caption: HTTP Client Engines 
+caption: HTTP Client Engines
 ---
 
 Ktor HTTP Client has a common interface for performing HTTP Requests,
@@ -149,20 +149,20 @@ val client = HttpClient(OkHttp) {
             // ...
             followRedirects(true)
             // ...
-        }    
-        
+        }
+
         // https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html
         addInterceptor(interceptor)
         addNetworkInterceptor(interceptor)
 
     }
-    
+
 }
 ```
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.okhttp.OkHttp" artifact="io.ktor:ktor-client-okhttp:$ktor_version" transitive="com.squareup.okhttp3:okhttp" %}
 
-## Android
+### Android
 {: #android }
 
 The Android engine, doesn't have additional dependencies, and uses a ThreadPool with a normal HttpURLConnection,
@@ -203,6 +203,19 @@ val client = HttpClient(Js) {
 You can also call the `JsClient()` function to get the `Js` engine singleton.
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.js.Js" artifact="io.ktor:ktor-client-js:$ktor_version" %}
+
+## Curl
+{: #curl }
+
+There is a engine based on Curl:
+
+```kotlin
+val client = HttpClient(Curl)
+```
+
+Supported platforms: linux_x64, macos_x64, mingw_x64. Please note that to use the engine you must have the installed curl library at least version 7.63
+
+{% include artifact.html kind="engine" class="io.ktor.client.engine.curl.Curl" artifact="io.ktor:ktor-client-curl:$ktor_version" %}
 
 ## Testing
 {: #testing }
