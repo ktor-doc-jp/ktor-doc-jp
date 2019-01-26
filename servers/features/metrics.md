@@ -12,9 +12,7 @@ ktor_version_review: 1.0.0
 ---
 
 The Metrics feature allows you to configure the [Metrics](http://metrics.dropwizard.io/4.0.0/)
-to get useful information about the server and the requests.
-
-It reports 
+to get useful information about the server and incoming requests.
 
 {% include feature.html %}
 
@@ -64,7 +62,7 @@ You can use any of the available [Metric reporters](http://metrics.dropwizard.io
 
 ## Exposed reports
 
-It exposes a lot of properties of the JVM about memory and threads.
+This feature exposes many JVM properties relating to memory usage and thread behavior.
 
 ### Global:
 

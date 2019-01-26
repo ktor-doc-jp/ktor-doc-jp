@@ -69,7 +69,7 @@ an `ApplicationEngineEnvironment` is then created or provided.
 
 ### EngineMain
 
-Ktor defines one `EngineMain` class, per each supported server engine.
+Ktor defines one `EngineMain` class per each supported server engine.
 This class defines a `main` method that can be executed to run the application.
 By using `commandLineEnvironment` it will load the [HOCON `application.conf`](/servers/configuration.html)
 file from your resources and will use extra arguments to determine which modules to install
@@ -118,7 +118,7 @@ Phases are ordered and can be defined to be executed, after or before another ph
 Each pipeline has an ordered list of phase contexts for that instance, which contain a set of
 interceptors for each phase.
 
-So for example:
+For example:
 
 * Pipeline
     * Phase1
@@ -160,9 +160,9 @@ val Fallback = PipelinePhase("Fallback") // Phase for handling unprocessed calls
 
 ## [Features](/advanced/features)
 
-Ktor defines application features [`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/ApplicationFeature.kt).
+Ktor defines application features using the [`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/src/io/ktor/application/ApplicationFeature.kt) class.
 A feature is something that you can `install` to an specific pipeline.
-It has access to the pipeline and it can register interceptors and do all kind of other things. 
+It has access to the pipeline, and it can register interceptors and do all sorts of other things.
 
 ## Routing
 
