@@ -122,7 +122,7 @@ Remember to adjust the defaultScopes to just request what you really need for th
 
 We also have to install the OAuth feature and configure it. We need to provide a HTTP client instance, a provider lookup
 where we determine the provider from the call (we don't need to put logic here since we are just supporting Google for this guide) and
-a `urlProvider` giving the redirection U$L that must match the one specified as authorized redirection in the Google Developers Console, in this case `http://me.mydomain.com:8080/login`:
+a `urlProvider` giving the redirection URL that must match the one specified as authorized redirection in the Google Developers Console, in this case `http://me.mydomain.com:8080/login`:
 
 ```kotlin
 install(Authentication) {
