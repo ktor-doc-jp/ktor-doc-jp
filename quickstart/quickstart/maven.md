@@ -112,7 +112,7 @@ You have to add both to the `repositories` block in the `pom.xml` file:
 <repositories>
     <repository>
         <id>jcenter</id>
-        <url>http://jcenter.bintray.com</url>
+        <url>https://jcenter.bintray.com</url>
     </repository>
 </repositories>
 ``` 
