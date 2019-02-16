@@ -72,6 +72,8 @@ fun Application.main() {
 
 - `method("HTTP_METHOD")` : Includes this method to the white list of Http methods to use CORS.
 - `header("header-name")` : Includes this header to the white list of headers to use CORS.
+- `exposeHeader("header-name)` : Exposes this header in the response.
+- `exposeXHttpMethodOverride()` : Exposes `X-Http-Method-Override` header in the response
 - `anyHost()` : Allows any host to access the resources
 - `host("hostname")` : Allows only the specified host to use CORS, it can have the port number, a list of subDomains or the supported schemes.
 - `allowCredentials` : Includes AccessControlAllowCredentials header in the response
