@@ -34,13 +34,8 @@ You can declare a class with a main method that only generates the certificate w
 ```kotlin
 package io.ktor.samples.http2
 
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.util.*
-import java.io.*
+import io.ktor.network.tls.certificates.generateCertificate
+import java.io.File
 
 object CertificateGenerator {
     @JvmStatic
