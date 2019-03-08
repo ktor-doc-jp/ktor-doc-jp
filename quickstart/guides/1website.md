@@ -333,7 +333,7 @@ on change and reload the relevant JVM classes.
 
 ### Exercise 1
 
-Make a registeration page and store the user/password datasource in memory in a hashmap.
+Make a registration page and store the user/password datasource in memory in a hashmap.
 
 ### Exercise 2
 
