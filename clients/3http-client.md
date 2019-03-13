@@ -53,7 +53,7 @@ suspend fun sequentialRequests() {
 ### Parallel requests:
 
 ```kotlin
-suspend fun parallelRequests() {
+suspend fun parallelRequests() = coroutineScope<Unit> {
     val client1 = HttpClient(Apache)
     val client2 = HttpClient(Apache)
     
