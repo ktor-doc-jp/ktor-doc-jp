@@ -89,7 +89,7 @@ fun Application.module() {
     }
     
     routing {
-        get("/") {
+        get("/html-freemarker") {
             call.respond(FreeMarkerContent("index.ftl", mapOf("data" to IndexData(listOf(1, 2, 3))), ""))
         }
     }
@@ -137,9 +137,9 @@ In addition to this, we will have to update our template to include the `style.c
     <head>
         <link rel="stylesheet" href="/static/styles.css">
     </head>
-	<body>
-	    <!-- ... -->
-	</body>
+    <body>
+	<!-- ... -->
+    </body>
 </html>
 ```
 
@@ -272,11 +272,13 @@ fun Application.module() {
     install(Sessions) {
         cookie<MySession>("SESSION")
     }
-    authenticate("login") {
-        post {
-            val principal = call.principal<UserIdPrincipal>() ?: error("No principal")
-            call.sessions.set(MySession(principal.name))
-            call.respondRedirect("/", permanent = false)
+    routing {
+        authenticate("login") {
+            post {
+                val principal = call.principal<UserIdPrincipal>() ?: error("No principal")
+                call.sessions.set("SESSION", MySession(principal.name))
+                call.respondRedirect("/", permanent = false)
+            }
         }
     }
 } 
@@ -306,7 +308,7 @@ This artifact provides an extension to respond with HTML blocks:
 
 ```kotlin
 get("/") { 
-    val data = IndexData(listOf(1, 2, 3)))  
+    val data = IndexData(listOf(1, 2, 3))
     call.respondHtml {
         head {
             link(rel = "stylesheet", href = "/static/styles.css")
