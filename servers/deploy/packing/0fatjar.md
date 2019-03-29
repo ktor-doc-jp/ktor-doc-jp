@@ -47,8 +47,34 @@ shadowJar {
 ```
 {% endcapture %}
 
+{% capture build-gradle-kts %}
+```kotlin
+plugins {
+    application
+    kotlin("jvm") version "1.3.21"
+    // Shadow 5.0.0 requires Gradle 5+. Check the shadow plugin manual if yo're using an older version of Gradle.
+    id("com.github.johnrengelman.shadow") version "5.0.0"
+}
+
+application {
+    mainClassName = "io.ktor.server.netty.EngineMain"
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes(
+            mapOf(
+                "Main-Class" to application.mainClassName
+            )
+        )
+    }
+}
+```
+{% endcapture %}
+
 {% include tabbed-code.html
     tab1-title="build.gradle" tab1-content=build-gradle
+    tab2-title="build.gradle.kts" tab2-content=build-gradle-kts
     no-height="true"
 %}
 
