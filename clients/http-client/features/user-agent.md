@@ -1,13 +1,14 @@
 ---
 title: UserAgent
 category: clients
-caption: UserAgent 
+caption: UserAgent
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.UserAgent
+ktor_version_review: 1.2.0
 ---
 
-This feature add User-Agent header to requests.
+This feature adds a User-Agent header to requests.
 
 {% include feature.html %}
 
@@ -16,15 +17,15 @@ This feature add User-Agent header to requests.
 ```kotlin
 val client = HttpClient() {
 
-    // full configuration
+    // Full configuration.
     install(UserAgent) {
         agent = "ktor"
     }
 
-    // short version for browser-like user agent
+    // Shortcut for the browser-like user agent.
     BrowserUserAgent()
 
-    // short version for curl-like user agent
+    // Shortcut for the curl-like user agent.
     CurlUserAgent()
 }
 

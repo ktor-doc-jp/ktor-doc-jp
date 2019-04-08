@@ -4,6 +4,7 @@ caption: Http Client Features
 category: clients
 permalink: /clients/http-client/features.html
 children: /clients/http-client/features/
+ktor_version_review: 1.2.0
 ---
 
 Similar to the server, Ktor supports features on the client. And it has the same design:

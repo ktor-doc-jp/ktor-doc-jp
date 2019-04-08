@@ -37,6 +37,7 @@ exclude:
   - Dockerfile
   - docker-build.sh
   - docker-run.sh
+  - .vscode
 
 # library used for syntax highlighting
 highlighter: rouge

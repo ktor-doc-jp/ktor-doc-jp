@@ -3,8 +3,8 @@ title: Http Client
 category: clients
 permalink: /clients/http-client.html
 children: /clients/http-client/
-caption: Http Client 
-ktor_version_review: 1.0.0
+caption: Http Client
+ktor_version_review: 1.2.0
 ---
 
 {::options toc_levels="1..2" /}
@@ -22,6 +22,7 @@ And each engine, is provided in [separate artifacts](/clients/http-client/engine
 {:toc}
 
 ## Calls: Requests and Responses
+
 {: #requests-responses }
 
 You can check [how to make requests](/clients/http-client/calls/requests.html),
@@ -34,40 +35,38 @@ and your function will be suspended until done. If you want to perform several r
 in the same block, you can use `launch` or `async` functions and later get the results.
 For example:
 
-### Sequential requests:
+### Sequential requests
 
 ```kotlin
 suspend fun sequentialRequests() {
-    val client = HttpClient(Apache)
-    
+    val client = HttpClient()
+
     // Get the content of an URL.
-    val bytes1 = client.call("https://127.0.0.1:8080/a").response.readBytes() // Suspension point.
-    
+    val firstBytes = client.get<ByteArray>("https://127.0.0.1:8080/a")
+
     // Once the previous request is done, get the content of an URL.
-    val bytes2 = client.call("https://127.0.0.1:8080/b").response.readBytes() // Suspension point.
-    
+    val secondBytes = client.get<ByteArray>("https://127.0.0.1:8080/b")
+
     client.close()
 }
 ```
 
-### Parallel requests:
+### Parallel requests
 
 ```kotlin
 suspend fun parallelRequests() = coroutineScope<Unit> {
-    val client1 = HttpClient(Apache)
-    val client2 = HttpClient(Apache)
-    
+    val client = HttpClient()
+
     // Start two requests asynchronously.
-    val req1 = async { client1.call("https://127.0.0.1:8080/a").response.readBytes() }
-    val req2 = async { client2.call("https://127.0.0.1:8080/b").response.readBytes() }
-    
+    val firstRequest = async { client.get<ByteArray>("https://127.0.0.1:8080/a") }
+    val secondRequest = async { client.get<ByteArray>("https://127.0.0.1:8080/b") }
+
     // Get the request contents without blocking threads, but suspending the function until both
     // requests are done.
-    val bytes1 = req1.await() // Suspension point.
-    val bytes2 = req2.await() // Suspension point.
-    
-    client2.close()
-    client1.close()
+    val bytes1 = firstRequest.await() // Suspension point.
+    val bytes2 = secondRequest.await() // Suspension point.
+
+    client.close()
 }
 ```
 

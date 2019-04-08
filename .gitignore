@@ -8,3 +8,7 @@ _pdf
 *.iml
 /.gradle
 *.pdf
+
+.project
+.settings
+.vscode

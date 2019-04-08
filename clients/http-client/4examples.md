@@ -2,10 +2,12 @@
 title: Examples
 category: clients
 permalink: /clients/http-client/examples.html
-caption: HTTP Client Examples 
+caption: HTTP Client Examples
+ktor_version_review: 1.2.0
 ---
 
 ## Interchanging JSON: Ktor server / Ktor client
+
 {: #example-json }
 
 ```kotlin
@@ -30,7 +32,7 @@ fun main(args: Array<String>) {
         }
 
         val message = client.post<HelloWorld> {
-            url(URL("http://127.0.0.1:8080/"))
+            url("http://127.0.0.1:8080/")
             contentType(ContentType.Application.Json)
             body = HelloWorld(hello = "world")
         }

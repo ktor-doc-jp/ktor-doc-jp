@@ -1,13 +1,14 @@
 ---
 title: ExpectSuccess
 category: clients
-caption: ExpectSuccess 
+caption: ExpectSuccess
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.ExpectSuccess
+ktor_version_review: 1.2.0
 ---
 
-This feature checks that the response is OK (code < 300) or throws a `BadResponseStatus`. 
+This feature checks that the response is OK (code < 300) or throws a `BadResponseStatus`.
 
 {% include feature.html %}
 
@@ -20,7 +21,7 @@ This feature is installed by default.
 You can prevent installing this feature by setting the `HttpClient.expectSuccess` property to `false`:
 
 ```kotlin
-val client = HttpClient(HttpClientEngine) {
+val client = HttpClient() {
     expectSuccess = false
 }
 ```

@@ -2,47 +2,53 @@
 title: WebSockets
 category: clients
 permalink: /clients/websockets.html
-caption: WebSockets  
+caption: WebSockets
 feature:
-    artifact: io.ktor:ktor-client-websocket:$ktor_version,io.ktor:ktor-client-cio:$ktor_version
+    artifact: io.ktor:ktor-client-websocket:$ktor_version,io.ktor:ktor-client-cio:$ktor_version,io.ktor:ktor-client-js:$ktor_version,io.ktor:ktor-client-okhttp:$ktor_version
     class: io.ktor.client.features.websocket.WebSockets
-ktor_version_review: 1.0.0
+ktor_version_review: 1.2.0
 ---
 
 {% include feature.html %}
 
-Ktor provides a WebSocket client only supporting the CIO engine in addition to supporting [WebSockets at server side](/servers/features/websockets.html). 
+Ktor provides a WebSocket client for the following engines: CIO, OkHttp, Js. To get more information about the server side, follow this [section](/servers/features/websockets.html).
 
 Once connected, client and server WebSockets share the same [WebSocketSession](/servers/features/websockets.html#WebSocketSession)
 interface for communication.
 
-Right now, client WebSockets are only available for the [CIO Client Engine](/clients/http-client/engines.html#cio).
-
-The basic usage to create a HTTP client supporting WebSockets is pretty simple:
+The basic usage to create an HTTP client supporting WebSockets is pretty simple:
 
 ```kotlin
-val client = HttpClient(CIO).config { install(WebSockets) }
+val client = HttpClient {
+    install(WebSockets)
+}
 ```
 
 Once created we can perform a request, starting a `WebSocketSession`:
 
 ```kotlin
-client.ws(method = HttpMethod.Get, host = "127.0.0.1", port = 8080, path = "/route/path/to/ws") { // this: DefaultClientWebSocketSession
+client.ws(
+    method = HttpMethod.Get,
+    host = "127.0.0.1",
+    port = 8080, path = "/route/path/to/ws"
+) { // this: DefaultClientWebSocketSession
+
+    // Send text frame.
+    send("Hello, Text frame")
+
+    // Send text frame.
     send(Frame.Text("Hello World"))
 
-    for (message in incoming.map { it as? Frame.Text }.filterNotNull()) {
-        println(message.readText())
+    // Send binary frame.
+    send(Frame.Binary(...))
+
+    // Receive frame.
+    val frame = incomming.receive()
+    when (frame) {
+        is Frame.Text -> println(frame.readText())
+        is Frame.Binary -> println(frame.readBytes())
     }
 }
 ```
 
-You can configure timeout and ping periods:
-
-```kotlin
-client.ws(...) { // this: DefaultClientWebSocketSession
-    timeout = Duration.ofMinutes(10)
-    pingInterval = Duration.ofMinutes(10) // null to disable it
-}
-```
-
-For more information about the WebSocketSession, check the [WebSocketSession page](/servers/features/websockets.html#WebSocketSession).
+For more information about the WebSocketSession, check the [WebSocketSession page](/servers/features/websockets.html#WebSocketSession) and the [API reference](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.features.websocket/).

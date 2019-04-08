@@ -6,19 +6,20 @@ feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.DefaultRequest
   method: io.ktor.client.features.defaultRequest
+ktor_version_review: 1.2.0
 ---
 
-This feature allows you to configure some defaults for all the requests for a specific client.  
+This feature allows you to configure some defaults for all the requests for a specific client.
 
 {% include feature.html %}
 
 ## Installation
 
 When configuring the client, there is an extension method provided by this feature to set come defaults for this client.
-For example if you want to add an header to all the requests, or configure the host, port and method or just set the path. 
+For example, if you want to add a header to all the requests, or configure the host, port, and method or just set the path.
 
 ```kotlin
-val client = HttpClient(engine).config {
+val client = HttpClient() {
     defaultRequest { // this: HttpRequestBuilder ->
         method = HttpMethod.Head
         host = "127.0.0.1"
@@ -42,29 +43,43 @@ import io.ktor.http.*
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.io.*
 
-fun main(args: Array<String>) {
-    runBlocking {
-        val engine: HttpClientEngine = MockEngine { call ->
-            MockHttpResponse(
-                call,
-                HttpStatusCode.OK,
-                ByteReadChannel(
-                    "method=$method, host=${url.host}, port=${url.port}, path=${url.fullPath}, headers=$headers"
-                        .toByteArray(Charsets.UTF_8)),
-                headersOf("Content-Type" to listOf(ContentType.Text.Plain.toString()))
-            )
-        }
-        val client = HttpClient(engine).config {
-            defaultRequest {
-                method = HttpMethod.Head
-                host = "127.0.0.1"
-                port = 8080
-                header("X-My-Header", "MyValue")
+fun main(args: Array<String>) = runBlocking {
+    val client = HttpClient(MockEngine) {
+        engine {
+            // Register request handler.
+            addHandler { request ->
+                with(request) {
+                    val responseText = buildString{
+                        append("method=$method,")
+                        append("host=${url.host},")
+                        append("port=${url.port},")
+                        append("path=${url.fullPath},")
+                        append("headers=$headers")
+                    }
+                    val responseHeaders = headersOf("Content-Type" to listOf(ContentType.Text.Plain.toString()))
+
+                    respond(responseText, headers = responseHeaders)
+                }
             }
         }
-        val result = client.get<String> { url { encodedPath = "/demo" } }
-        println(result)
-        // Prints: method=HttpMethod(value=HEAD), host=127.0.0.1, port=8080, path=/demo, headers=Headers [X-My-Header=[MyValue], Accept=[*/*]]
+
+        // Configure default request feature.
+        defaultRequest {
+            method = HttpMethod.Head
+            host = "127.0.0.1"
+            port = 8080
+            header("X-My-Header", "MyValue")
+        }
     }
+
+    val result = client.get<String> {
+        url {
+            encodedPath = "/demo"
+        }
+    }
+
+    println(result)
+    // Prints: method=HttpMethod(value=HEAD), host=127.0.0.1, port=8080, path=/demo, headers=Headers [X-My-Header=[MyValue], Accept=[*/*]]
 }
+
 ```

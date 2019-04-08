@@ -3,9 +3,11 @@ title: Responses
 caption: HTTP Client Responses
 category: clients
 permalink: /clients/http-client/calls/responses.html
+ktor_version_review: 1.2.0
 ---
 
 ## Receiving the body of a response
+
 {: #receive}
 
 By default you can use `HttpResponse` or `String` as possible types for typed
@@ -24,33 +26,38 @@ val helloWorld = client.get<HelloWorld>("http://127.0.0.1:8080/")
 ```
 
 ### The `HttpResponse` class
+
 {: #HttpResponse }
 
+`HttpResponse` API reference is listed [here](https://api.ktor.io/{{site.ktor_version}}/io.ktor.client.response/-http-response/).
+
 From an `HttpResponse`, you can get the response content easily:
- 
+
 * `val readChannel: ByteReadChannel = response.content`
 * `val bytes: ByteArray = response.readBytes()`
 * `val text: String = response.readText()`
-* `val readChannel = response.call.receive<ByteReadChannel>()`
-* `val multiPart = response.call.receive<MultiPartData>()`
-* `val inputStream = response.call.receive<InputStream>()` *Remember that InputStream API is synchronous!*
+* `val readChannel = response.receive<ByteReadChannel>()`
+* `val multiPart = response.receive<MultiPartData>()`
+* `val inputStream = response.receive<InputStream>()` *Remember that InputStream API is synchronous!*
 * `response.discardRemaining()`
 
 You can also get the additional response information such as its status, headers, internal state, etc.:
 
-### *Basic*:
+### *Basic*
 
 * `val status: HttpStatusCode = response.status`
 * `val headers: Headers = response.headers`
 
-### *Advanced*:
+### *Advanced*
+
 * `val call: HttpClientCall = response.call`
 * `val version: HttpProtocolVersion = response.version`
 * `val requestTime: Date = response.requestTime`
 * `val responseTime: Date = response.responseTime`
 * `val executionContext: Job = response.executionContext`
 
-### *Extensions for headers*:
+### *Extensions for headers*
+
 * `val contentType: ContentType? = response.contentType()`
 * `val charset: Charset? = response.charset()`
 * `val lastModified: Date? = response.lastModified()`

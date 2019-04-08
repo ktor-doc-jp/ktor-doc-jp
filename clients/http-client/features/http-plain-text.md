@@ -5,9 +5,10 @@ caption: HttpPlainText
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.HttpPlainText
+ktor_version_review: 1.2.0
 ---
 
-This feature processes the request content as plain text of a specified charset by `defaultCharset`.
+This feature processes the request content as the plain text with a charset specified by `defaultCharset`.
 Also, it will process the response content as plain text too.
 
 {% include feature.html %}

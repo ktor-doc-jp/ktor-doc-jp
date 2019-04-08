@@ -6,6 +6,7 @@ feature:
   artifact: io.ktor:ktor-client-auth:$ktor_version
   class: io.ktor.client.features.auth.Auth
 keywords: authentication
+ktor_version_review: 1.2.0
 ---
 
 Ktor client supports authentication out of the box as a standard pluggable feature:
@@ -22,9 +23,11 @@ val client = HttpClient() {
     }
 }
 ```
+
 ## Providers
 
-### Basic 
+### Basic
+
 This provider sends an `Authorization: Basic` with the specified credentials:
 
 ```kotlin

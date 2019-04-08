@@ -5,9 +5,10 @@ caption: Logging
 feature:
   artifact: io.ktor:ktor-client-logging:$ktor_version
   class: io.ktor.client.features.logging.Logging
+ktor_version_review: 1.2.0
 ---
 
-This feature add multiplatform logging for http calls.
+This feature adds multiplatform logging for HTTP calls.
 
 {% include feature.html %}
 
@@ -20,5 +21,4 @@ val client = HttpClient() {
         level = LogLevel.HEADERS
     }
 }
-
 ```
