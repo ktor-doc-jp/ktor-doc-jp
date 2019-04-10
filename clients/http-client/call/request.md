@@ -1,8 +1,8 @@
 ---
-title: Requests
-caption: HTTP Client Requests
+title: Request
+caption: HTTP Client Request
 category: clients
-permalink: /clients/http-client/calls/requests.html
+permalink: /clients/http-client/call/requests.html
 ktor_version_review: 1.2.0
 ---
 

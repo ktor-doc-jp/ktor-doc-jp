@@ -1,8 +1,8 @@
 ---
-title: Responses
-caption: HTTP Client Responses
+title: Response
+caption: HTTP Client Response
 category: clients
-permalink: /clients/http-client/calls/responses.html
+permalink: /clients/http-client/call/responses.html
 ktor_version_review: 1.2.0
 ---
 

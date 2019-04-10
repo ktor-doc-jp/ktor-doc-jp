@@ -1,7 +1,7 @@
 ---
-title: UserAgent
+title: User Agent
 category: clients
-caption: UserAgent
+caption: User Agent
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.UserAgent

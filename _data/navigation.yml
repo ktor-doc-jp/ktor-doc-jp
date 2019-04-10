@@ -39,6 +39,14 @@ main:
     color: primary
     icon: icon_toolbox_alt
 
+  - title: Api
+    category: api
+    url: https://api.ktor.io
+    icon_url: '/assets/images/icon_api.svg'
+    summary: API Reference
+    color: primary
+    icon: icon_toolbox_alt
+
   - title: Advanced
     category: advanced
     url: /advanced/index.html

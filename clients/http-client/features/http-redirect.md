@@ -1,7 +1,7 @@
 ---
-title: HttpRedirect
+title: Redirect
 category: clients
-caption: HttpRedirect
+caption: Redirect
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.HttpRedirect

@@ -1,7 +1,7 @@
 ---
-title: DefaultRequest
+title: Default Request
 category: clients
-caption: DefaultRequest
+caption: Default Request
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.DefaultRequest

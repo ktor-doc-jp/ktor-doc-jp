@@ -11,6 +11,20 @@ that was introduced in [Kotlin 1.2](https://blog.jetbrains.com/kotlin/2017/11/ko
 
 Right now, the supported platforms are JVM, Android, iOS, Js and native.
 
+## Common
+
+For [multiplatform projects](https://kotlinlang.org/docs/reference/multiplatform.html) that for example
+share code between multiple platforms, we can create a common module.
+That common module can only access APIs that are available on all the targets.
+Ktor HTTP Client exposes a common module that can be used for such projects:
+
+```kotlin
+dependencies {
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    // ...
+}
+```
+
 ## Android
 
 To use Android engine you have to add the dependency in your `build.gradle`(`build.gradle.kts`):
@@ -56,20 +70,6 @@ As an alternative to JVM compatible engines, you also could use ktor client with
 ```kotlin
 dependencies {
     implementation("io.ktor:ktor-client-curl:$ktor_version")
-    // ...
-}
-```
-
-## Common
-
-For [multiplatform projects](https://kotlinlang.org/docs/reference/multiplatform.html) that for example
-share code between multiple platforms, we can create a common module.
-That common module can only access APIs that are available on all the targets.
-Ktor HTTP Client exposes a common module that can be used for such projects:
-
-```kotlin
-dependencies {
-    implementation("io.ktor:ktor-client-core:$ktor_version")
     // ...
 }
 ```

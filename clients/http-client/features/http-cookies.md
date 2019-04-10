@@ -1,7 +1,7 @@
 ---
-title: HttpCookies
+title: Cookies
 category: clients
-caption: HttpCookies
+caption: Cookies
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.DefaultRequest
