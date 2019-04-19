@@ -101,7 +101,7 @@ suspend fun ApplicationCall.respondUrlEncoded(vararg keys: Pair<String, List<Str
     respondUrlEncoded(parametersOf(*keys))
 
 suspend fun ApplicationCall.respondUrlEncoded(parameters: Parameters) =
-    respondWrite(ContentType.Application.FormUrlEncoded) {
+    respondTextWriter(ContentType.Application.FormUrlEncoded) {
         parameters.formUrlEncodeTo(this)
     }
 ```
