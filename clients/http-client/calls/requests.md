@@ -267,7 +267,7 @@ Alternatively you can set the body directly:
 ```kotlin
 val request = client.request {
     method = HttpMethod.Post
-    body = FormDataContent(formData {
+    body = MultiPartFormDataContent(formData {
         append("key", "value")
     })
 }
