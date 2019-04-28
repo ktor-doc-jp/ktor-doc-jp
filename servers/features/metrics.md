@@ -1,11 +1,11 @@
 ---
-title: Metrics
-caption: Metrics
+title: Metrics with Dropwizard metrics
+caption: Metrics with Dropwizard metrics
 category: servers
 permalink: /servers/features/metrics.html
 feature:
   artifact: io.ktor:ktor-metrics:$ktor_version
-  class: io.ktor.metrics.Metrics
+  class: io.ktor.metrics.DropwizardMetrics
 redirect_from:
 - /features/metrics.html
 ktor_version_review: 1.0.0
@@ -27,7 +27,7 @@ The JMX Reporter allows you to expose all the metrics to JMX,
 allowing you to view those metrics with `jconsole` or `jvisualvm` with the MBeans plugin.
 
 ```kotlin
-install(Metrics) {
+install(DropwizardMetrics) {
     JmxReporter.forRegistry(registry)
         .convertRatesTo(TimeUnit.SECONDS)
         .convertDurationsTo(TimeUnit.MILLISECONDS)
@@ -44,7 +44,7 @@ The SLF4J Reporter allows you to periodically emit reports to any output support
 For example, to output the metrics every 10 seconds, you would:
 
 ```kotlin
-install(Metrics) {
+install(DropwizardMetrics) {
     Slf4jReporter.forRegistry(registry)
         .outputTo(log)
         .convertRatesTo(TimeUnit.SECONDS)
