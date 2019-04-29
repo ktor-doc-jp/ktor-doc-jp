@@ -63,8 +63,7 @@ property, as well as a `close` method. Check the full [WebSocketSession](#WebSoc
 ```kotlin
 routing {
     webSocket("/") { // websocketSession
-        while (true) {
-            val frame = incoming.receive()
+        for (frame in incoming) {
             when (frame) {
                 is Frame.Text -> {
                     val text = frame.readText()
@@ -92,7 +91,7 @@ Since the `incoming` property is a ReceiveChannel, you can use it with its strea
 ```kotlin
 routing {
     webSocket("/") { // websocketSession
-        incoming.mapNotNull { it as? Frame.Text }.consumeEach { frame ->
+        for (frame in incoming.mapNotNull { it as? Frame.Text }) {
             val text = frame.readText()
             outgoing.send(Frame.Text("YOU SAID $text"))
             if (text.equals("bye", ignoreCase = true)) {
@@ -232,8 +231,8 @@ class MyAppTest {
 How do the [standard events from the WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) maps to Ktor?
 
 * `onConnect` happens at the start of the block.
-* `onMessage` happens after successfully reading a message (for example with `incoming.receive()`) or using `consumeEach`.
-* `onClose` happens when the `incoming` channel is closed. That would complete the `consumeEach` function, or throw a `ClosedReceiveChannelException` when trying to receive a message`.
+* `onMessage` happens after successfully reading a message (for example with `incoming.receive()`) or using suspended iteration with `for(frame in incoming)`.
+* `onClose` happens when the `incoming` channel is closed. That would complete the suspended iteration, or throw a `ClosedReceiveChannelException` when trying to receive a message`.
 * `onError` is equivalent to other other exceptions.
 
 In both `onClose` and `onError`, the [`closeReason` property](https://api.ktor.io/1.0.0-beta-1/io.ktor.http.cio.websocket/-default-web-socket-session/close-reason.html) is set.
@@ -244,8 +243,8 @@ To illustrate this:
 webSocket("/echo") {
     println("onConnect")
     try {
-        while (true) {
-            val text = (incoming.receive() as Frame.Text).readText()
+        for (frame in incoming){
+            val text = (frame as Frame.Text).readText()
             println("onMessage")
             received += text
             outgoing.send(Frame.Text(text))
