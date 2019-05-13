@@ -33,7 +33,7 @@ val loginProviders = listOf(
             clientId = "***",
             clientSecret = "***"
     )
-)
+).associateBy {it.name}
 
 install(Authentication) {
     oauth("gitHubOAuth") {
