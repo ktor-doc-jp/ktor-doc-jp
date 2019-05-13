@@ -19,8 +19,7 @@ This functionality is exposed through the `io.ktor:ktor-network:$ktor_version` a
 {: .note.artifact }
 
 In order to create either server or client sockets, you have to use the `aSocket` builder,
-with a mandatory `ActorSelectorManager`: `aSocket(selector)`. For example: `aSocket(ActorSelectorManager(ioCoroutineDispatcher))`.
-As for `1.0.0-alpha-1` `ioCoroutineDispatcher` has been deprecated and you have to use `Dispatchers.IO` instead. 
+with a mandatory `ActorSelectorManager`: `aSocket(selector)`. For example: `aSocket(ActorSelectorManager(Dispatchers.IO))`.
 
 Then use:
 
@@ -79,7 +78,7 @@ the function that is accepting the sockets from suspending.
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val server = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().bind(InetSocketAddress("127.0.0.1", 2323))
+        val server = aSocket(ActorSelectorManager(Dispatchers.IO)).tcp().bind(InetSocketAddress("127.0.0.1", 2323))
         println("Started echo telnet server at ${server.localAddress}")
         
         while (true) {
@@ -150,7 +149,7 @@ val socket = aSocket(selector).tcp().connect(InetSocketAddress("127.0.0.1", 2323
 ```kotlin
 fun main(args: Array<String>) {
     runBlocking {
-        val socket = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
+        val socket = aSocket(ActorSelectorManager(Dispatchers.IO)).tcp().connect(InetSocketAddress("127.0.0.1", 2323))
         val input = socket.openReadChannel()
         val output = socket.openWriteChannel(autoFlush = true)
 
@@ -176,7 +175,7 @@ Ktor supports secure sockets. To enable them you will need to include the
 *Connect to a secure socket:*
 ```kotlin
 runBlocking {
-    val socket = aSocket(ActorSelectorManager(ioCoroutineDispatcher)).tcp().connect(InetSocketAddress("google.com", 443)).tls()
+    val socket = aSocket(ActorSelectorManager(Dispatchers.IO)).tcp().connect(InetSocketAddress("google.com", 443)).tls()
     val w = socket.openWriteChannel(autoFlush = false)
     w.write("GET / HTTP/1.1\r\n")
     w.write("Host: google.com\r\n")
@@ -194,6 +193,6 @@ suspend fun Socket.tls(
         trustManager: X509TrustManager? = null,
         randomAlgorithm: String = "NativePRNGNonBlocking",
         serverName: String? = null,
-        coroutineContext: CoroutineContext = ioCoroutineDispatcher
+        coroutineContext: CoroutineContext = Dispatchers.IO
 ): Socket
 ```
