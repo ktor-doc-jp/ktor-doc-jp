@@ -5,6 +5,8 @@ caption: Response Validation
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.HttpCallValidator
+redirect_from:
+- /clients/http-client/features/expect-success.html
 ktor_version_review: 1.2.0
 ---
 
