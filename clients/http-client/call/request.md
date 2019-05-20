@@ -3,6 +3,8 @@ title: Request
 caption: HTTP Client Request
 category: clients
 permalink: /clients/http-client/call/requests.html
+redirect_from:
+- /clients/http-client/calls/requests.html
 ktor_version_review: 1.2.0
 ---
 
