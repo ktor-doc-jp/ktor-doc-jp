@@ -16,10 +16,10 @@ specifying an engine, for example
 [`OkHttp`](/clients/http-client/engines.html#okhttp),
 [`Android`](/clients/http-client/engines.html#android),
 [`Ios`](/clients/http-client/engines.html#ios),
-[`Js`](/clients/http-client/engines.html#js),
+[`Js`](/clients/http-client/engines.html#js-javascript),
 [`Jetty`](/clients/http-client/engines.html#jetty),
 [`CIO`](/clients/http-client/engines.html#cio)
-or [`Mock`](/clients/http-client/engines.html#mock),
+or [`Mock`](/clients/http-client/testing.html),
 and start making requests using one of the many convenience methods available.
 
 You can omit the engine, and Ktor will choose an engine among the ones that are available
