@@ -7,8 +7,8 @@ ktor_version_review: 1.0.0
 ---
 
 A WAR archive allows you to easily deploy your application inside your web container / servlet container,
-by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: [Jetty](#jetty) and [Tomcat](#tomcat).
-It also serves when deploying to [google app engine](#google-app-engine).
+by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: Jetty and Tomcat.
+It also serves when deploying to [google app engine](https://cloud.google.com/appengine/).
 
 To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` which looks like this:
 
