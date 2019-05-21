@@ -33,21 +33,6 @@ cookie<MySession>("SESSION") {
 }
 ```
 
-### GsonSessionSerializer
-{: #GsonSessionSerializer}
-
-Using JSON instead of the default serializer. Note that the payload will be bigger:
-
-```kotlin
-cookie<MySession>("SESSION") {
-    serializer = gsonSessionSerializer()
-}
-```
-
-This serializes requires the artifact `io.ktor:ktor-gson:$ktor_version`.
-{: .note}
-
-
 ## Custom serializers
 {: #extending-serializers}
 
@@ -90,3 +75,4 @@ cookie<MySession>("NAME") {
     serializer = GsonSessionSerializer(MySession::class.java)
 }
 ```
+
