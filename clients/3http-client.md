@@ -25,8 +25,8 @@ And each engine, is provided in [separate artifacts](/clients/http-client/engine
 
 {: #requests-responses }
 
-You can check [how to make requests](/clients/http-client/calls/requests.html),
-and [how to receive responses](/clients/http-client/calls/responses.html) in their respective sections.
+You can check [how to make requests](/clients/http-client/call/requests.html),
+and [how to receive responses](/clients/http-client/call/responses.html) in their respective sections.
 
 ## Concurrency
 

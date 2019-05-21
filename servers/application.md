@@ -43,7 +43,7 @@ A feature is a singleton (usually a companion object) that you can install and c
 Ktor includes some standard features, but you can add your own or other features from the community. 
 You can install features in any pipeline, like the application itself, or specific routes.
 
-You can read more about [features](/servers/features/index.html) in its dedicated page.
+You can read more about [features](/servers/features.html) in its dedicated page.
 {: .note}
 
 ## Modules

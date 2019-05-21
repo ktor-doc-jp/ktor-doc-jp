@@ -30,8 +30,6 @@ A quick walkthrough:
 * Use `withTestApplication` function to setup a test environment for your Application
 * Use the `handleRequest` function to send requests to your application and verify the results
 
-See an [example](#example) on this page.
-
 ## Building post/put bodies
 
 ### `application/x-www-form-urlencoded`
