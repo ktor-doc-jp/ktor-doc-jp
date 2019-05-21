@@ -49,7 +49,7 @@ install(XForwardedHeaderSupport)
 
 ## Request information
 
-You can see all the [available request properties](/servers/calls/requests.html#properties) on the Requests page.
+You can see all the [available request properties](/servers/calls/requests.html) on the Requests page.
 
 ### The proxy request information
 
