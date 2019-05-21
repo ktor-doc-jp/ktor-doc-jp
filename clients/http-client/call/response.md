@@ -4,7 +4,7 @@ caption: HTTP Client Response
 category: clients
 permalink: /clients/http-client/call/responses.html
 redirect_from:
-- /clients/http-client/calls/requests.html
+- /clients/http-client/calls/responses.html
 ktor_version_review: 1.2.0
 ---
 
