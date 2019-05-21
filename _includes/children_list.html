@@ -9,7 +9,7 @@
         {% assign slug = entry.url | split: "/" | last %}
         {% assign current = entry.url | remove: slug %}
 
-        {% if current == include.context %}
+        {% if current == include.context and entry.title %}
         <li>
             <a href="{{ entry.url }}">{{ entry.title }}</a>
         </li>
