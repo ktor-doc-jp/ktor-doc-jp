@@ -64,7 +64,7 @@ val port = request.local.port
 val host = request.local.host
 val uri = request.local.uri
 val method = request.local.method
-val remoteHost = request.local.method
+val remoteHost = request.local.remoteHost
 ```
 
 ### The original request information
@@ -80,7 +80,7 @@ val port = request.origin.port // Determined from X-Forwarded-Host / X-Forwarded
 val host = request.origin.host // Determined from X-Forwarded-Host / X-Forwarded-Server
 val uri = request.origin.uri
 val method = request.origin.method
-val remoteHost = request.origin.method // Determined from X-Forwarded-For
+val remoteHost = request.origin.remoteHost // Determined from X-Forwarded-For
 ```
 
 In the cases where you need the X-Forwarded-By (the interface used for the socket), you can access the raw X-Forwarded properties with:
