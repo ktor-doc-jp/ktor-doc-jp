@@ -6,6 +6,8 @@ feature:
   artifact: io.ktor:ktor-client-auth:$ktor_version
   class: io.ktor.client.features.auth.Auth
 keywords: authentication
+redirect_from:
+- /clients/http-client/features/basic-auth.html
 ktor_version_review: 1.2.0
 ---
 

@@ -44,7 +44,7 @@ a generic servlet. It also contains a TestEngine for setting up application test
   * `ktor-client-apache` adds support for the Apache asynchronous HttpClient
   * `ktor-client-cio`  adds support for a pure Kotlin Corutine based I/O asynchronous HttpClient
   * `ktor-client-jetty` adds support
-  * `ktor-client-auth-basic` adds support for [authentication](/clients/http-client/features/basic-auth.html)
+  * `ktor-client-auth-basic` adds support for [authentication](/clients/http-client/features/auth.html)
   * `ktor-client-json` adds support for [json content negotiation](/clients/http-client/features/json-feature.html)
 * `ktor-network` includes [raw sockets](/servers/raw-sockets.html) for client/server, and TCP/UDP
   * `ktor-network-tls` contains TLS support for raw sockets
