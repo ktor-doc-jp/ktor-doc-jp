@@ -93,7 +93,7 @@ By default the timers provided by this feature expose the 50%, 90%, 95% and
 
 
 ```kotlin
-install(MicrometerMeterFeature) {
+install(MicrometerMetrics) {
     registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     
     distributionStatisticConfig = DistributionStatisticConfig.Builder()
@@ -114,10 +114,10 @@ combination of tag values results in an own metric. Therefore it is not recommen
 to put properties with high cardinality (e.g. resource ids) into tags.
 
 ```kotlin
-install(MicrometerMeterFeature) {
+install(MicrometerMetrics) {
     registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     
-    timerBuilder { call, exception ->
+    timers { call, exception ->
         this.tag("tenant", call.request.headers["tenantId"])
     }
 }
