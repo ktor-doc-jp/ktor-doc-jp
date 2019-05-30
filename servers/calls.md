@@ -36,3 +36,9 @@ Most functions available on `ApplicationCall` (such as `respondText` above) are 
 can potentially execute asynchronously.
  
 See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s.
+
+## What's next
+
+- [Application lifecycle explanation](https://ktor.io/servers/lifecycle.html)
+- [Application configuration](https://ktor.io/servers/configuration.html)
+- [Pipelines exlained](/advanced/pipeline)

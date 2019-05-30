@@ -166,7 +166,7 @@ It has access to the pipeline, and it can register interceptors and do all sorts
 
 ## Routing
 
-To illustrate how features and a pipeline tree work together, let's have a look at how routing works.
+To illustrate how features and a pipeline tree work together, let's have a look at how [Routing](/servers/features/routing.html) works.
 
 Routing, like other features, is normally installed like this:
 
@@ -183,3 +183,10 @@ routing { }
 Routing is defined as a tree, where each node is a Route that is also a separate instance of an ApplicationCallPipeline.
 So when the root routing node is executed, it will execute its own pipeline. And will stop executing things once
 the route has been processed.
+
+## What's next
+
+- [Application calls](/servers/calls.html)
+- [Application lifecycle explanation](/servers/lifecycle.html)
+- [Application configuration](/servers/configuration.html)
+- [Pipelines exlained](/advanced/pipeline)

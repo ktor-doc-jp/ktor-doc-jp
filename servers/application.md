@@ -3,7 +3,7 @@ title: Application
 category: servers
 permalink: /servers/application.html
 caption: What is an Application? 
-ktor_version_review: 1.0.0
+ktor_version_review: 1.2.1
 ---
 
 A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),
@@ -92,3 +92,10 @@ and adds the extension method as a static method with the received as its first 
 In this case, the class name is `MainKt` in the `com.example.myapp` package, and the Java method signature would be
 `static public void mymodule(Application app)`.
 {: .note}
+
+## What's next
+
+- [Application calls](/servers/calls.html)
+- [Application lifecycle explanation](/servers/lifecycle.html)
+- [Application configuration](/servers/configuration.html)
+- [Pipelines exlained](/advanced/pipeline)
