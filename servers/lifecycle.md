@@ -54,7 +54,7 @@ by using SSL, certificates and so on, with the specified workers.
 Connectors will be used for listening to specific http/https hosts and ports.
 While the `Application` pipeline will be used to handle the requests. 
 
-**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt)** : Pipeline:
+**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt) Pipeline**:
 
 It is created by the `ApplicationEngineEnvironment` and it is initially empty.
 It is a pipeline without a subject that has `ApplicationCall` as the context.
