@@ -187,6 +187,5 @@ the route has been processed.
 ## What's next
 
 - [Application calls](/servers/calls.html)
-- [Application lifecycle explanation](/servers/lifecycle.html)
 - [Application configuration](/servers/configuration.html)
 - [Pipelines exlained](/advanced/pipeline)
