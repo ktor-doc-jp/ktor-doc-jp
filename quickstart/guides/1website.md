@@ -303,7 +303,7 @@ fun Application.module() {
 ## Using HTML DSL instead of FreeMarker
 
 You can choose to generate HTML directly from the code instead of using a Template Engine.
-For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact.
+For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact (see [HTML DSL] for details).
 This artifact provides an extension to respond with HTML blocks:
 
 ```kotlin
