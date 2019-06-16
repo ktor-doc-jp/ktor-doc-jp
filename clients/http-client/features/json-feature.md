@@ -71,5 +71,5 @@ val client = HttpClient(HttpClientEngine) {
 }
 ```
 
-To use this feature, you need to include `io.ktor:ktor-client-json-jvm` artifact on the jvm.
+To use this feature, you need to include `io.ktor:ktor-client-serialization-jvm` artifact on the jvm.
 {: .note.artifact }
