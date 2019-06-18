@@ -46,7 +46,7 @@ And then set the `bodyChannel`, for example, by calling the `setBody` method:
 setBody("name1=value1&name2=value%202")
 ```
 
-Ktor provides an extension method to build afrom url encoded `name1=value1&name2=value%202...`:
+Ktor provides an extension method to build a form urlencoded out of a `List` of key/value pairs:
 
 ```kotlin
 fun List<Pair<String, String>>.formUrlEncode(): String
