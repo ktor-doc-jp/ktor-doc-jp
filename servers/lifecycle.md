@@ -54,7 +54,7 @@ by using SSL, certificates and so on, with the specified workers.
 Connectors will be used for listening to specific http/https hosts and ports.
 While the `Application` pipeline will be used to handle the requests. 
 
-**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt)** : Pipeline:
+**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt) Pipeline**:
 
 It is created by the `ApplicationEngineEnvironment` and it is initially empty.
 It is a pipeline without a subject that has `ApplicationCall` as the context.
@@ -135,9 +135,9 @@ When executing a pipeline, all the registered interceptors will be executed in t
 
 ### [ApplicationCallPipeline](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationCallPipeline.kt)
 
-The server part of Ktor defines an `ApplicationCallPipeline` pipeline without a subject
+The server part of Ktor defines an `ApplicationCallPipeline` without a subject
 and with `ApplicationCall` as context.
-The `Application` instance is a `ApplicationCallPipeline`.
+The `Application` instance is an `ApplicationCallPipeline`.
 
 So when the server's application engine handles a HTTP request, it will execute the `Application`
 pipeline.
@@ -148,7 +148,7 @@ and the `attributes` and `parameters`.
 In the end, the application modules, will end registering interceptors
 for specific phases for the Application pipeline, to process the `request` and emitting a `response`.  
 
-The ApplicationCallPipeline defines the following built-in phases for its pipeline:
+The `ApplicationCallPipeline` defines the following built-in phases for its pipeline:
 
 ```kotlin
 val Setup = PipelinePhase("Setup") // Phase for preparing the call, and processing attributes
@@ -161,7 +161,7 @@ val Fallback = PipelinePhase("Fallback") // Phase for handling unprocessed calls
 ## [Features](/advanced/features)
 
 Ktor defines application features using the [`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationFeature.kt) class.
-A feature is something that you can `install` to an specific pipeline.
+A feature is something that you can `install` to a specific pipeline.
 It has access to the pipeline, and it can register interceptors and do all sorts of other things.
 
 ## Routing
@@ -174,19 +174,18 @@ Routing, like other features, is normally installed like this:
 install(Routing) { }
 ```
 
-But there is a easy method to register and start using it, that also installs it if it is already registered:
+But there is an easy method to register and start using it, that also installs it if it is already registered:
 
 ```kotlin
 routing { }
 ```
 
-Routing is defined as a tree, where each node is a Route that is also a separate instance of an ApplicationCallPipeline.
+Routing is defined as a tree, where each node is a `Route` that is also a separate instance of an `ApplicationCallPipeline`.
 So when the root routing node is executed, it will execute its own pipeline. And will stop executing things once
 the route has been processed.
 
 ## What's next
 
 - [Application calls](/servers/calls.html)
-- [Application lifecycle explanation](/servers/lifecycle.html)
 - [Application configuration](/servers/configuration.html)
 - [Pipelines exlained](/advanced/pipeline)
