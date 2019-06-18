@@ -22,12 +22,12 @@ A sample illustrating this:
 val client = HttpClient(MockEngine) {
     engine {
         addHandler { request ->
-            when (url.fullUrl) {
+            when (request.url.fullUrl) {
                 "https://example.org/" -> {
                     val responseHeaders = headersOf("Content-Type" to listOf(ContentType.Text.Plain.toString()))
                     respond("Hello, world", headers = responseHeaders)
                 }
-                else -> error("Unhandled ${url.fullUrl}")
+                else -> error("Unhandled ${request.url.fullUrl}")
             }
         }
     }
