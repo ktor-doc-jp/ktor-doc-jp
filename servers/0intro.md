@@ -143,7 +143,7 @@ Notice that routes are organized into a tree so you can declare routes structure
 
 ```kotlin
 routing {
-    rouite("profile/{id}") {
+    route("profile/{id}") {
         get("view") { TODO("...") }
         get("settings") { TODO("...") }
     }
