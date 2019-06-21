@@ -3,7 +3,7 @@ title: WebSockets
 category: clients
 caption: WebSockets
 feature:
-  artifact: io.ktor:ktor-client-websocket:$ktor_version
+  artifact: io.ktor:ktor-client-websockets:$ktor_version
   class: io.ktor.client.features.websocket.ClientWebSocketSession
   method: io.ktor.client.features.websocket.ws
 ktor_version_review: 1.2.0
