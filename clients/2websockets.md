@@ -4,7 +4,7 @@ category: clients
 permalink: /clients/websockets.html
 caption: WebSockets
 feature:
-    artifact: io.ktor:ktor-client-websocket:$ktor_version,io.ktor:ktor-client-cio:$ktor_version,io.ktor:ktor-client-js:$ktor_version,io.ktor:ktor-client-okhttp:$ktor_version
+    artifact: io.ktor:ktor-client-websockets:$ktor_version,io.ktor:ktor-client-cio:$ktor_version,io.ktor:ktor-client-js:$ktor_version,io.ktor:ktor-client-okhttp:$ktor_version
     class: io.ktor.client.features.websocket.WebSockets
 ktor_version_review: 1.2.0
 ---
