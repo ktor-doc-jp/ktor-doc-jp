@@ -52,7 +52,7 @@ shadowJar {
 plugins {
     application
     kotlin("jvm") version "1.3.21"
-    // Shadow 5.0.0 requires Gradle 5+. Check the shadow plugin manual if yo're using an older version of Gradle.
+    // Shadow 5.0.0 requires Gradle 5+. Check the shadow plugin manual if you're using an older version of Gradle.
     id("com.github.johnrengelman.shadow") version "5.0.0"
 }
 
