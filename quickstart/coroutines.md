@@ -10,7 +10,7 @@ ktor_version_review: 1.0.0
 
 Ktor makes heavy use of Kotlin 1.3 stable coroutines.
 
-Coroutines is a basic Kotlin mechanism (also called `suspend` functions), that among other things allows to do asynchronous programming that is linearly written like plain code
+Coroutines are a basic Kotlin mechanism (also called `suspend` functions), that among other things allows to do asynchronous programming that is linearly written like plain code
 instead of the traditional callback-based approach.
 
 Other modern languages expose a similar, but more specific mechanism called await-async. The Kotlin approach is more generic and flexible and it is less verbose and less error-prone
