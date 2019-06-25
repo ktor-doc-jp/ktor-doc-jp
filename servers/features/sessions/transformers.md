@@ -82,7 +82,7 @@ It is important to note that changing the key will invalidate all the sessions f
 
 The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
 an authenticated hash of the payload and verifies it. It is similar to SessionTransportTransformerDigest
-but uses a HMAC. It uses `HmacSHA1` as the default authentication algorithm, but it can be changed.
+but uses a HMAC. It uses `HmacSHA265` as the default authentication algorithm, but it can be changed.
 It doesn't encrypt the payload, but still without the key people shouldn't be able to change it.
 
 ```kotlin
