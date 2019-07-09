@@ -18,7 +18,7 @@ feature.  Initialize the FreeMarker feature with a
 
 ```kotlin
     install(FreeMarker) {
-        templateLoader = ClassTemplateLoader(TheApp::class.java.classLoader, "templates")
+        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
     }
 ```
 
