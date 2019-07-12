@@ -109,7 +109,7 @@ will have `"login"` key with value `"john"`.
 
 #### Optional, Wildcard, Tailcard
 
-Parameters and path segments can be optional or capture entire reminder of URI.
+Parameters and path segments can be optional or capture entire remainder of URI.
 
 * `{param?}` – optional path segment, if it exists its captured in the parameter
 * `*` – wildcard, any segment will match, but shouldn't be missing
