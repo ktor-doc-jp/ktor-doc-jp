@@ -2,7 +2,7 @@ repository: ktorio/ktorio.github.io
 encoding: utf-8
 output: web
 
-# this appears in the html browser tab for the site title (seen mostly by search engines, not users)
+# this appears in the html browser tab for the site title (seen mostly by search engines, not users).
 title: Ktor
 description: "Ktor"
 url: http://ktor.io
