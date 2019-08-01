@@ -33,12 +33,10 @@ fun Application.main() {
 The default configuration to the CORS feature handles only `GET`, `POST` and `HEAD` HTTP methods and the following headers:
 
 ```kotlin
-  HttpHeaders.CacheControl
+  HttpHeaders.Accept
+  HttpHeaders.AcceptLanguages
   HttpHeaders.ContentLanguage
   HttpHeaders.ContentType
-  HttpHeaders.Expires
-  HttpHeaders.LastModified
-  HttpHeaders.Pragma
 ```
 
 ## Advanced
@@ -61,8 +59,8 @@ fun Application.main() {
     // host("my-host", subDomains = listOf("www"))
     // host("my-host", schemes = listOf("http", "https"))
     allowCredentials = true
+    allowNonSimpleContentTypes = true
     maxAge = Duration.ofDays(1)
-
   }
   ...
 }
@@ -77,4 +75,6 @@ fun Application.main() {
 - `anyHost()` : Allows any host to access the resources
 - `host("hostname")` : Allows only the specified host to use CORS, it can have the port number, a list of subDomains or the supported schemes.
 - `allowCredentials` : Includes `Access-Control-Allow-Credentials` header in the response
+- `allowNonSimpleContentTypes`: Inclues `Content-Type` request header to the white list for values other than [simple content types](https://www.w3.org/TR/cors/#simple-header).
 - `maxAge`: Includes `Access-Control-Max-Age` header in the response with the given max age
+
