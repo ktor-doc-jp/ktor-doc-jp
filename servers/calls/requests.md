@@ -124,10 +124,8 @@ val queryString: String = request.queryString()
 `POST`, `PUT` and `PATCH` requests has an associated request body (the payload).
 That payload is usually encoded.
 
-All the receive methods consume the payload sent by the client.
-They won't throw an exception if you call them several times,
-but subsequent receives will be executed with an empty payload.
-So for example, `receiveText` would return an empty string starting with the second call.
+All the receive methods consume the whole payload sent by the client so an attempt to receive a request body twice
+will lead to `RequestAlreadyConsumedException` error unless you have [DoubleReceive](/servers/features/double-receive.html) feature installed.
 {: .note #receiving-several-times}
 
 ### Raw payload
