@@ -99,3 +99,5 @@ Ktor provide some content converters out of the box:
 * `application/json`
     * [GsonConverter](/servers/features/content-negotiation/gson.html)
     * [JacksonConverter](/servers/features/content-negotiation/jackson.html)
+    * [SerializationConverter](/servers/features/content-negotiation/serialization-converter.html)
+
