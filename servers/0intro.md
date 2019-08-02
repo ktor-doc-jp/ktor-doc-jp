@@ -124,9 +124,9 @@ intercept {
 ```
 
 For sure, this approach has a lot of disadvantages.
-Fortunately, there is [Routing](/servers/features/routing.html) feature for structured requests
+Fortunately, there is the [Routing](/servers/features/routing.html) feature for structured requests
 handling that does intercept application call pipeline and provides a way to register handlers for _routes_.
-Since the only Routing does is intercepting the application call pipeline, manual intercepting with Routing also works.
+Since the only thing Routing does is intercepting the application call pipeline, manual intercepting with Routing also works.
 Routing consists of a tree of routes having handlers and interceptors. A set of extension functions in ktor
 provides an easy way to register handlers like this:
 
@@ -139,7 +139,7 @@ routing {
 }
 ```
 
-Notice that routes are organized into a tree so you can declare routes structured:
+Notice that routes are organized into a tree so you can declare structured routes:
 
 ```kotlin
 routing {
