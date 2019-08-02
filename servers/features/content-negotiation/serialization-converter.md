@@ -20,7 +20,7 @@ This feature is a [ContentNegotiation](/servers/features/content-negotiation.htm
 
 ## Basic usage
 
-To install the feature by registering a JSON content convertor using Jackson:
+To install the feature by registering a JSON content convertor using kotlinx.serialization:
 
 ```kotlin
 install(ContentNegotiation) {
