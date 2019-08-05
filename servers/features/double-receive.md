@@ -12,10 +12,10 @@ keywords: receive
 ktor_version_review: 1.2.3
 ---
 
-`DoubleReceive` feature provides ability to invoke `ApplicationCall.receive` several times with no `RequestAlreadyConsumedException` exception. This usually makes sense when a feature is consuming a request body
-so a handler is unable to recevie it again.
+`DoubleReceive` feature provides the ability to invoke `ApplicationCall.receive` several times with no `RequestAlreadyConsumedException` exception. This usually makes sense when a feature is consuming a request body
+so a handler is unable to receive it again.
 
-This feature is experimental including all options and behaviour. It is not guaranteed to work the same way in the futurue releases.
+This feature is experimental including all options and behaviour. It is not guaranteed to work the same way in future releases.
 {: .note.experimental}
 
 **Table of contents:**
