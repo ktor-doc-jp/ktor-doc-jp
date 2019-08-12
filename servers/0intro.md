@@ -32,7 +32,7 @@ or provide [hot reload](/servers/autoreload.html) functionality).
 So stopping application doesn't always mean that the server is stopping:
  for example, it could be reloaded while the server keeps running.
 
-Application modules are started when an application is started one by one, and every module can configure an instance
+Application modules are started one by one when an application is started, and every module can configure an instance
 of the application. An application instance is configured by installing _features_ and intercepting _pipelines_.
 
 See [lifecycle](/servers/lifecycle.html) for more details.
