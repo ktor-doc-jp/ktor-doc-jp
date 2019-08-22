@@ -88,7 +88,7 @@ com.example.myapp.MainKt.mymodule
 
 `mymodule` is an extension method of the class `Application` (where `Application` is the *receiver*).
 Since it is defined as a top-level function, Kotlin creates a JVM class with a `Kt` suffix (`FileNameKt`),
-and adds the extension method as a static method with the received as its first parameter.
+and adds the extension method as a static method with the receiver as its first parameter.
 In this case, the class name is `MainKt` in the `com.example.myapp` package, and the Java method signature would be
 `static public void mymodule(Application app)`.
 {: .note}
