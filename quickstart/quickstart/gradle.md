@@ -212,27 +212,25 @@ You can check this in IntelliJ IDEA in the main menu:
 
     ![Ktor IntelliJ: GroupId](/quickstart/intellij-idea/groupid.png)
 
-4.  Check the checkboxes for `Use auto-import` and `Create separate module per source set`. Confirm the Use default gradle wrapper radio button is selected and that Gradle JVM is populated and click `Next`:
-
-    ![Ktor IntelliJ: Gradle Config](/quickstart/intellij-idea/gradle-config.png)
-
-5.  Complete Project name: `Example`
+4.  Complete Project name: `Example`
     and Project location: `a/path/on/your/filesystem`
     and click `Finish`:
 
     ![Ktor IntelliJ: Project Location Name](/quickstart/intellij-idea/project-location-name.png)
 
-6.  Wait a few seconds for Gradle to run, and you should see a project structure like the following (with a few other files and directories):
+5.  Wait a few seconds for Gradle to run, and you should see a project structure like the following (with a few other files and directories):
 
     ![Ktor IntelliJ: Project Structure](/quickstart/intellij-idea/project-structure.png)
 
-7.  Update your `build.gradle` file with the artifact and repositories for the classes to be available:
+6.  Update your `build.gradle` file with the artifact and repositories for the classes to be available:
     * Include `compile("io.ktor:ktor-server-netty:$ktor_version")`, in your `build.gradle`'s `dependencies` block
     * Include  `jcenter()` in your `repositories` block
 
     ![Ktor IntelliJ: Build Gradle](/quickstart/intellij-idea/build-gradle.png)
 
 For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/quickstart/gradle.html) section. 
+
+When auto-import options, shows up (likely on bottom right hand side) click allow auto-import. 
 {: .note}
 
 ## IntelliJ: Gradle Setup
