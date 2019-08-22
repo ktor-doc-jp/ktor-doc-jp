@@ -41,4 +41,4 @@ See advanced topic [Pipeline](/advanced/pipeline) for more information on the me
 
 - [Application lifecycle explanation](https://ktor.io/servers/lifecycle.html)
 - [Application configuration](https://ktor.io/servers/configuration.html)
-- [Pipelines exlained](/advanced/pipeline)
+- [Pipelines explained](/advanced/pipeline)
