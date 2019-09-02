@@ -79,7 +79,7 @@ val call = handleRequest(HttpMethod.Post, "/upload") {
                 .withParameter(ContentDisposition.Parameters.Name, "title")
                 .toString()
         )),
-        PartData.FileItem({ byteArrayOf(1, 2, 3).inputStream() }, {}, headersOf(
+        PartData.FileItem({ byteArrayOf(1, 2, 3).inputStream().asInput() }, {}, headersOf(
             HttpHeaders.ContentDisposition,
             ContentDisposition.File
                 .withParameter(ContentDisposition.Parameters.Name, "file")
