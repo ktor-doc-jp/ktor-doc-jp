@@ -1,17 +1,17 @@
 ---
-title: Overview
+title: 概要
 permalink: /index.html
 layout: home
 landing_page: true
-caption: Connected Applications with Kotlin
+caption: Kotlinによるアプリケーション間の連携
 ktor_version_review: 1.0.0
 ---
 
-Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful [Kotlin programming language](https://kotlinlang.org).
-This website provides a complete reference to the Ktor application structure and programming interface. And how to approach particular tasks.
+Ktorは、強力なプログラミング言語[Kotlin](https://kotlinlang.org)を用いて、システム間連携のため非同期なサーバーとクライアントを構築するためのフレームワークです。	
+このサイトでは、Ktorのアプリケーション構造とAPIについての完全なリファレンス、及び特定のタスクへの取り組み方を提供します。
 
-Here is the place to find the answers you are looking for and learn all about how it works.
-Search for information or explore the sections below to get started.
+ここではあなたが探している答えを探し、どのように機能するかについてのすべてを学べます。
+情報を検索するか、以下のセクションを探索して始めてみましょう。
 
 {% include search.html inline="true" %}
 
