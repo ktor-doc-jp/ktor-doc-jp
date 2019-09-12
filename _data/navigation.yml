@@ -1,25 +1,25 @@
 main:
-  - title: Quick Start
+  - title: クイックスタート
     category: quickstart
     url: /quickstart/index.html
     icon_url: '/assets/images/icon_quick-start.svg'
-    summary: Setting up the environment and starting up
+    summary: 環境と起動
     color: green
     icon: icon_gift
 
-  - title: Servers
+  - title: サーバー
     category: servers
     url: /servers/index.html
     icon_url: '/assets/images/icon_servers.svg'
-    summary: Creating web applications and services
+    summary: Webアプリケーションとサービスの作成
     color: purple
     icon: icon_cloud
 
-  - title: Clients
+  - title: クライアント
     category: clients
     url: /clients/index.html
     icon_url: '/assets/images/icon_clients.svg'
-    summary: Connecting to services and applications
+    summary: サービスとアプリケーションへの接続
     color: orange
     icon: icon_link_alt
 
@@ -27,30 +27,30 @@ main:
     category: kotlinx
     url: /kotlinx/index.html
     icon_url: '/assets/images/icon_kotlinx.svg'
-    summary: Kotlinx libraries, a set of multiplatform libraries
+    summary: マルチプラットフォーム対応ライブラリの集合であるKotlinxライブラリ
     color: blue
     icon: arrow_triangle-right_alt
 
-  - title: Samples
+  - title: サンプル
     category: samples
     url: /samples/index.html
     icon_url: '/assets/images/icon_samples.svg'
-    summary: Samples and open source projects
+    summary: サンプルおよびOSSプロジェクト
     color: primary
     icon: icon_toolbox_alt
 
-  - title: Api
+  - title: API
     category: api
     url: https://api.ktor.io
     icon_url: '/assets/images/icon_api.svg'
-    summary: API Reference
+    summary: APIリファレンス
     color: primary
     icon: icon_toolbox_alt
 
-  - title: Advanced
+  - title: 発展的トピック
     category: advanced
     url: /advanced/index.html
     icon_url: '/assets/images/icon_advanced.svg'
-    summary: Advanced topics and implementation details
+    summary: 発展的なトピックと実装の詳細
     color: red
     icon: icon_cone
