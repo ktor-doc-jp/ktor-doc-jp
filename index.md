@@ -3,7 +3,7 @@ title: 概要
 permalink: /index.html
 layout: home
 landing_page: true
-caption: Kotlinによるアプリケーション間の連携
+caption: Kotlinによるネットワーク接続アプリケーション
 ktor_version_review: 1.0.0
 ---
 
