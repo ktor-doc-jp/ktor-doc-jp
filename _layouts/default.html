@@ -3,7 +3,7 @@
 <head>
     {% for section in site.data.navigation.main %}{% if section.category == page.category %}{% assign section-title = section.title %}{% endif %}{% endfor %}
     {% if page.landing_page %}
-    <title>Ktor - asynchronous Web framework for Kotlin</title>
+    <title>Ktor - Kotlin用非同期Webフレームワーク</title>
     {% elsif section-category == page.title or page.category == null %}
     <title>{{ site.title | prepend: " - " | prepend: page.title }}</title>
     {% else %}
