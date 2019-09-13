@@ -160,7 +160,7 @@ mime types and convert types using [Accept](https://developer.mozilla.org/en-US/
  and [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) headers.
 A content converter could be registered for a particular content type for receiving and responding objects.
 There are [Jackson](/servers/features/content-negotiation/jackson.html),
- [Gson](/servers/features/content-negotiation/gson.html) and [kotlinx.serialization](https://ktor.io/servers/features/content-negotiation/serialization-converter.html)
+ [Gson](/servers/features/content-negotiation/gson.html) and [kotlinx.serialization](https://jp.ktor.work/servers/features/content-negotiation/serialization-converter.html)
  content converters available out of the box that could be plugged into the feature.
 
 Example:

@@ -39,6 +39,6 @@ See advanced topic [Pipeline](/advanced/pipeline) for more information on the me
 
 ## What's next
 
-- [Application lifecycle explanation](https://ktor.io/servers/lifecycle.html)
-- [Application configuration](https://ktor.io/servers/configuration.html)
+- [Application lifecycle explanation](https://jp.ktor.work/servers/lifecycle.html)
+- [Application configuration](https://jp.ktor.work/servers/configuration.html)
 - [Pipelines explained](/advanced/pipeline)

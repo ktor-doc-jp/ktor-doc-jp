@@ -27,7 +27,7 @@ dependencies {
 
 ## JVM
 
-To use Ktor on JVM, you have to include [one of the supported JVM Engines](https://ktor.io/clients/http-client/engines.html#jvm) to your  `build.gradle`(`build.gradle.kts`).
+To use Ktor on JVM, you have to include [one of the supported JVM Engines](https://jp.ktor.work/clients/http-client/engines.html#jvm) to your  `build.gradle`(`build.gradle.kts`).
 
 ## Android
 

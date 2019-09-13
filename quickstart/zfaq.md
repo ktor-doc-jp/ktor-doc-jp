@@ -75,8 +75,8 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 >     compile("io.ktor:ktor-server-netty:$ktor_version")
 > }
 > ```
-> * For gradle, check: <https://ktor.io/quickstart/gradle.html#engine>
-> * For maven, check: <https://ktor.io/quickstart/maven.html>
+> * For gradle, check: <https://jp.ktor.work/quickstart/gradle.html#engine>
+> * For maven, check: <https://jp.ktor.work/quickstart/maven.html>
 
 ## Does ktor provide a way to catch IPC signals (e.g. SIGTERM or SIGINT) so the server shutdown can be handled gracefully?
 {: #sigterm }
@@ -96,7 +96,7 @@ the logic implementing an IETF RFC or another protocol without relying on extern
 {: #no-attribute-key-locations }
 
 > You get this error if you try to use the locations feature without actually installing it. Check the locations feature:
-> <https://ktor.io/features/locations.html>
+> <https://jp.ktor.work/features/locations.html>
 
 ## How can I test the latest commits on master?
 {: #bleeding-edge }

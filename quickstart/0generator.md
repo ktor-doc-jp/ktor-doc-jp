@@ -9,7 +9,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-<!--<https://ktor.io/start>-->
+<!--<https://jp.ktor.work/start>-->
 
 **NOTE: You can also use the [Ktor IntelliJ plugin](/quickstart/quickstart/intellij-idea.html) instead.** This page can also be accessed at [start.ktor.io](https://start.ktor.io/).
 
