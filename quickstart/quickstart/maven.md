@@ -1,6 +1,6 @@
 ---
 title: Maven
-caption: Setting up a Maven Build
+caption: Mavenビルドの設定
 category: quickstart
 toc: true
 permalink: /quickstart/quickstart/maven.html
@@ -8,20 +8,19 @@ redirect_from:
   - /quickstart/maven.html
 ---
 
-In this guide, we will show you how to create a Maven `pom.xml` file
-and how to configure it to support Ktor.
+このガイドでは、Mavenの`pom.xml`ファイルの作成方法とKtorをサポートするための設定方法について説明します。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Basic Kotlin `pom.xml` file (without Ktor)
+## 基本的なKotlinの`pom.xml`ファイル(Ktor無し)
 {: #initial }
 
-Maven is a build automation tool used primarily for Java projects.
-It reads project configuration from `pom.xml` files.
-Here is a basic `pom.xml` file for building Kotlin applications:
+Mavenは主にJavaプロジェクトに利用される自動ビルドツールです。
+Mavenは`pom.xml`ファイルからプロジェクトの設定を読み取ります。
+以下は基本的なKotlinアプリケーションビルド用の`pom.xml`ファイルです。
 
 {% capture pom-xml %}
 ```xml
@@ -99,15 +98,14 @@ Here is a basic `pom.xml` file for building Kotlin applications:
     tab1-title="pom.xml" tab1-content=pom-xml
 %}
 
-## Add Ktor dependencies and configure build settings
+## Ktorへの依存追加とビルド設定
 {: #ktor-dependencies}
 
-Ktor artifacts are located in a specific repository on bintray.
-And its core has dependencies on the `kotlinx.coroutines` library that
-can be found on `jcenter`.
+Ktorの成果物はbintrayの特定のレポジトリに配置されています。
+そしてその核となる部分は`jcenter`にある`kotlinx.coroutines`ライブラリに依存しています。
 
-You have to add both to the `repositories` block in the `pom.xml` file:
-   
+そのためその両方を`pom.xml`ファイルの`repositories`ブロックに追加してやる必要があります。
+
 ```xml
 <repositories>
     <repository>
@@ -117,12 +115,10 @@ You have to add both to the `repositories` block in the `pom.xml` file:
 </repositories>
 ``` 
 
-Visit [Bintray](https://bintray.com/kotlin/ktor/ktor) and determine the latest version of ktor.
-In this case it is `{{site.ktor_version}}`.
+[Bintray](https://bintray.com/kotlin/ktor/ktor)サイトを見て、Ktorの最新バージョンを見つけてください。
+この場合それは `{{site.ktor_version}}`です.
 
-You have to specify that version in each Ktor artifact reference,
-and to avoid repetitions, you can specify that version in an extra property
-in the `properties` block for using it later:
+Ktorの成果物リファレンスからバージョンを指定する必要があり、重複を避けるためそのバージョンを`properties`ブロック内でextraプロパティとして指定する必要があります。
 
 ```xml
 <properties>
@@ -130,7 +126,7 @@ in the `properties` block for using it later:
 </properties>
 ```
 
-Now you have to add `ktor-server-core` artifact using the `ktor.version` you specified:
+`ktor-server-core`の成果物を追加し、あなたが決めた`ktor.version`を指定します:
  
 ```xml
 <dependency>
@@ -140,20 +136,16 @@ Now you have to add `ktor-server-core` artifact using the `ktor.version` you spe
 </dependency>
 ```
 
-## Choose your engine and configure it
+## エンジンの決定と設定
 {: #engine}
 
-Ktor can run in many environments, such as Netty, Jetty or any other
-Servlet-compatible Application Container such as Tomcat.
+Ktorは様々な環境で動作します。例えばNetty、Jetty、そのたServlet互換のあるアプリケーションコンテナ（例：Tomcat）などでです。
 
-This example shows how to configure Ktor with Netty.
-For other engines see [artifacts](/quickstart/artifacts.html) for a list of
-available artifacts.
+以下の例はKtorをNettyで動作させる例です。
+その他のエンジンについては[artifacts](/quickstart/artifacts.html)をご覧ください。
 
-You will add a dependency for `ktor-server-netty` using the
-`ktor.version` property you have created. This module provides
-Netty as a web server and all the required code to run Ktor
-application on top of it:
+`ktor-server-netty`への依存を追加し`ktor.version`プロパティを指定します。
+このモジュールはNettyを提供し、Ktorアプリケーションがその上で動作するうえでWebサーバとして動作できるようにします。
 
 ```xml
 <dependency>
@@ -163,10 +155,10 @@ application on top of it:
 </dependency>
 ```
 
-## Final `pom.xml` (with Ktor)
+## 最終的な`pom.xml`(Ktor有り)
 {: #complete}
 
-When you are done, the `pom.xml` file should look like:
+設定が終わったなら、`pom.xml`ファイルは以下のようになっているかと思います。
 
 {% capture pom-xml %}
 ```xml
@@ -266,12 +258,12 @@ When you are done, the `pom.xml` file should look like:
     tab1-title="pom.xml" tab1-content=pom-xml
 %}
 
-You can now run `mvn package` to fetch dependencies and verify everything is set up correctly.
+`mvn package`コマンドを実行することで、依存ライブラリの解決や設定の妥当性検証を行うことができます。
 
-## Configure logging
+## ログ設定
 {: #logging}
 
-If you want to log application events and useful information,
-you can read further in the [logging](/servers/logging.html) page.
+アプリケーションイベントやその他有益な情報のログを残したい場合は、[logging](/servers/logging.html)ページをご覧ください。
+
 
 
