@@ -1,34 +1,34 @@
 ---
 title: Docker
-caption: Creating Docker Container
+caption: Dockerコンテナの作成
 category: quickstart
 permalink: /quickstart/quickstart/docker.html
 redirect_from:
   - /quickstart/docker.html
 ---
 
-[Docker](https://www.docker.com) is a container platform:
-it allows packaging software in a format that can then be run in isolation in any supported operating system.
+[Docker](https://www.docker.com)はコンテナプラットフォームです。
+それを使うことで任意のオペレーティングシステムで独立した形で動くようソフトウェアのパッケージングをすることができます。
 
-Publishing a Ktor application to docker is very easy and only takes a few steps:
+KtorアプリケーションをDockerで配信することは非常に簡単で、数ステップでできます。
 
-* Install [Docker](https://www.docker.com)
-* A JAR packaging tool
+* [Docker](https://www.docker.com)のインストール
+* JARパッケージングツール
 
-In this page we will guide you through creating a docker image and publishing an application to it.
+このページではDockerイメージの作成とイメージへのアプリケーションの設置方法について説明します。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Package an application using Gradle
+## Gradleを使ったアプリケーションのパッケージング
 
-In this tutorial, we will use the Gradle [shadow plugin](https://github.com/johnrengelman/shadow).
-It packages all the output classes, resources, and all the required dependencies into a single JAR file,
-and appends a manifest file to tell Java which is the entry-point main class containing the main method. 
+このチュートリアルでは、Gradle [shadow plugin](https://github.com/johnrengelman/shadow)を使います。
+それを使うことで、全Outputクラス・resource・必要な依存ライブラリを１つのJarファイルにパッケージングでき、
+またmainメソッドを含むエントリーポイントmainクラスがどれかをJavaに知らせるマニフェストファイルも添付することができます。
 
-First, you need to add the shadow plugin dependency in your `build.gradle` file:
+初めに、shadow pluginへの依存を、`build.gradle`ファイルに追加する必要があります。
 
 ```groovy 
 buildscript {
@@ -44,24 +44,24 @@ buildscript {
 }
 ```
 
-After that, you have to apply it, along with the application plugin:
+その後、applicationプラグインと一緒にapplyする必要があります。
 
 ```groovy
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 ``` 
 
-Then specify the main class, so it knows what to run when running the java's JAR inside Docker:
+Docker内部でJavaのJARが起動する際にどれを起動すればよいのか伝えるため、mainクラスを指定します。
 
 ```groovy
 mainClassName = 'org.sample.ApplicationKt'
 ```
 
-The string is the fully qualified name of the class containing your `main` function. When `main` function is a top-level
-function in a file, the class name is the file name with the `Kt` suffix. In the example above, `main` function is in the
-file `Application.kt` in package `org.sample`.
+設定する値はmain関数を含むクラスの完全修飾名です。
+`main`関数がファイルのトップレベル関数だったときは、クラス名はファイル名に`Kt`サフィックスを付与したものになります。
+上の例だと、`main`関数は`org.sample`パッケージの`Application.kt`ファイルになります。
 
-Finally, you have to configure the shadow plugin:
+最後に、shadow pluginを設定する必要があります。
 
 ```groovy
 shadowJar {
@@ -71,13 +71,12 @@ shadowJar {
 }
 ```
 
-Now you can run `./gradlew build` to build and package your application.
-You should get `my-application.jar` in `build/libs` folder.  
+今、`./gradlew build`を実行することで、アプリケーションをビルド・パッケージングすることができます。
+`build/libs`フォルダに`my-application.jar`ができるかと思います。
 
-For more information about configuring this plugin see [documentation for the plugin](http://imperceptiblethoughts.com/shadow/)
+さらなる情報としては、[プラグインの設定方法のドキュメント](http://imperceptiblethoughts.com/shadow/)を御覧ください。
 
-So a full `build.gradle` file would look like this:
-
+完全な`build.gradle`は例えば以下のようになります。
 
 {% capture build-gradle %}
 ```groovy
@@ -180,12 +179,12 @@ fun Application.main() {
 %}
 
 
-You can check this [full example](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker) at the ktor-samples repository.
+[動作例](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker)をktor-samplesリポジトリで確認することもできます。
 {: .note }
 
-## Prepare Docker image
+## Dockerイメージの準備
 
-In the root folder of your project create a file named `Dockerfile` with the following contents:
+プロジェクトのrootフォルダ内で、`Dockerfile`という名前のファイルを以下の内容で作成してください。
 
 {% capture dockerfile %}{% include docker-sample.md %}{% endcapture %}
 {% include tabbed-code.html
@@ -193,15 +192,17 @@ In the root folder of your project create a file named `Dockerfile` with the fol
     no-height="true"
 %}
 
-Let's see what is what:
+これが何なのか見てみましょう。
 
 ```dockerfile
 FROM openjdk:8-jre-alpine
 ```
 
-This line tells Docker to base an image on a pre-built image with [Alpine Linux](https://alpinelinux.org/). You can use other images 
-from [OpenJDK registry](https://hub.docker.com/_/openjdk/). Alpine Linux benefit is that the image is pretty small. 
-We also select JRE-only image since we don't need to compile code on the image, only run precompiled classes.
+この行はDockerに対し、pre-builtイメージである[Alpine Linux](https://alpinelinux.org/)をベースにすることを伝えています。
+もちろん他のイメージを[OpenJDK registry](https://hub.docker.com/_/openjdk/)から利用することもできます。
+Alpine Linuxのメリットはイメージがとても小さいことです。
+
+また、イメージ内のコードをコンパイルする必要がなくコンパイル済みクラスの実行のみしか行わない場合、JREのみのイメージを選択するといったこともできます。
 
 ```dockerfile
 RUN mkdir /app
@@ -209,67 +210,64 @@ COPY ./build/libs/my-application.jar /app/my-application.jar
 WORKDIR /app
 ```
 
-These lines copy your packaged application into the Docker image and sets the working directory to where we copied it.
+これらの行はパッケージされたアプリケーションをDockerイメージ内にコピーし、コピー先ディレクトリをWorkingディレクトリとして指定しています。
 
 ```dockerfile
 CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "my-application.jar"]
 ```
 
-The last line instructs Docker to run `java` with G10s GC, 4G of memory and your packaged application. 
+最終行は、Dockerに`java`をオプション・パッケージしたアプリケーション指定で起動するように指定しています。
 
-## Building and running the Docker image
+## Dockerイメージのビルド・起動方法
 
-Build an application package:
+アプリケーションパッケージのビルド:
 
 ```bash
 ./gradlew build
 ```
 
-Build and tag an image:
+ビルドとイメージへのタグ付け:
 
 ```bash
 docker build -t my-application .
 ```
 
-Start an image:
+イメージの起動:
 
 ```bash
 docker run -m512M --cpus 2 -it -p 8080:8080 --rm my-application
 ```
 
-With this command, we start Docker in a foreground mode. It will wait for the server to exit, it
-will also respond to `Ctrl+C` to stop it. `-it` instructs Docker to allocate a terminal (*tty*) to pipe the stdout
-and to respond to the interrupt key sequence. 
+このコマンドでDockerをforegroundモードで実行できます。
+サーバーが終了するのを待ち、また`Ctrl+C`を押すことでも終了することができるモードです。
+`-it`オプションを使うことでDockerにターミナル(*tty*)を割り当て、stdoutをパイプし、キー割り込みに反応するようにすることができます。
 
-Since our server is running in an isolated container now, we should tell Docker to expose a port so we can
-actually access the server port. Parameter `-p 8080:8080` tells Docker to publish port 8080 from inside a container as a port 8080 on a local
-machine. Thus, when you tell your browser to visit `localhost:8080` it will first reach out to Docker, and it will bridge
-it into internal port `8080` for your application. 
+サーバーが独立したコンテナ内で今動いているため、Dockerに実際にサーバーにアクセスするためのportを開けるように指定する必要があります。
+パラメーター`-p 8080:8080`はDockerにコンテナ内部のport番号8080を、ローカルマシンのport番号8080番として利用可能にするよう指定します。
+それゆえに`localhost:8080`にブラウザ経由でアクセスした際、最初にDockerに到達した上でアプリケーションの`8080`番ポートにブリッジされます。
 
-You can adjust memory with `-m512M` and number of exposed cpus with `--cpus 2`. 
+`-m512M`オプションでメモリを、`--cpus 2`オプションでCPU数を割当てできます。
 
-By default a container’s file system persists even after the container exits, so we supply `--rm` option to prevent
-garbage piling up.
+デフォルトでは、コンテナのファイルシステムはコンテナが終了後も残るようになっていますが、`--rm`オプションをつけることでゴミファイルが残ることを防げます。
 
-For more information about running a docker image please consult [docker run](https://docs.docker.com/engine/reference/run) 
-documentation.
+Dockerイメージの起動についてのさらなる情報は[docker runに関するドキュメント](https://docs.docker.com/engine/reference/run)をご覧ください。
 
-## Pushing docker image 
+## DockerイメージのPush
 
-Once your application is running locally successfully, it might be a time to deploy it:
+アプリケーションがローカルで無事起動したならば、次はそれをデプロイしてみましょう。
 
 ```bash
 docker tag my-application hub.example.com/docker/registry/tag
 docker push hub.example.com/docker/registry/tag
 ```
- 
-These commands will tag your application for a registry and push an image. 
-Of course, you need to replace `hub.example.com/docker/registry/tag` with an actual URL for your registry.
 
-We won't go into details here since your configuration might require authentication, specific configuration options 
-and even special tools. Please consult your organization or cloud platform, or 
-check [docker push](https://docs.docker.com/engine/reference/commandline/push/) documentation.
+これらのコマンドはアプリケーションにタグ付けと、ImageのPushをしています。 
+もちろん、`hub.example.com/docker/registry/tag`をあなたのレジストリの実際のURLと置き換えることもできます。
 
-## Sample
+ここでは詳細に触れませんが、認証や特定のオプションや特定のツールに関する設定が必要とされることもあります。
+あなたの組織やクラウドプラットフォームの情報を探してみたり、[docker pushに関するドキュメント](https://docs.docker.com/engine/reference/commandline/push/)を確認してみてください。
 
-You can check a [full sample](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker) at the ktor-samples repository.
+## サンプル
+
+[動作サンプル](https://github.com/ktorio/ktor-samples/tree/master/deployment/docker)はktor-samplesリポジトリで確認できます。
+
