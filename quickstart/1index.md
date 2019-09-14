@@ -1,6 +1,6 @@
 ---
-title: Quick Start
-caption: QuickStart
+title: クイックスタート
+caption: クイックスタート
 category: quickstart
 toc: true
 permalink: /quickstart/index.html
@@ -10,44 +10,44 @@ ktor_version_review: 1.0.0
 
 ![Ktor logo](/assets/images/ktor_logo.svg){:style="width:134px;height:56px;"}
  
-Ktor is a framework to easily build connected applications – web applications, HTTP services, mobile and browser applications.
-Modern connected applications need to be asynchronous to provide the best experience to users, and Kotlin coroutines provide
-awesome facilities to do it in an easy and straightforward way. 
+Ktorを使えばWebアプリケーション、HTTPサービス、モバイルアプリ、ブラウザアプリケーションといったネットワーク接続アプリケーションを簡単に構築できます。
+モダンなネットワーク接続アプリケーションはユーザに最適な体験を提供するため非同期である必要があり、Kotlinコルーチンはこれを簡単かつ直接的な方法で解決する素晴らしい手段です。
 
-While not yet entirely there, the goal of Ktor is to provide an end-to-end multiplatform application framework for connected applications. 
-Currently, JVM client and server scenarios are supported, as well as JavaScript, iOS and Android clients, and we are working on bringing server facilities to native
-environments, and client facilities to other native targets.
+まだまだ道のりは遠いですが、Ktorのゴールはネットワーク接続アプリケーション用のMultiplatformアプリケーションフレームワークになることです。
 
-**Table of contents:**
+現在、JVMクライアントとJVMサーバーをサポートしており、また、Javascript, iOS, Androindクライアントも同様にサポートしています。
+また、サーバー・クライアントの機能をNativeにおいても利用できるようにしているところです。
+
+**目次:**
 
 * TOC
 {:toc}
 
-## Set up a Ktor project
+## Ktorプロジェクトのセットアップ
 
-You can set up a Ktor project using [Maven](/quickstart/quickstart/maven.html), [Gradle](/quickstart/quickstart/gradle.html), [start.ktor.io](/quickstart/generator.html#) and the [IntelliJ Plugin](/quickstart/quickstart/intellij-idea.html).
+あなたはKtorプロジェクトを[Maven](/quickstart/quickstart/maven.html)や [Gradle](/quickstart/quickstart/gradle.html)や[start.ktor.io](/quickstart/generator.html#)や[IntelliJ Plugin](/quickstart/quickstart/intellij-idea.html)を使ってセットアップできます。
 
-The plugin allows you to create a Ktor project as well as [start.ktor.io](/quickstart/generator.html#), but with the additional convenience of being fully integrated in the IDE.
+なお、IntelliJプラグインの場合[start.ktor.io](/quickstart/generator.html#)同様にKtorプロジェクトを作れるだけでなく、IDEとの統合のための便利な追加部分もあります。
 
-### 1) In a first step, you can configure the project to generate and select features to install:
+### 1) 最初のステップとして、プロジェクトを作成するための設定をし、インストールする機能を選択します
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png){: width="100%" }
 
-### 2) In a second step, you can configure the project artifacts:
+### 2) 次のステップとして、プロジェクトの成果物の設定をします
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png){: width="100%" }
 
-And that's it. A new project will be created and opened inside your IDE.
+それで終わりです。新しいプロジェクトが作成され、IDEにより開かれます。
 
 ## Hello World
 
-A simple hello world in Ktor looks like this:
+Ktorによる単純なHello Worldプログラムは以下のようになります。
 
 ![Ktor Hello World](/quickstart/1/ktor_hello_world_main.png){: width="100%" }
 
-1. Here you define a plain callable *main method*.
-2. Then you create an embedded *server using Netty* as the back-end that will listen on *port 8080*.
-3. Installs the *routing feature* with a block where you can define routes for specific paths and HTTP methods.
-4. Actual routes: In this case, it will handle a *GET request* for the path `/demo`, and will reply with a `HELLO WORLD!` message.
-5. Actually *start the server* and wait for connections.
+1. ここに普通のMainメソッドを定義します
+2. 次にNettyを使った組み込みサーバをバックエンドとして作成し、8080番ポートをリッスンするようにします。
+3. ブロックで所定のパスやHTTPメソッドを指定した上で、Routing機能をインストールします。
+4. 実際のルーティングはこの場合`/demo`への*GET request*で、`HELLO WORLD!`というメッセージが返信されます。
+5. 実際にサーバーを起動し、接続を待ちます
 
 {% capture main-kt %}
 ```kotlin
@@ -80,36 +80,37 @@ fun main(args: Array<String>) {
 %}
 
 
-## Accessing your application
+## アプリケーションへのアクセス方法
 
-Since you have a main method, you can execute it with your IDE. That will open a HTTP server,
-listening on [http://127.0.0.1:8080](http://127.0.0.1:8080/), You can try opening it with your favorite web browser.
+Mainメソッドがあるなら、IDEでそれを実行することができます。
+そうすることでHTTPサーバーが起動され、[http://127.0.0.1:8080](http://127.0.0.1:8080/)がリッスンされます。
+あなたのお気に入りのブラウザでそのアドレスを開くことができます。
 
-If that doesn't work, maybe your computer is using that port already. You can try changing the
-port 8080 (in line 10) and adjust it as needed.
+もしうまくいかなければ、あなたのPC内でそのポートをすでに使っているかもしれません。
+8080（10行目）番ポートから別のポートに必要に応じて変えることができます。
 {: .note}
 
 ![Ktor Hello World Browser](/quickstart/1/screenshot.png){: width="50%""}
 
-At this point you should have a very simple Web Back-end running, so you can make changes,
-and see the results in your browser.
+この時点であなたはとても単純なWebのバックエンドを動作させており、変更を加えることでその結果をあなたのブラウザ上で見ることができます。
 
-Since you have configured a Gradle project with the application plugin and the `mainClassName`,
-you can also run it from a terminal using `./gradlew run` on Linux/Mac, or `gradlew run` on a Windows machine.
+applicationプラグインと`mainClassName`フィールドでGradleプロジェクトの設定を済ませていれば、
+ターミナルから`./gradlew run`コマンド（Linux/Macの場合。Windowsは`gradlew run`）でも起動することができます。
 {:.note}
 
 {::comment}
-## Next step
 
-Now we are ready for the next step. *What kind of application are you developing?*
+## 次のステップ
 
-1. [RESTful API: Let's serve a *data class* as JSON](/quickstart/restful.html)
-2. Web Application:
-    * [Let's describe and serve some HTML, fully typed, using kotlinx.html the DSL way](/quickstart/html-dsl.html)
-    * [Let's serve some HTML using FreeMarker template engine](/quickstart/html-freemarker.html)
+これで次のステップの準備が整いました。*どんな種類のアプリケーションをあなたは開発しているのでしょうか？*
+
+1. [RESTful API: *data class*をJSONとして提供する方法](/quickstart/restful.html)
+2. Webアプリケーション:
+    * [HTMLをkotlinx.htmlを使ったDSLで型安全に配信する方法](/quickstart/html-dsl.html)
+    * [HTMLをFreeMarkerテンプレートエンジンを使って配信する方法](/quickstart/html-freemarker.html)
     
 {:/comment}
 
-## Walkthroughs
+## 関連記事
 
 {% include category-list.html %}
