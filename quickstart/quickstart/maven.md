@@ -15,7 +15,7 @@ redirect_from:
 * TOC
 {:toc}
 
-## 基本的なKotlinの`pom.xml`ファイル(Ktor無し)
+## 基本的なKotlinの`pom.xml`ファイル(Ktor設定無し)
 {: #initial }
 
 Mavenは主にJavaプロジェクトに利用される自動ビルドツールです。
@@ -155,7 +155,7 @@ Ktorは様々な環境で動作します。例えばNetty、Jetty、そのたSer
 </dependency>
 ```
 
-## 最終的な`pom.xml`(Ktor有り)
+## 最終的な`pom.xml`(Ktor設定有り)
 {: #complete}
 
 設定が終わったなら、`pom.xml`ファイルは以下のようになっているかと思います。

@@ -1,6 +1,6 @@
 ---
 title: Gradle
-caption: Setting up a Gradle Build
+caption: Gradleビルドの設定
 category: quickstart
 toc: true
 permalink: /quickstart/quickstart/gradle.html
@@ -10,22 +10,20 @@ redirect_from:
   - /quickstart/quickstart/intellij-idea/plugin.html
 ---
 
-In this guide, we will show you how to create a `build.gradle` file
-and how to configure it to support Ktor.
+このガイドでは`build.gradle`ファイルの作成方法とKtorをサポートするための設定方法について説明します。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Basic Kotlin `build.gradle` file (without Ktor)
+## 基本的なKotlinの`build.gradle`ファイル(Ktor設定無し)
 {: #initial }
 
-First of all, you need a skeleton `build.gradle` file including Kotlin.
-You can create it with any text editor, or you can use IntelliJ to create
-it following the [IntelliJ guide](/quickstart/quickstart/intellij-idea.html).
+まず初めに、Kotlinを含むスケルトンの`build.gradle`ファイルが必要です。
+任意のテキストエディタで作成できますし、IntelliJを使う場合は[IntelliJ guide](/quickstart/quickstart/intellij-idea.html)の方法で作成できます。
 
-The initial file looks like this:
+最初のファイルは以下のような見た目になります:
 
 {% capture build-gradle %}
 ```groovy
@@ -63,39 +61,37 @@ dependencies {
     tab1-title="build.gradle" tab1-content=build-gradle
 %}
 
-## Add Ktor dependencies and configure build settings
+## Ktorへの依存の追加とビルド設定
 {: #ktor-dependencies}
 
-Ktor artifacts are located in a specific repository on bintray.
-And its core has dependencies on the `kotlinx.coroutines` library that
-can be found on `jcenter`.
+Ktorの成果物はbintrayのレポジトリに配置されています。
+そしてその核の部分は`kotlinx.coroutines`ライブラリに依存しており、それは`jcenter`リポジトリ内にあります。
 
-You have to add both to the `repositories` block in the `build.gradle` file:
+そのため両方のリポジトリを`build.gradle`ファイルの`repositories`ブロックに追加する必要があります:
 
 ```groovy
 jcenter()
 ```
 
-You have to specify that version in each Ktor artifact reference,
-and to avoid repetitions, you can specify that version in an extra property
-in the `buildscript` block (or in a `gradle.properties` file) for using it later:
+Ktorの成果物の参照ごとにバージョンを指定する必要があります。
+重複を避けるため、`buildscript`ブロック内のextraプロパティ（または`gradle.properties`ファイル内）にバージョンを指定するとそれを後で使うことができます。
 
 ```groovy
 ext.ktor_version = '{{site.ktor_version}}'
 ```
 
-Now you have to add the `ktor-server-core` artifact, referencing the `ktor_version` you specified:
+`ktor-server-core`を設定したバージョン`ktor_version`で追加する必要があります。
 
 ```groovy
 compile "io.ktor:ktor-server-core:$ktor_version"
 ```
 
-In groovy, there are single-quoted strings (instead of characters)
-and double-quoted strings, to be able to interpolate variables like
-versions, you have to use double-quoted strings.
+groovyにおいては、シングルクオートの文字列とダブルクオートの文字列があり、
+ダブルクオートの文字列においては上のバージョン値のような変数の展開ができます。
+そのためダブルクオートの文字列を使う必要があります。
 {: .note.tip }
 
-You need to tell the Kotlin compiler to generate bytecode compatible with Java 8:
+KotlinコンパイラーにJava8互換のバイトコードの生成をすることを伝える必要があります。
 {: #java8}
 
 ```groovy
@@ -107,29 +103,26 @@ compileTestKotlin {
 }
 ```
 
-## Choose your engine and configure it
+## エンジンの選択と設定
 {: #engine}
 
-Ktor can run in many environments, such as Netty, Jetty or any other
-Servlet-compatible Application Container such as Tomcat.
+Ktorは様々な環境で動作します。
+例えばNetty、Jetty、その他Servlet互換のアプリケーションコンテナ（例：Tomcat）などです。
 
-This example shows you how to configure Ktor with Netty.
-For other engines see [artifacts](/quickstart/artifacts.html) for a list of
-available artifacts.
+以下の例はNettyベースでKtorを設定する方法です。
+その他のエンジンについては[成果物](/quickstart/artifacts.html)をご覧ください。
 
-You will add a dependency for `ktor-server-netty` using the
-`ktor_version` property you have created. This module provides
-a Netty web server and all the required code to run Ktor
-application on top of it:
+`ktor-server-netty`への依存を追加し、前に定義した`ktor_version`プロパティを指定します。
+このモジュールはNettyによるWebサーバと、その上でKtorが動く上で必要なコードを提供します。
 
 ```groovy
 compile "io.ktor:ktor-server-netty:$ktor_version"
 ```
 
-## Final `build.gradle` (with Ktor)
+## 最終的な`build.gradle`ファイル(Ktor設定有り)
 {: #complete}
 
-When you are done, the `build.gradle` file should look like this:
+設定が完了すれば、`build.gradle`ファイルは以下のようになっているかと思います:
 
 {% capture build-gradle %}
 ```groovy
@@ -181,65 +174,63 @@ dependencies {
     tab1-title="build.gradle" tab1-content=build-gradle
 %}
 
-You can now run Gradle (just `gradle` or `./gradlew` if using the wrapper)
-to fetch dependencies and verify everything is set up correctly.
+Gradleを起動することで依存の解決と設定の妥当性検証を行うことができます。（起動は`gradle`コマンドか、gradle wrapperを利用する場合は`./gradlew`）
 
-This tutorial will guide you from the most basic setup through to a full
-featured setup you can use to start developing your app.
+以下のチュートリアルでは最も基本的な設定から、アプリケーション開発を始める際に使える機能を盛り込んだ設定までお見せします。
 
-## IntelliJ: Prerequisites
+## IntelliJ: 事前要件
 
-1.  The most recent version of IntelliJ IDEA
-2.  Kotlin and Gradle plugins enabled (They should be enabled by default.)
+1.  最新バージョンのIntelliJ IDEAがインストールされていること
+2.  Kotlinプラグイン、Gradleプラグインが有効になっていること(デフォルトでは有効です)
 
-You can check this in IntelliJ IDEA in the main menu:
+IntelliJ IDEAのメインメニューで以下の場所からチェックできます。
 * Windows: `File -> Settings -> Plugins`
 * Mac: `IntelliJ IDEA -> Settings -> Plugins`
 
-## IntelliJ: Start a Project
+## IntelliJ: プロジェクトの開始
 
 1.  `File -> New -> Project`:
 
     ![Ktor IntelliJ: File New Project](/quickstart/intellij-idea/file-new-project.png)
 
-2.  Select Gradle and under Additional Libraries and Frameworks, check Java and Kotlin (Java).  Confirm that Project SDK is completed and click `Next`:
+2.  `Gradle`を選択し、`Additional Libraries and Frameworks`の下にある`Java`と`Kotlin (Java)`をチェックします。プロジェクトのSDKを確認し`Next`をクリックします:
 
     ![Ktor IntelliJ: Gradle Kotlin JVM](/quickstart/intellij-idea/gradle-kotlin-jvm.png)
 
-3.  Enter a GroupId: `Example`
-    and ArtifactId: `Example`
-    and click Next:
+3.  GroupIdを入れます: `Example`
+    ArtifactIdを入れます: `Example`
+    Nextをクリックします:
 
     ![Ktor IntelliJ: GroupId](/quickstart/intellij-idea/groupid.png)
 
-4.  Complete Project name: `Example`
-    and Project location: `a/path/on/your/filesystem`
-    and click `Finish`:
+4.  Project名を入れます: `Example`
+    Projectのファイルパスを指定します: `a/path/on/your/filesystem`
+    `Finish`をクリックします:
 
     ![Ktor IntelliJ: Project Location Name](/quickstart/intellij-idea/project-location-name.png)
 
-5.  Wait a few seconds for Gradle to run, and you should see a project structure like the following (with a few other files and directories):
+5.  Gradleが動き出すまで数秒待ちます。そうすると以下のようにプロジェクト構造が見れるようになります。:
 
     ![Ktor IntelliJ: Project Structure](/quickstart/intellij-idea/project-structure.png)
 
-6.  Update your `build.gradle` file with the artifact and repositories for the classes to be available:
-    * Include `compile("io.ktor:ktor-server-netty:$ktor_version")`, in your `build.gradle`'s `dependencies` block
-    * Include  `jcenter()` in your `repositories` block
+6.  `build.gradle`ファイルの成果物やリポジトリ設定を更新します:
+    * `compile("io.ktor:ktor-server-netty:$ktor_version")`を`build.gradle`の`dependencies`ブロックに追加
+    * `jcenter()`を`repositories`ブロックに追加
 
     ![Ktor IntelliJ: Build Gradle](/quickstart/intellij-idea/build-gradle.png)
 
-For a more detailed guide on setting up the `build.gradle` file, check the [Getting Started with Gradle](/quickstart/quickstart/gradle.html) section. 
+`build.gradle`の設定に関する詳細な説明は[Gradleビルドの設定](/quickstart/quickstart/gradle.html)をご覧ください。
 
-When auto-import options, shows up (likely on bottom right hand side) click allow auto-import. 
+Auto Importオプションを設定したい場合、右下のほうにAuto Importの設定を設定を促す通知が出てくるのでクリックすることで設定を行うことができます。 
 {: .note}
 
-## IntelliJ: Gradle Setup
+## IntelliJ: Gradleのセットアップ
 
-This section assumes you have some basic knowledge of Gradle. If you have never used Gradle,
-gradle.org provides [several guides](https://guides.gradle.org/building-java-applications/) to help you get started.
+このセクションはGradleについての基本的な知識を持っている人を想定しています。
+Gradleをもし使ったことがなければ、gradle.orgがGradleを始める上で有効な[いくつかのガイド](https://guides.gradle.org/building-java-applications/)を提供してくれています。
 {: .note}
 
-You can set-up a simple Ktor application using Gradle like this:
+単純なKtorアプリケーションを以下のようにしてセットアップすることができます。
 
 ![Ktor Build with Gradle](/quickstart/1/ktor_build_gradle.png)
 
@@ -330,29 +321,30 @@ dependencies {
 Text version:
 {% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
-Since Ktor is not yet 1.0, we have custom Maven repositories for distributing our early preview artifacts.
-You have to set up a couple of repositories as shown below, so your tools can find Ktor artifacts and dependencies.
+Ktorが1.0になる前、カスタムのMavenリポジトリをearly previewの成果物を配布するために用意していました。
+以下に示すようないくつかのリポジトリを指定することでそれらを参照することができるようになります。
 
-Of course, don't forget to include the actual artifact! For our quickstart, we are using the `ktor-server-netty` artifact.
-That includes Ktor's core, netty, and the ktor-netty connector as transitive dependencies.
-You can, of course, include any additional dependencies that you need.
+もちろん、実際の成果物を含めることも忘れてはいけません。
+Quickstartのページでは、`ktor-server-netty`を使いました。
+その成果物はKtorのコア部分、Netty、KtorとNettyとのコネクタを推移的依存として含んでいます。
+もちろんその他の依存を好きに追加することができあｍす。
 
-Since Ktor is designed to be modular, you will require additional artifacts and potentially other repositories
-for specific features. You can find the required artifacts (and repositories where required) for each feature in the
-specific feature documentation.
+Ktorはモジュール化した設計になっているため、追加で他のリポジトリにある成果物から特定の機能を追加することもできます。
+必要な成果物（およびそれを配布するリポジトリ）を機能ごとに探す必要があります。
 {:.note}
 
-## IntelliJ: Create the App
+## IntelliJ: アプリケーションの作成
 
-Select the `src/main/kotlin` directory and create a new package.  We will call it `blog`.
+`src/main/kotlin`ディレクトリを選択し、新しいパッケージを作成します。
+新しいパッケージ名は`blog`にします。
 
-Select that directory and create a new kotlin file under it named `BlogApp`
+ディレクトリを選択し、その下に`BlogApp`という名前で新しいファイルを作成します。
 
 ![Ktor IntelliJ: Create Kotlin File](/quickstart/intellij-idea/create-kotlin-file.png)
 
 ![Ktor IntelliJ: Create Kotlin File Name](/quickstart/intellij-idea/create-kotlin-file-name.png)
 
-Copy and paste in the most basic setup for an app so that it looks like:
+以下のコードをコピーアンドペーストします。
 
 {% capture blog-app %}
 ```kotlin
@@ -384,28 +376,26 @@ fun main(args: Array<String>) {
 
 ![Ktor IntelliJ: Program](/quickstart/intellij-idea/program.png)
 
-Now you can Run '`blog.BlogAppKt`'. You can do it, by pressing the glutter icon with the **🐞**{: style="transform:rotate(90deg);display:inline-block;"} symbol and selecting `Debug 'blog.BlogAppKt'`:
+これで'`blog.BlogAppKt`'を起動できるようになりました。
+the **🐞**{: style="transform:rotate(90deg);display:inline-block;"}がついているアイコンを押し、`Debug 'blog.BlogAppKt'`を選択します。
 
 ![Ktor IntelliJ: Program Run](/quickstart/intellij-idea/program-run.png)
 
-This will also create a run configuration in the upper-right part of IntelliJ, that will allow running
-this configuration again easily:
+これによってIntelliJの右上部に起動設定も作成され、再度同じ設定で簡単に実行できるようになります。
 
 ![Ktor IntelliJ: Program Run Config](/quickstart/intellij-idea/program-run-config.png)
 
-This will start the Netty web server.
-In your browser enter the URL:  localhost:8080
-And you should see your example blog page.
+これによりNettyによるWebサーバが起動します。
+ブラウザでURL`localhost:8080`を入力することでブログサンプルページを見ることができるようになります。
 
 ![Ktor IntelliJ: Website](/quickstart/intellij-idea/website.png)
 
-## IntelliJ: Improve the app with the Application object
+## IntelliJ: アプリケーションオブジェクトを使うことで改善
 
-The setup above has a lot of nested blocks and is not ideal for starting to 
-add functionality to your app.  We can improve it by using the Application object 
-and referring to that from an embeddedServer call in the main function.  
+上で行ったせて地はたくさんのネストブロックが発生するため、アプリケーションに機能を追加していく上で理想的ではない状況です。
+そこでApplicationオブジェクトを使いそれをmain関数内のembeddedServerから参照することで、その点を改善することができます。
 
-Change your code in BlogApp.kt to the following to try this:
+BlogApp.kt内のコードを以下のように変更し試してみてください:
 
 {% capture blog-app %}
 ```kotlin
@@ -440,9 +430,11 @@ fun main(args: Array<String>) {
     no-height="true"
 %}
 
-## IntelliJ: Extract out Configuration Data
+## IntelliJ: 設定データの切り出し
 
-Although we can designate some application configuration data in the main function embeddedServer call, we can provide more flexibility for future deployments and changes by extracting this out to a separate configuration file.  In the `src/main/resources` directory we will create a new text file named `application.conf` with the following content:
+上のコードではmain関数のembeddedServer内でアプリケーション設定を行うようになっていますが、
+別の設定ファイルに切り出すことで将来的なデプロイや変更に対しより柔軟性をもたせることができるようになります。
+`src/main/resources`ディレクトリ内において、`application.conf`という名前で以下の内容のテキストファイルを新規作成します:
 
 {% capture application-conf %}
 ```kotlin
@@ -463,9 +455,12 @@ ktor {
     no-height="true"
 %}
 
-Then we delete the main function from `BlogApp.kt` and change `fun Application.module()` to `fun Application.main()`.  However, if we run the application now, it will fail with an error message like "Top-level function 'main' not found in package blog."  Our `Application.main()` function is now a function extension and does not qualify as a top-level main function.   
+その後`BlogApp.kt`からmain関数を削除し、`fun Application.module()`を`fun Application.main()`に変更します。
+しかし、今アプリケーションを起動しても、"Top-level function 'main' not found in package blog." というエラーメッセージとともに失敗します。
+`Application.main()`関数は今拡張関数でありトップレベルのmain関数として認識できないからです。
 
-This requires us to indicate a new main class as IntelliJ IDEA will no longer be able to find it automatically.  In `build.gradle` we add:
+IntelliJ IDEAは自動的に認識はできないので、新しいmainクラスを指定してやる必要があります。
+`build.gradle`に以下のように追加します:
 
 {% capture gradle-groovy-build %}
 ```groovy
@@ -495,13 +490,12 @@ application {
 
 {% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
-And then go to `Run -> Edit Configurations` select the `blog.BlogAppKt` configuration and change its Main class to:
-`io.ktor.server.netty.EngineMain`
+その後`Run -> Edit Configurations`を開き、`blog.BlogAppKt`の設定を選択し、mainクラスを`io.ktor.server.netty.EngineMain`に変更します。
 
-Now when we run the new configuration, the application will start again.
+新しい設定で起動すると、アプリケーションが再び起動できるようになります。
 
-## Configure logging
+## ログ設定
 {: #logging}
 
-If you want to log application events and useful information,
-you can read about it further in the [logging](/servers/logging.html) page.
+アプリケーションイベントやその他有益な情報をログ出力したい場合は、[ロギング](/servers/logging.html)ページをご覧ください。
+
