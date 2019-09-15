@@ -1,13 +1,13 @@
 ---
-title: Authenticate
+title: 認証
 category: samples
 permalink: /samples/feature/auth.html
-caption: Example of Using Authentication 
+caption: 認証の例
 redirect_from:
   - /samples/auth.html
 ---
 
-Browse the source code on GitHub: [ktor-samples/feature/auth](https://github.com/ktorio/ktor-samples/tree/master/feature/auth)
+GitHub上のソースコード[ktor-samples/feature/auth](https://github.com/ktorio/ktor-samples/tree/master/feature/auth)をご覧ください。
 
 {% include sample.html paths='
     feature/auth/src/io/ktor/samples/auth/BasicAuthApplication.kt,

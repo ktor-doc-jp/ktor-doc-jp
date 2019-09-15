@@ -1,13 +1,13 @@
 ---
-title: Embedded
+title: 組み込みアプリケーション
 category: samples
 permalink: /samples/deployment/netty-embedded.html
-caption: Example of Creating an Embedded Application
+caption: 組み込みアプリケーションの作成例
 redirect_from:
   - /samples/embedded.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-embedded](https://github.com/ktorio/ktor-samples/tree/master/deployment/netty-embedded)
+GitHub上のソースコード[ktor-samples-embedded](https://github.com/ktorio/ktor-samples/tree/master/deployment/netty-embedded)をご覧ください。
 
 {% include sample.html paths = '
     deployment/netty-embedded/src/Main.kt,
