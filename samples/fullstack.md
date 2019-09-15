@@ -1,8 +1,8 @@
 ---
-title: FullStack
+title: フルスタック
 category: samples
 permalink: /samples/fullstack.html
-caption: Example of a FullStack Application
+caption: フルスタックアプリケーション例
 ---
 
-Browse the source code on GitHub: [Kotlin/kotlin-fullstack-sample](https://github.com/Kotlin/kotlin-fullstack-sample)
+GitHub上のソースコード[Kotlin/kotlin-fullstack-sample](https://github.com/Kotlin/kotlin-fullstack-sample)をご覧ください。

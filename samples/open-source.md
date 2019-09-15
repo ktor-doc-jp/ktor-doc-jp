@@ -1,8 +1,8 @@
 ---
-title: Open Source
+title: オープンソース
 category: samples
 permalink: /samples/open-source.html
-caption: Explore Open Source Projects  
+caption: オープンソースプロジェクトを検索
 ---
 
 * [Javanese.Online](https://github.com/JavaneseOnline/JavaneseBackend)

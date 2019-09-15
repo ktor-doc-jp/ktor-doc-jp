@@ -1,11 +1,11 @@
 ---
-title: FullStack MPP
+title: フルスタックのMPPプロジェクト
 category: samples
 permalink: /samples/fullstack-mpp.html
-caption: Example of a FullStack Multiplatform Application
+caption: フルスタックなMultiplatformアプリケーション例
 ---
 
-Browse the source code on GitHub: [ktor-samples-fullstack-mpp](https://github.com/ktorio/ktor-samples/tree/master/mpp/fullstack-mpp)
+GitHub上の[ktor-samples-fullstack-mpp](https://github.com/ktorio/ktor-samples/tree/master/mpp/fullstack-mpp)をご覧ください。
 
 {% include sample.html paths='
     mpp/fullstack-mpp/src/backendMain/kotlin/BackendCode.kt,
