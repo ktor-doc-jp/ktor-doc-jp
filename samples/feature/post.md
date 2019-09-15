@@ -7,7 +7,7 @@ redirect_from:
   - /samples/post.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-post](https://github.com/ktorio/ktor-samples/blob/master/feature/post)
+GitHub上のソースコード[ktor-samples-post](https://github.com/ktorio/ktor-samples/blob/master/feature/post)をご覧ください。
 
 {% include sample.html paths='
     feature/post/src/PostApplication.kt

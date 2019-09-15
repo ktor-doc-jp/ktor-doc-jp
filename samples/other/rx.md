@@ -4,7 +4,7 @@ category: samples
 caption: Reactive eXtensions
 ---
 
-Browse the source code on GitHub: [ktor-samples-rx](https://github.com/ktorio/ktor-samples/tree/master/other/rx)
+GitHub上のソースコード[ktor-samples-rx](https://github.com/ktorio/ktor-samples/tree/master/other/rx)をご覧ください。
 
 {% include sample.html paths='
     other/rx/src/RxApplication.kt,

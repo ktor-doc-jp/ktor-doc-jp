@@ -7,7 +7,7 @@ redirect_from:
   - /samples/locations.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-locations](https://github.com/ktorio/ktor-samples/tree/master/feature/locations)
+GitHub上のソースコード[ktor-samples-locations](https://github.com/ktorio/ktor-samples/tree/master/feature/locations)をご覧ください。
 
 {% include sample.html paths='
     feature/locations/src/LocationsApplication.kt

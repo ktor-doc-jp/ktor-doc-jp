@@ -4,7 +4,7 @@ category: samples
 caption: Maven with Netty
 ---
 
-Browse the source code on GitHub: [ktor-samples-maven-netty](https://github.com/ktorio/ktor-samples/tree/master/other/maven-netty)
+GitHub上のソースコード[ktor-samples-maven-netty](https://github.com/ktorio/ktor-samples/tree/master/other/maven-netty)をご覧ください。
 
 {% include sample.html paths='
     other/maven-netty/pom.xml,

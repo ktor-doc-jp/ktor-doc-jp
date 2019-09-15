@@ -7,6 +7,6 @@ redirect_from:
   - /samples/jackson.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-jackson](https://github.com/ktorio/ktor-samples/tree/master/feature/jackson)
+GitHub上のソースコード[ktor-samples-jackson](https://github.com/ktorio/ktor-samples/tree/master/feature/jackson)をご覧ください。
 
 {% include sample.html paths = 'feature/jackson/src/JacksonApplication.kt' %}

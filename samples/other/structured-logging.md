@@ -4,7 +4,7 @@ category: samples
 caption: Structured Logging
 ---
 
-Browse the source code on GitHub: [ktor-samples-structured-logging](https://github.com/ktorio/ktor-samples/tree/master/other/structured-logging)
+GitHub上のソースコード[ktor-samples-structured-logging](https://github.com/ktorio/ktor-samples/tree/master/other/structured-logging)をご覧ください。
 
 {% include sample.html paths='
     other/structured-logging/src/Application.kt,

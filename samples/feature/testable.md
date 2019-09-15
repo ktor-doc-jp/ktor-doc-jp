@@ -7,7 +7,7 @@ redirect_from:
   - /samples/testable.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable)
+GitHub上のソースコード[ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable)をご覧ください。
 
 {% include sample.html paths='
     feature/testable/src/TestableApplication.kt,

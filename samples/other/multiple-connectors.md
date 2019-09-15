@@ -4,7 +4,7 @@ category: samples
 caption: Multiple Connectors
 ---
 
-Browse the source code on GitHub: [ktor-samples-multiple-connectors](https://github.com/ktorio/ktor-samples/tree/master/other/multiple-connectors)
+GitHub上のソースコード[ktor-samples-multiple-connectors](https://github.com/ktorio/ktor-samples/tree/master/other/multiple-connectors)をご覧ください。
 
 {% include sample.html paths='
     other/multiple-connectors/src/Main.kt,

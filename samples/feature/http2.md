@@ -7,7 +7,7 @@ redirect_from:
   - /samples/http2.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-http2](https://github.com/ktorio/ktor-samples/blob/master/feature/http2-push)
+GitHub上のソースコード[ktor-samples-http2](https://github.com/ktorio/ktor-samples/blob/master/feature/http2-push)をご覧ください。
 
 {% include sample.html paths = '
     feature/http2-push/src/Http2PushApplication.kt,
