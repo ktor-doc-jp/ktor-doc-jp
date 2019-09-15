@@ -50,21 +50,16 @@ application.install(DefaultHeaders) {
 featureは1度だけしかインストールされませんが、そういったケースに置いては設定のその際に設定の適用が必要となります。
 そういった機能においては、例えば`routing {}` のような、featureがインストールされていない場合はインストールもしつつ設定を適用するヘルパー関数があります。
 
-## Calls and pipelines
+## Callとpipeline
 
-In ktor a pair of incoming request and response (complete or incomplete)
-is named _application call_
-([ApplicationCall](/servers/calls.html)).
-Every application _call_ is passed through an _application call pipeline_
-([ApplicationCallPipeline](https://api.ktor.io/latest/io.ktor.application/-application-call-pipeline/index.html))
-consisting of several (or none) _interceptors_. Interceptors are invoked one by one and every _interceptor_
-can amend request or response and control pipeline execution by proceeding (`proceed()`) to the next interceptor
-or finishing (`finish()` or `finishAll()`) the whole pipeline execution
-(so the next interceptor is not invoked,
-see [PipelineContext](https://api.ktor.io/latest/io.ktor.util.pipeline/-pipeline-context/index.html) for details).
-It also can decorate the remaining interceptors chain doing additional actions before and after `proceed()` invocation.
+Ktorにおいては、リクエストとレスポンス（完了しているか否かに関わらない）のペアは _application call_ ([ApplicationCall](/servers/calls.html)) と呼ばれています。
+全てのapplication callは複数（または0個）の _interceptor_ で構成される _application call pipeline_ ([ApplicationCallPipeline](https://api.ktor.io/latest/io.ktor.application/-application-call-pipeline/index.html))を介して渡されます。
 
-Consider the following decorating example:
+インターセプターは1つずつ呼び出され、すべてのインターセプターは要求または応答を修正し、次のインターセプターに進む（`proceed（）`）またはパイプラインの実行全体を終了する（`finish（）`または`finishAll（）`）ことでパイプラインの実行を制御できます
+（その場合次のインターセプターは呼び出されません。詳細については、[PipelineContext](https://api.ktor.io/latest/io.ktor.util.pipeline/-pipeline-context/index.html)を参照してください）。 
+また、`proceed（）`呼び出しの前後に追加のアクションを実行することで、残りのインターセプターチェーンに追加処理を加えることができます。
+
+次の例を考えてみましょう。
 
 ```kotlin
 intercept {
@@ -77,9 +72,10 @@ intercept {
 }
 ```
 
-A pipeline may consist of several _phases_. Every interceptor is registered at a particular phase.
-So interceptors are executed in their phases order. See [Pipelines](/advanced/pipeline) documentation
-for the more detailed explanation.
+パイプラインはいくつかの _phaes_ で構成されます。
+すべてのインターセプターは特定のフェーズで登録されます。
+そのため、インターセプターはフェーズ順に実行されます。 
+より詳細な説明については、[Pipelines](/advanced/pipeline)のドキュメントを参照してください。
 
 ## Application call
 
