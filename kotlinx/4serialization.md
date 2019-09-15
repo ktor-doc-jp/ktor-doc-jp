@@ -7,8 +7,8 @@ permalink: /kotlinx/serialization.html
 ktor_version_review: 1.0.0
 ---
 
-Do you need to send a message from Native or JVM to JavaScript or over the network?
-Do you need to store a class in file and retrieve it later?
-`kotlinx.serialization` allows you to do it.
+NativeやJVMからJavascriptやネットワークの向こうへ、メッセージを送ったりする必要がありますか？
+classをファイルに保存しそれを後で参照する必要があったりしますか？
+`kotlinx.serialization`ならそれができます。
 
-`kotlinx.serialization` is OpenSource and you can find it at GitHub: <https://github.com/Kotlin/kotlinx.serialization>
+`kotlinx.serialization`はオープンソースでGitHub<https://github.com/Kotlin/kotlinx.serialization>からご覧いただけます。
