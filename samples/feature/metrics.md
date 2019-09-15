@@ -1,8 +1,8 @@
 ---
-title: Metrics
+title: メトリクス
 category: samples
 permalink: /samples/feature/metrics.html
-caption: Example of Wiring up Metrics
+caption: メトリクスの計測例
 redirect_from:
   - /samples/metrics.html
 ---

@@ -2,7 +2,7 @@
 title: POST
 category: samples
 permalink: /samples/feature/post.html
-caption: Example of Posting Data with Forms
+caption: FORMによるデータPOST例
 redirect_from:
   - /samples/post.html
 ---

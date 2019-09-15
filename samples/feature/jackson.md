@@ -2,7 +2,7 @@
 title: Jackson
 category: samples
 permalink: /samples/feature/jackson.html
-caption: Example of Serving JSON using Jackson
+caption: JacksonによるJSON配信例
 redirect_from:
   - /samples/jackson.html
 ---

@@ -1,8 +1,8 @@
 ---
-title: Static
+title: 静的コンテンツ
 category: samples
 permalink: /samples/feature/static.html
-caption: Example of Serving Static Files
+caption: 静的ファイルの配信例
 redirect_from:
   - /samples/static.html
 ---

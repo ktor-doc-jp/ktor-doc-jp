@@ -2,7 +2,7 @@
 title: HTTP/2
 category: samples
 permalink: /samples/feature/http2.html
-caption: Example of Enabling HTTP/2 Support
+caption: HTTP/2サポートの有効化
 redirect_from:
   - /samples/http2.html
 ---

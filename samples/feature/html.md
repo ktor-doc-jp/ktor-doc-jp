@@ -2,7 +2,7 @@
 title: Html
 category: samples
 permalink: /samples/feature/html.html
-caption: Example of Using Html Builders
+caption: Htmlビルダーの利用例
 redirect_from:
   - /samples/html.html
 ---

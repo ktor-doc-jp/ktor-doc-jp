@@ -2,7 +2,7 @@
 title: Locations
 category: samples
 permalink: /samples/feature/locations.html
-caption: Example of Using Typed Locations
+caption: 型安全なLocation機能の利用例
 redirect_from:
   - /samples/locations.html
 ---

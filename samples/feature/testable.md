@@ -1,8 +1,8 @@
 ---
-title: Testable
+title: テスタブル
 category: samples
 permalink: /samples/feature/testable.html
-caption: Example of Writing Tests for an Application
+caption: アプリケーションのためのテスト記述例
 redirect_from:
   - /samples/testable.html
 ---
