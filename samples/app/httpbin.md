@@ -2,12 +2,12 @@
 title: HttpBin
 category: samples
 permalink: /samples/app/httpbin.html
-caption: Showcase of Basic Features
+caption: 基本的な機能の紹介
 redirect_from:
   - /samples/httpbin.html
 ---
 
-Browse the source code on GitHub: [ktor-samples-httpbin](https://github.com/ktorio/ktor-samples/tree/master/app/httpbin)
+GitHub上のソースコード[ktor-samples-httpbin](https://github.com/ktorio/ktor-samples/tree/master/app/httpbin)をご覧ください。
 
 {% include sample.html paths = '
     app/httpbin/src/HttpBinApplication.kt,

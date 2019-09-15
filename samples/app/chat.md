@@ -1,13 +1,13 @@
 ---
-title: Chat
+title: チャット
 category: samples
 permalink: /samples/app/chat.html
-caption: Trivial Chat Application with WebSockets
+caption: Websocketによる単純なチャットアプリケーション
 redirect_from:
   - /samples/websockets.html
 ---
 
-Browse the source code on GitHub: [ktor-samples/app/chat](https://github.com/ktorio/ktor-samples/tree/master/app/chat)
+GitHub上のソースコード[ktor-samples/app/chat](https://github.com/ktorio/ktor-samples/tree/master/app/chat)をご覧ください。
 
 {% include sample.html paths='
     app/chat/src/ChatApplication.kt,
