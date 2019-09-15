@@ -1,7 +1,7 @@
 ---
 title: RX
 category: samples
-caption: Reactive eXtensions
+caption: Reactive拡張
 ---
 
 GitHub上のソースコード[ktor-samples-rx](https://github.com/ktorio/ktor-samples/tree/master/other/rx)をご覧ください。

@@ -1,7 +1,7 @@
 ---
-title: Client Tools
+title: クライアントツール
 category: samples
-caption: Client Tools
+caption: クライアントツール
 ---
 
 GitHub上のソースコード[ktor-samples-client-tools](https://github.com/ktorio/ktor-samples/tree/master/other/client-tools)をご覧ください。

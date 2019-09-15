@@ -1,7 +1,7 @@
 ---
-title: Structured Logging
+title: 構造化ロギング
 category: samples
-caption: Structured Logging
+caption: 構造化ロギング
 ---
 
 GitHub上のソースコード[ktor-samples-structured-logging](https://github.com/ktorio/ktor-samples/tree/master/other/structured-logging)をご覧ください。

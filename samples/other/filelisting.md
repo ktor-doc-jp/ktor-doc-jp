@@ -1,7 +1,7 @@
 ---
-title: File Listing
+title: ファイルリスティング
 category: samples
-caption: File Listing
+caption: ファイルリスティング
 ---
 
 GitHub上のソースコード[ktor-samples-filelisting](https://github.com/ktorio/ktor-samples/tree/master/other/filelisting)をご覧ください。

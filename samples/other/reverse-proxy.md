@@ -1,7 +1,7 @@
 ---
-title: Reverse Proxy
+title: リバースプロキシ
 category: samples
-caption: Reverse Proxy and Asynchronous Streaming using Ktor Client and Server
+caption: Ktorクライアント・サーバを使ったリバースプロキシと非同期ストリーム
 ---
 
 GitHub上のソースコード[ktor-samples-proguard](https://github.com/ktorio/ktor-samples/tree/master/other/reverse-proxy)をご覧ください。

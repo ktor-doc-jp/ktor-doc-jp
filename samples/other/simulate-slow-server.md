@@ -1,7 +1,7 @@
 ---
-title: Simulate Slow Server
+title: スローサーバのシミュレート
 category: samples
-caption: Simulate Slow Server
+caption: スローサーバのシミュレート
 ---
 
 GitHub上のソースコード[ktor-samples-simulate-slow-server](https://github.com/ktorio/ktor-samples/tree/master/other/simulate-slow-server)をご覧ください。

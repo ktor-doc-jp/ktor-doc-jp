@@ -1,7 +1,7 @@
 ---
-title: Redirect with Exception
+title: 例外のリダイレクト
 category: samples
-caption: Redirect with Exception
+caption: 例外のリダイレクト
 ---
 
 GitHub上のソースコード[ktor-samples-redirect-with-exception](https://github.com/ktorio/ktor-samples/tree/master/other/redirect-with-exception)をご覧ください。

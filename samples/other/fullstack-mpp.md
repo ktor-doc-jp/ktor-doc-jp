@@ -1,7 +1,7 @@
 ---
-title: Fullstack MPP
+title: フルスタックMPP
 category: samples
-caption: Fullstack MPP
+caption: フルスタックMPP
 ---
 
 GitHub上のソースコード[ktor-samples-fullstack-mpp](https://github.com/ktorio/ktor-samples/tree/master/mpp/fullstack-mpp)をご覧ください。
