@@ -1,14 +1,14 @@
 ---
-title: Samples
+title: サンプル
 category: samples
 permalink: /samples/index.html
-caption: Sample Projects
+caption: サンプルプロジェクト
 ---
 
-Ktor comes with a number of examples in its repository, which cover many features and use cases.
-If you checkout the ktor source code, you can browse various samples, navigate to the implementations and even 
-step through with a debugger to see how it all works.
+Ktorはリポジトリ内に様々なサンプルを含んでいます。
+そしてそれらは様々な機能やユースケースをカバーしています。
+Ktorのソースコードをチェックアウトするなら、様々なサンプルが見れ、実装について参考にでき、デバッガーを使うことでどのようにステップ実行されるのか確認することができるでしょう。
 
 {% include category-list.html %}
 
-If you want to see how Ktor is used in real-world projects, check out some [Open Source Projects](open-source).
+Ktorがどのように実世界のプロジェクトで利用されているのか知りたい場合は、[Open Source Projects](open-source)をチェックアウトしてみてください。
