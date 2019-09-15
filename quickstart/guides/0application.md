@@ -1,6 +1,6 @@
 ---
 title: First App
-caption: Creating Your First Application
+caption: 最初のアプリケーションの作成
 category: quickstart
 permalink: /quickstart/guides/application.html
 redirect_from:
@@ -8,48 +8,47 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-In this tutorial you will learn how to create a simple self-hosted Ktor server application that responds to HTTP requests with `Hello, World!`.
-Ktor applications can be built using common build systems such as [Maven](/quickstart/quickstart/maven.html) or [Gradle](/quickstart/quickstart/gradle.html).
+このチュートリアルではHTTPリクエストに対し`Hello, World!`と返す単純なKtorのサーバアプリケーションの作り方について学びます。
+Ktorアプリケーションは[Maven](/quickstart/quickstart/maven.html)や[Gradle](/quickstart/quickstart/gradle.html)といった一般的なビルドシステムで構築することができます。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Including the right dependencies
+## 正しい依存性を設定
 {: #dependencies }
 
-Ktor is split up into several groups of artifacts,
-allowing you to include only the functionality that you will need. And thus reducing the size of a fat-jar containing all the code, and the startup time.
+Ktorはいくつかの成果物に別れています。
+そのため必要な機能だけを利用することができます。
+それにより全コードを含んだfat-jarのサイズを減らし、起動時間を短縮できます。
 
-In this case, you only need to include the artifact `ktor-server-netty`.
-For a list of all the artifacts available, please check the [Artifacts](/quickstart/artifacts.html) page.  
+以下のケースでは、`ktor-server-netty`の成果物のみ利用します。
+利用可能な成果物一覧は[Artifacts](/quickstart/artifacts.html)ページをご覧ください。
 
-Release versions of these dependencies are available at jcenter and maven central.
-For pre-releases we host them on [Bintray kotlin/ktor](https://bintray.com/kotlin/ktor).
+リリースバージョンのそれら成果物は、jcenter、maven centralリポジトリにあります。
+プレリリースのものは[Bintray kotlin/ktor](https://bintray.com/kotlin/ktor)にあります。
 
-For a more detailed guide on setting up build files with different build systems check:
+ビルドファイルについてのより詳細なガイドは以下をご参照ください:
 
-* [Setting up Gradle Build](/quickstart/quickstart/gradle.html)
-* [Setting up Maven Build](/quickstart/quickstart/maven.html)
+* [Gradleビルドの設定](/quickstart/quickstart/gradle.html)
+* [Mavenビルドの設定](/quickstart/quickstart/maven.html)
 
-## Creating a self-hosted Application
+## セルフホスティングアプリケーションの作成
 {: #self-hosted}
 
-Ktor allows applications to run within an Application Server compatible with Servlets, such as Tomcat,
-or as an embedded application, using Jetty, Netty or CIO.
+KtorはTomcatのようなServlet互換アプリケーションサーバ、Jetty, Netty, CIOのような組み込みアプリケーションサーバ上で起動できます。
 
-In this tutorial, we are going to create a self-hosted application using Netty.
+このチュートリアルでは、Nettyを使ったセルフホスティングアプリケーションの作成を行います。
 
-You can start by calling the `embeddedServer` function, passing in the engine factory as the first argument,
-the port as the second argument and the actual application code as the fourth argument (third argument
-is the host which is `0.0.0.0` by default).
+`embeddedServer`関数を呼び出すことで起動することができます。
+engineのfactoryメソッドを第一引数に渡し、ポート番号を第二引数に渡し、実際のアプリケーションコードを第四引数に渡します。
+（第三引数はhostであり、デフォルト値は`0.0.0.0`になっています）
 
-The code below defines a single route that responds to the `GET` verb on the URL `/` with
-the text `Hello, world!`
+以下のコードは`GET`で`/`のURLを受け付け`Hello, world!`の文字列を返す、1つのルーティングのみを定義しています。
 
-After defining the routes, you have to start the server by calling the `server.start` method,
-passing as argument a boolean to indicate whether you want the main thread of the application to block.
+ルーティングの定義後、`server.start`メソッドを呼び出すことでサーバの起動が可能です。
+その際にboolean引数を渡すことでアプリケーションのmainスレッドをブロックするかどうかを指定します。
 
 {% capture main-kt %}
 ```kotlin
@@ -80,25 +79,23 @@ fun main(args: Array<String>) {
 
 &nbsp;
 
-If your server is just listening for HTTP requests and do not want to do anything else after that in the setup,
-you will normally call the server.start with `wait = true`.
+サーバが起動後、HTTPリクエストを受け付けるのみでそれ以外のことを行わないのであれば、`wait = true`引数でserver.startを呼び出すのがいいでしょう。
 {: .note}
 
-## Running the Application
+## アプリケーションの起動
 {: #running }
 
-Given that the entry point of your application is the standard Kotlin `main` function, 
-you can simply run it, effectively starting the server and listening on the specified port.
+アプリケーションのエントリーポイントはKotlinの標準的な`main`関数になっているため、単純にそれを起動することでサーバの起動および指定のポートのリッスンがスタートします。
 
-Checking the `localhost:8080` page in your browser, you should see the `Hello, world!` text. 
+`localhost:8080`ページをあなたのブラウザで確認すれば、`Hello, world!`というテキストが確認できるでしょう。
 
-## Next Steps
+## 次のステップ
 {: #next-steps }
 
-This was the simplest example of getting a self-hosted Ktor application up and running. 
-A recommended tour to continue learning Ktor on the server would be:
+以下はセルフホスティングKtorアプリケーションの構築と起動に関する単純な例です。
+サーバーとしてのKtorについて学ぶために以下が推奨されます:
 
-* [What is an Application?](/servers/application.html)
-* [Features](/features)
-* [Application Structure](/servers/structure.html)
-* [Testing](/servers/testing.html)
+* [アプリケーションとは何か？](/servers/application.html)
+* [フィーチャー](/features)
+* [アプリケーション構造](/servers/structure.html)
+* [テスト](/servers/testing.html)
