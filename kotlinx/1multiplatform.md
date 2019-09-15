@@ -1,24 +1,22 @@
 ---
-title: Multiplatform
-caption: Multiplatform
+title: マルチプラットフォーム
+caption: マルチプラットフォーム
 category: kotlinx
 permalink: /kotlinx/multiplatform.html
 toc: true
 ktor_version_review: 1.0.0
 ---
 
-Kotlin Multi-Platform Projects (also called Kotlin MPP).
+Kotlin Multi-Platform プロジェクト(Kotlin MPPとも呼ばれます)。
 
-Kotlin 1.2 introduced an experimental multiplatform support. While still experimental in 1.3, it has improved significantly.
+Kotlin 1.2からmultiplatformのexperimentalなサポートがスタートしました。
+1.3においてもまだexperimentalですが、大きな改善がなされています。
 
-The idea behind it is to be able to write common code with a subset of common APIs available on all the platforms,
-and then per platform specific things.
+その背後にあるアイデアは、全プラットフォームで利用可能な共通コードと、プラットフォーム固有のコードを分けて書くことです。
 
-Multiplatform projects add a couple of new keywords to the Kotlin Language: `expect` and `actual`.
+MultiplatformプロジェクトはKotlin言語にいくつかの新たなキーワードを必要とします。`expect`と`actual`です。
 
-* `expect` is available for common projects to be able to define bodyless APIs that must be available in common projects,
-but will have specific implementations per platform.
-* `actual` is available for non-common projects (JVM, JS and Native) and must match the expect structure in each platform
-that will be supported.
+* `expect`はcommonプロジェクトにおいて利用可能で、内容の無いAPIを定義します。これに対しプラットフォーム固有の実装を持つことになります。
+* `actual`はcommonプロジェクト以外（JVM, JS, Native）において利用可能で、サポートするプラットフォームごとに`expect`の構造と一致させて書く必要があります。
 
-**Reference: <https://kotlinlang.org/docs/reference/multiplatform.html>**
+**参考: <https://kotlinlang.org/docs/reference/multiplatform.html>**

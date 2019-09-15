@@ -1,14 +1,14 @@
 ---
 title: kotlinx.coroutines
-caption: "kotlinx.coroutines: Multiplatform Coroutine Library"
+caption: "kotlinx.coroutines: Multiplatformコルーチンライブラリ"
 category: kotlinx
 toc: true
 permalink: /kotlinx/coroutines.html
 ktor_version_review: 1.0.0
 ---
 
-`kotlinx.coroutines` is OpenSource and you can find it at GitHub:
-<https://github.com/Kotlin/kotlinx.coroutines>{: target="_blank"}
+`kotlinx.coroutines`はオープンソースで、GitHubの
+<https://github.com/Kotlin/kotlinx.coroutines>{: target="_blank"}でご覧いただけます。
 
 ## Official Documentation
 

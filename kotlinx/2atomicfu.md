@@ -7,5 +7,5 @@ permalink: /kotlinx/atomicfu.html
 ktor_version_review: 1.0.0
 ---
 
-`kotlinx.atomicfu` is OpenSource and you can find it at GitHub: <https://github.com/Kotlin/kotlinx.atomicfu>{: target="_blank"}
+`kotlinx.atomicfu`はオープンソースで、GitHubの<https://github.com/Kotlin/kotlinx.atomicfu>{: target="_blank"}からご覧いただけます。
 
