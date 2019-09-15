@@ -1,49 +1,44 @@
 ---
-title: Server introduction
+title: イントロダクション
 category: servers
 permalink: /servers/index.html
-caption: Server Applications
+caption: サーバーアプリケーション
 ktor_version_review: 1.2.1
 ---
 
-# Ktor server introduction and key concepts
+# イントロダクションとキーコンセプト
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Application and ApplicationEnvironment
+## ApplicationとApplicationEnvironment
 
-A running instance of a ktor application is represented by
-[Application](https://api.ktor.io/latest/io.ktor.application/-application/index.html) class.
-A ktor _application_ consists of a set of [_modules_](/servers/application.html#modules) (possibly one).
-Each module is a regular kotlin lambda or a function
-(usually having an instance of application as a receiver or parameter).
+Ktorアプリケーションの動作しているインスタンスは[Application](https://api.ktor.io/latest/io.ktor.application/-application/index.html)によって表現されます。
+Ktor _application_ は[_module群_](/servers/application.html#modules)（１つだけのこともある）によって構成されます。
+各moduleはKotlinのlambdaまたはfunctionです。（通常applicationインスタンスをreceiverまたはparameterとして保持します）
 
-An application is started inside of _environment_ that is represented by
-[ApplicationEnvironment](https://api.ktor.io/latest/io.ktor.application/-application-environment/index.html)
-having _application config_
- (See [Configuration](/servers/configuration.html) page for more details).
+applicationは [ApplicationEnvironment](https://api.ktor.io/latest/io.ktor.application/-application-environment/index.html)によって表現される _environment_ 内で起動されます。
+ApplicationEnvironmentは _application config_ も含みます。
+ (詳細は[Configuration](/servers/configuration.html)ページをご覧ください)。
+ 
+Ktorの _server_ はenvironmentとともに起動され、applicationのライフサイクルを制御します。
+ライフサイクルとはつまり、環境によるapplicationインスタンスの作成・削除です。
+遅延作成なのか、[hot reload](/servers/autoreload.html)機能があるのかなどは実装によります。
+そのためapplicationの停止はサーバの停止自体を意味するとは限りません。例えばサーバが動き続けるとapplicationがリロードされることもあります。
 
-A ktor _server_ is started with an environment and controls application lifecycle: an application instance is created
-and destroyed by the environment (depending on the implementation it could create it lazily
-or provide [hot reload](/servers/autoreload.html) functionality).
-So stopping application doesn't always mean that the server is stopping:
- for example, it could be reloaded while the server keeps running.
+application moduleはapplicationが起動された際に１つ１つ起動され、どのmoduleもapplicationのインスタンスを設定できます。
+applicationインスタンスは _feature_ のインストールおよび _pipeline_ のインターセプトにより設定ができます。
 
-Application modules are started one by one when an application is started, and every module can configure an instance
-of the application. An application instance is configured by installing _features_ and intercepting _pipelines_.
+詳細は [lifecycle](/servers/lifecycle.html) をご覧ください。
 
-See [lifecycle](/servers/lifecycle.html) for more details.
+## Feature
 
-## Features
-
-A _feature_ is a part of specific functionality that could be plugged into an application. It usually _intercepts_
-requests and responses and does its particular functionality.
-For example, [Default Headers](/servers/features/default-headers.html) feature intercepts responses
-and appends `Date` and `Server` headers. A feature can be installed into an application using `install` function
-like this:
+_feature_ とはapplicationにプラグイン可能な特定機能を指します。
+通常、リクエストとレスポンスを _intercept_ し、そこで特定の機能を実行します。
+例えば[Default Headers](/servers/features/default-headers.html)機能はレスポンスをinterceptし、`Date`, `Server`ヘッダーを追加します。
+`install`関数によって以下コードのようにapplicationに機能がインストールできます。
 
 ```kotlin
 application.install(DefaultHeaders) {
@@ -51,9 +46,9 @@ application.install(DefaultHeaders) {
 }
 ```
 
-Where configuration lambda could be optional for some features. A feature could be installed only once; however,
-there are cases when a configuration composition is required. For such features, there are helper functions
-that install a feature if not yet installed and apply configuration lambda. For example, `routing {}`.
+設定を行うlambda関数はいくつかの機能に対しては任意で必要になります。
+featureは1度だけしかインストールされませんが、そういったケースに置いては設定のその際に設定の適用が必要となります。
+そういった機能においては、例えば`routing {}` のような、featureがインストールされていない場合はインストールもしつつ設定を適用するヘルパー関数があります。
 
 ## Calls and pipelines
 
