@@ -79,30 +79,27 @@ intercept {
 
 ## Application call
 
-An application call consists of a pair of request with response and a set of parameters.
-So an application call pipeline has a pair of _receive_ and _send_ pipelines. The request's content (body)
- could be received using `ApplicationCall.receive<T>()` where `T` is an expected type of content.
- For example, `call.receive<String>()` reads requests body as a `String`. Some types could be received with no
- additional configuration
- out of the box while receiving a custom type may require a feature installation or configuration.
- Every `receive()` causes receive pipeline (`ApplicationCallPipeline.receivePipeline`)
- to be executed from the beginning so every receive pipeline interceptor could transform or by-pass request body.
- The original body object type is `ByteReadChannel` (asynchronous byte channel).
+application callは、リクエスト・レスポンスとパラメーターセットのペアで構成されます。
+したがって、application callパイプラインには、受信パイプラインと送信パイプラインのペアがあります。
+要求のコンテンツ（body）は、ApplicationCall.receive <T>（）を使用して受信できます（Tは予想されるコンテンツのタイプです）。
+たとえば、call.receive <String>（）はリクエストのbodyを文字列として読み取ります。
+一部のタイプは追加設定なしですぐに受信できますが、カスタムタイプを受信するにはFeatureのインストールまたは設定が必要になる場合があります。
+すべての`receive（）`により、受信パイプライン（`ApplicationCallPipeline.receivePipeline`）が最初から実行されるため、
+すべての受信パイプラインインターセプターがリクエストボディを変換またはバイパスできます。
+元のbodyオブジェクトタイプはByteReadChannel（非同期バイトチャネル）です。
 
-An application response body could be provided by `ApplicationCall.respond(Any)` function invocation that
-executes a response pipeline (`ApplicationCallPipeline.respondPipeline`). Similar to receive pipeline,
-every response pipeline interceptor could transform a response object. Finally, a response object should be
-converted into an instance of
-[OutgoingContent](https://api.ktor.io/latest/io.ktor.http.content/-outgoing-content/index.html).
+アプリケーションレスポンス本文は、レスポンスパイプライン（`ApplicationCallPipeline.respondPipeline`）を実行する
+`ApplicationCall.respond（Any）`関数呼び出しによって提供できます。
+受信パイプラインと同様に、すべての応答パイプラインインターセプターは応答オブジェクトを変換できます。
+最後に、応答オブジェクトを[OutgoingContent](https://api.ktor.io/latest/io.ktor.http.content/-outgoing-content/index.html)のインスタンスに変換する必要があります。
 
-A set of extension functions `respondText`, `respondBytes`, `receiveText`, `receiveParameters` and so on
-simplifies request and response objects construction.
+拡張関数respondText、respondBytes、receiveText、receiveParametersなどのセットにより、リクエストおよびレスポンスオブジェクトの構築が簡単になります。
 
 ## Routing
 
-An empty application has no interceptors so 404 Not Found will be generated for every request.
- An application call pipeline should be intercepted to handle requests. Such interceptor could respond depending on
-request URI like this:
+空のアプリケーションにはインターセプターがないため、リクエストごとに404 Not Foundが生成されます。
+要求を処理するには、アプリケーション呼び出しパイプラインをインターセプトする必要があります。
+このようなインターセプターは、次のようなリクエストURIに応じて応答できます。
 
 ```kotlin
 intercept {
@@ -114,12 +111,11 @@ intercept {
 }
 ```
 
-For sure, this approach has a lot of disadvantages.
-Fortunately, there is the [Routing](/servers/features/routing.html) feature for structured requests
-handling that does intercept application call pipeline and provides a way to register handlers for _routes_.
-Since the only thing Routing does is intercepting the application call pipeline, manual intercepting with Routing also works.
-Routing consists of a tree of routes having handlers and interceptors. A set of extension functions in ktor
-provides an easy way to register handlers like this:
+確かに、このアプローチには多くの欠点があります。
+幸いなことに、アプリケーション呼び出しパイプラインをインターセプトし、ルートのハンドラーを登録する方法を提供する、構造化された要求処理のための[Routing](/servers/features/routing.html)機能があります。
+ルーティングが行うのはアプリケーション呼び出しパイプラインをインターセプトすることだけなので、ルーティングを使用した手動インターセプトも機能します。
+ルーティングは、ハンドラーとインターセプターを持つルートのツリーで構成されます。
+ktorの一連の拡張関数を使用すると、次のようなハンドラーを簡単に登録できます。
 
 ```kotlin
 routing {
@@ -130,7 +126,7 @@ routing {
 }
 ```
 
-Notice that routes are organized into a tree so you can declare structured routes:
+ルートはツリー構造になっているため、構造化されたルートを宣言できます。
 
 ```kotlin
 routing {
@@ -141,18 +137,19 @@ routing {
 }
 ```
 
-A routing path can contain constant parts and parameters such as `{id}` in the example above.
-Property `call.parameters` provides access to the captured setting values.
+ルーティングパスには、上記の例の`{id}`などの定数部分とパラメーターを含めることができます。
+プロパティ`call.parameters`は、キャプチャされた設定値へのアクセスを提供します。
 
 ## Content Negotiation
 
-[ContentNegotiation](/servers/features/content-negotiation.html) feature provides a way to negotiate
-mime types and convert types using [Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)
- and [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) headers.
-A content converter could be registered for a particular content type for receiving and responding objects.
-There are [Jackson](/servers/features/content-negotiation/jackson.html),
- [Gson](/servers/features/content-negotiation/gson.html) and [kotlinx.serialization](https://jp.ktor.work/servers/features/content-negotiation/serialization-converter.html)
- content converters available out of the box that could be plugged into the feature.
+[ContentNegotiation](/servers/features/content-negotiation.html)機能は、
+[Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)および
+[Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)ヘッダーを使用して、
+MIMEタイプをネゴシエートし、タイプを変換する方法を提供します。
+コンテンツコンバータは、オブジェクトを受信および応答する特定のコンテンツタイプに対して登録できます。
+[Jackson](/servers/features/content-negotiation/jackson.html)、[Gson](/servers/features/content-negotiation/gson.html)、
+および[kotlinx.serialization](https://jp.ktor.work/servers/features/content-negotiation/serialization-converter.html)コンテンツコンバーターがあり、
+この機能にプラグインできます。
 
 Example:
 
@@ -171,10 +168,10 @@ routing {
 
 ## What's next
 
-- [Quick start](/quickstart/index.html) for creating your first ktor server application
-- [What is an Application?](/servers/application.html)
-- [Application calls](/servers/calls.html)
-- [Application lifecycle explanation](/servers/lifecycle.html)
-- [Application configuration](/servers/configuration.html)
+- [クイックスタート](/quickstart/index.html) for creating your first ktor server application
+- [Applicationとは?](/servers/application.html)
+- [Application call](/servers/calls.html)
+- [Applicationライフサイクル](/servers/lifecycle.html)
+- [Application設定](/servers/configuration.html)
 - [Routing](/servers/features/routing.html)
-- [Pipelines exlained](/advanced/pipeline)
+- [Pipeline](/advanced/pipeline)
