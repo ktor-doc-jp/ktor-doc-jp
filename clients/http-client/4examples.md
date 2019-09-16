@@ -1,12 +1,12 @@
 ---
-title: Examples
+title: サンプル
 category: clients
 permalink: /clients/http-client/examples.html
-caption: HTTP Client Examples
+caption: HTTPクライアントのサンプル
 ktor_version_review: 1.2.0
 ---
 
-## Interchanging JSON: Ktor server / Ktor client
+## Ktorサーバ・クライアント間でのJSONの相互変換
 
 {: #example-json }
 
@@ -62,5 +62,5 @@ fun Application.mymodule() {
 }
 ```
 
-You can check the [ktor-samples](https://github.com/ktorio/ktor-samples) and [ktor-exercises](https://github.com/ktorio/ktor-exercises) repositories for samples and exercises.
+[ktor-samples](https://github.com/ktorio/ktor-samples)や[ktor-exercises](https://github.com/ktorio/ktor-exercises)リポジトリにサンプル・exerciseがあります。
 {: .note }

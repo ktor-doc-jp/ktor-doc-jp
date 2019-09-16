@@ -1,22 +1,25 @@
 ---
-title: Testing
+title: テスト
 category: clients
 permalink: /clients/http-client/testing.html
-caption: Testing Http Client (MockEngine)
+caption: Httpクライアントのテスト(モック)
 ktor_version_review: 1.2.0
 ---
 
-Ktor exposes a `MockEngine` for the HttpClient. This engine allows simulating HTTP calls without actually connecting to the endpoint. It allows to set a code block, that can handle the request and generates a response.
+Ktorは、HttpClientの`MockEngine`を公開します。
+このエンジンにより、実際にエンドポイントに接続せずにHTTP呼び出しをシミュレートできます。
+リクエストを処理してレスポンスを生成できるコードブロックを設定できます。
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.mock.MockEngine" artifact="io.ktor:ktor-client-mock:$ktor_version,io.ktor:ktor-client-mock-jvm:$ktor_version,io.ktor:ktor-client-mock-js:$ktor_version,io.ktor:ktor-client-mock-native:$ktor_version" test="true" %}
 
-## Usage
+## 使い方
 
-The usage is straightforward: the MockEngine class has a method `addHandler` in `MockEngineConfig`, that receives a block/callback that will handle the request. This callback receives an `HttpRequest` as a parameter, and must return a `HttpResponseData`. There are many helper methods to construct the response.
+使い方は簡単です。MockEngineクラスには、`MockEngineConfig`に`addHandler`メソッドがあり、リクエストを処理するブロック/コールバックを受け取ります。
+このコールバックは、`HttpRequest`をパラメーターとして受け取り、`HttpResponseData`を返す必要があります。レスポンスを作成する多くのヘルパーメソッドがあります。
 
-Full API description and list of helper methods could be found [here](https://api.ktor.io/{{site.ktor_version}}/io.ktor.client.engine.mock/).
+完全なAPIの説明とヘルパーメソッドのリストは、[こちら](https://api.ktor.io/{{site.ktor_version}}/io.ktor.client.engine.mock/)にあります。
 
-A sample illustrating this:
+以下がサンプルです：
 
 ```kotlin
 val client = HttpClient(MockEngine) {
