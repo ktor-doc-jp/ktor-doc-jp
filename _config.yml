@@ -20,7 +20,7 @@ blog_enabled: false
 github_editme_path: doyaaaaaken/ktor-doc-jp/edit/master/
 
 # if you have google-analytics ID, put it in. if not, edit this value to blank.
-#google_analytics: UA-47631155-3
+google_analytics: UA-148077979-1
 
 # the preview server used. Leave as is.
 host: 127.0.0.1
