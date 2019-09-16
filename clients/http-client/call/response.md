@@ -1,6 +1,6 @@
 ---
-title: Response
-caption: HTTP Client Response
+title: レスポンス
+caption: HTTPクライアントレスポンス
 category: clients
 permalink: /clients/http-client/call/responses.html
 redirect_from:
@@ -8,42 +8,42 @@ redirect_from:
 ktor_version_review: 1.2.0
 ---
 
-## Receiving the body of a response
+## レスポンスボディの受信
 
 {: #receive}
 
-By default you can use `HttpResponse` or `String` as possible types for typed
-HttpClient requests. So for example:
+デフォルトでは、Httpクライアントリクエストの可能な型として`HttpResponse`または`String`を使用できます。
+例えば、次のとおりです。
 
 ```kotlin
 val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
 val response = client.get<HttpResponse>("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-If *JsonFeature* is configured, and the server returns the header `Content-Type: application/json`,
-you can also specify a class for deserializing it.
+*JsonFeature* が設定されていて、サーバーがヘッダー`Content-Type: application/json`を返す場合、
+デシリアライズするクラスを指定することもできます。
 
 ```kotlin
 val helloWorld = client.get<HelloWorld>("http://127.0.0.1:8080/")
 ```
 
-### The `HttpResponse` class
+### `HttpResponse`クラス
 
 {: #HttpResponse }
 
-`HttpResponse` API reference is listed [here](https://api.ktor.io/{{site.ktor_version}}/io.ktor.client.response/-http-response/).
+`HttpResponse`のAPIリファレンスは[こちらに記載されています](https://api.ktor.io/{{site.ktor_version}}/io.ktor.client.response/-http-response/).
 
-From an `HttpResponse`, you can get the response content easily:
+`HttpResponse`から、レスポンス内容を簡単に取得することができます。
 
 * `val readChannel: ByteReadChannel = response.content`
 * `val bytes: ByteArray = response.readBytes()`
 * `val text: String = response.readText()`
 * `val readChannel = response.receive<ByteReadChannel>()`
 * `val multiPart = response.receive<MultiPartData>()`
-* `val inputStream = response.receive<InputStream>()` *Remember that InputStream API is synchronous!*
+* `val inputStream = response.receive<InputStream>()` *InputStream APIは同期的なことに注意！*
 * `response.discardRemaining()`
 
-You can also get the additional response information such as its status, headers, internal state, etc.:
+ステータス、ヘッダー、内部状態などの追加のレスポンス情報も取得できます。
 
 ### *Basic*
 
