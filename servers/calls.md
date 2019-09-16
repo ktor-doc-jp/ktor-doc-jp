@@ -8,17 +8,15 @@ children: /servers/calls/
 ktor_version_review: 1.0.0
 ---
 
-When handling routes, or directly intercepting the pipeline, you get a context with an ApplicationCall.
+ルートを処理するとき、またはパイプラインを直接インターセプトするとき、ApplicationCallでコンテキストを取得します。
 
-The `ApplicationCall` provides access to two main properties [`ApplicationRequest`](/servers/calls/requests.html) and [`ApplicationResponse`](/servers/calls/responses.html).
-As their names indicate, they correspond to the incoming request and outgoing response. In addition to these,
-it also provides an `ApplicationEnvironment`, and some useful functions to help respond to client requests.
-Given that pipelines can be executed asynchronously, `ApplicationCall` also represents the logical execution
-context with `Attributes` to pass data between various parts of the pipeline.
+`ApplicationCall`は、2つの主要なプロパティ[`ApplicationRequest`](/servers/calls/requests.html)
+と[`ApplicationResponse`](/servers/calls/responses.html)へのアクセスを提供します。
+名前が示すように、リクエストとレスポンスに対応します。
+これらに加えて、`ApplicationEnvironment`、およびクライアント要求への応答に役立ついくつかの便利な機能も提供します。
+パイプラインを非同期で実行できることを前提に、`ApplicationCall`は、パイプラインのさまざまな部分間でデータを渡すための`Attributes（属性）`を持つ論理実行コンテキストも表します。
 
-Installing an interceptor into the pipeline is the primary method to alter the processing of an `ApplicationCall`.
-Nearly all Ktor [features](/servers/features) are interceptors that perform various operations in different phases of
-the application call processing. 
+パイプラインへのインターセプターのインストールは、`ApplicationCall`の処理を変更する主要な方法です。ほとんどすべてのKtorの[features](/servers/features)は、アプリケーションコール処理のさまざまなフェーズでさまざまな操作を実行するインターセプターです。
 
 ```kotlin
     intercept(ApplicationCallPipeline.Call) { 
@@ -26,19 +24,18 @@ the application call processing.
             call.respondText("Test String")
     }
 ```
-The code above installs an interceptor into the `Call` phase of an `ApplicationCall` processing and responds with plain text
-when the request is asking for a root page.  
 
-This is just an example, and usually, page requests are not handled in this way, as there is a [routing](/servers/features/routing) facility that does this
- and more. Also, as mentioned previously, defining interceptor is usually done using [features](/servers/features) with an `install` function.
-   
-Most functions available on `ApplicationCall` (such as `respondText` above) are `suspend` functions, indicating that they 
-can potentially execute asynchronously.
- 
-See advanced topic [Pipeline](/advanced/pipeline) for more information on the mechanics of processing `ApplicationCall`s.
+上記のコードは、インターセプターを`ApplicationCall`の処理の`Call`フェーズにインストールし、リクエストがルートページを要求しているときにプレーンテキストで応答します。
+
+これは単なる例であり、通常、ページリクエストはこの方法で処理されません。これを行う[routing](/servers/features/routing)機能があるためです。
+また、前述のように、インターセプターの定義は通常、インストール機能を備えた[feature](/servers/features)を使用して行われます。
+
+ApplicationCallで使用できるほとんどの関数（上記のrespondTextなど）は`suspend`関数であり、潜在的に非同期で実行できることを示しています。
+
+ApplicationCallsの処理のメカニズムの詳細については、高度なトピック[Pipeline](/advanced/pipeline)を参照してください。
 
 ## What's next
 
-- [Application lifecycle explanation](https://jp.ktor.work/servers/lifecycle.html)
+- [Applicationライフサイクル](https://jp.ktor.work/servers/lifecycle.html)
 - [Application configuration](https://jp.ktor.work/servers/configuration.html)
-- [Pipelines explained](/advanced/pipeline)
+- [Pipeline](/advanced/pipeline)
