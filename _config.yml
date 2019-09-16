@@ -1,4 +1,4 @@
-repository: doyaaaaaken/ktor-doc-ja
+repository: doyaaaaaken/ktor-doc-jp
 encoding: utf-8
 output: web
 
@@ -17,7 +17,7 @@ ktor_init_tools_url: https://start.ktor.io/
 blog_enabled: false
 
 # if you're using Github, provide the basepath to the branch you've created for reviews, following the sample here. if not, leave this value blank.
-github_editme_path: doyaaaaaken/ktor-doc-ja/edit/master/
+github_editme_path: doyaaaaaken/ktor-doc-jp/edit/master/
 
 # if you have google-analytics ID, put it in. if not, edit this value to blank.
 #google_analytics: UA-47631155-3

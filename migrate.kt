@@ -35,7 +35,7 @@ object Migrate {
 }
 
 object MigrateFeatures {
-    val base = File("${System.getenv("HOME")}/projects/ktor-doc-ja")
+    val base = File("${System.getenv("HOME")}/projects/ktor-doc-jp")
     val yaml = ObjectMapper(YAMLFactory().apply {
         this.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
         this.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
