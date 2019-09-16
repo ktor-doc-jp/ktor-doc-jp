@@ -9,6 +9,9 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
+この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
+{: .note.machine-translation}
+
 この機能を使用すると、特定のクライアントのすべての要求に対していくつかのデフォルトを設定できます。
 
 {% include feature.html %}

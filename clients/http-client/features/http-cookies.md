@@ -9,7 +9,7 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-この機能は、呼び出し間でCookieを保持するか、特定のCookieを強制します。
+この機能を使うことで呼び出し間でCookieを保持するか特定のCookieを強制することができます。
 
 {% include feature.html %}
 

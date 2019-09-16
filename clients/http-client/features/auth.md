@@ -11,9 +11,6 @@ redirect_from:
 ktor_version_review: 1.2.0
 ---
 
-この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
-{: .note.machine-translation}
-
 Ktorクライアントは、標準のプラグイン可能な機能として、すぐに使用できる認証をサポートしています。
 
 {% include feature.html %}
