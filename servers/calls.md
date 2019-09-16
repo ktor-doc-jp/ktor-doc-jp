@@ -8,6 +8,9 @@ children: /servers/calls/
 ktor_version_review: 1.0.0
 ---
 
+この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
+{: .note.machine-translation}
+
 ルートを処理するとき、またはパイプラインを直接インターセプトするとき、ApplicationCallでコンテキストを取得します。
 
 `ApplicationCall`は、2つの主要なプロパティ[`ApplicationRequest`](/servers/calls/requests.html)

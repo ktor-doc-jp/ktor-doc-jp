@@ -6,6 +6,9 @@ caption: Applicationとは?
 ktor_version_review: 1.2.1
 ---
 
+この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
+{: .note.machine-translation}
+
 Ktorサーバーアプリケーションは、HTTP/S 1.x/2.x、WebSocketリクエストを処理するための
 [routing](/servers/features/routing.html)、[sessions](/servers/features/sessions.html)、[compression](/servers/features/compression.html)などの
 [features](#features)をインストールするアプリケーションロジックを備えた[modules](#modules)で構成される、
