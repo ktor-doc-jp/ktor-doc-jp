@@ -1,19 +1,18 @@
 ---
-title: Http Client
+title: Httpクライアント
 category: clients
 permalink: /clients/http-client.html
 children: /clients/http-client/
-caption: Http Client
+caption: Httpクライアント
 ktor_version_review: 1.2.0
 ---
 
 {::options toc_levels="1..2" /}
 
-In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
-This client supports several [configurable engines](/clients/http-client/engines.html), and has its own set of [features](/clients/http-client/features.html).
+HTTPサーバーに加えて、Ktorには柔軟な非同期HTTPクライアントも含まれています。
+このクライアントは、いくつかの構成可能なエンジンをサポートし、独自の[機能](/clients/http-client/features.html)セットを備えています。
 
-The main functionality is available through the `io.ktor:ktor-client-core:$ktor_version` artifact.
-And each engine, is provided in [separate artifacts](/clients/http-client/engines.html).
+主な機能は、`io.ktor:ktor-client-core:$ktor_version`アーティファクトを介して利用できます。 また、各エンジンは、[個別の成果物](/clients/http-client/engines.html)で提供されます。
 {: .note.artifact }
 
 **Table of contents:**
@@ -25,15 +24,12 @@ And each engine, is provided in [separate artifacts](/clients/http-client/engine
 
 {: #requests-responses }
 
-You can check [how to make requests](/clients/http-client/call/requests.html),
-and [how to receive responses](/clients/http-client/call/responses.html) in their respective sections.
+それぞれのセクションで[リクエストの作成方法](/clients/http-client/call/requests.html)と[レスポンスの受信方法](/clients/http-client/call/responses.html)を確認できます。
 
-## Concurrency
+## 並列処理
 
-Remember that requests are asynchronous, but when performing requests, the API suspends further requests
-and your function will be suspended until done. If you want to perform several requests at once
-in the same block, you can use `launch` or `async` functions and later get the results.
-For example:
+リクエストは非同期ですが、リクエストを実行すると、APIはさらにリクエストを一時停止し、機能は完了するまで一時停止されます。
+同じブロックで複数の要求を一度に実行する場合は、`launch`または`async`関数を使用して、後で結果を取得できます。 例えば：
 
 ### Sequential requests
 
@@ -70,12 +66,12 @@ suspend fun parallelRequests() = coroutineScope<Unit> {
 }
 ```
 
-## Examples
+## サンプル
 {: #examples }
 
-For more information, check the [examples page](/clients/http-client/examples.html) with some examples.
+詳細な情報は[サンプルページ](/clients/http-client/examples.html)をご覧ください。
 
-## Features
+## Feature
 {: #features}
 
-For more information, check the [features page](/clients/http-client/features.html) with all the available features.
+詳細な情報は[機能ページ](/clients/http-client/features.html)をご覧ください。
