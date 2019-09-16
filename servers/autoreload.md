@@ -1,31 +1,29 @@
 ---
 title: Autoreload
-caption: Saving Time with Automatic Reloading  
+caption: 自動リロードで時間節約
 category: servers
 permalink: /servers/autoreload.html
 keywords: autoreload watchpaths
 ktor_version_review: 1.0.0
 ---
 
-During development, it is important to have a fast feedback loop cycle. 
-Often, restarting the server can take some time, so Ktor provides a basic auto-reload facility that
-reloads your Application classes.
+開発中は、フィードバックループのサイクルを高速にすることが重要です。
+多くの場合、サーバーの再起動には時間がかかることがあるため、Ktorには、アプリケーションクラスをリロードする基本的な自動リロード機能が用意されています。
 
-Autoreload [*doesn't* work in Java 9](https://github.com/ktorio/ktor/issues/359). If you want to use it,
-please stick to **JDK 8** for now.
+自動リロードは[Java 9では機能しません](https://github.com/ktorio/ktor/issues/359)。使用したい場合は、今のところJDK 8を使用してください。
 {: .note }
 {: #java9 }
 
-There is a performance penalty when using auto-reloading. So keep in mind that you should not use
-it in production or when doing benchmarks.
+自動リロードを使用すると、パフォーマンスが低下します。
+そのため、実稼働環境やベンチマークを実行する際には使用しないでください。
 {: .note.performance}
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Automatic reloading on class changes
+## class変更時の自動リロード
 {: #basics}
 
 In both cases, when using the [embeddedServer](#embedded-server) or a [configuration file](#configuration-file), you will have to provide a list of watch substrings
