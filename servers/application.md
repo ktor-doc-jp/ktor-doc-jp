@@ -2,59 +2,55 @@
 title: Application
 category: servers
 permalink: /servers/application.html
-caption: What is an Application? 
+caption: Applicationとは? 
 ktor_version_review: 1.2.1
 ---
 
-A Ktor Server Application is a custom program listening to one or more ports using a [configured server engine](/servers/configuration.html),
-composed by [modules](#modules) with the application logic, that install [features](#features), like [routing](/servers/features/routing.html),
-[sessions](/servers/features/sessions.html), [compression](/servers/features/compression.html), etc. to handle HTTP/S 1.x/2.x and WebSocket requests.
+Ktorサーバーアプリケーションは、HTTP/S 1.x/2.x、WebSocketリクエストを処理するための
+[routing](/servers/features/routing.html)、[sessions](/servers/features/sessions.html)、[compression](/servers/features/compression.html)などの
+[features](#features)をインストールするアプリケーションロジックを備えた[modules](#modules)で構成される、
+構成済みサーバーエンジンを使用して1つ以上のポートをリッスンするカスタムプログラムです。
 
-Ktor also provides functionality to [handle raw sockets](/servers/raw-sockets.html), but not as part of the Application and
-its pipeline.
+Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)も提供しますが、アプリケーションおよびそのパイプラインの一部としては提供しません。
 {: .note}
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
 ## Application
 
-An `Application` instance is the main unit of a Ktor Application. When a request comes in
-(a request can be HTTP, HTTP/2 or WebSocket requests), it is converted to an `ApplicationCall`
-and goes through a pipeline which is owned by the `Application`. The pipeline consists of one or more
-interceptors that are previously installed, providing certain functionality such as routing,
-compression, etc. that ends handling the request.
+`Application`インスタンスは、Ktorアプリケーションのメインユニットです。
+要求が着信すると（要求はHTTP、HTTP/2、またはWebSocket要求の場合があります）、`ApplicationCall`に変換され、`Application`が所有するパイプラインを通過します。
+パイプラインは、以前にインストールされた1つ以上のインターセプターで構成され、リクエストの処理を終了するルーティング、圧縮などの特定の機能を提供します。
 
-Normally, a Ktor program configures the Application pipeline through [modules](#modules)
-that [install and configure features](#features).
+通常、Ktorプログラムは、[機能](#features)をインストールおよび構成する[modules](#modules)を介してアプリケーションパイプラインを構成します。
 
-You can read further information about the pipeline, in the [lifecycle](/servers/lifecycle.html) section.
+[ライフサイクル](/servers/lifecycle.html)セクションで、パイプラインに関する詳細情報を読むことができます。
 {: .note}
 
 ## ApplicationCall
 
-Check the [dedicated page about ApplicationCall](/servers/calls.html).
+[ApplicationCall](/servers/calls.html)に関するページをご覧ください。
 
 ## Features
 
-A feature is a singleton (usually a companion object) that you can install and configure for a pipeline.
-Ktor includes some standard features, but you can add your own or other features from the community. 
-You can install features in any pipeline, like the application itself, or specific routes.
+機能は、パイプライン用にインストールおよび構成できるシングルトン（通常はコンパニオンオブジェクト）です。
+Ktorにはいくつかの標準機能が含まれていますが、コミュニティから独自の機能または他の機能を追加できます。
+アプリケーション自体や特定のルートなど、任意のパイプラインに機能をインストールできます。
 
-You can read more about [features](/servers/features.html) in its dedicated page.
+[機能](/servers/features.html)の詳細については、専用ページをご覧ください。
 {: .note}
 
 ## Modules
 {: #modules}
 
-A Ktor module is just a user-defined function receiving the `Application` class that is in charge of configuring
-the server pipeline, install features, registering routes, handling requests, etc.
+Ktorモジュールは、サーバーパイプラインの構成、機能のインストール、ルートの登録、リクエストの処理などを担当するApplicationクラスを受け取るユーザー定義関数です。
 
-You have to specify the modules to load when the server starts in [the `application.conf` file](/servers/configuration.html#hocon-file).
+サーバーの起動時にロードするモジュールを[`application.conf` file](/servers/configuration.html#hocon-file)で指定する必要があります。
 
-A simple module function would look like this:
+単純なモジュール関数は次のようになります。
 
 {% capture main-kt %}
 ```kotlin
@@ -75,27 +71,24 @@ fun Application.mymodule() {
     no-height="true"
 %}
 
-Of course, you can split the module function in several smaller functions or classes.
+もちろん、モジュール関数をいくつかの小さな関数またはクラスに分割できます。
 
-Modules are referenced by their fully qualified name: the fully qualified name of the class and the method name,
-separated by a dot (`.`).
+モジュールは、完全修飾名（クラスの完全修飾名とドット（.）で区切られたメソッド名）によって参照されます。
 
-So for the example, the module's fully qualified name would be:
+したがって、この例では、モジュールの完全修飾名は次のようになります。
 
 ```
 com.example.myapp.MainKt.mymodule
 ```
 
-`mymodule` is an extension method of the class `Application` (where `Application` is the *receiver*).
-Since it is defined as a top-level function, Kotlin creates a JVM class with a `Kt` suffix (`FileNameKt`),
-and adds the extension method as a static method with the receiver as its first parameter.
-In this case, the class name is `MainKt` in the `com.example.myapp` package, and the Java method signature would be
-`static public void mymodule(Application app)`.
+`mymodule`はApplicationクラスの拡張メソッドです（`Application`は*receiver*です）。
+Kotlinはトップレベル関数として定義されているため、`Kt`サフィックス（`FileNameKt`）を持つJVMクラスを作成し、最初のパラメーターとしてレシーバーを持つ静的メソッドとして拡張メソッドを追加します。
+この場合、クラス名は`com.example.myapp`パッケージの`MainKt`であり、Javaメソッドシグネチャは`static public void mymodule（Application app）`になります。
 {: .note}
 
 ## What's next
 
-- [Application calls](/servers/calls.html)
-- [Application lifecycle explanation](/servers/lifecycle.html)
+- [Application call](/servers/calls.html)
+- [Applicationライフサイクル](/servers/lifecycle.html)
 - [Application configuration](/servers/configuration.html)
-- [Pipelines exlained](/advanced/pipeline)
+- [Pipeline](/advanced/pipeline)
