@@ -1,8 +1,8 @@
 ---
-title: WebSockets
+title: WebSocket
 category: clients
 permalink: /clients/websockets.html
-caption: WebSockets
+caption: WebSocket
 feature:
     artifact: io.ktor:ktor-client-websockets:$ktor_version,io.ktor:ktor-client-cio:$ktor_version,io.ktor:ktor-client-js:$ktor_version,io.ktor:ktor-client-okhttp:$ktor_version
     class: io.ktor.client.features.websocket.WebSockets
@@ -11,12 +11,13 @@ ktor_version_review: 1.2.0
 
 {% include feature.html %}
 
-Ktor provides a WebSocket client for the following engines: CIO, OkHttp, Js. To get more information about the server side, follow this [section](/servers/features/websockets.html).
 
-Once connected, client and server WebSockets share the same [WebSocketSession](/servers/features/websockets.html#WebSocketSession)
-interface for communication.
+Ktorは、CIO、OkHttp、Jsのエンジン用のWebSocketクライアントを提供します。
+サーバー側に関する詳細情報を取得するには、この[セクション](/servers/features/websockets.html)に従ってください。
 
-The basic usage to create an HTTP client supporting WebSockets is pretty simple:
+接続されると、クライアントとサーバーのWebSocketは通信のために同じ[WebSocketSession](/servers/features/websockets.html#WebSocketSession)インターフェイスを共有します。
+
+WebSocketをサポートするHTTPクライアントを作成する基本的な使用法は非常に簡単です。
 
 ```kotlin
 val client = HttpClient {
@@ -24,7 +25,7 @@ val client = HttpClient {
 }
 ```
 
-Once created we can perform a request, starting a `WebSocketSession`:
+作成したら、`WebSocketSession`を開始してリクエストを実行できます。
 
 ```kotlin
 client.ws(
@@ -51,4 +52,5 @@ client.ws(
 }
 ```
 
-For more information about the WebSocketSession, check the [WebSocketSession page](/servers/features/websockets.html#WebSocketSession) and the [API reference](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.features.websocket/).
+WebSocketSessionの詳細については、[WebSocketSessionページ](/servers/features/websockets.html#WebSocketSession)と[APIリファレンス](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.features.websocket/)を確認してください。
+

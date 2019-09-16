@@ -1,14 +1,11 @@
 ---
-title: Sockets
+title: Socket
 category: clients
 permalink: /clients/raw-sockets.html
-caption: Raw Sockets
+caption: Raw Socket
 ktor_version_review: 1.2.0
 ---
 
-Ktor support Client Raw Sockets that allows you to connect, for example,
-to a telnet server, or to write custom CIO (Coroutine I/O) clients to
-connect to databases or your servers using binary or text protocols.
+Ktorは、たとえばtelnetサーバーに接続したり、バイナリまたはテキストプロトコルを使用してデータベースやサーバーに接続するカスタムCIO（コルーチンI/O）クライアントを作成したりできるClient Raw Socketsをサポートしています。
 
-Since raw sockets, apply to both: clients and servers,
-the documentation is unified in the **[Raw Sockets page in the server section](/servers/raw-sockets.html)**.
+rawソケットはクライアントとサーバーの両方に適用されるため、ドキュメントは **[サーバーセクションのRawソケットページ](/servers/raw-sockets.html)** に統一されています。
