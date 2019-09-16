@@ -1,7 +1,7 @@
 ---
-title: Default Request
+title: デフォルトリクエスト
 category: clients
-caption: Default Request
+caption: デフォルトリクエスト
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.DefaultRequest
@@ -9,14 +9,14 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-This feature allows you to configure some defaults for all the requests for a specific client.
+この機能を使用すると、特定のクライアントのすべての要求に対していくつかのデフォルトを設定できます。
 
 {% include feature.html %}
 
-## Installation
+## インストール
 
-When configuring the client, there is an extension method provided by this feature to set come defaults for this client.
-For example, if you want to add a header to all the requests, or configure the host, port, and method or just set the path.
+クライアントを設定するとき、このクライアントにデフォルトを設定するために、この機能によって提供される拡張メソッドがあります。
+たとえば、すべての要求にヘッダーを追加する場合、ホスト、ポート、およびメソッドを構成する場合、または単にパスを設定する場合です。
 
 ```kotlin
 val client = HttpClient() {
@@ -29,9 +29,9 @@ val client = HttpClient() {
 }
 ```
 
-## Example
+## サンプル
 
-An example showing how to the client behaves using the [MockEngine](/clients/http-client/testing.html):
+以下の例はクライアントが[MockEngine](/clients/http-client/testing.html)を利用した際にどのように振る舞うかを示しています。
 
 ```kotlin
 import io.ktor.client.*

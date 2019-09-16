@@ -1,7 +1,7 @@
 ---
-title: Cookies
+title: Cookie
 category: clients
-caption: Cookies
+caption: Cookie
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.DefaultRequest
@@ -9,11 +9,11 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-This feature keeps cookies between calls or forces specific cookies.
+この機能は、呼び出し間でCookieを保持するか、特定のCookieを強制します。
 
 {% include feature.html %}
 
-## Installation
+## インストール
 
 ```kotlin
 val client = HttpClient() {

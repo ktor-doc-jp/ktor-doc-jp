@@ -8,13 +8,14 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-This feature allows to processes the plain text content in request and response: fills `Accept` header with registered charsets, encode request body and decode response body according to `ContentType` charset.
+この機能により、要求と応答のプレーンテキストコンテンツを処理できます。
+登録済みの文字セットで`Accept`ヘッダーを埋め、`ContentType`文字セットに従ってリクエスト本文をエンコードし、レスポンス本文をデコードします。
 
 {% include feature.html %}
 
-## Configuration
+## 設定
 
-If no configuration specified in configuration or HTTP call properties, `Charsets.UTF_8` is used by default.
+HTTP callプロパティに何も設定されていなかった場合、`Charsets.UTF_8`がデフォルト値として利用されます。
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {

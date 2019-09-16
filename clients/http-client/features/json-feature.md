@@ -1,15 +1,14 @@
 ---
-title: Json
+title: JSON
 category: clients
-caption: Json
+caption: JSON
 feature:
   artifact: io.ktor:ktor-client-json:$ktor_version
   class: io.ktor.client.features.json.JsonFeature
 ktor_version_review: 1.2.0
 ---
 
-Processes the request and the response payload as JSON, serializing
-and de-serializing them using a specific `serializer: JsonSerializer`.
+JSONとしてリクエスト・レスポンスのPayloadを処理するとき、特定の`serializer: JsonSerializer`を使ってシリアライズ・デシリアライズすることができます。
 
 ```kotlin
 val client = HttpClient(HttpClientEngine) {
