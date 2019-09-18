@@ -28,14 +28,14 @@ Ktorの _サーバー_ はアプリケーション環境で起動され、アプ
 生成は遅延されるのか、[ホットリロード](/servers/autoreload.html)機能があるのかなどは実装によります。
 そのためアプリケーションの停止はサーバの停止自体を意味するとは限りません。例えばサーバが動き続けるとアプリケーションがリロードされることもあります。
 
-アプリケーションモジュールはアプリケーションが起動された際に１つ１つ起動され、どのモジュールもアプリケーションのインスタンスを設定できます。アプリケーションインスタンスは _feature_ のインストールおよび _パイプライン_ のインターセプトにより設定ができます。
+アプリケーションモジュールはアプリケーションが起動された際に1つ1つ起動され、どのモジュールもアプリケーションのインスタンスを設定できます。アプリケーションインスタンスは _feature_ のインストールおよび _パイプライン_ のインターセプトにより設定ができます。
 
-詳細は [Lifecycle](/servers/lifecycle.html) をご覧ください。
+詳細は [ライフサイクル](/servers/lifecycle.html) をご覧ください。
 
 ## Feature
 
-_feature_ とはapplicationにプラグイン可能な特定機能を指します。
-通常、リクエストとレスポンスを _受信_ し、そこで特定の機能を実行します。
+_feature_ とはapplicationにプラグイン可能な特定の機能を指します。
+通常、リクエストとレスポンスを _インターセプト_ し、そこで特定の機能を実行します。
 例えば[デフォルトヘッダー](/servers/features/default-headers.html)機能はレスポンスを受信し、`Date`, `Server`ヘッダーを追加します。
 `install`関数によって以下コードのようにapplicationに機能がインストールできます。
 
@@ -54,7 +54,7 @@ featureは1度だけしかインストールされませんが、そういった
 Ktorにおいては、リクエストとレスポンス(完了しているか否かに関わらない)のペアは _アプリケーションコール_ ([ApplicationCall](/servers/calls.html)) と呼ばれています。
 全てのアプリケーションコールは複数(または0個)の _インターセプター_ で構成される _アプリケーションコールパイプライン_ ([ApplicationCallPipeline](https://api.ktor.io/latest/io.ktor.application/-application-call-pipeline/index.html))を介して渡されます。
 
-インターセプターは1つずつ呼び出され、すべてのインターセプターは要求または応答を修正し、次のインターセプターに進む(`proceed()`)またはパイプラインの実行全体を終了する(`finish()`または`finishAll()`)ことでパイプラインの実行を制御できます
+インターセプターは1つずつ呼び出され、すべてのインターセプターはリクエストまたはレスポンスを修正し、次のインターセプターに進む(`proceed()`)またはパイプラインの実行全体を終了する(`finish()`または`finishAll()`)ことでパイプラインの実行を制御できます
 (その場合次のインターセプターは呼び出されません。詳細については、[PipelineContext](https://api.ktor.io/latest/io.ktor.util.pipeline/-pipeline-context/index.html)を参照してください)。 
 また、`proceed()`呼び出しの前後に追加のアクションを実行することで、残りのインターセプターチェーンに処理を追加することができます。
 
@@ -161,9 +161,9 @@ routing {
 
 - [クイックスタート](/quickstart/index.html) は最初のKtor サーバーアプリケーションを作る手助けになります。
 - [Applicationとは?](/servers/application.html)
-- [Application call](/servers/calls.html)
+- [アプリケーションコール](/servers/calls.html)
 - [Applicationライフサイクル](/servers/lifecycle.html)
 - [Application設定](/servers/configuration.html)
-- [Routing](/servers/features/routing.html)
-- [Pipeline](/advanced/pipeline)
+- [ルーティング](/servers/features/routing.html)
+- [パイプライン](/advanced/pipeline)
 
