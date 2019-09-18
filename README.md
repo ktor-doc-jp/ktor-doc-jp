@@ -34,6 +34,7 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 <table>
   <tr>
     <td align="center"><a href="https://github.com/doyaaaaaken"><img src="https://avatars3.githubusercontent.com/u/5428401?v=4" width="100px;" alt="kenta.koyama"/><br /><sub><b>kenta.koyama</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=doyaaaaaken" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/kyou"><img src="https://avatars3.githubusercontent.com/u/524451?v=4" width="100px;" alt="小米-乔立伟"/><br /><sub><b>小米-乔立伟</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou" title="Documentation">📖</a></td>
   </tr>
 </table>
 
