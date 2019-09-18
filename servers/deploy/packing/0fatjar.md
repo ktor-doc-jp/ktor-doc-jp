@@ -6,19 +6,20 @@ permalink: /servers/deploy/packing/fatjar.html
 ktor_version_review: 1.0.0
 ---
 
-A *fat-jar* (or *uber-jar*) archive is a normal jar file single archive packing all the dependencies together
-so it can be run a standalone application directly using Java:
+*Fat JAR*（または *uber-jar* とも呼ばれる）アーカイブは通常、すべての依存ライブラリを１つにまとめた単一のJARファイルで、
+Javaを使ってスタンドアロンのアプリケーションとして起動することができます。
 
 `java -jar yourapplication.jar`
 
-This is the preferred way for running it in a container like [docker](/servers/deploy/containers.html#docker), when deploying to [heroku](/servers/deploy/hosting/heroku.html)
-or when being reverse-proxied with [nginx](/servers/deploy/containers.html#nginx). 
+これは[docker](/servers/deploy/containers.html#docker)のようなコンテナ内で起動する場合や、
+[heroku](/servers/deploy/hosting/heroku.html)にデプロイする場合や、
+[nginx](/servers/deploy/containers.html#nginx)をリバースプロキシとして置く場合に好ましい方法です。
 
 ## Gradle
 {: #fat-jar-gradle}
 
-When using Gradle, you can use the [`shadow`](https://imperceptiblethoughts.com/shadow/) gradle plugin to generate it. For example,
-to generate a fat JAR using netty as an engine:
+Gradleを利用する際に、[`shadow`](https://imperceptiblethoughts.com/shadow/) gradleプラグインをJARを生成するために利用できます。
+例えば、Nettyをエンジンとして利用するFatJarの生成は以下のようになります。
 
 {% capture build-gradle %}
 ```groovy
@@ -81,8 +82,8 @@ tasks.withType<Jar> {
 ## Maven
 {: #fat-jar-maven}
 
-When using Maven, you can generate a fat JAR archive with the `maven-assembly-plugin`. For example, to generate
-a fat JAR using netty as an engine:
+Mavenを使っている場合は、`maven-assembly-plugin`を使うことでFatJARアーカイブを生成できます。
+例えば、Nettyをエンジンとして利用するFatJARの生成方法は次のとおりです。
 
 {% capture pom-xml %}
 ```xml

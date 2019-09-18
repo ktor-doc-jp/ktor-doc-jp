@@ -1,16 +1,15 @@
 ---
-title: Packing
-caption: Packing  
+title: パッケージング
+caption: パッケージング 
 category: servers
 permalink: /servers/deploy/packing.html
 children: /servers/deploy/packing/
 ktor_version_review: 1.0.0
 ---
 
-When deploying, normally you will want to generate a single archive with all your
-classes, dependencies, and resources packed together: either in a single JAR archive
-(also called Fat JAR) or a WAR file (Web Application Resource).
+デプロイする際には通常、すべてのクラス、依存ライブラリ、リソースが１つにパッケージされた単一のアーカイブを生成します。
+単一のJARアーカイブ（ファットJARと呼ばれるもの）かWARファイル（Webアプリケーションリソース）がそれに当たります。
 
-**Table of contents:**
+**目次:**
 
 {% include list-children.html %}
