@@ -1,6 +1,6 @@
 ---
-title: Certificates
-caption: Certificates  
+title: 証明書
+caption: 証明書
 category: servers
 keywords: certificates https
 permalink: /servers/certificates.html
@@ -8,9 +8,9 @@ permalink: /servers/certificates.html
 
 ## JKS file format
 
-JKS (Java KeyStore) is the certificate format used by Java and Ktor.
+JKS (Java KeyStore)はJavaとKtorで利用される証明書のフォーマットです。
 
-You can use [`keytool`](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html) to convert and manage these kind of certificates.
+この種類の証明書を変換・管理するためには[`keytool`](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html)が利用できます。
 
 ## CER file format
 
@@ -20,4 +20,5 @@ keytool -import -v -trustcacerts -alias keyAlias -file server.cer -keystore cace
 
 ## SSL
 
-You can check the [SSL guide](/quickstart/guides/ssl.html) for more details.
+[SSLガイド](/quickstart/guides/ssl.html)により詳細な情報が記載されています。
+
