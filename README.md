@@ -1,4 +1,5 @@
 # 概要
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメント](https://jp.ktor.work)です。
 
@@ -26,3 +27,19 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 # 開発方法
 
 `./develop.sh` を実行後 `localhost:4000` で修正中のドキュメントが閲覧できます。
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/doyaaaaaken"><img src="https://avatars3.githubusercontent.com/u/5428401?v=4" width="100px;" alt="kenta.koyama"/><br /><sub><b>kenta.koyama</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=doyaaaaaken" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
