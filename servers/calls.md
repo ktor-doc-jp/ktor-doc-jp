@@ -1,5 +1,5 @@
 ---
-title: Calls
+title: Call
 caption: ApplicationCall
 keywords: calls requests responses
 category: servers
@@ -8,18 +8,15 @@ children: /servers/calls/
 ktor_version_review: 1.0.0
 ---
 
-この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
-{: .note.machine-translation}
-
 ルートを処理するとき、またはパイプラインを直接インターセプトするとき、ApplicationCallでコンテキストを取得します。
 
 `ApplicationCall`は、2つの主要なプロパティ[`ApplicationRequest`](/servers/calls/requests.html)
 と[`ApplicationResponse`](/servers/calls/responses.html)へのアクセスを提供します。
-名前が示すように、リクエストとレスポンスに対応します。
-これらに加えて、`ApplicationEnvironment`、およびクライアント要求への応答に役立ついくつかの便利な機能も提供します。
-パイプラインを非同期で実行できることを前提に、`ApplicationCall`は、パイプラインのさまざまな部分間でデータを渡すための`Attributes（属性）`を持つ論理実行コンテキストも表します。
+名前が示しているように、これらはリクエストとレスポンスに対応します。
+これらに加えて、`ApplicationEnvironment`とクライアントリクエストへのレスポンスに役立ついくつかの便利な機能も提供します。
+パイプラインを非同期で実行できることを前提に、`ApplicationCall`は、パイプラインのさまざまな部分間でデータを渡すための`Attributes`を持つ論理実行コンテキストも表します。
 
-パイプラインへのインターセプターのインストールは、`ApplicationCall`の処理を変更する主要な方法です。ほとんどすべてのKtorの[features](/servers/features)は、アプリケーションコール処理のさまざまなフェーズでさまざまな操作を実行するインターセプターです。
+パイプラインへのインターセプターのインストールは、`ApplicationCall`の処理を変更する主要な方法です。ほとんどすべてのKtorの[Feature](/servers/features)は、アプリケーションコール処理のさまざまなフェーズでさまざまな操作を実行するインターセプターです。
 
 ```kotlin
     intercept(ApplicationCallPipeline.Call) { 
