@@ -1,25 +1,22 @@
 ---
-title: Environments
-caption: How to differentiate between environments
+title: 環境
+caption: 環境ごとの差異をどうするか
 category: servers
 ktor_version_review: 1.0.0
 ---
 
-You might want to do different things depending on whether your server is running locally or on your
-production machine.
+あなたのサーバがローカルで起動しているか本番環境のマシンで起動しているかによって、異なることを行いたいことがあるかもしれません。
 
-Ktor doesn't impose any way for doing this, but here are some guidelines you can use, in
-case you were wondering about it.
+Ktorはこれを行うことをフレームワークとして強制しませんが、どのようにして実現すればいいか迷った際のガイドラインを以下に記載します。
 
 ## HOCON & ENV
 {: #proposal }
 
-You can use the `application.conf` file to set a variable that will hold the environment, then check that variable
-at runtime and decide what to do.
-You can configure it to check an environment variable `KTOR_ENV` and to provide a default value `dev`.
-Then in production you set the `KTOR_ENV=prod`
+`application.conf`ファイルに、環境を表す変数をセットし、その変数を実行時にチェックしてどういった処理を行うかを動的に決定することができます。
+環境変数`KTOR_ENV`を使いデフォルト値として`dev`を与えることで設定することができます。
+本番環境では`KTOR_ENV=prod`と設定します。
 
-For example:
+例えば
 
 ### application.conf:
 
@@ -30,7 +27,8 @@ ktor {
 }
 ```
 
-You can access this config from the application, and use some extension properties to make your life easier:
+この設定ファイルにはアプリケーションからアクセスすることができます。
+拡張プロパティ機能を使うことでこれをより簡潔に実装できます。
 
 ```kotlin
 fun Application.module() {
