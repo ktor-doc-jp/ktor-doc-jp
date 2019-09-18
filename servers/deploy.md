@@ -1,27 +1,26 @@
 ---
-title: Deploy
+title: デプロイ
 category: servers
 permalink: /servers/deploy.html
 keywords: google-appengine-standard jetty-embedded jetty-war netty tomcat-war heroku nginx war fat-jar docker packing proguard
-caption: Deployment 
+caption: デプロイ 
 children: /servers/deploy/
 ---
 
 {::options toc_levels="1..3" /}
 
-Once you are ready with your application, you will probably want to put it somewhere.
+アプリケーションの準備ができたら、それをどこかに公開したくなるかもしれません。
 
-In this page, you will learn how to deploy your application to several providers and containers. 
+このページでは、アプリケーションをプロバイダやコンテナーにデプロイする方法について学びます。
 
-**Table of contents:**
+**目次:**
 
 {% include list-children.html %}
 
-## Samples
+## サンプル
 {: #samples }
 
-In the Ktor's samples repository, you can find examples and README files
-on [how to deploy to specific providers](https://github.com/ktorio/ktor-samples/tree/master/deployment).
+Ktorのサンプルリポジトリで[特定のプロバイダーへのデプロイ方法](https://github.com/ktorio/ktor-samples/tree/master/deployment)に関する例やREADMEファイルを見つけることができます。
 
 * <https://github.com/ktorio/ktor-samples/tree/master/deployment/docker>
 * <https://github.com/ktorio/ktor-samples/tree/master/deployment/google-appengine-standard>
