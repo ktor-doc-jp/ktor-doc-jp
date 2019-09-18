@@ -1,6 +1,6 @@
 ---
-title: Requests
-caption: Handling HTTP Requests  
+title: リクエスト
+caption: HTTPリクエストのハンドリング  
 category: servers
 permalink: /servers/calls/requests.html
 keywords: multipart receiving
@@ -9,22 +9,22 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-When handling routes, or directly intercepting the pipeline, you
-get a context with an [ApplicationCall](/servers/calls.html).
-That `call` contains a property called `request` that includes information about the request.
+ルーティングを行うときや直接パイプラインをインターセプトするときには、[ApplicationCall](/servers/calls.html)とともにcontextを取得します。
+`call`は`request`というプロパティを持っており、これはリクエストに関する情報を保持しています。
 
-Also, the call itself has some useful convenience properties and methods that rely on the request.
+また、`call`自体もリクエストに関係するいくつかの有益なプロパティやメソッドを持っています。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Introduction
+## イントロダクション
 {: #introduction}
 
-When using the [Routing](/servers/features/routing.html) feature, or when intercepting requests, you can access
-the `call` property inside handlers. That call includes a `request` property with relevant information about the request:
+[Routing](/servers/features/routing.html)機能を利用するときや、リクエストのインターセプトを行うときには、
+ルートハンドラ内部で`call`プロパティにアクセスできます。
+`call`はリクエストに関係する情報をもった`request`プロパティを保持します。
 
 ```kotlin
 routing {
@@ -41,17 +41,17 @@ intercept(ApplicationCallPipeline.Call) {
 }
 ```
 
-## Request information
+## リクエスト情報
 {: #info }
 
-As part of the `request`, you can get access to its internal context:
+`request`の一部として、内部contextにアクセスできます。
 
 ```kotlin
 val call: ApplicationCall = request.call
 val pipeline: ApplicationReceivePipeline = request.pipeline
 ```
 
-### URL, method, scheme, protocol, host, path, httpVersion, remoteHost, clientIp
+### URL, メソッド, スキーマ, プロトコル, ホスト, パス, HTTPバージョン, remoteホスト, クライアントIP
 {: # info-url }
 
 ```kotlin
@@ -66,26 +66,25 @@ val document: String = request.document() // The last component after '/' of the
 val remoteHost: String = request.origin.remoteHost // The IP address of the client doing the request
 ```
 
-### Reverse proxy support: `origin` and `local`
+### リバースプロキシのサポート: `origin`と`local`
 {: #info-origin-local }
 
-When behind a reverse-proxy (for example an nginx or a load balancer), the received request is not performed by the end-user, but that reverse proxy.
-That means that the client IP address of the connection would be the one of the proxy instead of the client.
-Also the reverse proxy might be serving via HTTPS and requesting to your server via HTTP.
-Popular reverse proxies send `X-Forwarded-` headers to be able to access this information. 
+（例えばNginxやロードバランサなどがあることで）リバースプロキシの背後にあるとき、受け取ったリクエストはエンドユーザからでなくリバースプロキシからのものになります。
+つまり、接続のクライアントIPアドレスがクライアントの代わりにプロキシのものになるということです。
+また、リバースプロキシはHTTPSでレスポンスを返す一方、あなたのサーバへはHTTP経由でリクエストします。
+多くのリバースプロキシは`X-Forwarded-`ヘッダーをこの情報にアクセスするために送信します。
 
-Note that for this to work when under a reverse-proxy you have to install the [`XForwardedHeaderSupport` feature](/servers/features/forward-headers.html).
+リバースプロキシ配下で配下で動作するためには、[`XForwardedHeaderSupport` feature](/servers/features/forward-headers.html)をインストールする必要がある点にご注意ください。
 {: .note}
 
-As part of the request object, there are two properties `local` and `origin` that allows to get information of the original request
-or the local/proxied one. 
+リクエストオブジェクトの一部として、`local`と`origin`という2つのプロパティがあり、それを使うことでオリジナルのリクエストやlocal/プロキシのリクエストの情報を取得できます。
 
 ```kotlin
 val local : RequestConnectionPoint = request.local // Local information 
 val origin: RequestConnectionPoint = request.origin // Local / Origin if XForwardedHeaderSupport feature is installed.
 ```
 
-The local/origin information you can get:
+以下があなたが取得可能なlocal/origin情報です。
 
 ```kotlin
 interface RequestConnectionPoint {
@@ -100,12 +99,11 @@ interface RequestConnectionPoint {
 ```
 
 
-## GET / Query parameters
+## GET / クエリパラメータ
 {: #get }
 
-If you need to access the query parameters `?param1=value&param2=value` as a collection,
-you can use `queryParameters`. It implements the `StringValues` interface where
-each key can have a list of Strings associated with it.
+クエリパラメータ`?param1=value&param2=value`をコレクションとしてアクセスする必要が出たときには、`queryParameters`が利用できます。
+`StringValues`インターフェースを実装しており、各キーがそれに紐づくStringのリストを保持する構造になっています。
 
 ```kotlin
 val queryParameters: Parameters = request.queryParameters
@@ -113,32 +111,32 @@ val param1: String? = request.queryParameters["param1"] // To access a single pa
 val repeatedParam: List<String>? = request.queryParameters.getAll("repeatedParam") // Multiple values
 ```
 
-You can also access the raw `queryString` (`param1=value&param2=value`):
+加工されていない生の`queryString`(`param1=value&param2=value`)にもアクセス可能です。
 
 ```kotlin
 val queryString: String = request.queryString()
 ```
 
-## POST, PUT and PATCH
+## POST, PUT, PATCH
 
-`POST`, `PUT` and `PATCH` requests has an associated request body (the payload).
-That payload is usually encoded.
+`POST`, `PUT`, `PATCH` リクエストはリクエストボディ（payload）を持ちます。
+payloadは通常エンコードされています。
 
-All the receive methods consume the whole payload sent by the client so an attempt to receive a request body twice
-will lead to `RequestAlreadyConsumedException` error unless you have [DoubleReceive](/servers/features/double-receive.html) feature installed.
+これらのメソッドはクライアントから送信されたpayload全体を読み込み、リクエストボディを2度読み込むと`RequestAlreadyConsumedException`エラーが発生します。
+（[DoubleReceive](/servers/features/double-receive.html)機能がインストールされていない限り）
 {: .note #receiving-several-times}
 
 ### Raw payload
 {: #payload-data }
 
-To access the raw bits of the payload, you can use `receiveChannel`, but it is
-directly part of the `call` instead of `call.request`:
+payloadの生のビット列にアクセスするためには、`receiveChannel`が使えます。
+`call.request`ではなく`call`の一部として直接アクセスすることになります。
 
 ```kotlin
 val channel: ByteReadChannel = call.receiveChannel()
 ```
 
-And it provide some convenience methods for common types:
+他にも汎用的な型のための便利なメソッドが提供されています。
 
 ```kotlin
 val channel: ByteReadChannel = call.receiveChannel()
@@ -147,32 +145,31 @@ val inputStream: InputStream = call.receiveStream() // NOTE: InputStream is sync
 val multipart: MultiPartData = call.receiveMultipart()
 ```
 
-All those receive* methods are aliases of `call.receive<T>` with the specified type.
-The types `ByteReadChannel`, `ByteArray`, `InputStream`, `MultiPartData`, `String` and `Parameters` are handled by
-`ApplicationReceivePipeline.installDefaultTransformations` that is installed by default.
+これらreceiveメソッド群は`call.receive<T>`メソッドに対する特定の型の場合のエイリアスです。
+`ByteReadChannel`, `ByteArray`, `InputStream`, `MultiPartData`, `String`,`Parameters`の型はデフォルトでインストールされている`ApplicationReceivePipeline.installDefaultTransformations`によってハンドルされます。
 
-### Form Parameters (urlencoded or multipart)
+### Formパラメータ (urlencodedまたはmultipart)
 {: #post }
 
-To parse a form urlencoded or with multipart, you can use `receiveParameters` or `receive<Parameters>`:
+Form URLencodeまたはmultipartをパースするためには`receiveParameters`か`receive<Parameters>`が使えます。
 
 ```kotlin
 val postParameters: Parameters = call.receiveParameters()
 ```
 
-### Receive Typed Objects, Content-Type and JSON
+### 型オブジェクト、Content-Type、JSONの受け取り
 {: #typed-objects }
 
-The call also supports receiving generic objects:
+`call`はジェネリクスの受け取りもサポートしています。
 
 ```kotlin
 val obj: T = call.receive<T>()
 val obj: T? = call.receiveOrNull<T>()
 ```
 
-In order to receive custom objects from the payload,
-you have to use the `ContentNegotiation` feature.
-This is useful for example to receive and send JSON payloads in REST APIs.  
+payloadからカスタムのオブジェクトを受け取るためには、
+`ContentNegotiation`機能を使う必要があります。
+以下はREST APIにおけるJSON payloadの受信、送信の良い例です。
 
 ```kotlin
 install(ContentNegotiation) {
@@ -183,14 +180,13 @@ install(ContentNegotiation) {
 }
 ```
 
-If you configure the ContentNegotiation to use gson,
-you will need to include the `ktor-gson` artifact:
+ContentNegotiationをgsonを使うように設定した場合、`ktor-gson`アーティファクトをインクルードする必要があります。
 
 ```kotlin
 compile("io.ktor:ktor-gson:$ktor_version")
 ```
 
-Then you can, as an example, do:
+そして以下の例のように受信ができます。
 
 ```kotlin
 data class HelloWorld(val hello: String)
@@ -202,39 +198,39 @@ routing {
 }
 ```
 
-Remember that your classes must be defined top level (outside of any other class or function) to be recognized by Gson. 
+Gsonに認識されるためクラスはトップレベル（任意のclassや関数の外側で）で定義されている必要があることを忘れてはいけません。
 {: .note #receiving-gson-top-level}
 
-### Multipart, Files and Uploads
+### Multipart, ファイル, アップロード
 {: #post-files }
 
-Check the [uploads](/servers/uploads.html) section.
+[アップロード](/servers/uploads.html)セクションをご覧ください。
 
-### Custom receive transformers
+### カスタムreceiveトランスフォーマー
 {: #custom-receive-transformers }
 
-You can create custom transformers by calling
-`application.receivePipeline.intercept(ApplicationReceivePipeline.Transform) { query ->`
-and then calling `proceedWith(ApplicationReceiveRequest(query.type, transformed))` as does the [ContentNegotiation feature](/servers/features/content-negotiation.html).
+`application.receivePipeline.intercept(ApplicationReceivePipeline.Transform) { query ->`を呼ぶことで、
+カスタムのトランスフォーマーを作成することができ、
+`proceedWith(ApplicationReceiveRequest(query.type, transformed))`を呼び出すことで
+[ContentNegotiation機能](/servers/features/content-negotiation.html)が実行されます
 
-## Cookies
+## Cookie
 {: #cookies }
 
-There is a `cookies` property to access the `Cookie` headers sent by the client,
-just as if it was a collection:
+クライアントから送信された`Cookie`ヘッダーにアクセスするための`cookies`プロパティというものがあり、コレクションのように動作します。
 
 ```kotlin
 val cookies: RequestCookies = request.cookies
 val mycookie: String? = request.cookies["mycookie"]
 ```
 
-To handle sessions using cookies, have a look to the [Sessions](/servers/features/sessions.html) feature.
+cookieを使うことでセッションのハンドルをする場合は、[セッション](/servers/features/sessions.html)機能をご覧ください。
 
-## Headers
+## ヘッダー
 {: #headers }
 
-To access the headers the request objects has a `headers: Headers` property.
-It implements the `StringValues` interface where each key can have a list of Strings associated with it.
+ヘッダーにアクセスするため、リクエストオブジェクトは`headers: Headers`プロパティを持っています。
+`StringValues`インターフェースを実装しており、各キーは対応する値としてStringのリストを保持しています。
 
 ```kotlin
 val headers: Headers = request.headers
@@ -242,7 +238,7 @@ val header: String? = request.header("HeaderName") // To access a single header 
 val repeatedHeader: List<String>? = request.headers.getAll("HeaderName") // Multiple values
 ```
 
-And several convenience methods to access some common headers:
+共通的なヘッダーにアクセスするためにいくつかの便利なメソッドがあります。
 
 ```kotlin
 val contentType: ContentType = request.contentType() // Parsed Content-Tpe 
