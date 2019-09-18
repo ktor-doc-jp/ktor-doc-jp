@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "doyaaaaaken",
+      "name": "kenta.koyama",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5428401?v=4",
+      "profile": "https://github.com/doyaaaaaken",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "ktor-doc-jp",
+  "projectOwner": "doyaaaaaken",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
