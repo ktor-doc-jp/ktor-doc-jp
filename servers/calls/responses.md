@@ -1,6 +1,6 @@
 ---
-title: Responses
-caption: Generating HTTP Responses  
+title: レスポンス
+caption: HTTPレスポンスの生成
 category: servers
 permalink: /servers/calls/responses.html
 keywords: Redirections Location header permanent redirect temporal redirect pushing http2 respondFile respondBytes respondText respond response downloads generating response sending response
@@ -9,14 +9,13 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-When handling routes, or directly intercepting the pipeline, you
-get a context with an [ApplicationCall](/servers/calls.html).
-That `call` contains a property called `response` that allows you to emit the response.
+ルーティングのハンドリングまたは直接パイプラインをインターセプトする際に、
+[ApplicationCall](/servers/calls.html)からcontextを取得できます。
+`call`は`response`と呼ばれるプロパティを持っており、それを使うことでレスポンスの送信を行うことができます。
 
-Also, the call itself has some useful convenience properties and methods 
-that interact with the response.
+また、`call`自体もレスポンスを操作するような便利なプロパティやメソッドをいくつか持っています。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
@@ -24,8 +23,8 @@ that interact with the response.
 ## Context
 {: #context}
 
-When using the [Routing](/servers/features/routing.html) feature, you can access
-the `call` property inside route handlers:
+[Routing](/servers/features/routing.html)機能を利用する際には、
+ルートハンドラ内で`call`プロパティにアクセスすることができるようになります。
 
 ```kotlin
 routing {
@@ -35,7 +34,7 @@ routing {
 }
 ```
 
-When intercepting requests, the lambda handler in `intercept` has the `call` property available too:
+リクエストのインターセプトを行う際に、`intercept`内のlambda関数が`call`プロパティを持っており、それを利用することもできます。
 
 ```kotlin
 intercept(ApplicationCallPipeline.Call) { 
@@ -45,61 +44,62 @@ intercept(ApplicationCallPipeline.Call) {
 }
 ```
 
-## Controlling the HTTP headers and the status
+## HTTPヘッダーとステータスの操作
 {: #properties}
 
-You can control how the response is generated, the HTTP status, the headers, cookies, and the payload.
+HTTPステータス、ヘッダー、Cookie、payloadなど、レスポンスがどのように生成されるのかを操作することができます。
 
-Remember that since HTTP requests an responses are non-seekable streams,
-once you start emitting the response payload/content, the status and the headers are emitted,
-and you won't be able to modify either the status or the headers/cookies.
+HTTPリクエストとレスポンスはシークできないストリームであるため、
+一度レスポンスpayload/コンテンツを送信し始めると、
+ステータスやヘッダーが送信され、
+ステータスやヘッダーやCookieを変更することができなくなる点にご注意ください。
 {: .note #headers-already-sent } 
 
-As part of the `response`, you can get access to its internal context:
+`response`の一部として、以下のような内部contextにもアクセスできます。
 
 * `val call: ApplicationCall = response.call`
 * `val pipeline: ApplicationSendPipeline = response.pipeline`
 
-Headers:
+ヘッダー:
 
 * `val headers: ResponseHeaders = response.headers`
 
-Convenience `cookies` instance to set `Set-Cookie` headers:
+`Set-Cookie`ヘッダーをセットするための便利な`cookies`インスタンス:
 
 * `val cookies: ResponseCookies = response.cookies`
 
-Getting and changing the HTTP Status:
+HTTP Statusの取得と変更:
 
-* `response.status(HttpStatusCode.OK)` - Sets the HttpStatusCode to a predefined standard one
-* `response.status(HttpStatusCode(418, "I'm a tea pot"))` - Sets the HttpStatusCode to a custom status code
-* `val status: HttpStatusCode? = response.status()` - Gets the currently set HttpStatusCode if set
+* `response.status(HttpStatusCode.OK)` - 事前に定義されたHTTPステータスコードの設定
+* `response.status(HttpStatusCode(418, "I'm a tea pot"))` - カスタムのHTTPステータスコードの設定
+* `val status: HttpStatusCode? = response.status()` - 現在設定されているHTTPステータスコードの取得
 
-* `response.contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))` - Typed way for setting the Content-Type (for `ContentType.Application.Json` the default charset is UTF_8 without making it explicit)
-* `response.contentType("application/json; charset=UTF-8")` - Untyped way for setting the Content-Type header
+* `response.contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))` - 定義されている型を使いContent-Typeを設定（`ContentType.Application.Json`においてはUTF-8がデフォルトの文字コードです）
+* `response.contentType("application/json; charset=UTF-8")` - 定義されている型を使わずContent-Typeを設定
 
-Custom headers:
+カスタムヘッダー:
 
-* `response.header("X-My-Header", "my value")` - Appends a custom header
-* `response.header("X-My-Times", 1000)` - Appends a custom header
-* `response.header("X-My-Times", 1000L)` - Appends a custom header
-* `response.header("X-My-Date", Instant.EPOCH)` - Appends a custom header
+* `response.header("X-My-Header", "my value")` - カスタムヘッダーの追加
+* `response.header("X-My-Times", 1000)` - カスタムヘッダーの追加
+* `response.header("X-My-Times", 1000L)` - カスタムヘッダーの追加
+* `response.header("X-My-Date", Instant.EPOCH)` - カスタムヘッダーの追加
 
-Convenience methods to set headers usually set by the infrastructure:
+通常インフラストラクチャによって設定されるヘッダーをセットする便利なメソッド群:
 
-* `response.etag("33a64df551425fcc55e4d42a148795d9f25f89d4")` - Sets the `ETag` used for caching
-* `response.lastModified(ZonedDateTime.now())` - Sets the `Last-Modified` header
-* `response.contentLength(1024L)` - Sets the `Content-Length`. This is generally automatically set when sending the payload
-* `response.cacheControl(CacheControl.NoCache(CacheControl.Visibility.Private))` - Sets the Cache-Control header in a typed way
-* `response.expires(LocalDateTime.now())` - Sets the `Expires` header
-* `response.contentRange(1024L until 2048L, 4096L)` - Sets the `Content-Range` header (check the [PartialContent](/servers/features/partial-content.html) feature) 
+* `response.etag("33a64df551425fcc55e4d42a148795d9f25f89d4")` - キャッシュのため`ETag`の設定
+* `response.lastModified(ZonedDateTime.now())` - `Last-Modified`ヘッダーの設定
+* `response.contentLength(1024L)` - `Content-Length`の設定。一般的にはpayload送信時に自動で付与されるものです。
+* `response.cacheControl(CacheControl.NoCache(CacheControl.Visibility.Private))` - 定義されている型を使いCache-Controlの設定
+* `response.expires(LocalDateTime.now())` - `Expires`ヘッダーの設定
+* `response.contentRange(1024L until 2048L, 4096L)` - `Content-Range`ヘッダーの設定([PartialContent](/servers/features/partial-content.html)機能をご覧ください) 
 
-## HTTP/2 pushing and HTTP/1 `Link `header
+## HTTP/2 pushingとHTTP/1 `Link` ヘッダー
 {: #pushing}
 
-The `call` supports pushing.
+`call`はpushingをサポートしています。
 
-* In HTTP/2 it uses the push feature
-* In HTTP/1.2 it adds the `Link` header as a hint
+* HTTP/2において、push機能が使えます。
+* HTTP/1.2において、`Link`ヘッダーをヒントとして付与できます。
 
 ```kotlin
 routing {
@@ -109,63 +109,62 @@ routing {
 }
 ```
 
-Pushing reduces the time between the request and the display of the page.
-But beware that sending content beforehand might send content that is already cached by the client.
+Pushingはリクエストからページの表示までの間の時間を削減します。
+しかし、コンテンツを事前に送信することはクライアントにすでにキャッシュされているコンテンツを送信することになるかもしれないので用心してください。
 {: .note.performance }
 
-## Redirections
+## リダイレクト
 
-You can easily generate redirection responses with the `respondRedirect` method,
-to send `301 Moved Permanently` or `302 Found` redirects, with a `Location` header.
+`respondRedirect`メソッドを使うことでリダイレクトレスポンスを簡単に生成することができます。
+`301 Moved Permanently`か`302 Found`によるリダイレクトを`Location`ヘッダーを使って行います。
 
 ```kotlin
 call.respondRedirect("/moved/here", permanent = true)
 ```
 
-Remember that once this function is executed, the rest of the function is still executed. Therefore, if you have it in a guard
-clause, you should return from the function to avoid continuing with the rest of the handler.
-If you want to make redirections that stop the control flow by throwing an exception, check out this [sample from status pages](/servers/features/status-pages.html#redirect).
+この関数が実行されると、残りの関数も実行されることに注意してください。
+したがって、ガード句内で利用する場合は、ハンドラーの残りの部分を継続して処理しないよう関数からreturnする必要があります。
+例外を投げることによって制御フローを止めるリダイレクトを行いたい場合は、[ステータスページのサンプル](/servers/features/status-pages.html#redirect)をご覧ください。
 {: .note}
 
-## Sending response content
+## レスポンスコンテンツの送信
 
-Sending generic content (compatible with [Content negotiation](#content-negotiation)):
+ジェネリクスのコンテンツを送信（[コンテントネゴシエーション](#content-negotiation)と互換性があります）
 {: #call-respond}
 
-* `call.respond(MyDataClass("hello", "world"))` - Check the [Content Negotiation](#content-negotiation) section
-* `call.respond(HttpStatusCode.NotFound, MyDataClass("hello", "world"))` - Specifies a status code, and sends a payload in a single call. Check [StatusPages](/servers/features/status-pages.html)
+* `call.respond(MyDataClass("hello", "world"))` - [コンテンツネゴシエーション](#content-negotiation)セクションをご確認ください
+* `call.respond(HttpStatusCode.NotFound, MyDataClass("hello", "world"))` - ステータスコードを指定しpayloadを送信するのを1回の呼び出しで行います。[ステータスページ](/servers/features/status-pages.html)をご確認ください。
 
-Sending plain text:
+プレーンテキストの送信:
 
-* `call.respondText("text")` - Just a string with the body
-* `call.respondText("p { background: red; }", contentType = ContentType.Text.CSS, status = HttpStatusCode.OK) { ... }` - Sending a text specifying the ContentType, the HTTP Status and configuring the [OutgoingContent](#outgoing-content)
-* `call.respondText { "string" }` - Responding a string with a suspend provider
-* `call.respondText(contentType = ..., status = ...) { "string" }` - Responding a string with a suspend provider
-* `call.respond(TextContent("{}", ContentType.Application.Json))` - Responding a string without adding a charset to the `Content-Type` 
+* `call.respondText("text")` - 単なる文字列をBodyに入れる
+* `call.respondText("p { background: red; }", contentType = ContentType.Text.CSS, status = HttpStatusCode.OK) { ... }` - ContentType、HTTPステータスを指定しテキストを送信し、[OutgoingContent](#outgoing-content)の設定を行う
+* `call.respondText { "string" }` - suspendプロバイダで文字列を返す
+* `call.respondText(contentType = ..., status = ...) { "string" }` - suspendプロバイダで文字列を返す
+* `call.respond(TextContent("{}", ContentType.Application.Json))` - `Content-Type`に文字コードを追加し文字列を返す 
 
-Sending byte arrays:
+byte arrayの送信:
 
-* `call.respondBytes(byteArrayOf(1, 2, 3))` - A ByteArray with a binary body
+* `call.respondBytes(byteArrayOf(1, 2, 3))` - binaryのbodyでByteArray
 
-Sending files:
+ファイルの送信:
 
-* `call.respondFile(File("/path/to/file"))` - Sends a file
-* `call.respondFile(File("basedir"), "filename") { ... }` - Send a file and configures the [OutgoingContent](#outgoing-content)
+* `call.respondFile(File("/path/to/file"))` - ファイルの送信
+* `call.respondFile(File("basedir"), "filename") { ... }` - ファイルを送信し、[OutgoingContent](#outgoing-content)を設定
 
-Sending URL-encoded forms (`application/x-www-form-urlencoded`):
+URL-encoded form(`application/x-www-form-urlencoded`)の送信:
 
-* Use `Parameters.formUrlEncode`. Check the [Utilities page](/advanced/utilities.html) for more information about this.
+* `Parameters.formUrlEncode`が利用できます.詳細は[Utilitiesページ](/advanced/utilities.html)をご確認ください。
 
-When sending files based on the request parameters,
-be especially careful validating and limiting the input.
+リクエストパラメータに基づいてファイルを送信するとき、入力のバリデーションと制限方法について特に注意してください。
 {: .note.security #validate-respond-file-parameters }
 
-Sending chunked content using a Writer:
+Writerを使いchunked contentを送信:
 
-* `call.respondWrite { write("hello"); write("world") }` - Sends text using a writer. This is used with the [HTML DSL](#html-dsl)
-* `call.respondWrite(contentType = ..., status = ...) { write("hello"); write("world") }` - Sends text using a writer and specifies a contentType and a status
+* `call.respondWrite { write("hello"); write("world") }` - writerを使いテキストを送信。[HTML DSL](#html-dsl)と一緒に使えます。
+* `call.respondWrite(contentType = ..., status = ...) { write("hello"); write("world") }` - writerを使いテキストを送信し、contentTypeとステータスを指定します。
 
-Sending arbitrary data in chunks using `WriteChannelContent`:
+`WriteChannelContent`を使いチャンク内の任意のデータを送信:
 
 ```kotlin
 call.respond(object : OutgoingContent.WriteChannelContent() {
@@ -178,11 +177,11 @@ call.respond(object : OutgoingContent.WriteChannelContent() {
 })
 ```
 
-To specify a default content type for the request:
+リクエストのため、デフォルトのcontentTypeを指定:
 
 * `call.defaultTextContentType(contentType: ContentType?): ContentType`
 
-The OutgoingContent interface for configuring responses:
+レスポンス設定のためのOutgoingContentインターフェース:
 {: #outgoing-content}
 
 ```kotlin
@@ -196,41 +195,42 @@ class OutgoingContent {
 }
 ```
 
-## Making files downloadable
+## ファイルをダウンロード可能にする
 {: #content-disposition }
 
-You can make files "downloadable", by adding the [`Content-Disposition` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition).
+[`Content-Disposition`ヘッダー](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)を付与することでファイルをダウンロード可能にすることができます。
 
-In an untyped way, you can do something like:
+定義されている型を使わない方法だと、以下のように使えます:
 
 ```kotlin
 call.response.header(HttpHeaders.ContentDisposition, "attachment; filename=\"myfilename.bin\"")
 ```
 
-But Ktor also provides a typed way with proper escaping to generate this header:
+しかしKtorは定義されている方も提供しており、その方法だと適切なエスケープとヘッダーの生成を行ってくれます:
 
 ```kotlin
 call.response.header(HttpHeaders.ContentDisposition, ContentDisposition.Attachment.withParameter(ContentDisposition.Parameters.FileName, "myfilename.bin").toString())
 ```
 
-## Content negotiation
+## コンテントネゴシエーション
 {: #content-negotiation}
 
-When configuring plugins for content negotiation, the pipeline may accept additional
-types for the [`call.respond`](#call-respond) methods.
+コンテントネゴシエーションのためのプラグインの設定をするとき、
+パイプラインは[`call.respond`](#call-respond)メソッドのための追加の型を受け入れるかもしれません。
 
-### Sending HTML with the DSL
+### HTMLをDSLで送信
 {: #html-dsl}
 
-Ktor includes an optional [feature to send HTML content using a DSL](/servers/features/templates/html-dsl.html).
+Ktorはオプショナルな機能として[HTMLコンテンツをDSLを使って送信](/servers/features/templates/html-dsl.html)する機能を持ちます.
 
-### Sending HTML with FreeMarker
+### HTMLをFreeMarkerで送信
 {: #html-freemarker}
 
-Ktor includes an optional [feature to send HTML content using FreeMarker](/servers/features/templates/freemarker.html).
+Ktorはオプショナルな機能として[HTMLコンテンツをFreeMarkerを使って送信](/servers/features/templates/freemarker.html)する機能を持ちます.
 
-### Sending JSON with data classes
+### JSONをdata classを使って送信
 {: #json}
 
-Ktor includes an optional [feature to send JSON content using Content negotiation](/servers/features/content-negotiation/gson.html).
+Ktorはオプショナルな機能として[JSONコンテンツをContentNegotiationを使って送信](/servers/features/templates/freemarker.html)する機能を持ちます.
+
 
