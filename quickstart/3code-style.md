@@ -24,3 +24,4 @@ That's specially convenient for operator extension methods.
 You can change the import configuration in `Preferences... -> Editor -> Code Style -> Kotlin -> Imports`:
 
 ![](/quickstart/code-style/code-style-imports.png)
+
