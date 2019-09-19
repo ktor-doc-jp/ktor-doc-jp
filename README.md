@@ -14,7 +14,7 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 * 着手方法
   * タイトル・説明・コミットメッセージ等は日本語で作成していただいて大丈夫です。
   * コミットメッセージに指定はありませんが、翻訳元ページがわかるようURL等を入れておくといいかもしれません。
-  * 他の方と着手箇所が被ると悲しいことになるので、空コミットを入れてタイトルの銭湯に`[WIP]`とつけPRを作成することを推奨します。（PR作成が早かったほうを優先になります）
+  * 他の方と着手箇所が被ると悲しいことになるので、空コミットを入れてタイトルの先頭に`[WIP]`とつけPRを作成することを推奨します。（PR作成が早かったほうを優先になります）
   * PRの説明文のところに着手対象のURLがあるとわかりやすいのでありがたいです。
 * 着手対象
   * 現在英語になっているページ、またはページの先頭に「この文章は機械翻訳を利用して翻訳されています。」と注意書きがあるページが対象になります。
@@ -28,6 +28,11 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 `./develop.sh` を実行後 `localhost:4000` で修正中のドキュメントが閲覧できます。
 
 ## Contributors ✨
+
+`SELECT * FROM contributors ORDER BY commited_page_count DESC, last_commited_at ASC`
+💻: commiter
+📖: 1page
+🐛: typo
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
