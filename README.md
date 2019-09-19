@@ -1,4 +1,4 @@
-# 概要 👀
+## 概要 👀
 
 Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメント](https://jp.ktor.work)です。
 
@@ -9,7 +9,7 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 翻訳を手伝っていただけるContributerの方を（また、Maintenerも）募集しています。
 また、Issue、Pull Request絶賛お待ちしています！
 
-# PullRequestについて ✅
+## PullRequestについて ✅
 
 * 着手方法
   * タイトル・説明・コミットメッセージ等は日本語で作成していただいて大丈夫です。
@@ -23,7 +23,7 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
   * 仮に下手な翻訳だったとしても読み手にとっては無いよりもはるかに有益なので、自信が無くても是非挑戦してみてください！
   * 内容がわからないところは部分的に英語のまま残すのもアリだと思います。
 
-# 開発方法 💻
+## 開発方法 💻
 
 `./develop.sh` を実行後 `localhost:4000` で修正中のドキュメントが閲覧できます。
 
