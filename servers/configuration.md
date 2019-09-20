@@ -1,42 +1,37 @@
 ---
 title: Configuration
-caption: Configuring the Server
+caption: サーバーの設定
 keywords: hocon json config DevelopmentEngine EngineMain embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
 category: servers
 permalink: /servers/configuration.html
 children: /servers/configuration/
 ---
 
-Ktor uses [HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)
-format in the external configuration file. In this file, you can configure things like the port to listen to,
-or the [modules](/servers/application.html#modules) to be loaded. This format is similar to JSON,
-but is optimized to be read and written by humans, and supports additional
-features like environment variable substitution.
-In this case, you configure the server engine to be used with the `mainClassName` pointing to a particular `EngineMain`.
+Ktorは外部設定ファイルに[HOCON (Human-Optimized Config Object Notation)](https://github.com/lightbend/config/blob/master/HOCON.md)フォーマットを利用しています。
+このファイル内ではリッスンするport番号であったり、ロードする[module](/servers/application.html#modules)であったりを設定します。
+JSONに似たフォーマットですが、人が読み書きしやすいよう最適化されており、環境変数の置換のような追加機能をサポートしています。
+以下のケースでは、`mainClassName`を使うことで特定の`EngineMain`を指定し、サーバーエンジンの設定を行います。
 
-Ktor also uses a set of lambdas with a typed DSL (Domain Specific Language) to configure the application
-and server engine when using `embeddedServer`.
+またKtorは型付けされたDSL(Domain Specific Language)とともにlambdaのセットを用い、アプリケーションとサーバーエンジンを`embeddedServer`を使って設定することもできます。
 
-Starting with Ktor 1.0.0-beta-2, the `DevelopmentEngine` class has been renamed to `EngineMain`, for older versions just rename it.
+Ktor 1.0.0-beta-2で始める場合は、`DevelopmentEngine`クラスは`EngineMain`にリネームされているため、古いバージョンを使う場合はリネームしてください。
 {: .note }
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## The HOCON file
+## HOCONファイル
 {: #hocon-file}
 
-This is the preferred way of configuring Ktor applications as it allows you
-to easily change the configuration without recompiling your application.
+アプリケーションを再コンパイルすることなく設定を簡単に変更できるため、この方法がKtorアプリケーションを設定する上での推奨される方法となります。
 
-When Ktor is started using a `EngineMain`, or by calling the `commandLineEnvironment`,
-it tries to load a HOCON file called `application.conf` from the application resources.
-You can change the location of the file using [command line arguments](#command-line).
+Ktorが`EngineMain`を使って起動されたときや`commandLineEnvironment`を呼び出したとき、アプリケーションresourceから`application.conf`という名のHOCONファイルを読み込もうとします。
+[コマンドライン引数](#command-line)を利用することでファイルの位置を変更することができます。
 
 <div markdown="1" class="note" style="margin-bottom: 1em;">
-Available development engines that you can use as `mainClassName`:
+以下は`mainClassName`として指定可能で開発エンジンとして利用可能なものです:
 
 * `io.ktor.server.cio.EngineMain`
 * `io.ktor.server.tomcat.EngineMain`
@@ -45,11 +40,10 @@ Available development engines that you can use as `mainClassName`:
 
 </div>
 
-Ktor only requires you to specify which [module or modules](/servers/application.html#modules)
-you want it to load when starting the server using the `ktor.application.modules` property.
-All the other properties are optional.
+Ktorにはどの[module](/servers/application.html#modules)をサーバー起動時にロードしたいのかを`ktor.application.modules`プロパティを使って指定するだけで大丈夫です。
+その他のプロパティはオプショナルです。
 
-A typical, simple HOCON file for Ktor (`application.conf`) would look like this:
+典型的なシンプルなKtor (`application.conf`)のHOCONファイルは以下のようになります:
 
 ```kotlin
 ktor {
@@ -63,15 +57,15 @@ ktor {
 }
 ```
 
-Using dot notation it would be equivalent to:
+ドット記法を使っても同じです:
 
 ```kotlin
 ktor.deployment.port = 8080
 ktor.application.modules = [ io.ktor.samples.metrics.MetricsApplicationKt.main ]
 ```
 
-Ktor allows you to configure much more: from additional core configurations
-to Ktor features, and even custom configurations for your applications:
+Ktorはより様々な設定が行なえます。
+Ktorの機能に関わるその他のコアな設定であったり、あなたのアプリケーションのためのカスタムの設定値であったり様々な設定が行えます:
 
 ```kotlin
 ktor {
@@ -116,39 +110,35 @@ youkube {
 ```
 {: .compact}
 
-There is a [list of the available core configurations](#available-config) in this document.
+このドキュメント内に[設定可能なコア設定の一覧](#available-config)があります。
 
-You can use HOCON to [set properties from environment variables](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions). 
+HOCONを使うことで[プロパティを環境変数から設定](https://github.com/lightbend/config/blob/master/HOCON.md#substitutions)することができます。
 {: .note.tip}
 
-There is an [IntelliJ plugin for HOCON](https://plugins.jetbrains.com/plugin/10481-hocon), that you may want to install. 
+[HOCON用のIntelliJプラグイン](https://plugins.jetbrains.com/plugin/10481-hocon)もあるので、インストールすると良いかもしれません。
 {: .note.tip}
 
-## Command Line
+## コマンドライン
 {: #command-line}
 
-When using [`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/src/io/ktor/server/engine/CommandLine.kt)
-(any `EngineMain` main) there are several switches and configuration parameters you can use to configure
-your application module.
+[`commandLineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/src/io/ktor/server/engine/CommandLine.kt)を使うとき、アプリケーションmoduleを設定する上で利用可能な設定パラメータがいくつかあります。
 
-If you start the application from the command line with `-config=anotherfile.conf`, it will
-load the config file from the specific local file instead of from the resources.
+`-config=anotherfile.conf`を使ってコマンドラインからアプリケーションをを起動したならば、resourceからの代わりにローカルの指定したファイルから設定ファイルを読み込みます。
 
-Using switches, you can, for example, override the bound port defined by executing:
+設定パラメータを使うことでbindされているport番号を上書きすることもできます。
 
 `java -jar myapp-fatjar.jar -port=8080`
 
-There is a [list of available command line switches](#available-config) in this document.
+[利用可能なコマンドラインの設定パラメータ一覧](#available-config)がこのドキュメント内にあります。
 
-## Configuring the embeddedServer
+## embeddedServerの設定
 {: #embedded-server}
 
-embeddedServer is a simple way to start a Ktor application. You provide your own main function,
-and being more explicit, it is easier to understand what happens exactly.
+embeddedServerはKtorアプリケーションを起動するための単純な方法です。
+あなたが定義したmain関数を提供することで、何が実際に起きるのかを理解するのが簡単になります。
 
-`embeddedServer` includes an optional parameter `configure` that allows you to set the configuration for the
-engine specified in the first parameter.
-Independent to the engine used, you will have some available properties to configure:
+`embeddedServer`はオプショナルなパラメータである`configure`を持っており、第一引数で指定されたエンジンのための設定をセットします。
+利用しているエンジンごとに独立しており、いくつかの設定可能なプロパティがあります:
 
 ```kotlin
 embeddedServer(AnyEngine, configure = {
@@ -166,11 +156,11 @@ embeddedServer(AnyEngine, configure = {
 
 ### Multiple connectors
 
-It is possible to define by code several connectors using the `applicationEngineEnvironment`.
+`applicationEngineEnvironment`を使ってコードでいくつかのコネクタを定義することができます。
 
-Inside the `applicationEngineEnvironment`, you can define HTTP and HTTPS connectors:
+`applicationEngineEnvironment`の内部で、HTTPとHTTPSのコネクタが定義できます。
 
-*To define a HTTP connector:* 
+*HTTPコネクタの定義:* 
 
 ```kotlin
 connector {
@@ -179,7 +169,7 @@ connector {
 }
 ```
 
-*To define a HTTPS connector:* 
+*HTTPSコネクタの定義:* 
 
 ```kotlin
 sslConnector(keyStore = keyStore, keyAlias = "mykey", keyStorePassword = { "changeit".toCharArray() }, privateKeyPassword = { "changeit".toCharArray() }) {
@@ -188,7 +178,7 @@ sslConnector(keyStore = keyStore, keyAlias = "mykey", keyStorePassword = { "chan
 }
 ```
 
-*An actual example:*
+*実際の例:*
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -211,8 +201,7 @@ fun main(args: Array<String>) {
 }
 ```
 
-The application will handle all the connections. You have access to the local port for each ApplicationCall,
-so you can decide what to do based on the local port:
+各ApplicationCallのローカルportにアクセスすることで、ローカルportに応じて何をするかを決めることができます:
 
 ```kotlin
 fun Application.main() {
@@ -228,12 +217,12 @@ fun Application.main() {
 }
 ```
 
-You can see a complete example of this in [ktor-samples/multiple-connectors](https://github.com/ktorio/ktor-samples/tree/master/other/multiple-connectors).
+これに関する動作する例は[ktor-samples/multiple-connectors](https://github.com/ktorio/ktor-samples/tree/master/other/multiple-connectors)を見てください。
 
 ### Netty
 {:.no_toc}
 
-When using Netty as the engine, in addition to common properties, you can configure some other properties:
+Nettyをエンジンとして使うとき、共通のプロパティに加え、いくつかの他のプロパティも設定できます:
 
 ```kotlin
 embeddedServer(Netty, configure = {
@@ -255,7 +244,7 @@ embeddedServer(Netty, configure = {
 ### Jetty
 {:.no_toc}
 
-When using Jetty as the engine, in addition to common properties, you can configure the Jetty server.
+Jettyをエンジンとして使うとき、共通のプロパティに加え、いくつかの他のプロパティも設定できます:
 
 ```kotlin
 embeddedServer(Jetty, configure = {
@@ -272,6 +261,7 @@ embeddedServer(Jetty, configure = {
 ### CIO
 {:.no_toc}
 
+CIO(Coroutine I/O)をエンジンとして使うとき、共通のプロパティに加え、`connectionIdleTimeoutSeconds`プロパティも設定できます:
 When using CIO (Coroutine I/O) as the engine, in addition to common properties, you can configure the `connectionIdleTimeoutSeconds` property.
 
 ```kotlin
@@ -287,7 +277,7 @@ embeddedServer(CIO, configure = {
 ### Tomcat
 {:.no_toc}
 
-When using Tomcat, in addition to common properties, you can configure the Tomcat server.
+Tomcatをエンジンとして使うとき、共通のプロパティに加え、いくつかの他のプロパティも設定できます:
 
 ```kotlin
 embeddedServer(Tomcat, configure = {
@@ -301,21 +291,19 @@ embeddedServer(Tomcat, configure = {
 }.start(true)
 ```
 
-Those are the official engines developed for Ktor, but it is also possible to [create
-your own engines](/advanced/engines.html) and provide custom configurations for them. 
+これらはKtorによって開発されているオフィシャルなエンジンですが、[自作のエンジンを作る](/advanced/engines.html)ことも可能で、それに対しカスタムの設定を作ることも可能です。
 {: .note}
 
-## Available configuration parameters
+## 利用可能な設定パラメータ
 {: #available-config}
 
-There is a list of properties which Ktor understands out of the box and that you can
-pass from the command line or the HOCON file. 
+コマンドラインまたはHOCONファイルから渡すことで、Ktorが追加設定なく利用可能なプロパティ一覧があります。
 
-**Switch** refers to command line arguments that you pass to the application, so you can, for example, change the bound port by:
+**Switch**はアプリケーションにわたすコマンドライン引数を参照します。例えばbindされているportを変更するには:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
-**Parameter paths** are paths inside the `application.conf` file:
+**Parameter paths** は`application.conf`内のpathです:
 
 ```
 ktor.deployment.port = 8080
@@ -329,23 +317,23 @@ ktor {
 }
 ```
 
-General switches and parameters:
+一般的なSwitchとParameterです:
 
 | Switch          | Parameter path                         | Default               | Description |
 |-----------------|:---------------------------------------|:----------------------|:------------|
-| `-jar=`         |                                        |                       | Path to JAR file |
-| `-config=`      |                                        |                       | Path to config file (instead of `application.conf` from resources) |
-| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`             | Bound host |
-| `-port=`        | `ktor.deployment.port`                 | `80`                  | Bound port |
-| `-watch=`       | `ktor.deployment.watch`                | `[]`                  | Package paths to watch for reloading |
-|                 | `ktor.application.id`                  | `Application`         | Application Identifier used for logging |
+| `-jar=`         |                                        |                       | JARファイルへのパス |
+| `-config=`      |                                        |                       | configファイルへのパス（resource内の`application.conf`がデフォルト） |
+| `-host=`        | `ktor.deployment.host`                 | `0.0.0.0`             | bindされているhost |
+| `-port=`        | `ktor.deployment.port`                 | `80`                  | bindされているport |
+| `-watch=`       | `ktor.deployment.watch`                | `[]`                  | リロードを監視するパッケージパス |
+|                 | `ktor.application.id`                  | `Application`         | ログ出力する際のアプリケーション識別子 |
 |                 | `ktor.deployment.callGroupSize`        | `parallelism`         | Event group size running application code |
 |                 | `ktor.deployment.connectionGroupSize`  | `parallelism / 2 + 1` | Event group size accepting connections |
 |                 | `ktor.deployment.workerGroupSize`      | `parallelism / 2 + 1` | Event group size for processing connections, parsing messages and doing engine's internal work |
-|                 | `ktor.deployment.shutdown.url`         |                       | URL for shutdown the application when defined. Internally uses the [ShutDownUrl feature](/servers/features/shutdown-url.html) |
+|                 | `ktor.deployment.shutdown.url`         |                       | アプリケーションをシャットダウンするためのURL。内部的に[ShutDownUrl機能](/servers/features/shutdown-url.html)を利用してます。 |
 {: .styled-table #general }
 
-Required when SSL port is defined:
+SSLポートが定義されているときに必須:
 
 | Switch          | Parameter path                         | Default          | Description |
 |-----------------|:---------------------------------------|:-----------------|:------------|
@@ -356,17 +344,15 @@ Required when SSL port is defined:
 |                 | `ktor.security.ssl.privateKeyPassword` | `null`           | Password for the SSL private key |
 {: .styled-table #ssql}
 
-
-You can use `-P:` to specify parameters that don't have a specific switch. For example:
+特定のswitchに一致しないパラメータを指定するために`-P:`を使うこともできます。例えば:
 `-P:ktor.deployment.callGroupSize=7`.
 
-## Reading the configuration from code
+## コードから設定を読み込む
 {: #accessing-config}
 
-If you are using a `EngineMain` instead of an `embeddedServer`, the HOCON file is loaded,
-and you are able to access its configuration properties.
+`embeddedServer`の代わりに`EngineMain`を使っているなら、HOCONファイルは読み込まれており、設定したプロパティにアクセスすることができます。
 
-You can also define arbitrary property paths to configure your application.
+アプリケーションを設定するために任意のプロパティのパスを定義することもできます。
 
 ```kotlin
 val port: String = application.environment.config
@@ -374,20 +360,20 @@ val port: String = application.environment.config
     ?: "80"
 ```
 
-It is possible to access the HOCON `application.conf` configuration too, by using a custom main with commandLineEnvironment:
+commandLineEnvironmentとともにカスタムのmain関数を利用することで、HOCON形式の`application.conf`設定ファイルにもアクセスすることができます:
 
 ```kotlin
 embeddedServer(Netty, commandLineEnvironment(args + arrayOf("-port=8080"))).start(true)
 ```
 
-Or by redirecting it to the specific `EngineMain.main`:
+または特定の`EngineMain.main`にリダイレクトすることもできます:
 
 ```kotlin
 val moduleName = Application::module.javaMethod!!.let { "${it.declaringClass.name}.${it.name}" }
 io.ktor.server.netty.main(args + arrayOf("-port=8080", "-PL:ktor.application.modules=$moduleName"))
 ```
 
-Or with a custom `applicationEngineEnvironment`:
+またはカスタムの`applicationEngineEnvironment`と一緒に使えます:
 
 ```kotlin
 embeddedServer(Netty, applicationEngineEnvironment {
@@ -409,17 +395,16 @@ embeddedServer(Netty, applicationEngineEnvironment {
 }).start(true)
 ```
 
-You can also access the configuration properties by manually loading the default config file `application.conf`:
+デフォルトの設定ファイルである`application.conf`を明示的に読み込むことで、設定プロパティにアクセスすることもできます:
 
 ```kotlin
 val config = HoconApplicationConfig(ConfigFactory.load())
 ```
 
-## Using environment variables
+## 環境変数を使う
 {: #environment-variables}
 
-For *HOCON*, if you want to configure some parameters using environment variables,
-you can use environment substitution using `${ENV}` syntax. For example:
+*HOCON*において、環境変数を使っていくつかのパラメータを設定したい場合、`${ENV}`シンタックスを利用して置換を行うことができます。例えば:
 
 ```groovy
 ktor {
@@ -429,14 +414,13 @@ ktor {
 }
 ```
 
-This will look for a `PORT` environment variable, and if not found an exception will be thrown:
+このコードは`PORT`環境変数を探します。そして見つからなければ例外を投げます:
 
 ```
 Exception in thread "main" com.typesafe.config.ConfigException$UnresolvedSubstitution: application.conf @ file:/path/to/application.conf: 3: Could not resolve substitution to a value: ${PORT}
 ```
 
-In case you want to provide a default value for a property because the environment doesn't exist, 
-you can set the property with the default value, and then set it again with the `${?ENV}` syntax:
+環境変数が見つからない場合のプロパティのデフォルト値を指定したい場合は、デフォルト値でプロパティをセットしその後再度`${?ENV}`シンタックスで設定すればよいです:
 
 ```groovy
 ktor {
@@ -447,17 +431,17 @@ ktor {
 }
 ```
 
-If you are using `embeddedServer` you can still use `System.getenv` from Java. For example:
+`embeddedServer`を使っている場合は、Javaから`System.getenv`が使えます。例えば:
 
 ```kotlin
 val port = System.getenv("PORT")?.toInt() ?: 8080
 ```
 
-## Custom configuration systems
+## カスタム設定システム
 {: #custom}
 
-Ktor provides an interface that you can implement the configuration in, available at `application.environment.config`.
-You can construct and set the configuration properties inside an `applicationEngineEnvironment`.
+`application.environment.config`において利用できる、設定を実装するためのインターフェースをKtorは提供しています。
+`applicationEngineEnvironment`内で設定プロパティの構築およびセットを行うことができます。
 
 ```kotlin
 interface ApplicationConfig {
@@ -475,7 +459,7 @@ interface ApplicationConfigValue {
 class ApplicationConfigurationException(message: String) : Exception(message)
 ```
 
-Ktor provides two implementations. One based on a map (`MapApplicationConfig`), and other based on HOCON (`HoconApplicationConfig`).
+Ktorは2種類の実装を提供しています。１つはMap（`MapApplicationConfig`）をベースにしたもの、もう１つはHOCON（`HoconApplicationConfig`）をベースにしたものです。
 
-You can create and compose config implementations and set them at `applicationEngineEnvironment`, so it is available to all the
-application components.
+configの実装を作成・組み合わせ、`applicationEngineEnvironment`においてそれらをセットすることができます。
+そうすることですべてのアプリケーションコンポーネントにおいて利用可能になります。
