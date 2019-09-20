@@ -28,6 +28,10 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 
 `./develop.sh` を実行後 `localhost:4000` で修正中のドキュメントが閲覧できます。
 
+## 議論・質問 💬
+
+Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.herokuapp.com/)の`ktor`チャンネルでお待ちしてます。
+
 ## Contributors ✨
 
 `SELECT * FROM contributors ORDER BY commited_page_count DESC, last_commited_at ASC`
