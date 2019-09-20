@@ -7,20 +7,21 @@ toc: false
 ktor_version_review: 1.0.0
 ---
 
-## Official Code Convention
+## 公式コーディング規約
 
-Ktor as well as other official Kotlin libraries use the [official Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html).
+Ktor は他の公式の Kotlin ライブラリと同様に [Kotlin 公式コーディング規約](https://kotlinlang.org/docs/reference/coding-conventions.html) に従います。
 
-You can use the official coding standard by adding `kotlin.code.style=official` to your `gradle.properties` file.
+`gradle.properties` に `kotlin.code.style=official` を追加することで、公式のコーディング規約を使用できます。
 
-## With Star Imports
+## オンデマンドインポート (`*`)
 
-The Official Coding Conventions don't define what's the recommended way of using imports.
-The IntelliJ default is to include star (`*`) imports after importing at least 5 symbols from a package. But in Ktor and other libraries at JetBrains we use and recommend using star imports always.
+公式のコーディング規約では、インポートの方式の規定はありません。
+IntelliJ IDEA のデフォルト設定では、同一パッケージから5つ以上のシンボルをインポートすると、動的にインポート文を `*` に置き換えますが、 Ktor や JetBrains 製のライブラリは、常にオンデマンドインポート (`*`) を使用することを推奨しています。
 
-The rationale behind it is that usually when you include a class, you will probably want to include all the method and property extension declared for that class.
-That's specially convenient for operator extension methods.
+特定のクラスをインポートした際、多くの場合でそのクラス向けに定義された拡張関数や拡張プロパティも使いたくなるからです。
+演算子拡張関数に対しては特に威力を発揮します。
 
-You can change the import configuration in `Preferences... -> Editor -> Code Style -> Kotlin -> Imports`:
+`Preferences... -> Editor -> Code Style -> Kotlin -> Imports` からインポートの設定を変更できます。
 
 ![](/quickstart/code-style/code-style-imports.png)
+
