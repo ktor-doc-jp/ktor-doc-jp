@@ -1,23 +1,22 @@
 ---
-title: Structure
-caption: Building Complex Servers 
+title: 構造化
+caption: 複雑なサーバの構築
 category: servers
 permalink: /servers/structure.html
 keywords: routing, routes, structuring, growing, dependency injection, guice, external configuration, 
 ---
 
-Depending on the complexity of the code of your server, you might want to structure your code
-one way or another. This page proposes some strategies to structure your code according to its
-complexity, adapting to its growth, while keeping it as simple as possible.
+サーバーのコードの複雑さ次第で、なんらかの方法でコードを構造化する必要があるかもしれません。
+このページでは、進化に適応しコードをシンプルに保てるような複雑度に応じたコード構造化戦略をいくつか提案します。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
 ## Hello World
 
-To get started with Ktor, you can start with an `embeddedServer` in a simple `main` function.
+Ktorで始めるためには、シンプルに`main`関数内で`embeddedServer`を起動すればいいです。
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -31,12 +30,12 @@ fun main(args: Array<String>) {
 }
 ```
 
-This works fine to understand how Ktor works and to have all the application code available
-at a glance.
+Ktorがどのように動くのかを理解したり、アプリケーションコードをひと目で確認できるという意味では良い方法です。
 
-## Defining modules
+## moduleの定義
 
-You can extract the code configuring the server, also called a Ktor module, to an extension method:
+サーバーを設定するためのコードを拡張関数として抽出することもできます。
+これはKtor moduleと呼ばれます:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -52,14 +51,13 @@ fun Application.mainModule() {
 }
 ```
 
-## Extracting routes
+## routeの切り出し
 
-Once your code starts to grow, and you have more routes defined, you will probably want to split
-the code up instead of growing your main function indefinitely.
+コードが成長し始め、より多くのrouteを定義し始めると、main関数をずっと成長させ続けるかわりにコードを分割したいと思うかもしれません。
 
-A simple way to do this, is to extract routes into extension methods using the `Routing` class as a receiver.
+分割するためのシンプルな方法は、routeを`Routing`クラスをレシーバとした拡張関数に切り出すことです。
 
-Depending on the size, maybe still keeping it in the same file or you can move it to other files:
+サイズに応じて、同じファイル内に定義するか、別ファイルに移動するかを選択できます:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -80,20 +78,19 @@ fun Routing.root() {
 }
 ```
 
-Inside the `routing { ... }` block there is an implicit `this: Routing`, you can call the `root` method directly,
-it is effectively like calling `this.root()`.
+`routing { ... }`ブロック内では、暗黙的にthisが`this: Routing`になっています。
+そのため`root`メソッドを直接呼び出すことができます。
+`this.root()`を呼び出すのと同じ結果になります。
 {: .note}
 
-## Deployment and `application.conf`
+## デプロイと`application.conf`
 
-Once you want to deploy your server, you might also want to provide or to change the configuration of the server
-externally without recompiling it.
+一度サーバーをデプロイしたあとに、再コンパイルすることなくサーバーの設定を外から追加・変更したいかもしれません。
 
-Ktor libraries expose some entrypoints that read an `application.conf` file from the resources, or by an external
-file. In this file you can define things like the entry point of the application, the port used, the ssl configuration
-or arbitrary configurations.
+Ktorライブラリはresourceの`application.conf`ファイルまたは外部ファイルを読み込むいくつかのエントリーポイントを公開しています。
+ファイル内ではアプリケーションのエントリーポイントであったり、利用するportであったり、ssl設定であったり、その他任意の設定を定義できます。
 
-You can read more about using `application.conf` in the [configuration page](/servers/configuration.html).
+[設定ページ](/servers/configuration.html)で、`application.conf`の使い方についてより詳しく見ることができます。
 
 {::comment}
 ## Dependency injection using Guice
@@ -102,14 +99,13 @@ Ktor doesn't impose any dependency injection system. In fact, you can easily wri
 without using any.
 {:/comment}
 
-## Health checks
+## ヘルスチェック
 
-Depending on your application, you might want to use different ways to create a health check.
-The easiest way would be to enable an endpoint like `/health_check` that returns
-something like HTTP 200 `OK`, while optionally verifying your dependant services.
-It's completely up to you.
+アプリケーション次第で、ヘルスチェックの方法は色々異なる方法を使いたいかもしれません。
+最も簡単な方法はHTTP 200 `OK`を返す`/health_check`といった感じのエンドポイントを有効にしておき、必要に応じて依存サービスを検証することです。
+全てはあなた次第です。
 
-You can also use the [StatusPages feature](/servers/features/status-pages.html) to handle exceptions.
+exceptionをハンドルするために[ステータスページ機能](/servers/features/status-pages.html)を利用することもできます。
 
 ```kotlin
 install(StatusPages){
