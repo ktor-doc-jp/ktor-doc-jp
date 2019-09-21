@@ -1,81 +1,77 @@
 ---
-title: Lifecycle
+title: ライフサイクル
 category: servers
 permalink: /servers/lifecycle.html
-caption: What Happens in a Server?  
+caption: サーバーで何が起きているのか？
 ---
 
-Ktor is designed to be flexible and extensible. It is composed
-of small, simple pieces, but if you don't know what's happening, then it is like a black box.
+Ktorは柔軟で拡張性があるように設計されています。
+そのため小さく、シンプルな部品で構成されていますが、もしあなたが何が起きているのか理解していないならばブラックボックスのように見えるでしょう。
 
-In this section, you will discover what Ktor is doing under the hood, and you will learn more
-about its generic infrastructure. 
+このセクションでは、Ktorが内部で何を行っているかを探索し、その汎用的なインフラストラクチャとしての性質について学んでいきましょう。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Entry points
+## エントリーポイント
 
-You can run a Ktor application in several ways:
+Ktorアプリケーションをいくつかの方法で起動することができます:
 
-* With a plain `main` by calling `embeddedServer`
-* Running a `EngineMain` `main` function and [using a HOCON `application.conf` configuration file](/servers/configuration.html)
-* [As a Servlet within a web server](https://github.com/ktorio/ktor-samples/tree/master/deployment)
-* As part of a test using `withTestApplication` from the [`ktor-server-test-host`](https://github.com/ktorio/ktor/tree/master/ktor-server/ktor-server-test-host) artifact
+* `embeddedServer`を呼び出す`main`関数
+* `EngineMain` `main` 関数を起動し、[HOCON `application.conf` 設定ファイルを利用](/servers/configuration.html)
+* [Webサーバ内でサーブレットとして起動](https://github.com/ktorio/ktor-samples/tree/master/deployment)
+* [`ktor-server-test-host`](https://github.com/ktorio/ktor/tree/master/ktor-server/ktor-server-test-host)アーティファクトから`withTestApplication`を使いテストの一部として起動
 
-## Start-up
+## 起動
 
-### Common
+### 共通
 
 **[`ApplicationEngineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/jvm/src/io/ktor/server/engine/ApplicationEngineEnvironment.kt):**
 
-To begin with, this immutable environment has to be built;
-with a classLoader, a logger, a [configuration](/servers/configuration.html),
-a monitor that acts as an event bus for application events,
-and a set of connectors and modules, that will form the application and [watchPaths](/servers/autoreload.html).
+起動するためにはイミュータブルな環境を構築する必要があります。
+クラスローダー、ロガー、[設定](/servers/configuration.html)、
+アプリケーションイベントのイベントバスとして起動するmonitor、
+コネクター群、モジュール群を設定し、それらがアプリケーションや[watchPath](/servers/autoreload.html)を形成します。
 
-You can build it using `ApplicationEngineEnvironmentBuilder`,
-and handy DSL functions `applicationEngineEnvironment`, `commandLineEnvironment` among others.
+`ApplicationEngineEnvironmentBuilder`や、お手軽なDSL関数である`applicationEngineEnvironment`, `commandLineEnvironment`を使うことで構築ができます。
 
 **[`ApplicationEngine`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/jvm/src/io/ktor/server/engine/ApplicationEngine.kt):**
 
-There are multiple `ApplicationEngine`, one per supported server like:
-Netty, Jetty, CIO or Tomcat.
+複数種類の`ApplicationEngine`があります。
+Netty, Jetty, CIO or Tomcatといったサーバーをサポートしています。
 
-The application engine is the class in charge of running the application,
-it has a specific **configuration**, an associated **environment** and can be `start`ed and `stop`ped.
+ApplicationEngineはアプリケーションを起動する役割をもったクラスであり、
+特定の**configuration**と、起動・停止可能な**environment**を持っています。
 
-When you start a specific application engine, it will use the configuration
-provided to listen, to the right ports and hosts,
-by using SSL, certificates and so on, with the specified workers.
+特定のアプリケーションエンジンを起動したとき、
+configurationが使われ、
+正しいport、hostをSSLや証明書を使い、指定したworkerでリッスンすることができます。
 
-Connectors will be used for listening to specific http/https hosts and ports.
-While the `Application` pipeline will be used to handle the requests. 
+コネクターは特定のhttp/httpsホスト・ポートをリッスンするために使われており、
+一方`Application`パイプラインはリクエストをハンドルするために使われています。
 
-**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt) Pipeline**:
+**[Application](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/Application.kt)パイプライン**:
 
-It is created by the `ApplicationEngineEnvironment` and it is initially empty.
-It is a pipeline without a subject that has `ApplicationCall` as the context.
-Each specified module will be called to configure this application when the
-environment is created.
+Applicationは`ApplicationEngineEnvironment`によって作成され、初めは空の状態です。
+コンテキストとしての`ApplicationCall`を持たないパイプラインになります。
+environmentの作成時にアプリケーションの設定を行うため各指定されたmoduleが呼び出されます。
 
 ### embeddedServer
 
-When you run your own main method and call the `embeddedServer` function,
-you provide a specific `ApplicationEngineFactory` and
-an `ApplicationEngineEnvironment` is then created or provided.
+main関数を起動し`embeddedServer`関数を呼び出すとき、
+特定の`ApplicationEngineFactory`を渡すことで`ApplicationEngineEnvironment`が作成または渡されます。
 
 ### EngineMain
 
-Ktor defines one `EngineMain` class per each supported server engine.
-This class defines a `main` method that can be executed to run the application.
-By using `commandLineEnvironment` it will load the [HOCON `application.conf`](/servers/configuration.html)
-file from your resources and will use extra arguments to determine which modules to install
-and how to configure the server. 
+Ktorは各サポートしているサーバーエンジンごとに`EngineMain`クラスを定義しています。
+このクラスはアプリケーションを起動することができる`main`関数を定義しています。
+また、`commandLineEnvironment`を使うことで、
+[HOCON `application.conf`](/servers/configuration.html)ファイルをresourceから読み込み、
+どのmoduleをインストールするかやサーバーをどう設定するかについて追加の引数を使って指定することができます。
 
-Those classes are normally declared in `CommandLine.kt` source files.
+`CommandLine.kt`ソースファイル内に通常これらのクラスは宣言されています。
 
 * CIO: [`io.ktor.server.cio.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-cio/jvm/src/io/ktor/server/cio/EngineMain.kt)
 * Jetty: [`io.ktor.server.jetty.EngineMain.main`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-jetty/jvm/src/io/ktor/server/jetty/EngineMain.kt)
@@ -84,19 +80,18 @@ Those classes are normally declared in `CommandLine.kt` source files.
 
 ### [TestApplicationEngine](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-test-host/jvm/src/io/ktor/server/testing/TestApplicationEngine.kt)
 
-For testing, Ktor defines a `TestApplicationEngine` and `withTestApplication` handy method,
-that will allow you to test your application modules, pipeline, and other features without
-actually starting any server or mocking any facility.
-It will use an in-memory configuration `MapApplicationConfig("ktor.deployment.environment" to "test")`
-that you can use to determine if it is to run in a test environment.
+テストのため、Ktorは`TestApplicationEngine`と、`withTestApplication`という便利なメソッドを定義しています。
+それを使うことでアプリケーションmoduleやパイプラインやその他の機能を、サーバーを実際に起動したり何かしらをモックしたりすることなしに、テストすることができます。
+そこではインメモリの設定として`MapApplicationConfig("ktor.deployment.environment" to "test")`を使用し、
+テスト環境内で実行することを決めています。
 
-## Monitor events
+## イベントの監視
 
-Associated with the environment is a monitor instance that Ktor uses to raise application events.
-You can use it to subscribe to events. For example, you can subscribe to a stop application event
-to shutdown specific services or finalize some resources.
+環境に紐づく形で、monitorインスタンスがあり、Ktorはそれをアプリケーションイベントを生成するために使っています。
+monitorインスタンスをイベントをサブスクライブするために使うことができます。
+例えば、アプリケーション停止イベントをサブスクライブすることで、特定サービスのシャットダウンや何らかのリソースの終了などを実行することができます。
 
-A list of [Ktor defined events](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationEvents.kt):  
+[Ktorが定義するイベント一覧](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationEvents.kt):  
 
 ```kotlin
 val ApplicationStarting = EventDefinition<Application>()
@@ -108,15 +103,15 @@ val ApplicationStopped = EventDefinition<Application>()
 
 ## [Pipelines](https://github.com/ktorio/ktor/blob/master/ktor-utils/common/src/io/ktor/util/pipeline/Pipeline.kt)
 
-Ktor defines pipelines for asynchronous extensible computations. Pipelines are used all over Ktor.
+Ktorは非同期で拡張可能な処理を行うためのパイプラインを定義します。
+パイプラインはKtor全体で利用されています。
 
-All the pipelines have an associated **subject** type, **context** type, and a list of **phases**
-with **interceptors** associated to them. As well as, **attributes** that act as a small typed object container.
+すべてのパイプラインは**subject**の型、**context**の型、**インターセプタ**が関連付けられている**phase**のリストに関連づけられます。
+As well as, **attributes** that act as a small typed object container.
 
-Phases are ordered and can be defined to be executed, after or before another phase, or at the end.
+フェーズは順序付けられており、どのPhaseよりも先なのか後なのかあるいは最後なのかといった実行順序について定義されています。
 
-Each pipeline has an ordered list of phase contexts for that instance, which contain a set of
-interceptors for each phase.
+各パイプラインは順序付けられたPhaseのリストを持っており、さらに各Phaseごとにinterceptorのセットを持っています。
 
 For example:
 
@@ -128,27 +123,23 @@ For example:
         * Interceptor3
         * Interceptor4
 
-The idea here is that each interceptor for a specific phase does not depend on other interceptors
-on the same phase, but on interceptors from previous phases.
+あるPhaseのためのインターセプタは、同じPhaseの他のインターセプタには依存していませんが、前のPhaseのインターセプタには依存しています。
 
-When executing a pipeline, all the registered interceptors will be executed in the order defined by the phases.
+パイプラインの実行時、すべての登録されているインターセプタはPhaseで定義されている順序で実行されます。
 
 ### [ApplicationCallPipeline](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationCallPipeline.kt)
 
-The server part of Ktor defines an `ApplicationCallPipeline` without a subject
-and with `ApplicationCall` as context.
-The `Application` instance is an `ApplicationCallPipeline`.
+Ktorのサーバー部分は`ApplicationCallPipeline`を定義しており、`ApplicationCall`をコンテキストとして持っています。
+`Application`インスタンスは`ApplicationCallPipeline`インスタンスでもあります。
 
-So when the server's application engine handles a HTTP request, it will execute the `Application`
-pipeline.
+サーバーのアプリケーションエンジンがHTTPリクエストをハンドルするとき、`Application`パイプラインが実行されます
 
-The context class `ApplicationCall` contains the application, the `request`, the `response`,
-and the `attributes` and `parameters`.
+コンテキストのクラスである`ApplicationCall`はApplicationや`request`、`response`、`attributes`、`parameters`などを保持しています。
 
-In the end, the application modules, will end registering interceptors
-for specific phases for the Application pipeline, to process the `request` and emitting a `response`.  
+最終的にアプリケーションmoduleは、アプリケーションパイプラインの特定のフェーズにインターセプタの登録するのを終了し、
+`request`の処理と`response`の送信を行います。
 
-The `ApplicationCallPipeline` defines the following built-in phases for its pipeline:
+`ApplicationCallPipeline`は以下のビルトインPhaseをパイプラインに定義しています:
 
 ```kotlin
 val Setup = PipelinePhase("Setup") // Phase for preparing the call, and processing attributes
@@ -160,32 +151,33 @@ val Fallback = PipelinePhase("Fallback") // Phase for handling unprocessed calls
 
 ## [Features](/advanced/features)
 
-Ktor defines application features using the [`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationFeature.kt) class.
-A feature is something that you can `install` to a specific pipeline.
-It has access to the pipeline, and it can register interceptors and do all sorts of other things.
+Ktorは[`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationFeature.kt) クラスでアプリケーションの機能を定義しています。
+Featureは指定のパイプラインに`install`可能なものです。
+Featureはパイプラインにアクセスし、interceptorに登録され、様々な種類のことを実行します。
 
 ## Routing
 
-To illustrate how features and a pipeline tree work together, let's have a look at how [Routing](/servers/features/routing.html) works.
+Featureやパイプラインツリーがどのようにともに動作しているのかを説明するには、[Routing](/servers/features/routing.html)がどのように動くのかを見るといいでしょう。
 
-Routing, like other features, is normally installed like this:
+Routingは他の機能同様、通常以下のようにインストールされます:
 
 ```kotlin
 install(Routing) { }
 ```
 
-But there is an easy method to register and start using it, that also installs it if it is already registered:
+登録・起動するための簡単なメソッドも用意されており、それを使うことでinstallを行うことができます。
 
 ```kotlin
 routing { }
 ```
 
-Routing is defined as a tree, where each node is a `Route` that is also a separate instance of an `ApplicationCallPipeline`.
-So when the root routing node is executed, it will execute its own pipeline. And will stop executing things once
-the route has been processed.
+Routingはツリーとして定義されます。
+各ノードは`Route`であり、`ApplicationCallPipeline`の分離されたインスタンスでもあります。
+そのため、ルートのroutingノードが実行されたとき、それ自体のパイプラインが実行されます。
+そしてパイプラインの実行が終わったときには、routeが実行され終わっています。
 
-## What's next
+## 関連記事
 
 - [Application calls](/servers/calls.html)
 - [Application configuration](/servers/configuration.html)
-- [Pipelines exlained](/advanced/pipeline)
+- [Pipelineについて](/advanced/pipeline)
