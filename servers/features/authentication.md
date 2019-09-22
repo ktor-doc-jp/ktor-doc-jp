@@ -1,6 +1,6 @@
 ---
-title: Authentication
-caption: Authenticating Clients
+title: 認証
+caption: クライアントの認証
 category: servers
 permalink: /servers/features/authentication.html
 children: /servers/features/authentication/
@@ -15,39 +15,36 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-Ktor supports authentication out of the box as a standard pluggable feature.
-It supports mechanisms to read *credentials*, and to authenticate *principals*.
+Ktorは標準のプラグイン可能なFeatureとして、すぐに使える認証機能をサポートしています。
+*credential*の読み込みと*principal*の認証のメカニズムをサポートしています。
 
-It can be used in some cases along with the [sessions feature](/servers/features/sessions.html)
-to keep the login information between requests.
+リクエスト間でログイン情報を保持するために[session機能](/servers/features/sessions.html)とともに使われるケースもあります。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
 {% include feature.html %}
 
-## Mechanisms
+## メカニズム
 
 {% include list-children.html %}
 
-## Basic usage
+## 基本的な使い方
 
-Ktor defines two concepts: credentials and principals.
+Ktorはcredentialとprincipalという2つの概念を定義しています。
 
-* A principal is something that can be authenticated: a user, a computer, a group, etc.
-* A credential is an object that represents a set of properties for the server to authenticate a principal:
-  a user/password, an API key or an authenticated payload signature, etc.
+* principalは認証されている何かを指します。ユーザやコンピュータやグループなどが例です。
+* credentialは、principalを認証するサーバーに提示するプロパティのセットです。user/password、APIキー、authenticated payload signatureなどが例です。
 
-To install it, you have to call to `application.install(Authentication)`. You have to install this feature
-directly to the application and it *won't* work in another `ApplicationCallPipeline` like `Route`.
+インスタンスするたえには、`application.install(Authentication)`を呼び出す必要があります。
+applicationに対し直接インストールする必要があり、`Route`のような別の`ApplicationCallPipeline`内ではうごきません。
 
-You might still be able to call the install code inside a Route if you have the Application injected in a nested DSL,
-but it will be applied to the application itself.
+Routeの内側でインストールするコードを実行することができますが、適用されるのはapplicationそのものに対してです。
 {: .note}
 
-Using its DSL, it allows you to configure the authentication providers available:
+DSLを使うことで、認証プロバイダの設定を可能にします:
 
 ```kotlin
 install(Authentication) {
@@ -64,8 +61,8 @@ install(Authentication) {
 }
 ```
 
-After defining one or more authentication providers (named or unnamed), with the [routing feature](/servers/features/routing.html)
-you can create a route group, that will apply that authentication to all the routes defined in that group:
+1つ以上の認証プロバイダを（名前付きでも名前無しでも）定義した後、[routing機能](/servers/features/routing.html)を使って、
+定義した認証が適用されるようなrouteのグループを作成できます。
 
 ```kotlin
 routing {
@@ -83,35 +80,34 @@ routing {
 }
 ```
 
-You can specify several names to apply several authentication providers, or none or null to use the unnamed one.
+いくつかの認証プロバイダを適用するために名前を指定することもできますし、あるいは名前を指定せず使うこともできます。
 
-You can get the generated `Principal` instance inside your handler with:
+生成された`Principal`のインスタンスをhandlerの内側で以下のように取得することができます:
 
 ```kotlin
 val principal: UserIdPrincipal? = call.authentication.principal<UserIdPrincipal>()
 ```
 
-In the generic, you have to put a specific type that *must* match the generated Principal.
-It will return null in the case you provide another type. 
+一般的には、生成したPrincipalにマッチする*必要がある*特定の型を指定する必要があります。
+別の型を指定した場合、nullが返ります。
 {: .note}
 
-The handler won't be executed if the configured authentication fails (when returning `null` in the authentication mechanism)
+設定された認証が失敗した場合handlerは実行されません（認証メカニズム内で`null`が返ったとき）
 {: .note}
 
-## Naming the AuthenticationProvider
+## AuthenticationProviderに名前付け
 
-It is possible to give arbitrary names to the authentication providers you specify,
-or to not provide a name at all (unnamed provider) by not setting the name argument or passing a null.
- 
-You cannot repeat authentication provider names, and you can define just one provider without a name.
+指定の認証プロバイダに任意の名前をつけることができますし、あるいは名前の引数を指定しないまたはnullを渡すことで名前をつけないこともできます。
 
-In the case you repeat a name for the provider or try to define two unnamed providers, an exception will be thrown:
+認証プロバイダ名を重複させることはできず、また名前なしのプロバイダは１つだけしか定義できません。
+
+プロバイダの名前を重複させた場合や、2つの未命名のプロバイダがあった場合は、exceptionが投げられます:
 
 ```
 java.lang.IllegalArgumentException: Provider with the name `authName` is already registered
 ```
 
-Summarizing:
+要約すると以下のようになります:
 
 ```kotlin
 install(Authentication) {
@@ -130,9 +126,9 @@ install(Authentication) {
 }
 ```
 
-## Skipping/Omitting Authentication providers
+## AuthenticationProviderのスキップ
 
-You can also skip an authentication based on a criteria.
+基準にしたがって認証をスキップさせることもできます。
 
 ```kotlin
 /**
@@ -142,7 +138,7 @@ You can also skip an authentication based on a criteria.
 fun AuthenticationProvider.skipWhen(predicate: (ApplicationCall) -> Boolean)
 ```
 
-For example, to skip a basic authentication if there is already a session, you could write:
+例えば、すでにセッションがある場合にbasic認証をスキップさせるためには、以下のように書けます:
 
 ```kotlin
 authentication {
@@ -152,10 +148,9 @@ authentication {
 }
 ```
 
-## Advanced
+## 発展的内容
 
-If you want to create custom authentication strategies,
-you can check the [Authentication feature](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/jvm/src/io/ktor/auth) as a reference.
+カスタムの認証を行いたい場合は、[Authentication機能](https://github.com/ktorio/ktor/tree/master/ktor-features/ktor-auth/jvm/src/io/ktor/auth)のページを参照してください。
 
-The authentication feature defines two stages as part of its [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/jvm/src/io/ktor/auth/AuthenticationPipeline.kt): `RequestAuthentication` and `CheckAuthentication`.
+認証機能は[Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth/jvm/src/io/ktor/auth/AuthenticationPipeline.kt)において`RequestAuthentication`と`CheckAuthentication`という2つのステージで定義されています
 {: .note}
