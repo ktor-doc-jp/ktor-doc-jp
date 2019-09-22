@@ -745,3 +745,4 @@ her snippets.
 ### Exercise 2
 
 Store users and snippets in a database. 
+
