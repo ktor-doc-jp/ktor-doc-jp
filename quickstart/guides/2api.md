@@ -1,6 +1,6 @@
 ---
 title: HTTP API
-caption: "Guides: How to create an API using ktor"
+caption: "Guides: ktor を用いた API の作り方"
 category: quickstart
 permalink: /quickstart/guides/api.html
 ktor_version_review: 1.0.0
@@ -8,11 +8,11 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-In this guide you will learn how to create an API using ktor.
+本ページでは、 ktor を用いた API の作り方を学びます。
 We are going to create a simple API to store simple text snippets (like a small pastebin-like API).
+簡易版 pastebin API のような、単純なテキストスニペットを保存する API を作っていきます。
 
-To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [JWT Authentication],
-[CORS], [ContentNegotiation] and [Jackson] features.
+これから [Routing], [StatusPages], [Authentication], [JWT Authentication], [CORS], [ContentNegotiation], [Jackson] について学んでいきます。
 
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
@@ -22,18 +22,18 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 [ContentNegotiation]: /servers/features/content-negotiation.html
 [Jackson]: /servers/features/content-negotiation/jackson.html
 
-While many frameworks advocate how to create REST API's the majority aren't actually talking about REST APIs but HTTP APIs.
-Ktor, much like many other frameworks can be used to create systems that comply with REST constraints. However,
-this tutorial is not talking about REST but HTTP APIs, i.e. endpoints using HTTP verbs that may or may not return JSON, XML or any other format.
-If you want to learn more about RESTful systems, you can start reading <https://en.wikipedia.org/wiki/Representational_state_transfer>{:target="_blank"}.
+多くの Web フレームワークにて REST API の作り方を説明していますが、実際には REST API ではなく HTTP API について説明しているものがほとんどです。
+Ktor は、多くの他のフレームワークと同様に、 REST の設計原則に則ったシステムを作ることができます。
+ですが、このチュートリアルでは、REST API についてではなく、 HTTP リクエストメソッドを用いて JSON や XML などのフォーマットで返却したりしなかったりする API について説明します。
+RESTful なシステムについてより詳しく知りたい場合は、 <https://ja.wikipedia.org/wiki/Representational_State_Transfer>{:target="_blank"} を参照してください。
 {: .note }
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
-## Setting up the project
+## プロジェクトの作成
 
 The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
 
