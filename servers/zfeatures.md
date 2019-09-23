@@ -1,6 +1,6 @@
 ---
-title: Features
-caption: Extend Application Capabilities
+title: Feature
+caption: アプリケーション機能の拡張
 category: servers
 permalink: /servers/features.html
 children: /servers/features/
@@ -11,22 +11,22 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-A Ktor application typically consists of a series of features. You can think of features as functionality 
-that is injected into the request and response pipeline. Usually, an application would have a series of features such as `DefaultHeaders` which add headers to every outgoing
-response, `Routing` which allows us to define routes to handle requests, etc.
+Ktorアプリケーションはだいたいの場合いくつかのFeatureから構成されています。
+Featureは「リクエスト・レスポンスのパイプラインに挿入される機能」として考えることができます。
+通常、アプリケーションは`DefaultHeaders`（ヘッダーをすべての送信レスポンスに付与する機能）、`Routing`（ルーティングの定義とリクエストのハンドリングを行えるようにする機能）のようないくつかの機能を持っています。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Features
+## Feature一覧
 
 {% include list-children.html %}
 
-## Installing
+## インストール
 
-A feature is installed into the [Application](/application) by calling the `install` function:
+Featureは`install`関数を呼び出すことで、[Application](/application)へとインストールされます。
 
 ```kotlin
 fun Application.main() {
@@ -40,8 +40,9 @@ fun Application.main() {
 }
 ```
 
-Some common feature such as `Routing` come with helper functions, which are defined as extension functions to `Application`, making the code
-somewhat more fluent. For instance, instead of writing:
+`Routing`のような共通的に利用される傾向のあるFeatureはヘルパー関数があります。
+それは`Application`の拡張関数として定義されているため、コードをより読みやすく書くことができます。
+例えば、以下のように書く代わりに:
 
 ```kotlin
     install(Routing) {
@@ -51,7 +52,7 @@ somewhat more fluent. For instance, instead of writing:
     }
 ```
 
-we could simply write:
+シンプルに以下のように書くことができます:
 
 ```kotlin
     routing {
@@ -61,14 +62,14 @@ we could simply write:
     }
 ```
 
-## Built-in Features
+## ビルトインFeature
 
-Ktor comes with a number of ready-made features that can be installed into your application:
+Ktorには、アプリケーションにインストール可能なたくさんの既製Featureがあります:
 
-Some features might need you to add an extra dependency to your project. See the feature pages for more details.
+いくつかのFeatureは追加の依存関係のプロジェクトへの追加を必要とします。詳細はFeatureページをご覧ください。
 {: .note }
 
-## Custom features
+## カスタムFeature
 
-You can develop your own features and reuse them across your Ktor applications. 
-Refer to [Advanced Features](/advanced/features) for more information.
+あなた自身のFeatureを開発し、Ktorアプリケーション間でそれを使いまわすことができます。
+[発展的なFeatures](/advanced/features)をご覧ください。
