@@ -1,6 +1,6 @@
 ---
 title: Default Headers
-caption: Send Headers Automatically
+caption: ヘッダーを自動で送信
 category: servers
 permalink: /servers/features/default-headers.html
 feature:
@@ -11,12 +11,12 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature adds a default set of headers to HTTP responses. The list of headers is customizable, and the `Date` header is cached
-to avoid building complex strings on each response.   
+このFeatureはデフォルトのヘッダーのセットをHTTPレスポンスに付与する機能です。
+ヘッダーの一覧はカスタマイズ可能です。
 
 {% include feature.html %}
 
-## Usage
+## 使い方
 
 ```kotlin
 fun Application.main() {
@@ -26,11 +26,11 @@ fun Application.main() {
 }
 ```
 
-This will add `Date` and `Server` headers to each HTTP response.
+`Date`、`Server`ヘッダーを各HTTPレスポンスに付与します。
 
-## Configuration
+## 設定
  
-* `header(name, value)` will add another header to the list of default headers
+* `header(name, value)`は別のヘッダーをデフォルトのヘッダー一覧に追加します。
 
 ```kotlin
 fun Application.main() {
@@ -42,7 +42,7 @@ fun Application.main() {
 }
 ```
 
-* default `Server` header can be overriden by specifying your custom header:
+* デフォルトの`Server`ヘッダーは、カスタムのヘッダーを指定することで上書きされます:
 
 ```kotlin
 fun Application.main() {
@@ -54,5 +54,4 @@ fun Application.main() {
 }
 ```
 
-* The default `Date` header cannot be overridden. If you need to override it, do not install the `DefaultHeaders` feature and instead 
-intercept the call manually 
+* `Date`ヘッダーは上書きできません。上書きする必要がある場合は、`DefaultHeaders`Featureをインストールせず、代わりにcallを手動でインターセプトするようにしてください。
