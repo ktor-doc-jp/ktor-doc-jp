@@ -8,7 +8,7 @@ ktor_version_review: 1.2.1
 
 Ktorサーバーアプリケーションは、HTTP/S 1.x/2.x、WebSocketリクエストを処理するための
 [ルーティング](/servers/features/routing.html)、[セッション](/servers/features/sessions.html)、[圧縮](/servers/features/compression.html)などの
-[Futures](#features)をインストールするロジックを備えた[モジュール](#modules)で構成されるサーバーエンジンを使用して、1つ以上のポートをリッスンするカスタムプログラムです。
+[Features](#features)をインストールするロジックを備えた[モジュール](#modules)で構成されるサーバーエンジンを使用して、1つ以上のポートをリッスンするカスタムプログラムです。
 
 Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)も提供しますが、アプリケーションおよびそのパイプラインの一部としては提供しません。
 {: .note}
@@ -24,7 +24,7 @@ Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)�
 リクエストを受信すると(リクエストはHTTP、HTTP/2、またはWebSocketの場合があります)、`ApplicationCall`に変換され、`Application`が所有するパイプラインを通過します。
 パイプラインは、以前にインストールされた1つ以上のインターセプターで構成され、リクエストの処理を終了するルーティング、圧縮などの特定の機能を提供します。
 
-通常、Ktorプログラムは、[Futures](#features)をインストールおよび構成する[modules](#modules)を介してアプリケーションパイプラインを構成します。
+通常、Ktorプログラムは、[Features](#features)をインストールおよび構成する[modules](#modules)を介してアプリケーションパイプラインを構成します。
 
 [ライフサイクル](/servers/lifecycle.html)セクションで、パイプラインに関する詳細情報を読むことができます。
 {: .note}
@@ -35,17 +35,17 @@ Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)�
 
 ## Features
 
-Futuresは、パイプラインにインストールおよび構成できるシングルトン(通常はコンパニオンオブジェクト)です。
-Ktorにはいくつかの標準でFutureが含まれていますが、独自のFutureを追加したりコミュニティから他のFutureを追加したりできます。
+Featuresは、パイプラインにインストールおよび構成できるシングルトン(通常はコンパニオンオブジェクト)です。
+Ktorにはいくつかの標準でFeatureが含まれていますが、独自のFeatureを追加したりコミュニティから他のFeatureを追加したりできます。
 アプリケーション自体や特定のルートなど、任意のパイプラインに機能をインストールできます。
 
-[Futures](/servers/features.html)の詳細については、専用ページをご覧ください。
+[Features](/servers/features.html)の詳細については、専用ページをご覧ください。
 {: .note}
 
 ## モジュール
 {: #modules}
 
-Ktorモジュールは、サーバーパイプラインの構成、Futuresのインストール、ルートの登録、リクエストの処理などを担当するApplicationクラスを受け取るユーザー定義関数です。
+Ktorモジュールは、サーバーパイプラインの構成、Featuresのインストール、ルートの登録、リクエストの処理などを担当するApplicationクラスを受け取るユーザー定義関数です。
 
 サーバーの起動時にロードするモジュールを[`application.conf`ファイル](/servers/configuration.html#hocon-file)で指定する必要があります。
 
