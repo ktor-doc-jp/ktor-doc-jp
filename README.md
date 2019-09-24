@@ -43,7 +43,8 @@ Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.hero
 ```
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://github.com/doyaaaaaken"><img src="https://avatars3.githubusercontent.com/u/5428401?v=4" width="100px;" alt="kenta.koyama"/><br /><sub><b>kenta.koyama</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=doyaaaaaken" title="Code">💻</a></td>
@@ -52,4 +53,6 @@ Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.hero
   </tr>
 </table>
 
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
