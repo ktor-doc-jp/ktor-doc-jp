@@ -35,18 +35,20 @@ RESTful なシステムについてより詳しく知りたい場合は、 <http
 
 ## プロジェクトの作成
 
-The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
+まずはじめに、プロジェクトのセットアップから行います。
+[Quick Start](/quickstart/index.html) のページに従うか、下の Ktor Project Generator を使ってプロジェクトを作成してください。
 
 {% include preconfigured-form.html hash="dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" %}
 
-## Simple routing
+## シンプルなルーティング
 
-First of all, we are going to use the [routing feature](/servers/features/routing.html). This feature is part of the Ktor's core, so you won't need
-to include any additional artifacts.
+まずはじめに、 [Routing Feature](/servers/features/routing.html) を使っていきます。
+Ktor では様々な機能を Feature という形で提供し、その Feature を install することで利用可能になります。
+ですが、 Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
 
-This feature is installed automatically when using the `routing { }` DSL block.
+Routing Feature は DSL ブロックのひとつの `routing { }` を用いることで、自動的に install されます。
 
-Let's start creating a simple GET route that responds with `OK` by using the `get` method available inside the `routing` block:
+`routing` ブロックとその内部で利用できる `get` メソッドを用いて、 `OK` を返却するシンプルな GET API を作成してみましょう。
 
 ```kotlin
 fun Application.module() {
@@ -58,9 +60,10 @@ fun Application.module() {
 }
 ```
 
-## Serving JSON content
+## JSON の返却
 
-A HTTP API usually responds with JSON. You can use the [Content Negotiation](/servers/features/content-negotiation.html) feature with [Jackson](/servers/features/content-negotiation/jackson.html) for this:
+HTTP API は JSON を返却することができます。
+[Content Negotiation](/servers/features/content-negotiation.html) に [Jackson](/servers/features/content-negotiation/jackson.html) を install すると、 JSON を返却できるようになります。
 
 ```kotlin
 fun Application.module() {
@@ -74,7 +77,7 @@ fun Application.module() {
 }
 ```
 
-To respond to a request with a JSON, you have to call the `call.respond` method with an arbitrary object.
+JSON を返却するためには、 `call.respond` メソッドに任意のオブジェクトを渡す必要があります。
 
 ```kotlin
 routing {
@@ -84,14 +87,14 @@ routing {
 }
 ```
 
-Now the browser or client should respond to `http://127.0.0.1:8080/snippets` with `{"OK":true}`
+ブラウザや HTTP クライアントから `http://localhost:8080/snipets` へアクセスすると、 `{"OK": true}` が返却されるはずです。
 
-If you get an error like `Response pipeline couldn't transform '...' to the OutgoingContent`, check that you have
-installed the [ContentNegotiation](/servers/features/content-negotiation.html) feature with Jackson.
+`Response pipeline couldn't transform '...' to the OutgoingContent` のようなエラーが返却された場合は、
+[ContentNegotiation](/servers/features/content-negotiation.html) に Jackson が install されているか確認しましょう。
 {: .note}
 
-You can also use typed objects as part of the reply (but ensure that your classes are not defined
-inside a function or it won't work). So for example:
+レスポンスオブジェクトの一部として任意の型のオブジェクトを渡すこともできます。
+例えば下記のような場合は、
 
 ```kotlin
 data class Snippet(val text: String)
@@ -115,15 +118,16 @@ fun Application.module() {
 }
 ```
 
-Would reply with:
+下記のように返却されます。
 
 ![](/quickstart/guides/api/snippets_get.png){:.rounded-shadow}
 
-## Handling other HTTP methods
+## HTTP メソッドの扱い方
 
-HTTP APIs use most of the HTTP methods/verbs (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) to perform operations.
-Let's create a route to add new snippets. For this, we will need to read the JSON body of the POST request.
-For this we will use `call.receive<Type>()`:
+HTTP API は様々な HTTP メソッド (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) を用いて操作を実行します。
+新規でスニペットを追加する API を作成してみましょう。
+このためには、 POST リクエストで送信される JSON 形式のリクエストボディを読み取る必要があります。
+リクエストボディを読み取るためには、 `call.receive<Type()` を用います。
 
 ```kotlin
 data class PostSnippet(val snippet: PostSnippet.Text) {
@@ -144,21 +148,22 @@ routing {
 }
 ```
 
-Now it is time to actually try our backend.
+さっそく使ってみましょう。
 
-If you have IntelliJ IDEA Ultimate, you can use its built-in powerful HTTP Request client,
-if not, you can also use postman or curl:
+IntelliJ IDEA Ultimate には強力な HTTP クライアントが同梱されています。
+もし IntelliJ IDEA Ultimate を利用していない場合は、 postman や curl で代用可能です。
 
 ### IntelliJ IDEA Ultimate:
 {: #first-request-intellij }
 
-IntelliJ IDEA Ultimate, along PhpStorm and other IDEs from JetBrains include a
-very nice [Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}.
+IntelliJ IDEA Ultimate や PhpStorm を始め、 JetBrains 製の IDE には
+[Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}
+が同梱されています。
 
-First you have to create a HTTP Request file (either `api` or `http` extensions)
+まずは、 HTTP Request ファイル (拡張子 `api` または `http`) を作成します。
 ![](/quickstart/guides/api/IU-http-new-file.png)
 
-Then you have to type the method, url, headers and payload like this:
+次に、 HTTP メソッド、 URL 、ヘッダ 、 payload を記述します。
 
 ![](/quickstart/guides/api/IU-http-request.png)
 
@@ -169,11 +174,11 @@ Content-Type: application/json
 {"snippet": {"text" : "mysnippet"}}
 ```
 
-And then in the play gutter icon from the URL, you can perform the call, and get the response:
+最後に、 URL の横にある実行ボタンを押すことでリクエストが実行され、結果が表示されます。
 
 ![](/quickstart/guides/api/IU-http-response.png)
 
-And that's it!
+以上!
 
 This allows you to define files (plain or scratches) that include definition for several HTTP requests,
 allowing to include headers, provide a payload inline, or from files, use environment variables defined in a JSON file,
