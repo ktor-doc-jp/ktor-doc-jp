@@ -24,7 +24,7 @@ We are going to create a simple API to store simple text snippets (like a small 
 
 多くの Web フレームワークにて REST API の作り方を説明していますが、実際には REST API ではなく HTTP API について説明しているものがほとんどです。
 Ktor は、多くの他のフレームワークと同様に、 REST の設計原則に則ったシステムを作ることができます。
-ですが、このチュートリアルでは、REST API についてではなく、 HTTP リクエストメソッドを用いて JSON や XML などのフォーマットで返却したりしなかったりする API について説明します。
+ですが、このチュートリアルでは、REST API についてではなく、 HTTP リクエストメソッドを用いて JSON や XML などのフォーマットで返却する API について説明します。
 RESTful なシステムについてより詳しく知りたい場合は、 <https://ja.wikipedia.org/wiki/Representational_State_Transfer>{:target="_blank"} を参照してください。
 {: .note }
 
