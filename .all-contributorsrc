@@ -20,7 +20,7 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/43880251?v=4",
       "profile": "https://prolab.club",
       "contributions": [
-        "doc"
+        "doc", "doc", "doc"
       ]
     },
     {
@@ -37,5 +37,6 @@
   "projectName": "ktor-doc-jp",
   "projectOwner": "doyaaaaaken",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "commitConvention": "none"
 }

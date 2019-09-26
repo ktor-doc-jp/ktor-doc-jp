@@ -13,3 +13,5 @@ _pdf
 .project
 .settings
 .vscode
+
+node_modules
