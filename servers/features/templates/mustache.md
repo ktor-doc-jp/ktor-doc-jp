@@ -1,6 +1,6 @@
 ---
 title: Mustache
-caption: Using Mustache Templates
+caption: Mustacheテンプレートを使う
 category: servers
 keywords: html
 feature:
@@ -12,9 +12,9 @@ redirect_from:
 ktor_version_review: 1.1.1
 ---
 
-Ktor includes support for [Mustache](https://github.com/spullara/mustache.java) templates through the Mustache
-feature.  Initialize the Mustache feature with a
-[MustacheFactory](http://spullara.github.io/mustache/apidocs/com/github/mustachejava/MustacheFactory.html):
+KtorはMustache Featureを通じて、[Mustache](https://github.com/spullara/mustache.java)テンプレートをサポートしています。
+[MustacheFactory](http://spullara.github.io/mustache/apidocs/com/github/mustachejava/MustacheFactory.html)を使って、
+Mustache Featureを初期化できます。
 
 ```kotlin
     install(Mustache) {
@@ -22,8 +22,8 @@ feature.  Initialize the Mustache feature with a
     }
 ```
 
-This MustacheFactory sets up Mustache to look for the template files on the classpath in the
-"templates" package, relative to the current class path.  A basic template looks like this:
+このMustacheFactoryは、Mustacheがテンプレートファイルをクラスパス上で現在のクラスパスからの相対パスとして"templates"パッケージ内で見つけられるようにセットアップします。
+基本的なテンプレートは以下のような見た目になります:
 
 {% include feature.html %}
 
@@ -35,8 +35,7 @@ This MustacheFactory sets up Mustache to look for the template files on the clas
 </html>
 ```
 
-With that template in `resources/templates` it is accessible elsewhere in the the application
-using the `call.respond()` method:
+アプリケーション内のどこででも`call.respond()`メソッドを利用することで、この`resources/templates`のテンプレートにアクセスできます。
 
 ```kotlin
     get("/{...}") {

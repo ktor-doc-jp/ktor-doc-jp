@@ -1,6 +1,6 @@
 ---
-title: Templates
-caption: Templates
+title: テンプレート
+caption: テンプレート
 category: servers
 children: /servers/features/templates/
 redirect_from:

@@ -1,6 +1,6 @@
 ---
 title: Thymeleaf
-caption: Using Thymeleaf Templates
+caption: Thymeleafテンプレートを使う
 category: servers
 keywords: html
 feature:
@@ -12,9 +12,8 @@ redirect_from:
 ktor_version_review: 1.2.0
 ---
 
-Ktor includes support for [Thymeleaf](https://www.thymeleaf.org/) templates through the Thymeleaf
-feature.  Initialize the Thymeleaf feature with a
-[ClassLoaderTemplateResolver](https://www.thymeleaf.org/apidocs/thymeleaf/3.0.1.RELEASE/org/thymeleaf/templateresolver/ClassLoaderTemplateResolver.html):
+Ktorは[Thymeleaf](https://www.thymeleaf.org/)テンプレートをThymeleaf Featureを通じてサポートしています。
+[ClassLoaderTemplateResolver](https://www.thymeleaf.org/apidocs/thymeleaf/3.0.1.RELEASE/org/thymeleaf/templateresolver/ClassLoaderTemplateResolver.html)とともにThymeleaf Featureを初期化します:
 
 ```kotlin
     install(Thymeleaf) {
@@ -26,8 +25,8 @@ feature.  Initialize the Thymeleaf feature with a
     }
 ```
 
-This TemplateResolver sets up Thymeleaf to look for the template files on the classpath in the
-"templates" package, relative to the current class path.  A basic template looks like this:
+このTemplateLoaderは、Thymeleafがテンプレートファイルをクラスパス上で現在のクラスパスからの相対パスとして"templates"パッケージ内で見つけられるようにセットアップします。
+基本的なテンプレートは以下のような見た目になります:
 
 {% include feature.html %}
 
@@ -44,8 +43,7 @@ This TemplateResolver sets up Thymeleaf to look for the template files on the cl
 </html>
 ```
 
-With that template in `resources/templates` it is accessible elsewhere in the the application
-using the `call.respond()` method:
+アプリケーション内のどこででも`call.respond()`メソッドを利用することで、この`resources/templates`のテンプレートにアクセスできます。
 
 ```kotlin
     get("/") {

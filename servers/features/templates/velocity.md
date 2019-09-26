@@ -1,6 +1,6 @@
 ---
 title: Velocity
-caption: Using Velocity Templates
+caption: Velocityテンプレートを使う
 category: servers
 keywords: html
 feature:
@@ -12,16 +12,15 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor includes support for [Velocity](http://velocity.apache.org/) templates through the Velocity
-feature.  Initialize the Velocity feature with the
-[VelocityEngine](https://velocity.apache.org/engine/1.7/apidocs/org/apache/velocity/app/VelocityEngine.html):
+Ktorは[Velocity](http://velocity.apache.org/)テンプレートをVelocity Featureを通じてサポートしています。
+[VelocityEngine](https://velocity.apache.org/engine/1.7/apidocs/org/apache/velocity/app/VelocityEngine.html)とともにVelocity Featureを初期化します:
 
 {% include feature.html %}
 
-## Installation
+## インストール
 {: #installation}
 
-You can install Velocity, and configure the `VelocityEngine`.
+Velocityをインストールし、`VelocityEngine`を設定します:
 
 ```kotlin
 install(Velocity) { // this: VelocityEngine
@@ -36,10 +35,10 @@ install(Velocity) { // this: VelocityEngine
 }
 ```
 
-## Usage
+## 使い方
 {: #usage}
 
-When Velocity is configured, you can call the `call.respond` method with a `VelocityContent` instance: 
+Velocityが設定されていたら、`call.respond`を`VelocityContent`インスタンスとともに呼び出します: 
 
 ```kotlin
 routing {

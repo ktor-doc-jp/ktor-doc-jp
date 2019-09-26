@@ -1,6 +1,6 @@
 ---
 title: HTML DSL
-caption: Emit HTML with a DSL
+caption: DSLを使ってHTMLを配信
 category: servers
 feature:
   artifact: io.ktor:ktor-html-builder:$ktor_version
@@ -11,21 +11,20 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature integrates with [kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-to directly emit HTML using Chunked transfer encoding without having to keep
-memory for the whole HTML.
+この機能は[kotlinx.html](https://github.com/Kotlin/kotlinx.html)と統合されており、
+HTMLをChunked transfer encodingを使って直接配信しているため、HTML全体のためにメモリ空間を保持する必要がありません。
 
 {% include feature.html %}
 
-## Installing
+## インストール
 {: #install }
 
-This feature doesn't require installation.
+この機能はインストールを必要としません。
 
-## Basic Usage
+## 基本的な使い方
 {: #basic-usage }
 
-When generating the response, instead of calling the `respond`/`respondText` methods, you have to call `ApplicationCall.respondHtml`:
+レスポンスの生成時に、`respond`/`respondText`メソッドを呼び出す代わりに、`ApplicationCall.respondHtml`を呼び出します:
 
 ```kotlin
 call.respondHtml {
@@ -40,14 +39,14 @@ call.respondHtml {
 }
 ```
 
-For documentation about generating HTML using kotlinx.html, please check [its wiki](https://github.com/kotlin/kotlinx.html/wiki/Getting-started).
+kotlinx.htmlを使ってHTMLを生成する方法に関するドキュメントとしては、[wiki](https://github.com/kotlin/kotlinx.html/wiki/Getting-started)を参照ください。
 
-
-## Templates & Layouts
+## テンプレートとレイアウト
 {: #templates-and-layouts }
 
-In addition to plain HTML generation with the DSL, ktor exposes a simple typed templating engine.
-You can use it to generate complex layouts in a typed way. It is pretty simple, yet powerful:
+DSLによるプレーンなHTMLの生成に加え、Ktorでは型付けされたシンプルなテンプレートエンジンが利用できます。
+それを使うことで複雑なレイアウトを型安全な方法で生成できます。
+とてもシンプルですが、パワフルです:
 
 ```kotlin
 call.respondHtmlTemplate(MulticolumnTemplate()) {
@@ -116,11 +115,9 @@ class MenuTemplate : Template<FlowContent> {
 }
 ```
 
-You have to define classes implementing `Template<TFlowContent>`,
-overriding the `TFlowContent.apply` method and optionally define
-`Placeholder` or `TemplatePlaceholder` properties just like
-in the example.
+この例のように、`Template<TFlowContent>`を実装したクラスを定義し、`TFlowContent.apply`をオーバーライドし、
+`Placeholder`か`TemplatePlaceholder`プロパティを任意で定義する必要があります。
 
-When generating the template with `call.respondHtmlTemplate(MulticolumnTemplate()) { }`,
-you will get the template as receiver, and will be able to access the placeholders
-defined as properties in a typed way.
+`call.respondHtmlTemplate(MulticolumnTemplate()) { }`でテンプレートを生成するとき、
+テンプレートをレシーバとして取得でき、
+プロパティとして定義されたプレースホルダーに型安全な方法でアクセスすることができます。
