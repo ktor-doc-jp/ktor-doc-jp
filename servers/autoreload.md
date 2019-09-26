@@ -1,5 +1,5 @@
 ---
-title: Autoreload
+title: 自動リロード
 caption: 自動リロードで時間節約
 category: servers
 permalink: /servers/autoreload.html
@@ -7,13 +7,10 @@ keywords: autoreload watchpaths
 ktor_version_review: 1.0.0
 ---
 
-この文章は機械翻訳を利用して翻訳されています。翻訳してくださる有志の方をお待ちしております。
-{: .note.machine-translation}
-
 開発中は、フィードバックループのサイクルを高速にすることが重要です。
 多くの場合、サーバーの再起動には時間がかかることがあるため、Ktorには、アプリケーションクラスをリロードする基本的な自動リロード機能が用意されています。
 
-自動リロードは[Java 9では機能しません](https://github.com/ktorio/ktor/issues/359)。使用したい場合は、今のところJDK 8を使用してください。
+自動リロードは[Java 9では機能しません](https://github.com/ktorio/ktor/issues/359)。現在のところ使用したい場合はJDK 8を使用してください。
 {: .note }
 {: #java9 }
 
@@ -29,20 +26,19 @@ ktor_version_review: 1.0.0
 ## class変更時の自動リロード
 {: #basics}
 
-In both cases, when using the [embeddedServer](#embedded-server) or a [configuration file](#configuration-file), you will have to provide a list of watch substrings
-that should match the classloaders you want to watch.
+[組み込みサーバー](#embedded-server)または[設定ファイル](#configuration-file)のどちらを利用する場合でも、監視する部分文字列のリストを提供する必要があります。
 
-So for example, a typical class loader when using gradle would look like: \\
+これは監視したいクラスローダーと一致します。
+
+したがって、例えばgradleを使用する場合の典型的なクラスローダーは次のようになります。
 `/Users/user/projects/ktor-exercises/solutions/exercise4/build/classes/kotlin/main`
 
-In this case, you can use the `solutions/exercise4` string or just `exercise4` when watching, so it will match that classloader.
+この場合、 `solutions/exercise4` が`exercise4`に一致するため、監視対象のクラスローダーになります。.
 
-## Using embeddedServer
+## 組み込みサーバーを使う場合
 {: #embedded-server}
 
-When using a custom main and `embeddedServer`,
-you can use the optional parameter `watchPaths` to provide
-a list of sub-paths that will be watched and reloaded.
+カスタムのメインと`embeddedServer`を使用する場合、オプションのパラメーター`watchPaths`を使用して、監視及び自動リロードされるサブパスのリストを指定できます。
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -63,20 +59,21 @@ fun Application.mymodule() {
 }
 ```
 
-When using `watchPaths` you should *not* use a lambda to configure the server, but to provide a method reference to your
-Application module.
+`watchPaths`を使用する場合、サーバーを構成するためのモジュールににラムダを使用するのではなく、メソッド参照を提供する必要があります。
+
 {: .note}
 
+メソッド参照の代わりにラムダを使用しようとすると、次のエラーが表示されます:
 
-If you try to use a lambda instead of a method reference, you will get the following error:
 ```
 Exception in thread "main" java.lang.RuntimeException: Module function provided as lambda cannot be unlinked for reload
 ```
 
-To fix this error, you just have to extract your lambda body to an Application extension method (module) just like this:
+このエラーを修正するには、次のようにラムダ本体をApplicationの拡張メソッド(モジュール)に抽出するだけです:
 
 {% capture left %}
 ❌ Code that *won't* work:
+
 ```kotlin
 fun main(args: Array<String>) {
     // ERROR! Module function provided as lambda cannot be unlinked for reload
@@ -117,17 +114,16 @@ fun Application.mymodule() {
 
 {% include two-column.html left=left right=right %}
 
-## Using the `application.conf`
+## `application.conf`を使う場合
 {: #configuration-file}
 
-When using a configuration file, for example with an [`EngineMain`](/servers/engine.html) to either run
-from the command line or hosted within a server container: 
+設定ファイルを使用する場合、例えば[`EngineMain`](/servers/engine.html)を使用して、またはコマンドラインから実行する場合はサーバーコンテナ内でホストされます。
 
-To enable this feature, add `watch` keys to `ktor.deployment` configuration. 
+この機能を有効にするには`watch`キーを`ktor.deployment`設定に追加します。
 
-`watch` - Array of classpath entries that should be watched and automatically reloaded.
+`watch` - 監視され、自動的にリロードされるクラスパスエントリの配列
 
-```
+```kotlin
 ktor {
     deployment {
         port = 8080
@@ -138,42 +134,43 @@ ktor {
 }
 ```
 
-For now watch keys are just strings that are matched with `contains`, against the classpath entries in the loaded 
-application, such as a jar name or a project directory name. 
-These classes are then loaded with a special `ClassLoader` that is recycled when a change is detected.
+現時点では、watchキーはロードされたクラスパスエントリやjar名、プロジェクトディレクトリ名などに対して`contains`で一致する単なる文字列です。
 
-`ktor-server-core` classes are specifically excluded from auto-reloading, so if you are working on something in ktor itself, 
-don't expect it to be reloaded automatically. It cannot work because core classes are loaded before the auto-reload kicks in. 
-The exclusion can potentially be smaller, but it is hard to analyze all the transitive closure of types loaded during
-startup.
+これらのクラスは、変更が検出されたときにリサイクルされる特別な`ClassLoader`でロードされます。
+`ktor-server-core`クラスは特に自動リロードから除外されているため、ktor自体でなにか作業をしている場合は自動的にリロードされると思わないでください。
+
+自動リロードが開始される前にコアクラスがロードされるため、機能しません。
+
+除外は潜在的に小さくすることができますが、起動中にロードされた型のすべての推移的閉包を分析することは困難です。
 {: .note}
 
-Classpath entries look like `file:///path/to/project/build/classes/myproject.jar`, so `to/project` would match, but `com.mydomain` would not.
+クラスパスのエントリは`file:///path/to/project/build/classes/myproject.jar`のように見えるため、`to/project`は一致しますが、`com.mydomain`は一致しません。
 {: .note}
 
-## Recompiling automatically on source changes
+## ソースの変更時に自動的に再コンパイルする
 
-Since the Autoreload feature only detects changes in class files, you have to compile the application by yourself.
-You can do it using IntelliJ IDEA with `Build -> Build Project` while running.
+自動リロード機能はクラスファイルの変更のみを検出するため、アプリケーションを自分でコンパイルする必要があります。
 
-However, you can also use gradle to automatically detect source changes and compile it for you. You can just open
-another terminal in your project folder and run: `gradle -t build`.
+IntelliJ IDEAを実行中に、`Build -> Build Project`で実行できます。
 
-It will compile the application, and after doing so,
-it will listen for additional source changes and recompile when necessary. And thus, triggering Automatic class reloading.
+ただし、gradleを使用してソースの変更を自動的に検出し、自動的にコンパイルすることもできます。プロジェクトフォルダー内の別のターミナルで`gradle -t build`を実行するだけです。
 
-You can then use another terminal to run the application with `gradle run`.
+これはアプリケーションをコンパイルし、その後追加のソース変更を監視し、必要に応じて再コンパイルします。したがって自動リロードをトリガーします。
 
-## Example
+その後、別のターミナルを使用して`gradle run`でアプリケーションを実行できます。
+
+## 例
 {: #example}
 
-Consider the following example:
+次の例を考えてみましょう:
 
-You can run the application by using either a `build.gradle` or directly within your IDE.
-Executing the main method in the example file, or by executing: `io.ktor.server.netty.EngineMain.main`.
-EngineMain using `commandLineEnvironment` will be in charge of loading the `application.conf` file (that is in HOCON format).
+`build.gradle`を利用するか、IDE内で直接アプリケーションを実行できます。
+
+サンプルファイルでmainメソッドを実行するか、`io.ktor.server.netty.EngineMain.main`を実行します。
+`commandLineEnvironment` を使用するEngineMainは `application.conf` ファイルの読み込みをサポートします(HACON形式)。
 
 {% capture main-kt %}
+
 ```kotlin
 package io.ktor.exercise.autoreload
 
@@ -224,5 +221,5 @@ ktor {
     tab2-title="application.conf" tab2-content=application-conf
 %}
 
+ご覧の通り、監視したいクラスローダー(この場合は`solutions/exercise4`のみ)に一致する文字列のリストを指定する必要があります。これは変更時に再読込する必要があります。
 
-As you can see, you need to specify a list of strings to match the classloaders you want to watch –in this case only `solutions/exercise4`– which should then be reloaded upon modification.
