@@ -38,7 +38,7 @@ ktor_version_review: 1.0.0
 ## 組み込みサーバーを使う場合
 {: #embedded-server}
 
-カスタムのメインと`embeddedServer`を使用する場合、オプションのパラメーター`watchPaths`を使用して、監視及び自動リロードされるサブパスのリストを指定できます。
+カスタムのmainメソッドと`embeddedServer`を使用する場合、オプションのパラメーター`watchPaths`を使用して、監視及び自動リロードされるサブパスのリストを指定できます。
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -135,12 +135,10 @@ ktor {
 ```
 
 現時点では、watchキーはロードされたクラスパスエントリやjar名、プロジェクトディレクトリ名などに対して`contains`で一致する単なる文字列です。
-
 これらのクラスは、変更が検出されたときにリサイクルされる特別な`ClassLoader`でロードされます。
+
 `ktor-server-core`クラスは特に自動リロードから除外されているため、ktor自体でなにか作業をしている場合は自動的にリロードされると思わないでください。
-
 自動リロードが開始される前にコアクラスがロードされるため、機能しません。
-
 除外は潜在的に小さくすることができますが、起動中にロードされた型のすべての推移的閉包を分析することは困難です。
 {: .note}
 
@@ -167,7 +165,7 @@ IntelliJ IDEAを実行中に、`Build -> Build Project`で実行できます。
 `build.gradle`を利用するか、IDE内で直接アプリケーションを実行できます。
 
 サンプルファイルでmainメソッドを実行するか、`io.ktor.server.netty.EngineMain.main`を実行します。
-`commandLineEnvironment` を使用するEngineMainは `application.conf` ファイルの読み込みをサポートします(HACON形式)。
+`commandLineEnvironment` を使用するEngineMainは `application.conf` ファイルの読み込みをサポートします(HOCON形式)。
 
 {% capture main-kt %}
 
