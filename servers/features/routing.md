@@ -1,6 +1,6 @@
 ---
-title: Routing
-caption: Structured Handling of HTTP Requests
+title: ルーティング
+caption: HTTPリクエストに対する構造化されたハンドリング
 category: servers
 permalink: /servers/features/routing.html
 feature:
@@ -11,13 +11,13 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Routing is a feature that is installed into an Application to simplify and structure page request handling.
+ルーティングはアプリケーションにインストールすることで、リクエストのハンドリング機能をかんたんに構築できるようにする機能です。
 
-This page explains the routing feature. Extracting information about a request,
-and generating valid responses inside a route, is described on the [requests] and [responses] pages.
+このページではルーティング機能について説明します。
+リクエストに関する情報の抽出方法と、ルート内での有効なレスポンスの生成方法は[リクエスト]・[レスポンス]ページに記載されています。
 
-[requests]: /servers/calls/requests.html
-[responses]: /servers/calls/responses.html
+[リクエスト]: /servers/calls/requests.html
+[レスポンス]: /servers/calls/responses.html
 
 ```kotlin
     application.install(Routing) {
@@ -30,21 +30,21 @@ and generating valid responses inside a route, is described on the [requests] an
     }
 ```
 
-`get`, `post`, `put`, `delete`, `head` and `options` functions are convenience shortcuts to a flexible and 
-powerful routing system. 
-In particular, `get` is an alias to `route(HttpMethod.Get, path) { handle(body) }`, where `body` is a lambda passed to the
-`get` function. 
+`get`, `post`, `put`, `delete`, `head`, `options` 関数は柔軟で強力なルーティング定義するための便利なショートカット関数です。
+特に、`get`は`route(HttpMethod.Get, path) { handle(body) }`のエイリアスです。
+`body`は`get`関数に渡されれるラムダです。
 
 {% include feature.html %}
 
-## Routing Tree
+## ルーティングツリー
 
-Routing is organized in a tree with a recursive matching system that is capable of handling quite complex rules
-for request processing. The Tree is built with nodes and selectors. The Node contains handlers and interceptors, 
-and the selector is attached to an arc which connects another node. If selector matches current routing evaluation context, 
-the algorithm goes down to the node associated with that selector.
- 
-Routing is built using a DSL in a nested manner:
+ルーティングはツリー状に構成されています。
+リクエストの処理に関する極めて複雑なルールもカバーできるような再帰的なマッチングシステムが使われています。
+ツリーはノードとセレクタによって構成されています。
+ノードはハンドラーとインターセプタを含んでおり、セレクタはノードに関連付いています。
+もしセレクタが現在のルーティングの評価コンテキストに一致したならば、アルゴリズムはセレクタに関連付いているノードを選択します。
+
+ルーティングはDSLを利用してネストする方式で定義できます:
   
 ```kotlin
 route("a") { // matches first segment with the value "a"
@@ -65,26 +65,28 @@ method(HttpMethod.Get) { // matches GET verb
 }
 ```  
 
-Route resolution algorithms go through nodes recursively discarding subtrees where selector didn't match.
+ルート解決のアルゴリズムは、セレクタが一致しない場合はサブツリーを排除しながら、ノードを再帰的に走査します。
 
-Builder functions:
+ビルダー関数群:
 
-* `route(path)` – adds path segments matcher(s), see below about [paths](#path)
-* `method(verb)` – adds HTTP method matcher.
-* `param(name, value)` – adds matcher for a specific value of the query parameter
-* `param(name)` – adds matcher that checks for the existence of a query parameter and captures its value
-* `optionalParam(name)` – adds matcher that captures the value of a query parameter if it exists
-* `header(name, value)` – adds matcher that for a specific value of HTTP header, see below about [quality](#quality)
+* `route(path)` – パスセグメントマッチャーを追加します。[paths](#path)をご覧ください。
+* `method(verb)` – HTTPメソッドマッチャーを追加します。
+* `param(name, value)` – クエリパラメータの特定の値に対するマッチャーを追加します。
+* `param(name)` – クエリパラメータの存在チェックとその値のキャプチャを行うマッチャーを追加します
+* `optionalParam(name)` – 存在した場合はクエリパラメータの値をキャプチャするようなマッチャーを追加します
+* `header(name, value)` – HTTPヘッダーの特定の値に対するマッチャーを追加します。[quality](#quality)をご覧ください。
 
-## Path
+## パス
 
-Building routing tree by hand would be very inconvenient. Thus there is `route` function that covers most of the use cases in a 
- simple way, using _path_.
+手動でルーティングツリーを構築するのは非常に不便です。
+そのため、`route`関数というものがあり、これは _path_ を使うことでシンプルな方法でほとんどのユースケースに対応します。
 
-`route` function (and respective HTTP verb aliases) receives a `path` as a parameter which is processed to build routing
-tree. First, it is split into path segments by the `'/'` delimiter. Each segment generates a nested routing node.
+`route` 関数（と対応するHTTPメソッドのエイリアス）は`path`をパラメータとして受け取り、
+`path`はルーティングツリーを構築するために使われます。
+初めに、`'/'`デリミターによって、パスセグメント群に分割されます。
+各セグメントはネストされたルーティングノードを生成します。
 
-These two variants are equivalent:
+以下2つは等価です:
 
 ```kotlin
 route("/foo/bar") { … } // (1)
@@ -94,9 +96,10 @@ route("/foo") {
 }
 ```
 
-#### Parameters
-Path can also contain _parameters_ that match specific path segment and capture its value into `parameters` properties
-of an application call:
+#### パラメータ
+
+パスは _パラメータ_　を含めることができます。
+パラメータは特定のパスセグメントにに一致し、その値をapplication callの`parameters`プロパティへとキャプチャします。:
 
 ```kotlin
 get("/user/{login}") {
@@ -104,30 +107,32 @@ get("/user/{login}") {
 }
 ```
 
-When user agent requests `/user/john` using GET method, this route is matched and `parameters` property
-will have `"login"` key with value `"john"`.
+上のケースでユーザエージェントがGETメソッドを使って`/user/john`をリクエストした場合、
+ルートはマッチし`parameters`プロパティは`"login"`キーに対して`"john"`の値を持ちます。
 
-#### Optional, Wildcard, Tailcard
+#### オプショナル、ワイルドカード、テイルカード
 
+パラメータとパスセグメントは、オプショナルになるか、URIの残り全体をキャプチャするかのどちらかになります。
 Parameters and path segments can be optional or capture entire remainder of URI.
 
-* `{param?}` – optional path segment, if it exists it's captured in the parameter
-* `*` – wildcard, any segment will match, but shouldn't be missing
-* `{...}`– tailcard, matches all the rest of the URI, should be last. Can be empty.
-* `{param...}` – captured tailcard, matches all the rest of the URI and puts multiple values for each path segment
-   into `parameters` using `param` as key. Use `call.parameters.getAll("param")` to get all values.
+* `{param?}` – オプショナルなパスセグメントです。もし存在した場合はパラメータにキャプチャされます
+* `*` – ワイルドカードです。任意のセグメントにマッチしますが、必ず値は存在する必要があります。
+* `{...}`– テイルカードです。URIの残り全体にマッチします。最後になる必要があり、空を許容します。
+* `{param...}` – キャプチャされるテイルカードです。URIの残り全体にマッチし、各パスセグメントの値群を`parameters`へと入れます。`param`というキーを使っており、`call.parameters.getAll("param")`ですべての値を取得できます。
  
-Examples:
+例:
 
 ```kotlin
 get("/user/{login}/{fullname?}") { … } 
 get("/resources/{path...}") { … } 
 ```
 
-## Quality
+## クオリティ
 
-It is not unlikely that several routes can match to the same HTTP request.
+いくつかのルートが同じHTTPリクエストにマッチすることが起こりえます。
 
+１つの例としては、`Accept`HTTPヘッダーに対するマッチングです。
+特定のプライオリティ（クオリティ）で複数の値を持ち得ます。
 One example is matching on the `Accept` HTTP header which can have multiple values with specified priority (quality).
 
 ```kotlin
@@ -135,33 +140,37 @@ accept(ContentType.Text.Plain) { … }
 accept(ContentType.Text.Html) { … }
 ```
 
-The routing matching algorithm not only checks if a particular HTTP request matches a specific path in a routing tree, but
-it also calculates the quality of the match and selects the routing node with the best quality.  Given the routes above,
-which match on the Accept header, and given the request header `Accept: text/plain; q=0.5, text/html` will match
-`text/html` because the quality factor in the HTTP header indicates a lower quality for`text/plain` (default is 1.0).
+ルーティングのマッチングアルゴリズムは、特定のHTTPリクエストがルーティングツリーの特定のパスにマッチするかチェックしているだけではなく、
+マッチのクオリティの計算やベストクオリティのルーティングノードの選択も行っています。
+上のルートの例でいうと、いずれのAcceptヘッダーにマッチするのかを選択します。
+リクエストヘッダー`Accept: text/plain; q=0.5, text/html`は`text/html`にマッチします。
+なぜならHTTPヘッダーのクオリティファクターが`text/plain`に対する低いクオリティを指定しているからです（デフォルトは1.0です）。
 
-The Header `Accept: text/plain, text/*` will match `text/plain`. Wildcard matches are considered less specific than direct matches. Therefore the routing matching algorithm will consider them to have a lower quality.
+ヘッダー`Accept: text/plain, text/*`は`text/plain`にマッチします。
+ワイルドカードによるマッチは直接的なマッチよりも具体性が低いと考えられます。
+そのため、ルーティングマッチングアルゴリズムはワイルドカードを低いクオリティだと判断します。
 
-Another example is making short URLs to named entities, e.g. users, and still being able to prefer specific pages like 
-"settings".  An example would be 
+他の例としては名前のあるエンティティ（例えばuser）に短いURLを生成しつつ、"settings"のような特定のページも使えるようにする場合があります。
+例としては
 
-* `https://twitter.com/kotlin` – displays user "kotlin"
-* `https://twitter.com/settings` - displays settings page
+* `https://twitter.com/kotlin` – "kotlin"という名前のユーザを表示します
+* `https://twitter.com/settings` - 設定ページを表示します
 
-This can be implemented like this:
+これは以下のように実装できます:
 
 ```kotlin
 get("/{user}") { … }
 get("/settings") { … }
 ```
-The parameter is considered to have a lower quality than a constant string, so that even if `/settings` matches both,
-the second route will be selected.  
 
-## Interception
+パラメータは定数文字列よりも低いクオリティだと考えられるため、
+`/settings`は両方にマッチしながらも2つめのルートのほうが選択されます。
 
-When routing node is selected, the routing system builds a special pipeline to execute the node.
-This pipeline consists of handler(s) for the selected node and any interceptors installed into nodes that
-constitutes path from root to the selected node in order from top to bottom.
+## インターセプション
+
+ルーティングノードが選択されると、ルーティングシステムはノードを実行するための特別なパイプラインを構築します。
+このパイプラインは、選択されたノードやノードにインストールされたインターセプタのためのハンドラー群で構成されており、
+上から下の順で、ルートから選択されたノードまでのパスを構築します。
 
 ```kotlin
 route("/portal") {
@@ -174,26 +183,25 @@ route("/portal") {
 }
 ```
 
-Given the routing tree above, when request URI starts with `/portal/articles`, routing will handle 
-call normally, but if the request is in `/portal/admin` section, it will first execute interceptor to validate
-if the current user has enough privilege to access admin pages. 
+上のルーティングツリーについて考えると、
+リクエストURIが`/portal/articles`で始まるとき、ルーティングはcallを普通に処理しますが、
+もしリクエストが`/portal/admin`セクションに一致する場合、まず初めにインターセプタを実行しユーザがアドミンページにアクセスする上で十分な権限を持っているかをチェックします。
 
-Other examples could be installing JSON serialisation into `/api` section, 
-loading user from the database in `/user/{id}` section and placing it into call's attributes, etc. 
+他の例としては、JSONシリアライゼーション機能を`/api`セクションにインストールし、
+`/user/{id}`セクションでデータベースからユーザを読み込みcallのattributeに設定するなどの使い方が考えられます。
 
-## Extensibility
-  
-The `ktor-server-core` module contains a number of basic selectors to match method, path, headers and query parameters, but
-you can easily add your own selectors to fit in even more complex logic. Implement `RouteSelector` and create
-a builder function similar to built-in. 
+## 拡張性
 
-Path parsing is not extensible.
+`ktor-server-core`モジュールは、メソッド・パス・ヘッダー・クエリパラメータにマッチするたくさんの基本的なセレクタを含んでいますが、
+より複雑なロジックに対応するために自身で定義したセレクタをかんたんに追加することができます。
+`RouteSelector`を実装し、ビルトインのものに似たビルダー関数を作成できます。
 
-## Tracing the routing decisions
+Pathのパース処理は拡張できません。
+
+## ルーティングの決定の追跡
 {: #tracing }
 
-If you have problems trying to figure out why your route is not being executed,
-Ktor provides a `trace` method inside the routing feature.
+なぜルートが実行されないのかわからない問題があった場合のため、Ktorは`trace`関数をルーティング機能内で提供します。
 
 ```kotlin
 routing {
@@ -201,8 +209,8 @@ routing {
 }
 ```
 
-This method is executed whenever a call is done giving you a trace of the decisions
-taken. As an example, for this routing configuration:
+このメソッドはcallが実行されるたびに呼び出され、行われた決定に関するトレースログを出力します。
+例としては、以下のルーティング設定において:
 
 ```kotlin
 routing {
@@ -221,7 +229,7 @@ routing {
 }
 ```
 
-The output if requesting `/bar` would be:
+`/bar`へのリクエストがあった場合のアウトプットは以下のようになります:
 
 ```
 Trace for [bar]
@@ -233,5 +241,5 @@ Trace for [bar]
   /*, segment:0 -> FAILURE "Better match was already found" @ /*)
 ```
 
-Remember to remove or disable this function when going into production.
+プロダクションで利用するときは、この関数を除外するか無効化することを忘れないでください
 {: .note }
