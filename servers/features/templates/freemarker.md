@@ -1,6 +1,6 @@
 ---
 title: Freemarker
-caption: Using Freemarker Templates
+caption: Freemarkerテンプレートを使う
 category: servers
 keywords: html
 feature:
@@ -12,9 +12,8 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor includes support for [FreeMarker](http://freemarker.org/) templates through the FreeMarker
-feature.  Initialize the FreeMarker feature with a
-[TemplateLoader](http://freemarker.org/docs/pgui_config_templateloading.html):
+Ktorは[FreeMarker](http://freemarker.org/)テンプレートをFreeMarker Featureを通じてサポートしています。
+[TemplateLoader](http://freemarker.org/docs/pgui_config_templateloading.html)とともにFreeMarker Featureを初期化します:
 
 ```kotlin
     install(FreeMarker) {
@@ -22,8 +21,8 @@ feature.  Initialize the FreeMarker feature with a
     }
 ```
 
-This TemplateLoader sets up FreeMarker to look for the template files on the classpath in the
-"templates" package, relative to the current class path.  A basic template looks like this:
+このTemplateLoaderは、FreeMarkerがテンプレートファイルをクラスパス上で現在のクラスパスからの相対パスとして"templates"パッケージ内で見つけられるようにセットアップします。
+基本的なテンプレートは以下のような見た目になります:
 
 {% include feature.html %}
 
@@ -35,8 +34,7 @@ Your email address is ${user.email}
 </html>
 ```
 
-With that template in `resources/templates` it is accessible elsewhere in the the application
-using the `call.respond()` method:
+アプリケーション内のどこででも`call.respond()`メソッドを利用することで、この`resources/templates`のテンプレートにアクセスできます。
 
 ```kotlin
     get("/{...}") {
