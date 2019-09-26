@@ -48,7 +48,7 @@ Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.hero
 <table>
   <tr>
     <td align="center"><a href="https://github.com/doyaaaaaken"><img src="https://avatars3.githubusercontent.com/u/5428401?v=4" width="100px;" alt="kenta.koyama"/><br /><sub><b>kenta.koyama</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=doyaaaaaken" title="Code">💻</a></td>
-    <td align="center"><a href="https://prolab.club"><img src="https://avatars0.githubusercontent.com/u/43880251?v=4" width="100px;" alt="misato/キョウ"/><br /><sub><b>misato/キョウ</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou-today" title="Documentation">📖</a> <a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou-today" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://prolab.club"><img src="https://avatars0.githubusercontent.com/u/43880251?v=4" width="100px;" alt="misato/キョウ"/><br /><sub><b>misato/キョウ</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou-today" title="Documentation">📖</a> <a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou-today" title="Documentation">📖</a> <a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=kyou-today" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/lasta"><img src="https://avatars2.githubusercontent.com/u/2967161?v=4" width="100px;" alt="Atsushi Koshikizawa"/><br /><sub><b>Atsushi Koshikizawa</b></sub></a><br /><a href="https://github.com/doyaaaaaken/ktor-doc-jp/commits?author=lasta" title="Documentation">📖</a></td>
   </tr>
 </table>
