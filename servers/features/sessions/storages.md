@@ -1,22 +1,23 @@
 ---
-title: Storages
-caption: Session Storages
+title: ストレージ
+caption: セッションストレージ
 category: servers
 redirect_from:
 - /features/sessions/storages.html
 ktor_version_review: 1.0.0
 ---
 
-There are two predefined storages: `SessionStorageMemory`, `DirectoryStorage`. And another composable storage: `CacheStorage`.
+`SessionStorageMemory`、`DirectoryStorage`という事前に定義された2つのストレージがあります。
+そして他の組み合わせ可能なストレージとして`CacheStorage`があります。
 
-`DirectoryStorage` and `CacheStorage` are dependant on the `io.ktor:ktor-server-sessions:$ktor_version` artifact.
+`DirectoryStorage`と`CacheStorage`は`io.ktor:ktor-server-sessions:$ktor_version`アーティファクトに依存しています。
 {: .note.artifact } 
 
-In this mode, you are just sending a Session Id instead of the actual session contents.
-This id is used to store its contents on the server side using a specific `SessionStorage`.
-This mode is used when you specify a second argument with a storage in the `cookie` or `header` methods.
+このモードでは、実際のセッションコンテンツの代わりにセッションIDを送信します。
+このIDは、特定の`SessionStorage`を使ってコンテンツをサーバサイドに保存するため使われます。
+このモードは`cookie`または`header`メソッド内でストレージを第二引数で指定することで使えます。
 
-Example:
+例:
 
 ```kotlin
 install(Sessions) {
@@ -26,14 +27,13 @@ install(Sessions) {
 }
 ```
 
+## カスタムSessionStorage
 
-## Custom SessionStorage
+`SessionStorage`はセッションペイロードの参照・保存の責務をもちます。
+インターフェースは*suspend*可能になっており、データを非同期に変換することができます。
 
-`SessionStorage` is in charge of storing and retrieving session payload. The interface is *suspendable*,
-so you can, and should if it is possible, transfer the data asynchronously.
-
-The data is transferred as a stream and the callee will pass consumers and providers offering the binary payload,
-and the callee will be in charge of opening and closing those byte channels.
+データはストリームとして変換され、呼び出し先はバイナリペイロードを提供するコンシューマとプロバイダを渡す必要があります。
+呼び出し先はバイトチャネルのオープン・クローズの責務をもちます。
 
 ```kotlin
 interface SessionStorage {
@@ -43,9 +43,9 @@ interface SessionStorage {
 }
 ```
 
-If the storage doesn't provide a meaningful way to store information as a stream, you might want to use
-a simplified adaptor that just reads and writes it using `ByteArray`. It can also be used as an example to know
-how to deal with the API in its primitive stream-based version.
+もしストレージが情報をストリームとして保存するよい方法を提供していなければ、
+`ByteArray`を使って単純に読み書きするようなシンプルなアダプターを使うこともできます。
+また、プリミティブなストリームベースバージョンでAPIを処理する方法を知るための例として使用することもできます。
 
 {% capture simplified-session-storage-sample-kt %}{% include simplified-session-storage-sample.md %}{% endcapture %}
 

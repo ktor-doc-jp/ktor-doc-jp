@@ -1,24 +1,24 @@
 ---
 title: Cookie/Header
-caption: Cookie/Header Sessions
+caption: Cookie/Headerセッション
 category: servers
 redirect_from:
 - /features/sessions/cookie-header.html
 ktor_version_review: 1.0.0
 ---
 
-You can either use cookies or custom HTTP headers for sessions. The code is roughly the same but you have to
-call either the `cookie` or `header` method, depending on where you want to send the session information.
+セッションとして、Cookieを使うこともカスタムのHTTPヘッダーを使うこともできます。
+コードは大体同じですが、どこにセッション情報を送信したいかによって、`cookie`か`header`メソッドのどちらかを呼び出す必要があります。
 
-## Cookies vs Headers sessions
+## Cookie vs ヘッダー セッション
 {: #cookies-headers }
 
-Depending on the consumer, you might want to transfer the sessionId or the payload using a cookie,
-or a header. For example, for a website, you will normally use cookies, while for an API you might want to use headers.
+cookieまたはヘッダーを使い、sessionIDまたはペイロードを変換する際、どの方式をとりたいかはコンシューマによります。
+例えば、ウェブサイトの場合、通常はCookieを使い、APIにおいてはヘッダーを使いたいかもしれません。
 
-The Sessions.Configuration provide two methods `cookie` and `header` to select how to transfer the sessions: 
+Sessions.Configurationは`cookie`と`header`の2つのメソッドを提供し、セッションをどう変換するかを選択できます: 
 
-### Cookies
+### Cookie
 
 ```kotlin
 application.install(Sessions) {
@@ -26,8 +26,8 @@ application.install(Sessions) {
 } 
 ```
 
-You can configure the cookie by providing an additional block. There is a cookie property allowing
-to configure it, for example by adding a [SameSite extension](https://caniuse.com/#search=samesite):
+追加のブロックを提供することでCookieの設定ができます。
+例えば[SameSite拡張](https://caniuse.com/#search=samesite)の追加のようなCookieプロパティの設定ができます:
 
 ```kotlin
 application.install(Sessions) {
@@ -37,10 +37,10 @@ application.install(Sessions) {
 } 
 ```
 
-The Cookie method is intended for browser sessions. It will use a standard
-[`Set-Cookie` header](https://developer.mozilla.org/es/docs/Web/HTTP/Headers/Set-Cookie).
-Inside the cookie block, you have access to a `cookie` property which allows you to configure the `Set-Cookie` header,
-for example, by setting a cookie's `path` or expiration, domain or https related things.
+Cookieメソッドはブラウザセッションを想定しています。
+標準的な[`Set-Cookie` header](https://developer.mozilla.org/es/docs/Web/HTTP/Headers/Set-Cookie)が使われます。
+cookieブロック内では、`Set-Cookie`ヘッダーを設定するような`cookie`プロパティにアクセスすることができます。
+例えばcookieの`path`や有効期限やドメインやhttpsに関わることなどを設定できます。
 
 ```kotlin
 install(Sessions) {
@@ -51,11 +51,11 @@ install(Sessions) {
 }
 ```
 
-### Headers
+### Header
 
-The Header method is intended for APIs, both for using in JavaScript XHR requests and for requesting them
-from the server side. It is usually easier for API clients to read and generate custom headers than to handle
-cookies.
+Header関数はAPI用途を想定しています。
+JavaScript XHRリクエストと、サーバサイドからのリクエストの療法を想定しています。
+APIクライアントにとっては、cookieを操作するよりも、カスタムのヘッダーを読み書きするほうが通常簡単です。
 
 ```kotlin
 install(Sessions) {
@@ -69,10 +69,10 @@ application.install(Sessions) {
 } 
 ```
 
-## Custom storages
+## カスタムストレージ
 {: #extending-storages}
 
-The Sessions API provides a `SessionStorage` interface, that looks like this:
+Session APIは`SessionStorage`インターフェースを提供し、以下のようになっています:
 
 ```kotlin
 interface SessionStorage {
@@ -82,14 +82,13 @@ interface SessionStorage {
 }
 ```
 
-All three functions are marked as `suspend` and are designed to be fully asynchronous
-and use `ByteWriteChannel` and `ByteReadChannel` from `kotlinx.coroutines.io` that provide
-APIs for reading and writing from an asynchronous Channel.
+3つの関数すべて`suspend`でマークされており、完全に非同期になるよう設計されています。
+そして非同期Channelから読み書きできるAPIを提供する`kotlinx.coroutines.io`から、`ByteWriteChannel`と`ByteReadChannel`を利用しています。
 
-In your implementations, you have to call the callbacks providing a ByteWriteChannel and a ByteReadChannel
-that you have to provide: it is your responsibility to open and close them.
-You can read more about `ByteWriteChannel` and `ByteReadChannel` in their libraries documentation.
-If you just need to load or store a ByteArray, you can use this snippet which provides a simplified session storage:
+実装において、ByteWriteChannelとByteReadChannelを提供するcallbackを呼びだす必要があります。
+ByteWriteChannelとByteReadChannelをあなたは提供する必要があり、オープン・クローズするのはあなたの責務です。
+`ByteWriteChannel`と`ByteReadChannel`についてはそれらのライブラリのドキュメント内でより詳細に読めます。
+単にByteArrayを読み込み・保存する必要があるだけならば、このシンプルなセッションストレージを提供するスニペットを使えます。
 
 {% capture simplified-session-storage-sample-kt %}{% include simplified-session-storage-sample.md %}{% endcapture %}
 
@@ -98,7 +97,7 @@ If you just need to load or store a ByteArray, you can use this snippet which pr
 %}
 
 
-With this simplified storage you only have to implement two simpler methods:
+このシンプルなストレージを使い、2つのよりシンプルなメソッドを実装する必要があります:
 
 ```kotlin
 abstract class SimplifiedSessionStorage : SessionStorage {
@@ -107,7 +106,7 @@ abstract class SimplifiedSessionStorage : SessionStorage {
 }
 ```
 
-So for example, a redis session storage would look like this:
+そのため例えば、redisセッションストレージは以下のようになります:
 
 ```kotlin
 class RedisSessionStorage(val redis: Redis, val prefix: String = "session_", val ttlSeconds: Int = 3600) :

@@ -1,6 +1,6 @@
 ---
-title: Transformers
-caption: Session Transformers
+title: トランスフォーマー
+caption: セッショントランスフォーマー
 category: servers
 redirect_from:
 - /features/sessions/transformers.html
@@ -9,20 +9,20 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..3" /}
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Standard Transformers
+## 標準のトランスフォーマー
 
 ### SessionTransportTransformerDigest
 {: #SessionTransportTransformerDigest}
 
-The `SessionTransportTransformerEncrypt` provides a session transport transformer that includes
-a hash of the payload with a salt and verifies it. It uses `SHA-256` as the default
-hashing algorithm, but it can be changed. It doesn't encrypt the payload, but still without the salt people
-shouldn't be able to change it.
+`SessionTransportTransformerEncrypt`はセッション転送時のトランスフォーマーを提供し、
+これを使うことでソルト付きでのペイロードのハッシュ化や、その検証をすることができます。
+`SHA-256`をデフォルトのハッシュアルゴリズムとして利用していますが、変更することもできます。
+これはペイロードを暗号化しませんが、ソルトなしには他の人が値を変更できないようにします。
 
 ```kotlin
 // REMEMBER! Change this string and store them safely
@@ -32,19 +32,18 @@ cookie<TestUserSession>(cookieName) {
 }
 ```
 
+このモードを使うとき、セッションの実際のコンテンツをクライアントに対し、CookieであれHeaderであれ、また平文であれ変換された形式であれ送信することができます。
 
-When using this mode, you can send the actual content of the session to the client as a cookie or a header, and as either
-raw or transformed.
+このモードは"サーバレス”と考えることができます。
+そのためサーバサイドには何も保存する必要がなく、セッションを保存・保持するのはクライアントだけの責務だからです。
+これはバックエンドをシンプルにしますが、このモードで動く場合セキュリティ面で何が問題となるのかを知っておく必要があります。
 
-This mode is considered to be "serverless", since you don't need to store anything on the server side and it is only
-the responsibility of the client to store and keep that session. This simplifies the backend, but has security
-implications that you need to know, to work in this mode.
-
+このモードにおいては、`header`または`cookie`メソッドを`install(Sessions)`ブロック内で、cookieまたはheaderの名前を１つ引数として渡してやり呼び出すだけでいいです。
 In this mode you just call `header` or `cookie` methods inside the `install(Sessions)` block with a single argument
 with the name of the cookie or the header.
 
-Inside `header` or `cookie` blocks you have the option to call a `transform` method that allows you to transform
-the value sent, for example to authenticate or encrypt it.
+`header`、`cookie`ブロック内で、`transform`メソッドを呼ぶかどうかの選択ができます。
+呼ぶことで、送信される値を変換し、例えば認証したり暗号化したりすることができます。
 
 ```kotlin
 install(Sessions) {
@@ -57,33 +56,33 @@ install(Sessions) {
 }
 ```
 
-* Serving a session without transform allows people to see the contents of the session clearly and then to modify it.
-* Serving a session with an Authentication transform means people can see the contents, but it prevents them from modifying it as long
-  as you keep your secret hash key safe and use a secure algorithm. It is also possible to use old session strings to go back
-  to a previous state.
-* Serving a session with an Encrypt transform prevents people from determining the actual contents and modifying it,
-  but it is still vulnerable to exploitation and being returned to previous states.
+* transformせずにセッションを送信した場合、他者にセッションのコンテンツが完全に見え、改ざんすることができます。
+* 認証付きのtransformをしセッションを送信した場合、他者はコンテンツをみることができますが、ハッシュ化のためのシークレットキーを安全に保管し、安全なアルゴリズムを使っている限りは改ざんすることはできません。
+  古いセッション文字列を使って古い状態に戻すこともできます
+* 暗号化付きのtransformをしセッションを送信した場合、他者はコンテンツを見ることができず、改ざんすることはできません。
+  しかし、過去の状態に戻すこと対しては依然脆弱性はあります。
 {: .note.security }
   
-It is possible to store a timestamp or a nonce encryption and authentication, but you will have to limit the
-session time or verify it at the server, reducing the benefits of this mode.
+タイムスタンプかnonceを保存することはできますが、
+セッションの有効期限の制限やその検証をサーバ側で行う必要が出てくるため、このモードの利点を減らしてしまいます。
 
-So as a rule of thumb you can use this mode only **if it is not a security concern that people could use old
-session states**. And if you are using a session to log in the user, **make sure that you are at least authenticating
-the session with a transform**, or people will be able to easily access other people's contents.
+経験則としては、このモードは**古いセッション状態が使われうるセキュリティ上の懸念がないときだけ**利用してください。
+そしてもしセッションをユーザのログインに利用している場合、**transform時に少なくとも認証は行うようにしてください**。
+そうでなければ簡単にセッションコンテンツにアクセスできてしまうためです。
 
-Also have it in mind that if your secure key is compromised, a person with the key will be able to generate any
-session payload and can potentially impersonate anyone.
+またもしセキュアなキーが危険にさらされている場合、キーを持つ人が任意のセッションペイロードを作成でき任意のユーザになりすませる可能性があることを
+頭にいれておいてください。
 
-It is important to note that changing the key will invalidate all the sessions from all the users.
+キーを変更することは全ユーザの全セッションを無効化することも重要なので覚えておいてください。
 
 ### SessionTransportTransformerMessageAuthentication
 {: #SessionTransportTransformerMessageAuthentication}
 
-The `SessionTransportTransformerMessageAuthentication` provides a session transport transformer that includes
-an authenticated hash of the payload and verifies it. It is similar to SessionTransportTransformerDigest
-but uses a HMAC. It uses `HmacSHA265` as the default authentication algorithm, but it can be changed.
-It doesn't encrypt the payload, but still without the key people shouldn't be able to change it.
+`SessionTransportTransformerMessageAuthentication`はセッション転送時の変換処理を提供します。
+ペイロードに対する認証ハッシュとその検証機能を提供します。
+SessionTransportTransformerDigestに似ていますが、HMACを利用しています。
+`HmacSHA265`をデフォルトの認証アルゴリズムとして使用していますが、変更することもできます。
+ペイロードを暗号化はしませんが、キーなしには改ざんできないようにできます。
 
 ```kotlin
 // REMEMBER! Change this string and store them safely
@@ -96,9 +95,10 @@ cookie<TestUserSession>(cookieName) {
 ### SessionTransportTransformerEncrypt
 {: #SessionTransportTransformerEncrypt}
 
-The `SessionTransportTransformerEncrypt` provides a session transport transformer that encrypts the payload
-and authenticates it. By default it uses `AES` and `HmacSHA256`, but you can configure it. It requires 
-an encryption key and an authentication key compatible in size with the algorithms: 
+`SessionTransportTransformerEncrypt`はセッション転送時の変換処理を提供します。
+ペイロードの暗号化とその認証処理を提供します。
+デフォルトでは`AES`と`HmacSHA256`を利用していますが、設定変更することができます。
+アルゴリズムと互換性があるサイズの暗号化キーと認証キーが必要です。
 
 ```kotlin
 // REMEMBER! Change ALL the digits in those hex numbers and store them safely
@@ -109,10 +109,10 @@ cookie<TestUserSession>(cookieName) {
 }
 ``` 
 
-## Custom transport transformers
+## カスタムTransportTransformer
 {: #extending-transport-transformers}
 
-The Sessions API provides a `SessionTransportTransformer` interface, that looks like this:
+Session APIは`SessionTransportTransformer`インターフェースを提供しており、以下のようになります:
 
 ```kotlin
 interface SessionTransportTransformer {
@@ -121,8 +121,8 @@ interface SessionTransportTransformer {
 }
 ```
 
-You can use these transformations to encrypt, authenticate, or transform the Payload.
-You have to implement that interface and add the transformer as usual:
+これらのトランスフォーマーはペイロードの暗号化や認証や変換に使えます。
+インターフェースを実装し、普通にトランスフォーマーとして使うことができます:
 
 ```kotlin
 cookie<MySession>("NAME") {
@@ -130,12 +130,11 @@ cookie<MySession>("NAME") {
 }
 ```
 
-`SessionTransportTransformer` allows to transform the value that is transferred along the request. Since it is
-composable, it can has as input either the transported value or a transformation of it. It is composed by two methods:
-One that applies the transformation (`transformWrite`) and other that will unapply it (`transformRead`).
-The input and the output are Strings in both cases.
-Normally `transformWrite` should always work, while `transformRead` might fail if the input is malformed or invalid in
-which cases it will return null. 
+`SessionTransportTransformer`はセッション値を変換することができ、リクエストとともに送信されます。
+構成可能な場合、入力としてトランスポートされた値またはその変換のいずれかを持つことができます。
+2つのメソッドから構成されており、１つは変換を適用する`transformWrite`と、もう１つはその変換を解除する`transformRead`です。
+入力も出力も両方とも文字列です。
+通常`transformWrite`は常に動作しますが、`transformRead`は入力が不正だった場合にはnullをreturnして失敗します。
 
 ```kotlin
 interface SessionTransportTransformer {
