@@ -265,7 +265,6 @@ fun Application.module() {
 
 Authentication Feature をインストールして設定が済んだら、認証を挟みたいルーティング群を `authenticat { }` ブロック内に入れましょう。
 
-In our case, we are going to keep the get call unauthenticated, and going to require authentication for the post one:
 今回は、GET リクエストでは認証不要で、 POST リクエストでは Basic 認証を要求するようにしてみました。
 
 ```kotlin
@@ -285,15 +284,17 @@ routing {
 }
 ```
 
-## JWT Authentication
+## JWT 認証
 
 Instead of using a fixed authentication, we are going to use JWT tokens.
+固定的な認証を用いる代わりに、 JWT 認証を用いてみましょう。
 
-We are going to add a login-register route. That route will register a user if it doesn't exist,
-and for a valid login or register it will return a JWT token.
-The JWT token will hold the user name, and posting will link a snippet to the user.
+`login-register` ルーティングを追加していきます。
+このルーティングは、ユーザ情報が存在しない場合は登録を行い、認証に成功した場合や登録が成功した場合は JWT トークンを返却します。
+JWT トークンはユーザ名と、ユーザがスニペットを投稿するためのリンクを持ちます。
 
-We will need to install and configure JWT (replacing the basic auth):
+まずは、 Authentication のインストールと JWT の設定を行います。
+(Basic 認証と置き換えしました。)
 
 ```kotlin
 open class SimpleJWT(val secret: String) {
@@ -316,7 +317,8 @@ fun Application.module() {
 }
 ```
 
-We will also need a data source holding usernames and passwords. One simple option would be:
+ユーザ名とパスワードを保持するためのデータソースも必要です。
+単純な例を下記に示します。
 
 ```kotlin
 class User(val name: String, val password: String)
@@ -331,6 +333,7 @@ class LoginRegister(val user: String, val password: String)
 ```
 
 With all this, we can already create a route for logging or registering users:
+以上で、ログインまたはユーザ登録ができるルーティング (`/login-register`) を作成できるようになりました。
 
 ```kotlin
 routing {
@@ -343,36 +346,34 @@ routing {
 }
 ```
 
-Now we can already try to obtain a JWT token for our user:
+これでユーザは JWT トークンを取得できるようになりました。
 
 {% comment %}
 ### IntelliJ
 {% endcomment %}
 
-Using the Editor-Based HTTP client for IntelliJ IDEA Ultimate,
-you can make the POST request, and check that the content is valid,
-and store the token in an environment variable:
+IntelliJ IDEA Ultimate の HTTP クライアントを用いると、 POST リクエストを作成し、
+レスポンス内容が期待通りか確認し、環境変数にトークンを保持することができます。
 
 ![](/quickstart/guides/api/IU-http-login-register-request.png)
 
 ![](/quickstart/guides/api/IU-http-login-register-response.png)
 
-Now you can make a request using the environment variable `{% raw %}{{auth_token}}{% endraw %}`:
+環境変数 `{% raw %}{{auth_token}}{% endraw %}` を用いてリクエストを発行してみましょう。
 
 ![](/quickstart/guides/api/IU-http-snippets-env-auth_token-request.png)
 
 ![](/quickstart/guides/api/IU-http-snippets-env-auth_token-response.png)
 
-If you want to easily test different endpoints in addition to localhost,
-you can create a `http-client.env.json` file and put a map with environments
-and variables like this:
+localhost に加えて他のエンドポイントに対し簡単にテストをしたい場合は、 `http-client.env.json` ファイルを作成し、
+下記のように環境変数の map を作成します。
 
 ![](/quickstart/guides/api/IU-env/http-client.env.json.png)
 
-After this, you can start using the user-defined `{% raw %}{{host}}{% endraw %}` env variable:
+これでユーザ定義環境変数 `{% raw %}{{host}}{% endraw %}` を用いることができるようになります。
 ![](/quickstart/guides/api/IU-env/use_host_env.png)
 
-When trying to run a request, you will be able to choose the environment to use:
+リクエストを発行する際に、環境の選択ができるようになります。
 ![](/quickstart/guides/api/IU-env/select_env_for_running.png)
 
 {% comment %}
@@ -398,7 +399,7 @@ curl -v \
 
 </td></tr></tbody></table>
 
-And with that token, we can already publish snippets:
+このトークンを使用することで、スニペットの投稿ができます。
 
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
