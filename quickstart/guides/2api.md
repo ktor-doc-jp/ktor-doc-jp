@@ -180,16 +180,18 @@ Content-Type: application/json
 
 以上!
 
-This allows you to define files (plain or scratches) that include definition for several HTTP requests,
-allowing to include headers, provide a payload inline, or from files, use environment variables defined in a JSON file,
-process the response using JavaScript to perform assertions, or to store some environment variables like
-authentication credentials so they are available to other requests. It supports autocompletion, templates, and
+複数の HTTP リクエストの定義を plain text や scratch ファイルに定義することができ、
+ヘッダを指定したり、インラインでペイロードを指定したり、 JSON ファイルに定義した環境変数を使用したり、
+JavaScript でレスポンスを処理してアサーションしたり、認証情報を環境変数に保存した上で別のリクエストで利用したりできます。
+It supports autocompletion, templates, and
 automatic language injection based on Content-Type, including JSON, XML, etc..
+また、自動補完やテンプレート、 Content-Type (JSON, XML など) に応じた
+自動[言語インジェクション](https://pleiades.io/help/idea/using-language-injections.html)にも対応しています。
 {: .note}
 
-In addition to easily test your backends inside your editor, it also helps your to document your APIs
-by including a file with the endpoints on it.
-And allows you fetch and locally store responses and visually compare them.
+エディタ上で簡単にバックエンドのテストができるだけでなく、エンドポイントをファイルに記述しておくことで、
+APIのドキュメント化にも役立ちます。
+また、レスポンスをローカルに保存することで差分を視覚化できます。
 {: .note}
 
 ### CURL:
@@ -217,18 +219,18 @@ curl \
 
 ---
 
-Let's do the GET request again:
+もう一度 GET リクエストを投げてみましょう。
 
 ![](/quickstart/guides/api/snippets_get_new.png){:.rounded-shadow}
 
 Nice!
 
-## Grouping routes together
+## ルーティングのグループ化
 
-Now we have two separate routes that share the path (but not the method) and we don't want to repeat ourselves.
+同じパスで HTTP メソッドだけが異なる場合、ルーティングの定義を重複して定義したくないですよね。
 
-We can group routes with the same prefix, using the `route(path) { }` block. For each HTTP method, there is an
-overload without the route path argument that we can use at routing leaf nodes:
+prefix が同じルーティングは、 `route(path) { }` ブロックを用いることでグループ化できます。
+複数の HTTP メソッドに対し、ルーティングの葉ノードを共有するかのごとく、同一のパスをオーバーロードできます。
 
 ```kotlin
 routing {
