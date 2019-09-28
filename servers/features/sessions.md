@@ -1,6 +1,6 @@
 ---
-title: Sessions
-caption: Handle Conversations with Sessions
+title: セッション
+caption: セッションによるやりとりを扱う
 category: servers
 permalink: /servers/features/sessions.html
 children: /servers/features/sessions/
@@ -16,36 +16,36 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..3" /}
 
-A session is a mechanism to persist data between different HTTP requests. Establishing a conversational
-context into the otherwise stateless nature of HTTP. They allow servers to keep a piece of information associated
-with the client during a sequence of HTTP requests and responses.
- 
-Different use-cases include: authentication and authorization, user tracking, keeping information
-at client like a shopping cart, and more.
+セッションは異なるHTTPリクエスト間でデータを永続化するメカニズムです。
+ステートレスな性質を持つHTTPに対し、対話的なコンテキストを確立します。
+一連のHTTPリクエスト・レスポンスの間、クライアントに紐づく情報をサーバに保持させることができます。
 
-Sessions are typically implemented by employing `Cookies`, but could also be done using headers for example
-to be consumed by other backends or an AJAX requests.
+異なるユースケースが含まれています: 認証・認可、ユーザトラッキング、ショッピングカートのようにクライアントによる情報保持など。 
 
-They are either client-side when the entire serialized object goes back and forth between the client and the server,
-or server-side when only the session ID is transferred and the associated data is stored entirely in the server. 
+セッションは典型的な方法としては`Cookies`を使って実装されていますが、
+ヘッダーを使うことでも実現できます。
+ヘッダーは例えば他のバックエンドやAJAXリクエストから使われたりします。
 
-**Table of contents:**
+クライアントとサーバの間でシリアライズされたオブジェクト全体がやりとりされるクライアントサイドセッションと、
+SessionIDだけやりとりされるがそれに紐づくデータはすべてサーバ側に保存されているサーバサイドセッションがあります。
+
+**目次:**
 
 * TOC
 {:toc}
 
 {% include feature.html %}
 
-## Installation
+## インストール
 {: #installation }
 
-Sessions are usually represented as immutable data classes (and session is changed by calling the `.copy` method):
+セッションは通常不変なdata classによって表現されます（そしてセッションは`.copy`メソッドを呼び出すことで変更されます）:
 
 ```kotlin
 data class SampleSession(val name: String, val value: Int)
 ```
 
-A simple Sessions installation looks like this:
+単純なSession機能のインストールコードは以下のようになります:
 
 ```kotlin
 install(Sessions) {
@@ -53,7 +53,7 @@ install(Sessions) {
 }
 ```
 
-And a more advanced installation could be like:
+より発展的なインストール方法は以下のようになります:
 
 ```kotlin
 install(Sessions) {
@@ -66,21 +66,20 @@ install(Sessions) {
 }
 ```
 
-To configure sessions you have to to specify a [cookie/header](/servers/features/sessions/cookie-header.html) name,
-optional [server-side storage](/servers/features/sessions/client-server.html), and a class associated to the session.
+セッションを設定するため、[cookie/header](/servers/features/sessions/cookie-header.html)名を指定する必要があります。
+また、[server-side storage](/servers/features/sessions/client-server.html)を任意で指定する必要もあり、セッションに紐づくクラスも指定する必要があります。
 
-If you want to further customize sessions. Please read the [extending](#extending) section.
+よりセッションをカスタマイズしたい場合は、[拡張](#extending)セクションを読んでください。
 
-Since there are several combinations for configuring sessions, there is a section about [deciding how to configure sessions](#configuring).
+いくつかのセッションの設定方法の組み合わせがあり、[セッションの設定方法の決定](#configuring)セクションに記載されています。
 {: .note}
 
-## Usage
+## 使い方
 {: #usage }
 
-In order to access or set the session content, you have to use the `call.sessions` property:
+セッションコンテンツにアクセスまたは設定するために、`call.sessions`プロパティを使う必要があります:
 
-To get the session content, you can call the `call.sessions.get` method receiving as type parameter one
-of the registered session types:
+セッションコンテンツを取得するためには、`call.sessions.get`メソッドをセッション型として登録した型パラメータとともに呼び出す必要があります。
 
 ```kotlin
 routing {
@@ -91,30 +90,30 @@ routing {
 }
 ```
 
-To create or modify current session you just call the `set` method of the `sessions` property with the value of the
-data class: 
+現在のセッションを作成または変更するためには、`sessions`プロパティの`set`メソッドをdata class値を渡して単に呼び出すだけです:
 
 ```kotlin
 call.sessions.set(MySession(name = "John", value = 12))
 ```
 
-To modify a session (for example incrementing a counter), you have to call the `.copy` method of the `data class`:
+セッションを変更するためには（例えばカウンターをインクリメント）、`data class`の`.copy`メソッドを呼び出します:
 
 ```kotlin
 val session = call.sessions.get<MySession>() ?: MySession(name = "Initial", value = 0)  
 call.sessions.set(session.copy(value = session.value + 1))
 ```
 
+ユーザがログアウトするか、その他の理由でセッションをクリアする場合、`clear`関数を呼び出すことができます。
 When a user logs out, or a session should be cleared for any other reason, you can call the `clear` function:
 
 ```kotlin
 call.sessions.clear<MySession>()
 ```
 
-After calling this, retrieving that session will return null, until set again.
+これを呼び出した後、再度セッションの設定を行うまではセッションへの参照はnullを返すようになります。
 
 <div markdown='1'>
-When handling requests, you can get, set, or clear your sessions:
+リクエストをハンドリングするときに、セッションを取得、設定、クリアできます:
 
 ```kotlin
 val session = call.sessions.get<SampleSession>() // Gets a session of this type or null if not available
@@ -124,14 +123,14 @@ call.sessions.clear<SampleSession>() // Clears the session of this type
 </div>
 {: .note.summarizing }
 
-## Multiple sessions
+## 複数セッション
 {: #multiple-sessions}
 
-Since there could be several conversational states for a single application, you can install multiple session mappings.
-For example:
+１つのアプリケーションに対しいくつかの対話的な状態がありえるため、複数のセッションへのマッピングをインストールすることができます。
+例えば:
 
-* Storing user preferences, or cart information as a client-side cookie.
-* While storing the user login inside a file on the server.
+* クライアントサイドCookieとして、ユーザ設定の保存やショッピングカートの情報など
+* サーバのファイル内にユーザログイン情報を保存
 
 ```kotlin
 application.install(Sessions) {
@@ -157,66 +156,66 @@ install(Sessions) {
 }
 ```
 
-For multiple session mappings, _both_ type and name should be unique.
+複数のセッションマッピングのためには、型も名前も _両方_ とも一意になる必要があります。
 {: .note} 
 
-## Configuration
+## 設定
 {: #configuration}
 
-You can configure the sessions in several different ways:
+セッションの設定をいくつかの異なる方法で行うことができます
 
-* *Where is the payload stored:* client-side, or server-side.
-* *How is the payload or the session id transferred:* Using cookies or headers.
-* *How are they serialized:* Using an internal format, JSON, a custom engine...
-* *Where is the payload stored in the server:* In memory, a folder, redis...
-* *Payload transformations:* Encrypted, authenticated...
+* *ペイロードがどこに保存されているか:* クライアントサイドかサーバサイドか...
+* *ペイロードやセッションIDが何で送信されるか:* CookieかHeaderか...
+* *どのようにシリアライズされるか:* 内部的なフォーマットを使うか、JSONを使うか、カスタムエンジンを使うか...
+* *サーバのどこいペイロードが保管されているか:* インメモリかフォルダかredisか...
+* *ペイロードの変換方法:* 暗号化された状態か, 認証された状態か...
 
-Since sessions can be implemented by various techniques, there is an extensive configuration facility to set them up:
+セッションは様々な手段で実装可能なので、それらを広範囲に設定する設定方法があります:
 
-* `cookie` will install cookie-based transport
-* `header` will install header-based transport 
+* `cookie`はCookieベースの転送機能をインストールします
+* `header`はHeaderベースの転送機能をインストールします 
 
-Each of these functions will get the name of the cookie or header. 
+これらの関数はcookieまたはheaderの名前を必要とします。
 
-If a function is passed an argument of type `SessionStorage` it will use the storage to save the session, otherwise
-it will serialize the data into the cookie/header value.
+もし関数が`SessionStorage`という型の引数を渡された場合、セッションを保存するためのストレージがつかわれます。
+そうでなければデータをcookie/headerの値内にデータをシリアライズするします。
 
-Each of these functions can receive an optional configuration lambda.
+これらの関数はオプショナルで設定のためのlambda関数を受け取ります。
 
-For cookies, the receiver is `CookieSessionBuilder` which allows you to:
+cookieの場合、レシーバは`CookieSessionBuilder`で、以下のようなことができます:
 
-* specify custom `serializer`
-* add a value `transformer`, like signing or encrypting
-* specify the cookie configuration such as duration, encoding, domain, path and so on
+* カスタムの`serializer`を指定できます
+* 例えば署名・暗号化といった`transformer`の値を追加できます
+* 有効期限・エンコード・ドメイン・パスなどのようなcookie設定を指定できます
 
-For headers, the receiver is `HeaderSessionBuilder` which allows `serializer` and `transformer` customization.
+Headerの場合、レシーバは`HeaderSessionBuilder`で、これにより`serializer`と`transformer`のカスタマイズができます。
 
-For cookies & headers that are server-side with a `SessionStorage`, additional configuration is `identity` function
-that should generate a new ID when the new session is created.
+`SessionStorage`を使ってサーバサイドにおけるcookieとheaderの場合、追加の設定として`identity`関数があり、
+新しいセッションが作成されたときのIDの生成方法を指定できます。
 
-## Deciding how to configure sessions
+## セッションの設定方法の決定
 {: #configuring}
 
 ### Cookie vs Header
 
-* Use [**Cookies**](/servers/features/sessions/cookie-header.html#cookies) for plain HTML applications.
-* Use [**Header**](/servers/features/sessions/cookie-header.html#headers) for APIs or for XHR requests if it is simpler for your http clients.
+* [**Cookie**](/servers/features/sessions/cookie-header.html#cookies)はプレーンなHTMLアプリケーションに利用します。
+* [**Header**](/servers/features/sessions/cookie-header.html#headers)は（もしクライアントにとってそちらのほうがシンプルな場合）APIやXHRリクエストに利用します。
 
-### Client vs Server
+### クライアント vs サーバー
 
-* Use [**Server Cookies**](/servers/features/sessions/client-server.html#server-cookies) if you want to prevent session replays or want to further increase security
-  * Use `SessionStorageMemory` for development if you want to drop sessions after stopping the server
-  * Use `directorySessionStorage` for production environments or to keep sessions after restarting the server
-* Use [**Client Cookies**](/servers/features/sessions/client-server.html#client-cookies) if you want a simpler approach without the storage on the backend
-  * Use it plain if you want to modify it on the fly at the client for testing purposes and don't care about the modifications
-  * Use it with transform authenticating and optionally encrypting it to prevent modifications
-  * **Do not** use it at all if your session payload is vulnerable to replay attacks. [Security examples here](/servers/features/sessions/client-server.html#security).
+* セッションリプレイを防ぎたい場合やよりセキュリティを強化したい場合には[**Server Cookie**](/servers/features/sessions/client-server.html#server-cookies)を使います。
+  * 開発時など、サーバーを停止した後にセッションを破棄したい場合は`SessionStorageMemory`を使います。
+  * 本番環境など、サーバーを再起動したあとにもセッションを残したい場合は`directorySessionStorage`を使います。
+* バックエンドのストレージよりもシンプルなものを求めている場合は[**Client Cookie**](/servers/features/sessions/client-server.html#client-cookies)を使います。
+  * 改ざんされることは気にせずテスト用の目的で臨機応変に変更したい場合は、プレーンな状態で使います。
+  * 改ざんを防ぎたい場合は、認証やあるいはオプショナルで暗号化も一緒につけ変換し使います。
+  * セッションペイロードがリプレイアタックに脆弱な場合は**絶対に使ってはいけません**。[セキュリティ例はこちら](/servers/features/sessions/client-server.html#security)。
 
-## Baked snippets
+## 動作サンプル
 
-### Storing the contents of the session in a cookie
+### Cookie内にセッションコンテンツを保存
 
-Since no SessionStorage is provided as a `cookie` second argument its contents will be stored in the cookie.
+`cookie`メソッドの第二引数でSessionStorageが渡されていないので、Cookie内にコンテンツが保存されます。
 
 ```kotlin
 install(Sessions) {
@@ -229,10 +228,10 @@ install(Sessions) {
 }
 ```
 
-### Storing a session id in a cookie, and storing session contents in-memory
+### セッションIDをCookie内に保存し、セッションコンテンツをインメモリに保存する
 {: #SessionStorageMemory }
 
-`SessionStorageMemory` don't have parameters at this point.
+`SessionStorageMemory`は今時点では引数を持ちません。
 
 ```kotlin
 install(Sessions) {
@@ -242,17 +241,16 @@ install(Sessions) {
 }
 ```
 
-Alongside SessionStorage there is a `SessionStorageMemory` class that you can use for development.
-It is a simple implementation that will keep sessions in-memory, thus all the sessions are dropped
-once you shutdown the server and will constantly grow in memory since this implementation does not discard
-the old sessions at all.
+SessionStorageに似た、開発用に利用できる`SessionStorageMemory`クラスがあります。
+セッションをインメモリで保持するシンプルな実装であり、サーバーをシャットダウンした際には全セッションが失われます。
+また古いセッションを全く破棄しないので常にメモリ内でセッションが増え続けます。
 
-This implementation is not intended for production environments.
+この実装は本番環境で利用されることは想定されていません。
 
-### Storing a session id in a cookie, and storing session contents in a file
+### Cookie内にセッションIDを保存し、セッションコンテンツをファイル内に保存
 {: #directorySessionStorage }
 
-You have to include an additional artifact for the `directorySessionStorage` function.
+`directorySessionStorage`関数のため、追加のアーティファクトを含める必要があります。
 
 `compile("io.ktor:ktor-server-sessions:$ktor_version") // Required for directorySessionStorage`
 
@@ -267,14 +265,13 @@ install(Sessions) {
 }
 ```
 
-As part of the `io.ktor:ktor-server-sessions` artifact, there is a `directorySessionStorage` function
-which utalizes a session storage that will use a folder for storing sessions on disk.
+`io.ktor:ktor-server-sessions`アーティファクトの一部として、`directorySessionStorage`関数があり、
+ディスクにセッションを保存するためにフォルダを使うセッションストレージが利用可能になります。
 
-This function has a first argument of type `File` that is the folder that will store sessions (it will be created
-if it doesn't exist already).
+この関数は第一引数が`File`型であり、これがセッションを保存するフォルダです（もし存在しない場合は作成されます）
 
-There is also an optional cache argument, which when set, will keep a 60-second in-memory cache to prevent
-calling the OS and reading the session from disk each time.
+また、オプショナルなキャッシュ引数もあり、設定された場合、60秒インメモリキャッシュを保持し、
+OS命令呼び出しとディスクからのセッション読み込みを防ぎます。
 
 {% comment %}
 ### Storing a session id in a cookie, and storing session contents in redis
@@ -295,17 +292,16 @@ install(Sessions) {
 
 {% endcomment %}
 
-## Extending
+## 拡張
 {: #extending }
 
-Sessions are designed to be extensible, and there are some cases where you might want to further compose
-or change the default sessions behaviour.
+Sessionは拡張性をもたせた設計になっています。
+デフォルトのセッション挙動を組み合わせたり変更したりしたいケースがあるかもしれません。
 
-For example by using custom encryption or authenticating algorithms for the transport value, or to store
-your session information server-side to a specific database.
+例えば、転送値に対しカスタムの暗号化や認証アルゴリズムを使うことや、セッション情報をサーバーサイドで特定のデータベースに保存することなど考えられます。
 
-You can define [custom transformers], [custom serializers] and [custom storages].
+[カスタムトランスフォーマー]、 [カスタムシリアライザー]、[カスタムストレージ]を定義することができます。
 
-[custom transformers]: /servers/features/sessions/transformers.html
-[custom serializers]: /servers/features/sessions/serializers.html
-[custom storages]: /servers/features/sessions/storages.html
+[カスタムトランスフォーマー]: /servers/features/sessions/transformers.html
+[カスタムシリアライザー]: /servers/features/sessions/serializers.html
+[カスタムストレージ]: /servers/features/sessions/storages.html
