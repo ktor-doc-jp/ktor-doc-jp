@@ -548,8 +548,9 @@ routing {
 
 ## CORS
 
-Now suppose we need this API to be accessible via JavaScript from another domain. We will need to configure CORS.
-And Ktor has a feature to configure this:
+別のドメインから JavaScript を介してこのスニペット API を利用できるようにする必要があるとします。
+そのためには、 CORS の設定が必要です。
+Ktor では下記のように設定することができます。
 
 ```kotlin
 fun Application.module() {
@@ -568,9 +569,9 @@ fun Application.module() {
 }
 ```
 
-Now our API is accessible from any host :)
+これでどんなホストからもこの API を利用可能になりますした :)
 
-## Full Source
+## コード全体
 
 
 {% capture application-kt %}
@@ -742,14 +743,13 @@ Content-Type: application/json
 
 ## Exercises
 
-After following this guide, as an exercise, you can try to do the following exercises:
+時間がある方や、今回身につけた新しいスキルを練習してみたい方向けに、あなたが挑戦できる改良のアイデアを用意してみました。
 
 ### Exercise 1
 
-Add unique ids to each snippet and add a DELETE http verb to `/snippets` allowing an authenticated user to delete
-her snippets.  
+各スニペットに一意の ID を付与し、 `/snipetts` に HTTP DELETE メソッドを追加し、
+認証済みユーザが自分のスニペットを削除できるようにしてみましょう。
 
 ### Exercise 2
 
-Store users and snippets in a database. 
-
+ユーザとスニペットをデータベースに保存してみましょう。
