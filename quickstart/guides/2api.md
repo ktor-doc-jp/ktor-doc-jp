@@ -86,7 +86,7 @@ routing {
 }
 ```
 
-ブラウザや HTTP クライアントから `http://localhost:8080/snipets` へアクセスすると、 `{"OK": true}` が返却されるはずです。
+ブラウザや HTTP クライアントから `http://127.0.0.1:8080/snipets` へアクセスすると、 `{"OK": true}` が返却されるはずです。
 
 `Response pipeline couldn't transform '...' to the OutgoingContent` のようなエラーが返却された場合は、
 [ContentNegotiation](/servers/features/content-negotiation.html) に Jackson がインストールされているか確認しましょう。
