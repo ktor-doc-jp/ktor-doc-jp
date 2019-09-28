@@ -9,7 +9,6 @@ ktor_version_review: 1.0.0
 {::options toc_levels="1..2" /}
 
 本ページでは、 ktor を用いた API の作り方を学びます。
-We are going to create a simple API to store simple text snippets (like a small pastebin-like API).
 簡易版 pastebin API のような、単純なテキストスニペットを保存する API を作っていきます。
 
 これから [Routing], [StatusPages], [Authentication], [JWT Authentication], [CORS], [ContentNegotiation], [Jackson] について学んでいきます。
@@ -36,17 +35,17 @@ RESTful なシステムについてより詳しく知りたい場合は、 <http
 ## プロジェクトの作成
 
 まずはじめに、プロジェクトのセットアップから行います。
-[Quick Start](/quickstart/index.html) のページに従うか、下の Ktor Project Generator を使ってプロジェクトを作成してください。
+[Quick Start](/quickstart/index.html) のページに従って作成するか、下記の Ktor Project Generator を使ってプロジェクトを作成してください。
 
 {% include preconfigured-form.html hash="dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" %}
 
 ## シンプルなルーティング
 
 まずはじめに、 [Routing Feature](/servers/features/routing.html) を使っていきます。
-Ktor では様々な機能を Feature という形で提供し、その Feature を install することで利用可能になります。
-ですが、 Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
+Ktor では様々な機能を Feature という形で提供し、その Feature をインストールすることで利用可能になりますが、
+Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
 
-Routing Feature は DSL ブロックのひとつの `routing { }` を用いることで、自動的に install されます。
+Routing Feature の DSL ブロックのひとつである `routing { }` ブロックを用いることで、自動的にインストールされます。
 
 `routing` ブロックとその内部で利用できる `get` メソッドを用いて、 `OK` を返却するシンプルな GET API を作成してみましょう。
 
@@ -63,7 +62,7 @@ fun Application.module() {
 ## JSON の返却
 
 HTTP API は JSON を返却することができます。
-[Content Negotiation](/servers/features/content-negotiation.html) に [Jackson](/servers/features/content-negotiation/jackson.html) を install すると、 JSON を返却できるようになります。
+[Content Negotiation](/servers/features/content-negotiation.html) に [Jackson](/servers/features/content-negotiation/jackson.html) をインストールすると、 JSON を返却できるようになります。
 
 ```kotlin
 fun Application.module() {
@@ -90,7 +89,7 @@ routing {
 ブラウザや HTTP クライアントから `http://localhost:8080/snipets` へアクセスすると、 `{"OK": true}` が返却されるはずです。
 
 `Response pipeline couldn't transform '...' to the OutgoingContent` のようなエラーが返却された場合は、
-[ContentNegotiation](/servers/features/content-negotiation.html) に Jackson が install されているか確認しましょう。
+[ContentNegotiation](/servers/features/content-negotiation.html) に Jackson がインストールされているか確認しましょう。
 {: .note}
 
 レスポンスオブジェクトの一部として任意の型のオブジェクトを渡すこともできます。
@@ -126,7 +125,7 @@ fun Application.module() {
 
 HTTP API は様々な HTTP メソッド (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) を用いて操作を実行します。
 新規でスニペットを追加する API を作成してみましょう。
-このためには、 POST リクエストで送信される JSON 形式のリクエストボディを読み取る必要があります。
+これを実現するためには、 POST リクエストで送信される JSON 形式のリクエストボディを読み取る必要があります。
 リクエストボディを読み取るためには、 `call.receive<Type()` を用います。
 
 ```kotlin
@@ -153,7 +152,7 @@ routing {
 IntelliJ IDEA Ultimate には強力な HTTP クライアントが同梱されています。
 もし IntelliJ IDEA Ultimate を利用していない場合は、 postman や curl で代用可能です。
 
-### IntelliJ IDEA Ultimate:
+### IntelliJ IDEA Ultimate の場合
 {: #first-request-intellij }
 
 IntelliJ IDEA Ultimate や PhpStorm を始め、 JetBrains 製の IDE には
@@ -180,7 +179,7 @@ Content-Type: application/json
 
 以上!
 
-複数の HTTP リクエストの定義を plain text や scratch ファイルに定義することができ、
+複数の HTTP リクエストの定義を plain text ファイルや scratch ファイルに定義することができ、
 ヘッダを指定したり、インラインでペイロードを指定したり、 JSON ファイルに定義した環境変数を使用したり、
 JavaScript でレスポンスを処理してアサーションしたり、認証情報を環境変数に保存した上で別のリクエストで利用したりできます。
 また、自動補完やテンプレート、 Content-Type (JSON, XML など) に応じた
@@ -248,8 +247,8 @@ routing {
 ## 認証
 
 誰からでもスニペットを投稿できるのは避けたいですよね。
-ここでは、ユーザ名とパスワードを用いた HTTP の Basic 認証でこれを制限することにします。
-Basic 認証をするために、 Authentication Feature をインストールしましょう。
+ユーザ名とパスワードを用いた HTTP の Basic 認証でこれを制限してみましょう。
+Basic 認証をするために、 Authentication Feature をインストールします。
 
 ```kotlin
 fun Application.module() {
@@ -263,7 +262,7 @@ fun Application.module() {
 }
 ```
 
-Authentication Feature をインストールして設定が済んだら、認証を挟みたいルーティング群を `authenticat { }` ブロック内に入れましょう。
+Authentication Feature をインストールして設定ができたら、認証を要求したいルーティング群を `authenticat { }` ブロック内に入れましょう。
 
 今回は、GET リクエストでは認証不要で、 POST リクエストでは Basic 認証を要求するようにしてみました。
 
@@ -286,8 +285,7 @@ routing {
 
 ## JWT 認証
 
-Instead of using a fixed authentication, we are going to use JWT tokens.
-固定的な認証を用いる代わりに、 JWT 認証を用いてみましょう。
+固定的な認証 (Basic 認証) を用いる代わりに、 JWT 認証を用いてみましょう。
 
 `login-register` ルーティングを追加していきます。
 このルーティングは、ユーザ情報が存在しない場合は登録を行い、認証に成功した場合や登録が成功した場合は JWT トークンを返却します。
@@ -332,7 +330,6 @@ class LoginRegister(val user: String, val password: String)
 
 ```
 
-With all this, we can already create a route for logging or registering users:
 以上で、ログインまたはユーザ登録ができるルーティング (`/login-register`) を作成できるようになりました。
 
 ```kotlin
@@ -426,7 +423,7 @@ curl -v \
 
 ## ユーザとスニペットの関連付け
 
-認証済のルーティングでスニペットを投稿しているため、ユーザ名を持っている `Principal` を参照できます。
+認証済のルーティングでスニペットを投稿しているため、ユーザ名などのユーザ情報を持っている `Principal` を参照できます。
 この `Principal` を用いることで、ユーザとスニペットを関連付けることができます。
 
 まずはじめに、ユーザ情報とスニペットを関連付けます。
@@ -501,12 +498,12 @@ Awesome!
 ## ステータスページ
 
 ちょっと改良してみましょう。
-HTTP API HTTP ステータスコードを用いて、エラーに関するセマンティックな情報を提供する必要があります。
-現状では、JWT トークンを取得する際に、すでに存在するユーザ名で登録しようとしたりユーザがパスワードを間違えた場合は例外が送出され、
+HTTP API は HTTP ステータスコードを用いて、エラーに関するセマンティックな情報を提供する必要があります。
+現状ではJWT トークンを取得する際に、すでに存在するユーザ名で登録しようとしたりユーザがパスワードを間違えた場合は例外が送出され、
 500 サーバエラーが返却されます。
 StatusPage Feature を利用することで、特定の例外をキャッチして何らかの結果を返却するなど、より適切なエラー処理を行えるようになります。
 
-新規で例外型を作成してみましょう。
+新しく例外型を作成してみましょう。
 
 ```kotlin
 class InvalidCredentialsException(message: String) : RuntimeException(message)
@@ -544,7 +541,7 @@ routing {
 
 ![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-response.png)
 
-より良くなりましたね!
+エラーがわかりやすくなりましたね!
 
 ## CORS
 
@@ -569,7 +566,7 @@ fun Application.module() {
 }
 ```
 
-これでどんなホストからもこの API を利用可能になりますした :)
+これでどんなホストからもこの API を利用可能になりました :)
 
 ## コード全体
 
@@ -741,15 +738,16 @@ Content-Type: application/json
     tab3-title="http-client.env.json" tab3-content=http-client-env-json
 %}
 
-## Exercises
+## 発展課題
 
-時間がある方や、今回身につけた新しいスキルを練習してみたい方向けに、あなたが挑戦できる改良のアイデアを用意してみました。
+時間がある方や、今回身につけた新しいスキルを練習してみたい方向けに、発展課題を用意しました。
+是非挑戦してみてください!
 
-### Exercise 1
+### 発展課題 1
 
-各スニペットに一意の ID を付与し、 `/snipetts` に HTTP DELETE メソッドを追加し、
+各スニペットに一意の ID を付与し、 `/snipetts` に HTTP DELETE メソッドを実装し、
 認証済みユーザが自分のスニペットを削除できるようにしてみましょう。
 
-### Exercise 2
+### 発展課題 2
 
 ユーザとスニペットをデータベースに保存してみましょう。
