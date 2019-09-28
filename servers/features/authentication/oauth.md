@@ -1,25 +1,24 @@
 ---
 title: OAuth
-caption: OAuth authentication
+caption: OAuth認証
 category: servers
 redirect_from:
 - /features/authentication/oauth.html
 ktor_version_review: 1.0.0
 ---
 
-OAuth defines a mechanism for authentication using external providers like Google or Facebook safely.
-You can read more about [OAuth](https://oauth.net/).
-Ktor has a feature to work with OAuth 1a and 2.0
+OAuthはGoogleやFacebookなどの外部プロバイダを使った安全な認証メカニズムを定義しています。
+[OAuth](https://oauth.net/)を読めばより詳細について知れます。
+KtorにはOAuth 1aと2.0で動作するFeatureがあります。
 
-A simplified OAuth 2.0 workflow:
-* The client is redirected to an authorize URL for the specified provider (Google, Facebook, Twitter, Github...).
-  specifying the `clientId` and a valid redirection URL.
-* Once the login is correct, the provider generates an auth token using a `clientSecret` associated with that `clientId`.
-* Then the client is redirected to a valid, previously agreed upon, application URL with an auth token that is signed with the `clientSecret`.
-* Ktor's OAuth feature verifies the token and generates a Principal `OAuthAccessTokenResponse`.
-* With the auth token, you can request, for example, the user's email or id depending on the provider.
+シンプルなOAuth 2.0によるワークフロー:
+* クライアントは、`clientId`と有効なリダイレクト先URLを指定した上で、特定プロバイダ（Google, Facebook, Twitter, Github）の認証URLへリダイレクトされます。
+* ログインに成功したら、プロバイダは`clientId`に紐づく`clientSecret`を使って認証トークンを生成します。
+* 次に、クライアントは以前合意した有効なアプリケーションURLへと、`clientSecret`で署名された認証トークン付きでリダイレクトされます。
+* KtorのOAuth機能はトークンの検証と、Principal `OAuthAccessTokenResponse`の生成を行います。
+* 認証トークンを使って、例えばユーザのemailやprovider内のidをリクエストすることができます。
 
-*Example*:
+*例*:
 
 {% capture oauth-sample-kt %}
 ```kotlin
@@ -71,7 +70,7 @@ routing {
     no-height="true"
 %}
 
-Depending on the OAuth version, you will get a different Principal
+OAuthバージョンによって、異なるPrincipalが取得されます。
 
 ```kotlin
 sealed class OAuthAccessTokenResponse : Principal {
@@ -88,8 +87,8 @@ sealed class OAuthAccessTokenResponse : Principal {
 }
 ```
 
-## Guide, example and testing
+## ガイド、サンプル、テスト
 
-* [OAuth Guide](/quickstart/guides/oauth.html)
-* [Example configuring several OAuth providers](https://github.com/ktorio/ktor-samples/blob/master/feature/auth/src/io/ktor/samples/auth/OAuthLoginApplication.kt)
-* [Testing OAuth authentication](https://github.com/ktorio/ktor-samples/commit/56119d2879d9300cf51d66ea7114ff815f7db752)
+* [OAuthガイド](/quickstart/guides/oauth.html)
+* [いくつかのOAuthプロバイダの設定方法例](https://github.com/ktorio/ktor-samples/blob/master/feature/auth/src/io/ktor/samples/auth/OAuthLoginApplication.kt)
+* [OAuth認証のテスト](https://github.com/ktorio/ktor-samples/commit/56119d2879d9300cf51d66ea7114ff815f7db752)
