@@ -1,16 +1,16 @@
 ---
-title: Serializers
-caption: Session Serializers
+title: シリアライザー
+caption: セッションシリアライザー
 category: servers
 redirect_from:
 - /features/sessions/serializers.html
 ktor_version_review: 1.0.0
 ---
 
-## Serializers
+## シリアライザー
 {: #serializer}
 
-You can specify a custom serializer with:
+カスタムのシリアライザーを以下のように指定できます:
 
 ```kotlin
 application.install(Sessions) {
@@ -20,12 +20,12 @@ application.install(Sessions) {
 } 
 ```
 
-If you do not specify any serializer, it will use one with an internal optimized format.
+どのシリアライザも指定しない場合、内部的な最適化されたフォーマットが利用されます。
 
 ### SessionSerializerReflection
 {: #SessionSerializerReflection}
 
-This is the default serializer, when no serializer is specified:
+これはどのシリアライザも指定されなかった場合のデフォルトのシリアライザです:
 
 ```kotlin
 cookie<MySession>("SESSION") {
@@ -33,10 +33,10 @@ cookie<MySession>("SESSION") {
 }
 ```
 
-## Custom serializers
+## カスタムシリアライザ
 {: #extending-serializers}
 
-The Sessions API provides a `SessionSerializer` interface, that looks like this:
+Sessions APIは`SessionSerializer`インターフェースを提供し、以下のようになります:
 
 ```kotlin
 interface SessionSerializer {
@@ -45,7 +45,7 @@ interface SessionSerializer {
 }
 ```
 
-This interface is for a generic serializer, and you can install it like this:
+このインターフェースは汎用的なシリアライザ用であり、以下のようにインストールできます:
 
 ```kotlin
 cookie<MySession>("NAME") {
@@ -53,7 +53,7 @@ cookie<MySession>("NAME") {
 }
 ```
 
-So for example you can create a JSON session serializer using Gson:
+そのため例えば、Gsonを使ったJSONセッションシリアライザを作成することができます:
 
 ```kotlin
 class GsonSessionSerializer(
@@ -68,7 +68,7 @@ class GsonSessionSerializer(
 }
 ```
 
-And configuring it:
+そして設定できます:
 
 ```kotlin
 cookie<MySession>("NAME") {
