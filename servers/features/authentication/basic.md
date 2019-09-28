@@ -1,14 +1,14 @@
 ---
-title: Basic and Form
-caption: Basic and Form authentication
+title: Basic・Form
+caption: Basic認証とForm認証
 category: servers
 redirect_from:
 - /features/authentication/basic.html
 ktor_version_review: 1.0.0
 ---
 
-Ktor supports two methods of authentication with the user and raw password as credentials:
-`basic` and `form`.
+Ktorはユーザと平文パスワードによる認証メソッドを2つサポートしています:
+`basic`と`form`です。
 
 ```kotlin
 install(Authentication) {
@@ -26,16 +26,16 @@ install(Authentication) {
 }
 ```
 
-Both authentication providers have a method `validate` to provide a callback that must generate a Principal from given a `UserPasswordCredential`
-or null for invalid credentials. That callback is marked as *suspending*, so that you can validate credentials in an asynchronous fashion.
+どちらの認証プロバイダも`validate`メソッドを持っており、このメソッドに
+`UserPasswordCredential`からPrincipalを生成するか、不正なクレデンシャルからnullを生成するcallbackを渡す必要があります。
+callbackは*suspending*としてマークされているため、クレデンシャルのバリデーションを非同期に行うこともできます。 
 
-You can use several strategies for validating:
+バリデーションにはいくつかの戦略が使えます:
 
-## Strategy: Manual credential validation
+## 戦略: 手動のクレデンシャルバリデーション
 
-Since there is a validate callback for authentication, you can just put your code there.
-So you can do things like checking the password against a constant, authenticating using a database
-or composing several validation mechanisms.
+認証に対するバリデーションを行うcallbackがあるので、コードをそこに書くことができます。
+そのため、パスワードが定数と一致するかや、データベースを使った認証や、いくつかのバリデーションメカニズムを組み合わせた認証などを行うことができます。
 
 ```kotlin
 application.install(Authentication) {
@@ -48,18 +48,17 @@ application.install(Authentication) {
 }
 ```
 
-Remember that both the `name` and the `password` from the credentials are arbitrary values.
-Remember to escape and/or validate them when accessing with those values to the file system, a database,
-when storing them, or generating HTML with its content, etc.
+クレデンシャルにある`name`と`password`はともに任意の値だということを覚えておいてください。
+ファイルシステムやデータベースにアクセスするときや、保存するとき、HTMLを生成するときなどに、それらの値をエスケープした上でバリデーションを行う必要があることを忘れないでください。
 {: .security.note }
 
-## Strategy: Validating using UserHashedTableAuth
+## 戦略: UserHashedTableAuthを用いたバリデーション
 
-There is a class that handles hashed passwords in-memory to authenticate `UserPasswordCredential`.
-You can populate it from constants in code or from another source. You can use predefined digest functions
-or your own.
+`UserPasswordCredential`を認証するためのインメモリのパスワードハッシュを扱うクラスがあります。
+コード内の定数からか、あるいは別のコードから、利用することができます。
+事前に定義されたdigest関数を使うことも、あなた自身で書いたものを使うこともできます。
 
-*Instantiating:*
+*インスタンス化:*
 
 ```kotlin
 val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"), mapOf(
@@ -67,7 +66,7 @@ val userTable = UserHashedTableAuth(getDigestFunction("SHA-256", salt = "ktor"),
 ))
 ```
 
-*Configuring server/routes:*
+*server/routeの設定:*
 
 ```kotlin
 application.install(Authentication) {
@@ -78,9 +77,8 @@ application.install(Authentication) {
 }
 ```
 
-The idea here is that you are not storing the actual password but a hash, so even if your data source is leaked,
-the passwords are not directly compromised. Though keep in mind that when using poor passwords and weak hashing algorithms
-it is possible to do brute-force attacks. You can append (instead of prepend) long salt values and do multiple hash
-stages or do key derivate functions to increase security and make brute-force attacks non-viable.
-You can also enforce or encourage strong passwords when creating users.
+ここでのアイデアは、実際のパスワードではなくハッシュを保存し、データがリークした場合でもパスワードは直接侵害されないようにするというものです。
+しかし、弱いパスワードを使ったり、弱いハッシュ化アルゴリズムを使うと、brute-forceアタックができてしまうことを忘れないでください。
+長いsalt値を付与し、複数回のハッシュ化を行うかセキュリティ向上できるような関数を実行するかすることでbrute-forceアタックを実行不可能にできます。
+また、ユーザに強力なパスワードを設定するよう強制または奨励することもできます。
 {: .security.note}
