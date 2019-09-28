@@ -1,6 +1,6 @@
 ---
 title: HTTP API
-caption: "Guides: How to create an API using ktor"
+caption: "Guides: ktor を用いた API の作り方"
 category: quickstart
 permalink: /quickstart/guides/api.html
 ktor_version_review: 1.0.0
@@ -8,11 +8,10 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-In this guide you will learn how to create an API using ktor.
-We are going to create a simple API to store simple text snippets (like a small pastebin-like API).
+本ページでは、 ktor を用いた API の作り方を学びます。
+簡易版 pastebin API のような、単純なテキストスニペットを保存する API を作っていきます。
 
-To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [JWT Authentication],
-[CORS], [ContentNegotiation] and [Jackson] features.
+これから [Routing], [StatusPages], [Authentication], [JWT Authentication], [CORS], [ContentNegotiation], [Jackson] について学んでいきます。
 
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
@@ -22,31 +21,33 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 [ContentNegotiation]: /servers/features/content-negotiation.html
 [Jackson]: /servers/features/content-negotiation/jackson.html
 
-While many frameworks advocate how to create REST API's the majority aren't actually talking about REST APIs but HTTP APIs.
-Ktor, much like many other frameworks can be used to create systems that comply with REST constraints. However,
-this tutorial is not talking about REST but HTTP APIs, i.e. endpoints using HTTP verbs that may or may not return JSON, XML or any other format.
-If you want to learn more about RESTful systems, you can start reading <https://en.wikipedia.org/wiki/Representational_state_transfer>{:target="_blank"}.
+多くの Web フレームワークにて REST API の作り方を説明していますが、実際には REST API ではなく HTTP API について説明しているものがほとんどです。
+Ktor は、多くの他のフレームワークと同様に、 REST の設計原則に則ったシステムを作ることができます。
+ですが、このチュートリアルでは、REST API についてではなく、 HTTP リクエストメソッドを用いて JSON や XML などのフォーマットで返却する API について説明します。
+RESTful なシステムについてより詳しく知りたい場合は、 <https://ja.wikipedia.org/wiki/Representational_State_Transfer>{:target="_blank"} を参照してください。
 {: .note }
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
-## Setting up the project
+## プロジェクトの作成
 
-The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
+まずはじめに、プロジェクトのセットアップから行います。
+[Quick Start](/quickstart/index.html) のページに従って作成するか、下記の Ktor Project Generator を使ってプロジェクトを作成してください。
 
 {% include preconfigured-form.html hash="dependency=auth&dependency=auth-jwt&dependency=ktor-jackson&dependency=cors&artifact-group=com.example&artifact-name=api-example" %}
 
-## Simple routing
+## シンプルなルーティング
 
-First of all, we are going to use the [routing feature](/servers/features/routing.html). This feature is part of the Ktor's core, so you won't need
-to include any additional artifacts.
+まずはじめに、 [Routing Feature](/servers/features/routing.html) を使っていきます。
+Ktor では様々な機能を Feature という形で提供し、その Feature をインストールすることで利用可能になりますが、
+Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
 
-This feature is installed automatically when using the `routing { }` DSL block.
+Routing Feature の DSL ブロックのひとつである `routing { }` ブロックを用いることで、自動的にインストールされます。
 
-Let's start creating a simple GET route that responds with `OK` by using the `get` method available inside the `routing` block:
+`routing` ブロックとその内部で利用できる `get` メソッドを用いて、 `OK` を返却するシンプルな GET API を作成してみましょう。
 
 ```kotlin
 fun Application.module() {
@@ -58,9 +59,10 @@ fun Application.module() {
 }
 ```
 
-## Serving JSON content
+## JSON の返却
 
-A HTTP API usually responds with JSON. You can use the [Content Negotiation](/servers/features/content-negotiation.html) feature with [Jackson](/servers/features/content-negotiation/jackson.html) for this:
+HTTP API は JSON を返却することができます。
+[Content Negotiation](/servers/features/content-negotiation.html) に [Jackson](/servers/features/content-negotiation/jackson.html) をインストールすると、 JSON を返却できるようになります。
 
 ```kotlin
 fun Application.module() {
@@ -74,7 +76,7 @@ fun Application.module() {
 }
 ```
 
-To respond to a request with a JSON, you have to call the `call.respond` method with an arbitrary object.
+JSON を返却するためには、 `call.respond` メソッドに任意のオブジェクトを渡す必要があります。
 
 ```kotlin
 routing {
@@ -84,14 +86,14 @@ routing {
 }
 ```
 
-Now the browser or client should respond to `http://127.0.0.1:8080/snippets` with `{"OK":true}`
+ブラウザや HTTP クライアントから `http://localhost:8080/snipets` へアクセスすると、 `{"OK": true}` が返却されるはずです。
 
-If you get an error like `Response pipeline couldn't transform '...' to the OutgoingContent`, check that you have
-installed the [ContentNegotiation](/servers/features/content-negotiation.html) feature with Jackson.
+`Response pipeline couldn't transform '...' to the OutgoingContent` のようなエラーが返却された場合は、
+[ContentNegotiation](/servers/features/content-negotiation.html) に Jackson がインストールされているか確認しましょう。
 {: .note}
 
-You can also use typed objects as part of the reply (but ensure that your classes are not defined
-inside a function or it won't work). So for example:
+レスポンスオブジェクトの一部として任意の型のオブジェクトを渡すこともできます。
+例えば下記のような場合は、
 
 ```kotlin
 data class Snippet(val text: String)
@@ -115,15 +117,16 @@ fun Application.module() {
 }
 ```
 
-Would reply with:
+下記のように返却されます。
 
 ![](/quickstart/guides/api/snippets_get.png){:.rounded-shadow}
 
-## Handling other HTTP methods
+## HTTP メソッドの扱い方
 
-HTTP APIs use most of the HTTP methods/verbs (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) to perform operations.
-Let's create a route to add new snippets. For this, we will need to read the JSON body of the POST request.
-For this we will use `call.receive<Type>()`:
+HTTP API は様々な HTTP メソッド (_HEAD_, _GET_, _POST_, _PUT_, _PATCH_, _DELETE_, _OPTIONS_) を用いて操作を実行します。
+新規でスニペットを追加する API を作成してみましょう。
+これを実現するためには、 POST リクエストで送信される JSON 形式のリクエストボディを読み取る必要があります。
+リクエストボディを読み取るためには、 `call.receive<Type()` を用います。
 
 ```kotlin
 data class PostSnippet(val snippet: PostSnippet.Text) {
@@ -144,21 +147,22 @@ routing {
 }
 ```
 
-Now it is time to actually try our backend.
+さっそく使ってみましょう。
 
-If you have IntelliJ IDEA Ultimate, you can use its built-in powerful HTTP Request client,
-if not, you can also use postman or curl:
+IntelliJ IDEA Ultimate には強力な HTTP クライアントが同梱されています。
+もし IntelliJ IDEA Ultimate を利用していない場合は、 postman や curl で代用可能です。
 
-### IntelliJ IDEA Ultimate:
+### IntelliJ IDEA Ultimate の場合
 {: #first-request-intellij }
 
-IntelliJ IDEA Ultimate, along PhpStorm and other IDEs from JetBrains include a
-very nice [Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}.
+IntelliJ IDEA Ultimate や PhpStorm を始め、 JetBrains 製の IDE には
+[Editor-Based Rest Client](https://blog.jetbrains.com/phpstorm/2017/09/editor-based-rest-client/){:target="_blank"}
+が同梱されています。
 
-First you have to create a HTTP Request file (either `api` or `http` extensions)
+まずは、 HTTP Request ファイル (拡張子 `api` または `http`) を作成します。
 ![](/quickstart/guides/api/IU-http-new-file.png)
 
-Then you have to type the method, url, headers and payload like this:
+次に、 HTTP メソッド、 URL 、ヘッダ 、 payload を記述します。
 
 ![](/quickstart/guides/api/IU-http-request.png)
 
@@ -169,22 +173,22 @@ Content-Type: application/json
 {"snippet": {"text" : "mysnippet"}}
 ```
 
-And then in the play gutter icon from the URL, you can perform the call, and get the response:
+最後に、 URL の横にある実行ボタンを押すことでリクエストが実行され、結果が表示されます。
 
 ![](/quickstart/guides/api/IU-http-response.png)
 
-And that's it!
+以上!
 
-This allows you to define files (plain or scratches) that include definition for several HTTP requests,
-allowing to include headers, provide a payload inline, or from files, use environment variables defined in a JSON file,
-process the response using JavaScript to perform assertions, or to store some environment variables like
-authentication credentials so they are available to other requests. It supports autocompletion, templates, and
-automatic language injection based on Content-Type, including JSON, XML, etc..
+複数の HTTP リクエストの定義を plain text ファイルや scratch ファイルに定義することができ、
+ヘッダを指定したり、インラインでペイロードを指定したり、 JSON ファイルに定義した環境変数を使用したり、
+JavaScript でレスポンスを処理してアサーションしたり、認証情報を環境変数に保存した上で別のリクエストで利用したりできます。
+また、自動補完やテンプレート、 Content-Type (JSON, XML など) に応じた
+自動[言語インジェクション](https://pleiades.io/help/idea/using-language-injections.html)にも対応しています。
 {: .note}
 
-In addition to easily test your backends inside your editor, it also helps your to document your APIs
-by including a file with the endpoints on it.
-And allows you fetch and locally store responses and visually compare them.
+エディタ上で簡単にバックエンドのテストができるだけでなく、エンドポイントをファイルに記述しておくことで、
+APIのドキュメント化にも役立ちます。
+また、レスポンスをローカルに保存することで差分を視覚化できます。
 {: .note}
 
 ### CURL:
@@ -212,18 +216,18 @@ curl \
 
 ---
 
-Let's do the GET request again:
+もう一度 GET リクエストを投げてみましょう。
 
 ![](/quickstart/guides/api/snippets_get_new.png){:.rounded-shadow}
 
 Nice!
 
-## Grouping routes together
+## ルーティングのグループ化
 
-Now we have two separate routes that share the path (but not the method) and we don't want to repeat ourselves.
+同じパスで HTTP メソッドだけが異なる場合、ルーティングの定義を重複して定義したくないですよね。
 
-We can group routes with the same prefix, using the `route(path) { }` block. For each HTTP method, there is an
-overload without the route path argument that we can use at routing leaf nodes:
+prefix が同じルーティングは、 `route(path) { }` ブロックを用いることでグループ化できます。
+複数の HTTP メソッドに対し、ルーティングの葉ノードを共有するかのごとく、同一のパスをオーバーロードできます。
 
 ```kotlin
 routing {
@@ -240,10 +244,11 @@ routing {
 }
 ```
 
-## Authentication
+## 認証
 
-It would be a good idea to prevent everyone from posting snippets. For now, we are going to limit it using
-http's basic authentication with a fixed user and password. To do it, we are going to use the authentication feature.
+誰からでもスニペットを投稿できるのは避けたいですよね。
+ユーザ名とパスワードを用いた HTTP の Basic 認証でこれを制限してみましょう。
+Basic 認証をするために、 Authentication Feature をインストールします。
 
 ```kotlin
 fun Application.module() {
@@ -257,10 +262,9 @@ fun Application.module() {
 }
 ```
 
-After installing and configuring the feature, we can group some routes together to be authenticated with the
-`authenticate { }` block.
+Authentication Feature をインストールして設定ができたら、認証を要求したいルーティング群を `authenticat { }` ブロック内に入れましょう。
 
-In our case, we are going to keep the get call unauthenticated, and going to require authentication for the post one:
+今回は、GET リクエストでは認証不要で、 POST リクエストでは Basic 認証を要求するようにしてみました。
 
 ```kotlin
 routing {
@@ -279,15 +283,16 @@ routing {
 }
 ```
 
-## JWT Authentication
+## JWT 認証
 
-Instead of using a fixed authentication, we are going to use JWT tokens.
+固定的な認証 (Basic 認証) を用いる代わりに、 JWT 認証を用いてみましょう。
 
-We are going to add a login-register route. That route will register a user if it doesn't exist,
-and for a valid login or register it will return a JWT token.
-The JWT token will hold the user name, and posting will link a snippet to the user.
+`login-register` ルーティングを追加していきます。
+このルーティングは、ユーザ情報が存在しない場合は登録を行い、認証に成功した場合や登録が成功した場合は JWT トークンを返却します。
+JWT トークンはユーザ名と、ユーザがスニペットを投稿するためのリンクを持ちます。
 
-We will need to install and configure JWT (replacing the basic auth):
+まずは、 Authentication のインストールと JWT の設定を行います。
+(Basic 認証と置き換えしました。)
 
 ```kotlin
 open class SimpleJWT(val secret: String) {
@@ -310,7 +315,8 @@ fun Application.module() {
 }
 ```
 
-We will also need a data source holding usernames and passwords. One simple option would be:
+ユーザ名とパスワードを保持するためのデータソースも必要です。
+単純な例を下記に示します。
 
 ```kotlin
 class User(val name: String, val password: String)
@@ -324,7 +330,7 @@ class LoginRegister(val user: String, val password: String)
 
 ```
 
-With all this, we can already create a route for logging or registering users:
+以上で、ログインまたはユーザ登録ができるルーティング (`/login-register`) を作成できるようになりました。
 
 ```kotlin
 routing {
@@ -337,36 +343,34 @@ routing {
 }
 ```
 
-Now we can already try to obtain a JWT token for our user:
+これでユーザは JWT トークンを取得できるようになりました。
 
 {% comment %}
 ### IntelliJ
 {% endcomment %}
 
-Using the Editor-Based HTTP client for IntelliJ IDEA Ultimate,
-you can make the POST request, and check that the content is valid,
-and store the token in an environment variable:
+IntelliJ IDEA Ultimate の HTTP クライアントを用いると、 POST リクエストを作成し、
+レスポンス内容が期待通りか確認し、環境変数にトークンを保持することができます。
 
 ![](/quickstart/guides/api/IU-http-login-register-request.png)
 
 ![](/quickstart/guides/api/IU-http-login-register-response.png)
 
-Now you can make a request using the environment variable `{% raw %}{{auth_token}}{% endraw %}`:
+環境変数 `{% raw %}{{auth_token}}{% endraw %}` を用いてリクエストを発行してみましょう。
 
 ![](/quickstart/guides/api/IU-http-snippets-env-auth_token-request.png)
 
 ![](/quickstart/guides/api/IU-http-snippets-env-auth_token-response.png)
 
-If you want to easily test different endpoints in addition to localhost,
-you can create a `http-client.env.json` file and put a map with environments
-and variables like this:
+localhost に加えて他のエンドポイントに対し簡単にテストをしたい場合は、 `http-client.env.json` ファイルを作成し、
+下記のように環境変数の map を作成します。
 
 ![](/quickstart/guides/api/IU-env/http-client.env.json.png)
 
-After this, you can start using the user-defined `{% raw %}{{host}}{% endraw %}` env variable:
+これでユーザ定義環境変数 `{% raw %}{{host}}{% endraw %}` を用いることができるようになります。
 ![](/quickstart/guides/api/IU-env/use_host_env.png)
 
-When trying to run a request, you will be able to choose the environment to use:
+リクエストを発行する際に、環境の選択ができるようになります。
 ![](/quickstart/guides/api/IU-env/select_env_for_running.png)
 
 {% comment %}
@@ -392,7 +396,7 @@ curl -v \
 
 </td></tr></tbody></table>
 
-And with that token, we can already publish snippets:
+このトークンを使用することで、スニペットの投稿ができます。
 
 <table class="compare-table"><thead><tr><th>Bash:</th><th>Response:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -417,12 +421,12 @@ curl -v \
 
 {% endcomment %}
 
-## Associating users to snippets
+## ユーザとスニペットの関連付け
 
-Since we are posting snippets with an authenticated route, we have access to the generated `Principal` that includes
-the username. So we should be able to access that user and associate it to the snippet.
+認証済のルーティングでスニペットを投稿しているため、ユーザ名などのユーザ情報を持っている `Principal` を参照できます。
+この `Principal` を用いることで、ユーザとスニペットを関連付けることができます。
 
-First of all, we will need to associate user information to snippets:
+まずはじめに、ユーザ情報とスニペットを関連付けます。
 
 ```kotlin
 data class Snippet(val user: String, val text: String)
@@ -433,8 +437,8 @@ val snippets = Collections.synchronizedList(mutableListOf(
 ))
 ```
 
-Now we can use the principal information (that is generated by the authentication feature when authenticating JWT)
-when inserting new snippets:
+これで、新規でスニペットを作成する際に、 Principal の情報 (JWT で認証した際に Authentication Feature が自動的に生成) も
+付与できるようになりました。
 
 ```kotlin
 routing {
@@ -453,7 +457,7 @@ routing {
 }
 ```
 
-Let's try this:
+実際に使ってみましよう!
 
 ![](/quickstart/guides/api/IU-final/final-request.png)
 
@@ -491,20 +495,21 @@ curl -v \
 
 Awesome!
 
-## StatusPages
+## ステータスページ
 
-Now let's refine things a bit. A HTTP API should use HTTP Status codes to provide semantic information about errors.
-Right now, when an exception is thrown (for example when trying to get a JWT token from an user that already exists,
-but with a wrong password), a 500 server error is returned. We can do it better, and the StatusPages features
-will allow you to do this by capturing specific exceptions and generating the result.
+ちょっと改良してみましょう。
+HTTP API は HTTP ステータスコードを用いて、エラーに関するセマンティックな情報を提供する必要があります。
+現状ではJWT トークンを取得する際に、すでに存在するユーザ名で登録しようとしたりユーザがパスワードを間違えた場合は例外が送出され、
+500 サーバエラーが返却されます。
+StatusPage Feature を利用することで、特定の例外をキャッチして何らかの結果を返却するなど、より適切なエラー処理を行えるようになります。
 
-Let's create a new exception type:
+新しく例外型を作成してみましょう。
 
 ```kotlin
 class InvalidCredentialsException(message: String) : RuntimeException(message)
 ```
 
-Now, let's install the StatusPages feature, register this exception type, and generate an Unauthorized page: 
+次に、 StatusPages Feature をインストールし、先程作成した例外型を登録し、 Unauthorized ページを生成しましょう。
 
 ```kotlin
 fun Application.module() {
@@ -517,7 +522,7 @@ fun Application.module() {
 }
 ```
 
-We should also update our login-register page to throw this exception:
+最後に、 `login-register` ページにて、認証に失敗した際に先程の例外を送出するようにします。
 
 ```kotlin
 routing {
@@ -530,19 +535,19 @@ routing {
 }
 ```
 
-Let's try this:
+実際に使ってみましよう!
 
 ![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-request.png)
 
 ![](/quickstart/guides/api/IU-bad-credentials/bad-credentials-response.png)
 
-
-Things are getting better!
+エラーがわかりやすくなりましたね!
 
 ## CORS
 
-Now suppose we need this API to be accessible via JavaScript from another domain. We will need to configure CORS.
-And Ktor has a feature to configure this:
+別のドメインから JavaScript を介してこのスニペット API を利用できるようにする必要があるとします。
+そのためには、 CORS の設定が必要です。
+Ktor では下記のように設定することができます。
 
 ```kotlin
 fun Application.module() {
@@ -561,9 +566,9 @@ fun Application.module() {
 }
 ```
 
-Now our API is accessible from any host :)
+これでどんなホストからもこの API を利用可能になりました :)
 
-## Full Source
+## コード全体
 
 
 {% capture application-kt %}
@@ -733,15 +738,16 @@ Content-Type: application/json
     tab3-title="http-client.env.json" tab3-content=http-client-env-json
 %}
 
-## Exercises
+## 発展課題
 
-After following this guide, as an exercise, you can try to do the following exercises:
+時間がある方や、今回身につけた新しいスキルを練習してみたい方向けに、発展課題を用意しました。
+是非挑戦してみてください!
 
-### Exercise 1
+### 発展課題 1
 
-Add unique ids to each snippet and add a DELETE http verb to `/snippets` allowing an authenticated user to delete
-her snippets.  
+各スニペットに一意の ID を付与し、 `/snipetts` に HTTP DELETE メソッドを実装し、
+認証済みユーザが自分のスニペットを削除できるようにしてみましょう。
 
-### Exercise 2
+### 発展課題 2
 
-Store users and snippets in a database. 
+ユーザとスニペットをデータベースに保存してみましょう。
