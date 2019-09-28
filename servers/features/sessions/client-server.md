@@ -1,26 +1,25 @@
 ---
-title: Client/Server
-caption: Client/Server Sessions
+title: クライアント/サーバー
+caption: クライアント/サーバーセッション
 category: servers
 redirect_from:
 - /features/sessions/client-server.html
 ktor_version_review: 1.0.0
 ---
 
-## Client-side/Server-side sessions (Session Content vs Session Id)
+## クライアントサイド/サーバーサイドセッション(セッションコンテンツ vs セッションID)
 {: #client-server-cookies }
 
-Ktor allows you to transfer either the session content or a session id.
+KtorはセッションコンテンツかセッションIDのいずれかを変換する機能を提供します。
 
-Depending on the application, the size of the payload and the security, you might want to put the payload of
-the session in the client or the server.
+アプリケーションやペイロードのサイズやセキュリティに応じて、クライアントかサーバにセッションのペイロードをいれたいかもしれません。
 
-### Client-side sessions and transforms (Sending Session Content)
+### クライアントサイドセッションと変換（セッションコンテンツの送信）
 {: #client-cookies}
 
-Without additional arguments for the `cookie` and `header` methods, the session is configured to keep the payload
-at the client. And the full payload will be sent back and forth. In this mode, you can, and should apply
-transforms to encrypt or authenticate sessions:
+`cookie`、`header`メソッドに対し追加の引数を必要とすることなしに、セッションはクライアントにおいてペイロードを保持するよう設定できます。
+ペイロード全体が送信、受信されるようになります。
+このモードでは、セッションを暗号化・認証するために変換できます:
 
 ```kotlin
 application.install(Sessions) {
@@ -31,22 +30,22 @@ application.install(Sessions) {
 } 
 ```
 
-You should only use client-side sessions if your payload can't suffer from replay attacks. Also if you need to prevent
-modifications, ensure that you are transforming the session with at least authentication, but ideally with encryption too.
-This should prevent payload modification if you keep your secret key safe. But remember that if your key is compromised
-and thus, you have to change the key, all the previous sessions will be marked invalid.
+リプレイアタックの影響をうけないのであれば、クライアントサイドのセッションのみを使うべきです。
+また、内容の修正を禁止する必要があるのであれば、最低でも認証を、理想的には暗号化も行った上でセッションを変換します。
+シークレットキーが安全に保管されていれば、これによりペイロードの内容の変更を禁止できます。
+しかし、キーが危険にさらされ、キーを変更する必要が出たとき、すべての過去のセッションは無効になることを忘れないでください。
 {: .note.security }
 
-Client-side Sessions use transformers to manipulate the payload, for example to authenticate and/or encrypt it.
+クライアントサイドセッションはペイロードの操作のためにトランスフォーマーを利用します。
+例えば認証や暗号化のために使います。
 
-You can check the [transformers page](/servers/features/sessions/transformers.html) for a list of standard available transformers,
-and for more information.
+[トランスフォーマー](/servers/features/sessions/transformers.html)ページを確認することで標準的な利用可能なトランスフォーマー一覧やその他情報が見れます。
 
-### Server-side sessions and storages (Sending Session Id)
+### サーバサイドセッションとストレージ（セッションIDの送信）
 {: #server-cookies }
 
-If you specify storage, then the session will be configured to be stored on the server using that storage, and
-a sessionId will be transferred between the server and the client instead of the full payload: 
+ストレージを指定すると、セッションはサーバ側にストレージを利用して保管されるよう設定され、
+ペイロード全体の代わりにセッションIDがサーバ・クライアント間でやりとりされるようになります。
 
 ```kotlin
 application.install(Sessions) {
@@ -54,53 +53,53 @@ application.install(Sessions) {
 } 
 ```
 
-
-## Security examples for client-side sessions
+## クライアントサイドセッションのためのセキュリティ例
 {: #security }
 
-If you plan to use client-side sessions, you need to understand the security implications it has. You have to keep
-your secret hash/encryption keys safe, as if they are compromised, a person with the keys would potentially be able 
-to impersonate any user. It is also a problem as then changing the key will invalidate all the sessions previously generated.
+クライアントサイドセッションを使う予定があるなら、それが持つセキュリティ的な意味合いを理解する必要があります。
+ハッシュ・暗号化のためのシークレットキーを安全にする必要があり、
+もし危険にさらされた場合は、キーを持つ人が任意のユーザになりすます潜在的な可能性があります。
+また、キーを変えることで過去に生成したすべてのセッションが無効化されることも問題としてあります。
 
-### Good usages for client-side cookies:
+### クライアントクッキーに関する良い使い方:
 
-* **Storing user preferences, such as language, cookie acceptation and things like that.**
+* **例えば言語やCookieの承認設定などのユーザの設定を格納する**
 
-  No security concerns for this. Just preferences. If anyone could ever modify the session. No harm can be done at all.
+  これについてセキュリティに対する懸念はありません。ただの設定だからです。もし誰かがセッションを変更できたとしても、何も害はありません。
 
-* **Shopping cart information**
+* **ショッピングカート情報**
 
-  If this information acts as a *wish list*, it would just be like preferences. No possible harm can be done here. 
+  もしこの情報が*ウィッシュリスト*として動作するなら、設定のようなものです。害は及びません。
 
-* **Storing user login using a immutable user id or an email address.**
+* **不変なユーザーIDまたはEmailアドレスを使いユーザログイン情報を保存**
 
-  Should be ok if at least authenticated (and with the knowledge of general risks) since in normal circumstances
-  people won't be able to change it to impersonate another person. And if you store a unique immutable session id,
-  using old session payloads, it would just give access to your own users who already have access. 
+  少なくともCookieが認証されている（そして一般的なリスクの知識がある）場合は問題ありません。
+  通常の状況では他の人になりすますように変更することはできないからです。
+  また、一意の不変のセッションIDを保存すると、古いセッションペイロードを使用すると、既にアクセス権を持っている自分のユーザーにアクセス権を与えるだけです。
 
-### Bad usages for client-side cookies:
+### クライアントクッキーに関する悪い使い方:
 
-* **Using session as cache. For example storing user's redeemable points.**
+* **セッションをキャッシュとして使うこと。例えばユーザが持つ換金可能なポイントの保存に使うこと。**
 
-  If you are using a session as cache to prevent reading from a database, for example, *user points* that a user can
-  use to purchase things. It is exploitable, since the user could purchase an item, but not to update the session
-  or using an old session payload that would have more points.
+  データベースから読み込まないようにするため、セッションをキャッシュとして利用するのであれば、（例えばユーザが物の購入に使えるポイントなど）
+  悪用可能です。
+  ユーザはアイテムを購入しつつセッションを更新しないか、より多くのポイントを持つ古いセッションのペイロードを使い続けることができます。
 
-* **Using session to store a mutable user name.**
+* **変更されうるユーザ名をセッションに保存すること**
 
-  Consider if you are storing the user name in the session to keep login information. But also allow changing
-  the username of an actual user. A malicious user could create an account, and rename its user several times
-  storing valid session payloads for each user name. So if a new user is created using a previously renamed
-  user name, the malicious user would have access to that account.
-  Server-side sessions are also vulnerable to this, but the attacker would have to keep those sessions alive.
+  ユーザ名をセッションに保存し、ログイン情報を保持することを考えてみてください。
+  ユーザ名の変更も許可するとします。
+  悪意のあるユーザがアカウントを作成し、ユーザーを何度か名前変更し各ユーザ名に対する有効なセッションペイロードを保存します。
+  新しいユーザが過去に名前変更されたユーザ名で作成された場合、悪意のあるユーザはそのアカウントにアクセスできます。
+  サーバサイドセッションもこれに対し脆弱ですが、この場合攻撃者はそのセッションを有効な状態で保持し続けておく必要があります。
 
-## Invalidating Client-side sessions
+## クライアントサイドセッションの無効化
 {: #invalidating-client-sessions }
 
-Since client-side sessions can't be invalidated directly like server sessions. You can manually mark an expiration
-time for the session by including an expiration timestamp as part of your session payload.
+クライアントサイドセッションはサーバサイドセッションのように直接無効化することができないので、
+セッションペイロードの一部として有効期限を含めることで有効期限をセッションに対し手動で設定することができます。
 
-For example:
+例:
 
 ```kotlin
 data class MyExpirableSession(val name: String, val expiration: Long)
