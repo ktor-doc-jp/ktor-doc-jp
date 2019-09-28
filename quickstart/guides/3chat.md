@@ -6,6 +6,7 @@ permalink: /quickstart/guides/chat.html
 ktor_version_review: 1.0.0
 ---
 
+
 In this tutorial, you will learn how to make a Chat application using Ktor.
 We are going to use WebSockets for a real-time bidirectional communication.
 
