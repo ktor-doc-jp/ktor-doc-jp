@@ -183,8 +183,6 @@ Content-Type: application/json
 複数の HTTP リクエストの定義を plain text や scratch ファイルに定義することができ、
 ヘッダを指定したり、インラインでペイロードを指定したり、 JSON ファイルに定義した環境変数を使用したり、
 JavaScript でレスポンスを処理してアサーションしたり、認証情報を環境変数に保存した上で別のリクエストで利用したりできます。
-It supports autocompletion, templates, and
-automatic language injection based on Content-Type, including JSON, XML, etc..
 また、自動補完やテンプレート、 Content-Type (JSON, XML など) に応じた
 自動[言語インジェクション](https://pleiades.io/help/idea/using-language-injections.html)にも対応しています。
 {: .note}
