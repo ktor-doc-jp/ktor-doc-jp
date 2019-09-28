@@ -1,6 +1,6 @@
 ---
-title: JWT and JWK
-caption: JWT and JWK authentication
+title: JWT・JWK
+caption: JWT認証・JWK認証
 category: servers
 keywords: jwt authentication jwt
 feature:
@@ -11,30 +11,30 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor supports [JWT (JSON Web Tokens)](https://jwt.io/), which is a mechanism for authenticating JSON-encoded payloads.
-It is useful to create stateless authenticated APIs in the standard way, since there are client libraries for it
-in a myriad of languages.
+Ktorは[JWT (JSON Web Tokens)](https://jwt.io/)をサポートしています。
+JWTはエンコードされたJSONペイロードによって認証する仕組みです。
+ステートレスな認証が必要なAPIをスタンダードな方法で作る上で役に立ち、たくさんの言語によってJWTをサポートするクライアントライブラリもあります。
 
-This feature will handle `Authorization: Bearer <JWT-TOKEN>`.
+この機能は`Authorization: Bearer <JWT-TOKEN>`を扱います。
 
 {% include feature.html %}
 
-Ktor has a couple of classes to use the JWT Payload as `Credential` or as `Principal`.
+Ktorは`Credential`または`Principal`としてJWTペイロードを利用するクラスをいくつか持ちます。
 
 ```kotlin
 class JWTCredential(val payload: Payload) : Credential
 class JWTPrincipal(val payload: Payload) : Principal
 ```
 
-## Configuring server/routes:
+## server/routeの設定:
 
-JWT and JWK each have their own method with slightly different parameters. 
-Both require the `realm` parameter, which is used in the WWW-Authenticate response header.
+JWTとJWKはそれぞれ少しずつ違ったパラメータのメソッドを持ちます。
+ともに`realm`パラメータを必要とし、それはWWW-Authenticateレスポンスヘッダーで使われます。
 
-## Using a verifier and a validator:
+## verifierとvalidatorの使用:
 
-The verifier will use the secret to verify the signature to trust the source.
-You can also check the payload within `validate` callback to ensure everything is right and to produce a Principal.
+verifierはsecretを署名を検証しソースを信頼するために利用します。
+諸々正しいことを検証しPrincipalを生成するために、`validate`コールバック内でpayloadのチェックも行うことができます。
 
 ### application.conf:
 
@@ -64,7 +64,7 @@ install(Authentication) {
 }
 ```
 
-## Using a JWK provider:
+## JWKプロバイダの利用:
 
 ```kotlin
 fun AuthenticationPipeline.jwtAuthentication(jwkProvider: JwkProvider, issuer: String, realm: String, validate: (JWTCredential) -> Principal?)

@@ -1,6 +1,6 @@
 ---
 title: LDAP
-caption: LDAP authentication
+caption: LDAP認証
 category: servers
 feature:
   artifact: io.ktor:ktor-auth-ldap:$ktor_version
@@ -10,7 +10,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor supports LDAP (Lightweight Directory Access Protocol) for credential authentication.
+KtorはLDAP (Lightweight Directory Access Protocol)認証をサポートしています。
 
 ```kotlin
 authentication {
@@ -23,7 +23,7 @@ authentication {
 }
 ```
 
-Optionally you can define an additional validation check:
+オプションとして、追加のバリデーションチェックを定義できます:
 ```kotlin
 authentication {
     basic("authName") { 
@@ -41,7 +41,7 @@ authentication {
 }
 ```
 
-This signature looks like this:
+シグニチャは以下のようになります:
 
 ```kotlin
 // Simplified signatures
@@ -58,7 +58,7 @@ fun <K : Credential, P : Any> ldapAuthenticate(credential: K, ldapServerURL: Str
 While the other overloads support only `UserPasswordCredential`, this overload accept any kind of credential. And instead of receiving a string with the userDNFormat, you can provide a generator
 to populate a map with the environments for ldap.
 
-A more advanced example using this:
+以下はこれを使ったより発展的な例です:
 
 ```kotlin
 application.install(Authentication) {
@@ -89,9 +89,9 @@ application.install(Authentication) {
 }
 ```
 
-You can see [advanced examples for LDAP authentication](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt) in the Ktor's tests.
+Ktorのテストにある[LDAP認証の発展的な例](https://github.com/ktorio/ktor/blob/master/ktor-features/ktor-auth-ldap/test/io/ktor/tests/auth/ldap/LdapAuthTest.kt)をご覧いただけます。
 
 {% include feature.html %}
 
-Bear in mind that current LDAP implementation is synchronous.
+LDAP実装は同期的であることに留意してください
 {: .performance.note}
