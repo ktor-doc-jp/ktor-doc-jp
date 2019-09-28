@@ -245,10 +245,11 @@ routing {
 }
 ```
 
-## Authentication
+## 認証
 
-It would be a good idea to prevent everyone from posting snippets. For now, we are going to limit it using
-http's basic authentication with a fixed user and password. To do it, we are going to use the authentication feature.
+誰からでもスニペットを投稿できるのは避けたいですよね。
+ここでは、ユーザ名とパスワードを用いた HTTP の Basic 認証でこれを制限することにします。
+Basic 認証をするために、 Authentication Feature をインストールしましょう。
 
 ```kotlin
 fun Application.module() {
@@ -262,10 +263,10 @@ fun Application.module() {
 }
 ```
 
-After installing and configuring the feature, we can group some routes together to be authenticated with the
-`authenticate { }` block.
+Authentication Feature をインストールして設定が済んだら、認証を挟みたいルーティング群を `authenticat { }` ブロック内に入れましょう。
 
 In our case, we are going to keep the get call unauthenticated, and going to require authentication for the post one:
+今回は、GET リクエストでは認証不要で、 POST リクエストでは Basic 認証を要求するようにしてみました。
 
 ```kotlin
 routing {
