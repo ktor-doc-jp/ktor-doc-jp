@@ -1,6 +1,6 @@
 ---
 title: Website
-caption: "Guides: How to create a plain website using ktor"
+caption: "Guides: ktorを用いた簡単なWebサイトの作り方"
 category: quickstart
 permalink: /quickstart/guides/website.html
 ktor_version_review: 1.0.0
@@ -8,12 +8,9 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-In this guide you will learn how to create an HTML Website using Ktor.
-We are going to create a simple website with HTML rendered at the back-end with users, a login form,
-and keeping a persistent session.
+本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持するKtor上でHTMLがレンダリングされた簡単なWebサイトを作っていきます。
 
-To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [Sessions], [StaticContent],
-[FreeMarker], and [HTML DSL] features.
+これから、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]について学んでいきます。
 
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
@@ -28,13 +25,13 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 * TOC
 {:toc}
 
-## Setting up the project
+## プロジェクトの作成 
 
 The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
 
 {% include preconfigured-form.html hash="dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" %}
 
-## Simple routing
+## シンプルなルーティング 
 
 First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
 to include any additional artifacts.
