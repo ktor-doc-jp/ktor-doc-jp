@@ -1,5 +1,5 @@
 ---
-title: Content Negotiation
+title: コンテントネゴシエーション
 caption: Content conversion based on Content-Type and Accept headers
 category: servers
 permalink: /servers/features/content-negotiation.html
