@@ -132,11 +132,10 @@ routing {
 }
 ```
 
-## Assigning names to users/connections
+## users や connections に名前をつける
 
-We might want to associate some information, like a name to an oppened connection,
-we can create a object that includes the WebSocketSession and store it instead
-like this:
+接続済みのコネクションに名前をつけるなど、何らかの情報を付与したくなることがあります。
+下記のように、 WebSocketSession となにかを一緒に情報を保持することができます。
 
 ```kotlin
 class ChatClient(val session: DefaultWebSocketSession) {
@@ -172,13 +171,13 @@ routing {
 }
 ```
 
-## Exercises
+## 発展課題
 
-### Creating a client
+### クライアントの作成
 
-Create a JavaScript client connecting to this endpoint and serve it with ktor.
+作成したエンドポイントに接続する JavaScript クライアントを作成し、 ktor を用いて提供しましょう。
 
 ### JSON
 
-Use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) to send and receive VOs
+[kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) を用いて Value Object の送受信をしましょう。
 
