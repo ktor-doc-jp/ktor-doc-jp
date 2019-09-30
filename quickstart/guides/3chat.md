@@ -51,12 +51,13 @@ Frame の型は、 `Text` 、 `Binary` 、 `Close` 、 `Ping` 、 `Pong` があ�
 
 ## WebSocket ルーティング
 
-This first step is to create a route for the WebSocket. In this case we are going to define the `/chat` route,
-but initially, we are going to make that route to act as an "echo" WebSocket route, that will send you back the same text messages that you send to it.
+まずはじめに、 WebSocket 用のルーティングを作りましょう。
+今回は `/chat` という名前にします。
+`/chat` という名前にしましたが、最初のうちは受信したメッセージをオウム返しするだけの「エコー」 WebSocket ルーティングとして機能させます。
 
-`webSocket` routes are intended to be long-lived. Since it is a suspend block and uses lightweight Kotlin coroutines,
-it is fine and you can handle (depending on the machine and the complexity) hundreds of thousands of connections
-at once, while keeping your code easy to read and to write.
+`webSocket` ルーティングは長命なオブジェクトです。
+Suspend block (`CoroutineScope`) で Kotlin の軽量な coroutine を用いているので、コードの可読性を保ちつつも、
+数十万のコネクションを一度に処理できます。 (マシンのスペックに依存します。)
 
 ```kotlin
 routing {
