@@ -75,10 +75,13 @@ routing {
 }
 ```
 
-## Keeping a set of opened connections
+## コネクションの保持
 
-We can use a Set to keep a list of opened connections. We can use a plain `try...finally` to keep track of them.
-Since Ktor is multithreaded by default we should use thread-safe collections or [limit the body to a single thread with newSingleThreadContext](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#coroutine-context-and-dispatchers){:target="_blank"}. 
+確立済みコネクション群を Set に保持できます。
+言語標準の `try...finally` を用いてコネクションの追跡ができます。
+Ktor はデフォルトでマルチスレッドで動作するため、スレッドセーフなコレクションを利用するか、
+[`newSingleThreadContext` を用いて実体をシングルスレッドに制限](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#coroutine-context-and-dispatchers){:target="_blank"}
+しなければなりません。
 
 ```kotlin
 routing {
