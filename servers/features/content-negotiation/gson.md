@@ -1,6 +1,6 @@
 ---
 title: Gson
-caption: JSON support using Gson
+caption: Gsonを利用したJSONのサポート
 category: servers
 feature:
   artifact: io.ktor:ktor-gson:$ktor_version
@@ -11,16 +11,15 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-The GSON feature allows you to handle JSON content in your application easily using
-the [google-gson](https://github.com/google/gson) library.
+gson機能を使うと、JSONコンテンツをあなたのアプリケーション内で[google-gson](https://github.com/google/gson)を使って簡単に扱うことができるようになります。
 
-This feature is a [ContentNegotiation](/servers/features/content-negotiation.html) converter.
+この機能は[ContentNegotiation](/servers/features/content-negotiation.html)コンバーターです。
 
 {% include feature.html %}
 
-## Basic usage
+## 基本的な使い方
 
-Install the feature by registering a JSON content converter using Gson:
+Gsonを使ったJSONコンテンツコンバーターを登録することでこの機能をインストールします:
 
 ```kotlin
 install(ContentNegotiation) {
@@ -30,7 +29,7 @@ install(ContentNegotiation) {
 }
 ```
 
-The `gson` block is a convenient method for:
+`gson`ブロックは以下の意味を持つ便利なメソッドです:
 
 ```kotlin
 register(ContentType.Application.Json, GsonConverter(GsonBuilder().apply {
@@ -38,10 +37,10 @@ register(ContentType.Application.Json, GsonConverter(GsonBuilder().apply {
 }.create()))
 ```
 
-## Configuration
+## 設定
 
-Inside the `gson` block, you have access to the [GsonBuilder](https://google.github.io/gson/apidocs/com/google/gson/GsonBuilder.html)
-used to install the ContentNegotiation. To give you an idea of what is available:
+`gson`ブロック内で、ContentNegotiationをインストールするために使われた[GsonBuilder](https://google.github.io/gson/apidocs/com/google/gson/GsonBuilder.html)にアクセスできます。
+以下を、何ができるのかの参考にしてください:
 
 ```kotlin
 install(ContentNegotiation) {
