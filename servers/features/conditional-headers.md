@@ -1,6 +1,6 @@
 ---
-title: Conditional Headers
-caption: Easy '304 Not Modified' Responses
+title: Conditional Header
+caption: 簡単な'304 Not Modified'レスポンス
 category: servers
 permalink: /servers/features/conditional-headers.html
 keywords: etag last-modified
@@ -12,22 +12,21 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-ConditionalHeaders feature adds the ability to avoid sending content if the client already has the same content. It does so by
-checking the `ETag` or `LastModified` properties of the `Resource` or `FinalContent` that are sent and comparing these 
-properties to what client indicates it is having. If the conditions allow it, the entire content is not sent and a
-"304 Not Modified" response is sent instead. 
+ConditionalHeaders Featureを使うことで、クライアントが同じコンテンツをすでに持っている場合にコンテンツの送信をしないようにすることができます。
+`Resource`または`FinalContent`が持つ、`ETag`か`LastModified`プロパティをチェックすることによって実現されます。
+条件で許可されている場合、コンテンツ全体は送信されず"304 Not Modified"レスポンスが代わりに送信されます。
 
 {% include feature.html %}
 
-## Configuration
+## 設定
 
-You can install and use `ConditionalHeaders` without additional configuration:
+`ConditionalHeaders`をインストールすると追加の設定無しにと利用ができます:
 
 ```kotlin
 install(ConditionalHeaders)
 ```
 
-It also allows to configure a lambda to fetch a version list from the generated `OutgoingContent` passed as parameter of the lambda:
+パラメータとして渡される生成された`OutgoingContent`からバージョンの一覧を取得するようなlambdaを設定することができます:
 
 ```kotlin
 install(ConditionalHeaders) {
@@ -35,7 +34,8 @@ install(ConditionalHeaders) {
 }
 ```
 
-## Extensibility
+## 拡張性
 
-`Version` interface implementations are attached to the `Resource` instances, and you can return custom implementations
-with your own logic. Please note that `FinalContent` is only checked for `ETag` and `LastModified` headers.
+`Version`インターフェースの実装は`Resource`インスタンスに紐付き、独自ロジックでのカスタム実装を返すことができます。
+`FinalContent`は`ETag`か`LastModified`ヘッダーに対してのみチェックされることに注意してください。
+
