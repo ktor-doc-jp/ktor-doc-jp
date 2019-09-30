@@ -1,6 +1,6 @@
 ---
 title: Chat
-caption: "Guides: How to implement a chat with WebSockets"
+caption: "ガイド: WebSocketでチャットを実装する方法"
 category: quickstart
 permalink: /quickstart/guides/chat.html
 ktor_version_review: 1.0.0
