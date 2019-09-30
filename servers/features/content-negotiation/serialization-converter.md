@@ -1,6 +1,6 @@
 ---
 title: kotlinx.serialization
-caption: JSON support using kotlinx.serialization
+caption: kotlinx.serializationを利用したJSONサポート
 category: servers
 feature:
   artifact: io.ktor:ktor-serialization:$ktor_version
@@ -11,16 +11,15 @@ redirect_from:
 ktor_version_review: 1.2.3
 ---
 
-The SerializationConverter feature allows you to handle JSON content in your application easily using
-[kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) library.
+SerializationConverter機能を使うと、JSONコンテンツをあなたのアプリケーション内で[kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)ライブラリを使って簡単に扱うことができるようになります。
 
-This feature is a [ContentNegotiation](/servers/features/content-negotiation.html) converter.
+この機能は[ContentNegotiation](/servers/features/content-negotiation.html)コンバーターです。
 
 {% include feature.html %}
 
-## Basic usage
+## 基本的な使い方
 
-To install the feature by registering a JSON content convertor using kotlinx.serialization:
+kotlinx.serializationを使ったJSONコンテンツコンバーターを登録することでこの機能をインストールします:
 
 ```kotlin
 install(ContentNegotiation) {
@@ -28,13 +27,13 @@ install(ContentNegotiation) {
 }
 ```
 
-## Configuration
+## 設定
 
-The `serialization()` function has two optional parameters with default arguments:
-* `contentType` provides a way to specify which content types it should handle, `ContentType.Application.Json` by default.
-* `json` provides ability to configure [JSON formatter](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/runtime_usage.md#json), `Json(DefaultJsonConfiguration)` by default.
+`serialization()`関数は2つのオプショナルのパラメータをデフォルト引数付きで持っています。
+* `contentType`は、どのcontent typeがハンドリングされるかを指定できます。`ContentType.Application.Json`がデフォルト値です。
+* `json`は、[JSONフォーマッター](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/runtime_usage.md#json)を設定する機能を提供します。`Json(DefaultJsonConfiguration)`がデフォルト値です。
 
-Advanced example:
+発展的な例:
 ```kotlin
 install(ContentNegotiation) {
     serialization(
