@@ -1,6 +1,6 @@
 ---
 title: Gson
-caption: Gsonを利用したJSONのサポート
+caption: Gsonを利用したJSONサポート
 category: servers
 feature:
   artifact: io.ktor:ktor-gson:$ktor_version
@@ -11,7 +11,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-gson機能を使うと、JSONコンテンツをあなたのアプリケーション内で[google-gson](https://github.com/google/gson)を使って簡単に扱うことができるようになります。
+gson機能を使うと、JSONコンテンツをあなたのアプリケーション内で[google-gson](https://github.com/google/gson)ライブラリを使って簡単に扱うことができるようになります。
 
 この機能は[ContentNegotiation](/servers/features/content-negotiation.html)コンバーターです。
 

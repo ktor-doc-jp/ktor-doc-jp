@@ -1,6 +1,6 @@
 ---
 title: Jackson
-caption: JSON support using Jackson
+caption: Jacksonを利用したJSONサポート
 category: servers
 feature:
   artifact: io.ktor:ktor-jackson:$ktor_version
@@ -11,16 +11,15 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-The Jackson feature allows you to handle JSON content in your application easily using
-the [jackson](https://github.com/FasterXML/jackson) library.
+Jackson機能を使うと、JSONコンテンツをあなたのアプリケーション内で[jackson](https://github.com/FasterXML/jackson)ライブラリを使って簡単に扱うことができるようになります。
 
-This feature is a [ContentNegotiation](/servers/features/content-negotiation.html) converter.
+この機能は[ContentNegotiation](/servers/features/content-negotiation.html)コンバーターです。
 
 {% include feature.html %}
 
-## Basic usage
+## 基本的な使い方
 
-To install the feature by registering a JSON content convertor using Jackson:
+Jacksonを使ったJSONコンテンツコンバーターを登録することでこの機能をインストールします:
 
 ```kotlin
 install(ContentNegotiation) {
@@ -30,7 +29,7 @@ install(ContentNegotiation) {
 }
 ```
 
-The `jackson` block is a convenient method for:
+`jackson`ブロックは以下の意味を持つ便利なメソッドです:
 
 ```kotlin
 register(ContentType.Application.Json, JacksonConverter(ObjectMapper().apply {
@@ -38,10 +37,10 @@ register(ContentType.Application.Json, JacksonConverter(ObjectMapper().apply {
 }.create()))
 ```
 
-## Configuration
+## 設定
 
-Inside the `jackson` block, you have access to the [ObjectMapper](https://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.html)
-used to install the ContentNegotiation. To give you an idea of what is available:
+`jackson`ブロック内で、ContentNegotiationをインストールするために使われた[ObjectMapper](https://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.html)にアクセスできます。
+以下を、何ができるのかの参考にしてください:
 
 ```kotlin
 install(ContentNegotiation) {
