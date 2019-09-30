@@ -6,53 +6,58 @@ permalink: /quickstart/guides/chat.html
 ktor_version_review: 1.0.0
 ---
 
-In this tutorial, you will learn how to make a Chat application using Ktor.
-We are going to use WebSockets for a real-time bidirectional communication.
 
-To achieve this, we are going to use the [Routing], [WebSockets] and [Sessions] features.
+このチュートリアルでは、 Ktor を用いたチャットアプリケーションの作り方を学びます。
+WebSocket を用いてリアルタイム双方向通信を行います。
+
+これを達成するために、 [Routing] 、 [WebSockets] 、 [Sessions] の3つの Feature を用います。
 
 [Routing]: /servers/features/routing.html
 [WebSockets]: /servers/features/websockets.html
 [Sessions]: /servers/features/sessions.html
 
-This is an advanced tutorial and it assumes you have some basic knowledge about Ktor,
-so you should follow the [guide about making a Website](/quickstart/guides/website.html) first.
+本チュートリアルは高度な内容になっています。
+Ktor に関する基本的な知識があることを前提としているため、先に [ウェブサイトの作り方](/quickstart/guides/website.html) を
+学んでください。
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
-## Setting up the project
+## プロジェクトのセットアップ
 
-The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide,
-or use the following form to create one:
+まずはじめに、プロジェクトのセットアップを行います。
+[Quick Start](/quickstart/index.html) を参考にするか、下記の設定を用いてプロジェクトを作成してください。
 
 {% include preconfigured-form.html hash="dependency=ktor-sessions&dependency=routing&dependency=ktor-websockets&artifact-name=chat" %}
 
-## Understanding WebSockets
+## WebSocket とは
 
-WebSockets is a subprotocol of HTTP. It starts as a normal HTTP request with an upgrade request header,
-and the connection switches to be a bidirectional communication instead of a request response one.
+WebSocket は HTTP のサブプロトコルです。
+WebSocket 通信は Upgrade リクエストヘッダを付与した通常の HTTP リクエストから始まり、なにか1つレスポンスを返すのではなく、双方向通信に接続が切り替わります。
 
-The smallest unit of transmission that can be sent as part of the WebSocket protocol, is a `Frame`. A WebSocket Frame defines a type, a length and a payload that might be binary or text.
-Internally those frames might be transparently sent in several TCP packets. 
+WebSocket プロトコルにて送信可能な情報の最小単位は `Frame` と呼ばれます。
+WebSocket Frame は型、長さ、そしてバイナリかテキストのペイロードを定義します。
+内部的には、これらのフレームは複数の TCP パケットに分割されて透過的に送信される場合があります。
 
-You can see Frames as WebSocket messages. Frames could be the following types: text, binary, close, ping and pong.
+Frame は WebSocket メッセージとして扱えます。
+Frame の型は、 `Text` 、 `Binary` 、 `Close` 、 `Ping` 、 `Pong` があります。
 
-You will normally handle `Text` and `Binary` frames, and the other will be handled by Ktor in most of the cases
-(though you can use a raw mode where you can handle those extra frame types yourself).
+基本的には、 `Text` と `Binary` のフレームだけを考えればよく、それ以外の種類は多くの場合は Ktor に任せることができます。
+(Raw mode を使うことで、独自の Frame 型を扱うこともできます。)
 
-In its page, you can read more about the [WebSockets feature](/servers/features/websockets.html).  
+詳細は [WebSockets feature](/servers/features/websockets.html) に記載してあります。
 
-## WebSocket route
+## WebSocket ルーティング
 
-This first step is to create a route for the WebSocket. In this case we are going to define the `/chat` route,
-but initially, we are going to make that route to act as an "echo" WebSocket route, that will send you back the same text messages that you send to it.
+まずはじめに、 WebSocket 用のルーティングを作りましょう。
+今回は `/chat` という名前にします。
+`/chat` という名前にしましたが、最初のうちは受信したメッセージをオウム返しするだけの「エコー」 WebSocket ルーティングとして機能させます。
 
-`webSocket` routes are intended to be long-lived. Since it is a suspend block and uses lightweight Kotlin coroutines,
-it is fine and you can handle (depending on the machine and the complexity) hundreds of thousands of connections
-at once, while keeping your code easy to read and to write.
+`webSocket` ルーティングは長命なオブジェクトです。
+Suspend block (`CoroutineScope`) で Kotlin の軽量な coroutine を用いているので、コードの可読性を保ちつつも、
+数十万のコネクションを一度に処理できます。 (マシンのスペックに依存します。)
 
 ```kotlin
 routing {
@@ -70,10 +75,13 @@ routing {
 }
 ```
 
-## Keeping a set of opened connections
+## コネクションの保持
 
-We can use a Set to keep a list of opened connections. We can use a plain `try...finally` to keep track of them.
-Since Ktor is multithreaded by default we should use thread-safe collections or [limit the body to a single thread with newSingleThreadContext](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#coroutine-context-and-dispatchers){:target="_blank"}. 
+確立済みコネクション群を Set に保持できます。
+言語標準の `try...finally` を用いてコネクションの追跡ができます。
+Ktor はデフォルトでマルチスレッドで動作するため、スレッドセーフなコレクションを利用するか、
+[`newSingleThreadContext` を用いて実体をシングルスレッドに制限](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md#coroutine-context-and-dispatchers){:target="_blank"}
+しなければなりません。
 
 ```kotlin
 routing {
@@ -93,11 +101,10 @@ routing {
 }
 ```
 
-## Propagating a message among all the connections
+## すべてのコネクションにメッセージを伝播させる
 
-Now that we have a set of connections, we can iterate over them and use the session
-to send the frames we need.
-Everytime a user sends a message, we are going to propagate to all the connected clients.
+コネクションの集合(Set)を保持できたので、全コネクションに対して送信したい frame を送信することができます。
+ユーザがメッセージを送信するたびに、接続済のすべてのクライアントに対しそのメッセージを伝播させてみましょう。
 
 ```kotlin
 routing {
@@ -111,7 +118,7 @@ routing {
                 when (frame) {
                     is Frame.Text -> {
                         val text = frame.readText()
-                        // Iterate over all the connections
+                        // 全コネクションに対する繰り返し処理
                         for (conn in wsConnections) {
                             conn.outgoing.send(Frame.Text(text))
                         }
@@ -125,11 +132,10 @@ routing {
 }
 ```
 
-## Assigning names to users/connections
+## users や connections に名前をつける
 
-We might want to associate some information, like a name to an oppened connection,
-we can create a object that includes the WebSocketSession and store it instead
-like this:
+接続済みのコネクションに名前をつけるなど、何らかの情報を付与したくなることがあります。
+下記のように、 WebSocketSession となにかを一緒に情報を保持することができます。
 
 ```kotlin
 class ChatClient(val session: DefaultWebSocketSession) {
@@ -165,13 +171,13 @@ routing {
 }
 ```
 
-## Exercises
+## 発展課題
 
-### Creating a client
+### クライアントの作成
 
-Create a JavaScript client connecting to this endpoint and serve it with ktor.
+作成したエンドポイントに接続する JavaScript クライアントを作成し、 ktor を用いて提供しましょう。
 
 ### JSON
 
-Use [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) to send and receive VOs
+[kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) を用いて Value Object の送受信をしましょう。
 
