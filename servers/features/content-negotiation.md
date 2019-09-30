@@ -1,6 +1,6 @@
 ---
 title: コンテントネゴシエーション
-caption: Content conversion based on Content-Type and Accept headers
+caption: Content-TypeとAccept Headerをベースにしたコンテントネゴシエーション
 category: servers
 permalink: /servers/features/content-negotiation.html
 feature:
@@ -12,14 +12,14 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature provides automatic content conversion according to `Content-Type` and `Accept` headers.
+この機能は、`Content-Type`と`Accept`ヘッダーに応じて自動でのコンテンツの変換を行う機能です。
 
 {% include feature.html %}
 
-## Basic Usage
+## 基本的な使い方
 {: #basic}
 
-The ContentNegotiation feature allows you to register and configure custom converters.
+ContentNegotiation Featureを使うとカスタムのコンバーターを登録・設定することができます。
 
 ```kotlin
 install(ContentNegotiation) {
@@ -29,7 +29,7 @@ install(ContentNegotiation) {
 }
 ```
 
-For example:
+例えば:
 
 ```kotlin
 install(ContentNegotiation) {
@@ -37,35 +37,34 @@ install(ContentNegotiation) {
 }
 ```
 
-## Sending
+## 送信時
 {: #sending }
 
-When you respond with an object that is not directly handled, like a custom data class,
-this feature checks the client's `Accept` header to determine which `Content-Type` will be 
-used and thus which `ContentConverter` will be called.
+直接扱うことができないオブジェクトでレスポンスを返したいとき、例えばカスタムのデータクラスを使うとき、
+この機能はクライアントの`Accept`ヘッダーをチェックし、
+どの`Content-Type`が利用されるかと、そしてどの`ContentConverter`が呼ばれるかを決定します。
 
 ```kotlin
 call.respond(MyDataClass("hello", "world"))
 ```
 
-Right now, the only supported ContentNegotiation strategy when sending, is the
-client's `Accept` header. There is an [issue to implement other strategies](https://github.com/ktorio/ktor/issues/357).
+たった今、送信時にサポートされている唯一のコンテントネゴシエーションの戦略は、クライアントの`Accept`ヘッダーを使うものです。
+[その他の戦略を実装する上では問題](https://github.com/ktorio/ktor/issues/357)があります。
 {: .note} 
 
-## Receiving
+## 受信時
 {: #receiving }
 
-When receiving, the `Content-Type` of the request will be used to determine
-which `ContentConverter` will be used to process that request:
+受信時にはリクエストの`Content-Type`が使われ、どの`ContentConverter`がリクエストを処理するのに使われるのかが決定されます。
 
 ```kotlin
 val myDataClass = call.receive<MyDataClass>()
 ```
 
-## The ContentConverter interface
+## ContentConverterインターフェース
 {: #content-converter}
 
-If you want to write your own converter, you have to implement the `ContentConverter` interface:
+自身でコンバーターを書きたいのなら、`ContentConverter`インターフェースを実装する必要があります。
 
 ```kotlin
 interface ContentConverter {
@@ -74,7 +73,7 @@ interface ContentConverter {
 }
 ```
 
-For example, the `GsonConverter` implementation looks like:
+例えば、`GsonConverter`の実装は以下のようになっています:
 
 ```kotlin
 class GsonConverter(private val gson: Gson = Gson()) : ContentConverter {
@@ -91,10 +90,10 @@ class GsonConverter(private val gson: Gson = Gson()) : ContentConverter {
 }
 ```
 
-## Available out of the box ContentConverter
+## 初めから利用可能なContentConverter
 {: #available-converters}
 
-Ktor provide some content converters out of the box:
+Ktorはいくつかの初めから利用可能なコンテントコンバーターを提供しています。
 
 * `application/json`
     * [GsonConverter](/servers/features/content-negotiation/gson.html)
