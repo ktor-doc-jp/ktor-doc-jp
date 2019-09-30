@@ -101,11 +101,10 @@ routing {
 }
 ```
 
-## Propagating a message among all the connections
+## すべてのコネクションにメッセージを伝播させる
 
-Now that we have a set of connections, we can iterate over them and use the session
-to send the frames we need.
-Everytime a user sends a message, we are going to propagate to all the connected clients.
+コネクションの集合(Set)を保持できたので、全コネクションに対して送信したい frame を送信することができます。
+ユーザがメッセージを送信するたびに、接続済のすべてのクライアントに対しそのメッセージを伝播させてみましょう。
 
 ```kotlin
 routing {
@@ -119,7 +118,7 @@ routing {
                 when (frame) {
                     is Frame.Text -> {
                         val text = frame.readText()
-                        // Iterate over all the connections
+                        // 全コネクションに対する繰り返し処理
                         for (conn in wsConnections) {
                             conn.outgoing.send(Frame.Text(text))
                         }
