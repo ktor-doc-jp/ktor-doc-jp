@@ -27,18 +27,19 @@ ktor_version_review: 1.0.0
 
 ## プロジェクトの作成 
 
-The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
+まずはじめにプロジェクトのセットアップから行います。[Quick Start](/quickstart/index.html) のページにしたがって作成するか、下記のKtor Project Generatorを使ってプロジェクトを作成してください。
 
 {% include preconfigured-form.html hash="dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" %}
 
 ## シンプルなルーティング 
 
-First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
-to include any additional artifacts.
+まずはじめに、 [Routing Feature](/servers/features/routing.html) を使っていきます。
+Ktor では様々な機能を Feature という形で提供し、その Feature をインストールすることで利用可能になりますが、
+Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
 
-This feature is installed automatically when using the `routing { }` block.
+Routing Feature の DSL ブロックのひとつである `routing { }` ブロックを用いることで、自動的にインストールされます。
 
-Let's start creating a simple GET route that responds with 'OK':
+`routing` ブロックとその内部で利用できる `get` メソッドを用いて、`OK`を返却するシンプルなGET APIを作成してみましょう:
 
 ```kotlin
 fun Application.module() {
@@ -50,14 +51,14 @@ fun Application.module() {
 }
 ```
 
-## Serving HTML with FreeMarker
+## FreeMarkerを用いたHTMLの生成
 
-Apache FreeMarker is a template engine for the JVM, and thus you can use it with Kotlin.
-There is a Ktor feature supporting it.
+Apache FreeMarkerはJVMのためのテンプレートエンジンです。したがってKotlinにおいても使うことができます。
+Ktor においては最初からFeatureとしてサポートされています。
 
-For now, we are going to store the templates embedded as part of the resources in a `templates` folder.
+ここでは、 `templates`フォルダ以下にリソースの一部として埋め込まれたテンプレートを保存します。
 
-Create a file called `resources/templates/index.ftl` and put in the following content to create a simple HTML list:
+新しく`resources/templates/index.ftl`ファイルを作成して, リストを表示する以下のHTMLを記述してください:
 
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
@@ -72,10 +73,10 @@ Create a file called `resources/templates/index.ftl` and put in the following co
 </html>
 ```
 
-IntelliJ IDEA Ultimate has FreeMarker support with autocompletion and variable hinting.
+IntelliJ IDEA Ultimate はFreeMarkerのオートコンプリートと変数のHintingをサポートしています。
 {:.note}
 
-Now, let's install the FreeMarker feature and then create a route serving this template and passing a set of values to it:
+次に、 FreeMarker Featureをインストールして、テンプレートに値を渡すroutingを作成しましょう:
 
 ```kotlin
 data class IndexData(val items: List<Int>)
@@ -93,13 +94,13 @@ fun Application.module() {
 }
 ```
 
-Now you can run the server and open a browser pointing to <http://127.0.0.1:8080/html-freemarker>{:target="_blank"} to see the results:
+サーバーを起動して、<http://127.0.0.1:8080/html-freemarker>ページをブラウザで確認すれば、リストが表示されていることを確認できるでしょう:
 
 ![](/quickstart/guides/website/website1.png){:.rounded-shadow}
 
-Nice!
+いいね!
 
-## Serving static files: styles, scripts, images... 
+## 静的ファイルの配信: styles, scripts, images...
 
 In addition to templates, you will want to serve static content.
 Static content will serve faster, and is compatible with other features like Partial Content that allows
@@ -333,7 +334,9 @@ on change and reload the relevant JVM classes.
 ### Exercise 1
 
 Make a registration page and store the user/password datasource in memory in a hashmap.
+登録ページを作成して、hashmapにuserとpasswordを格納してみましょう。
 
 ### Exercise 2
 
+ユーザーを格納するためにデータベースを使用してみましょう。
 Use a database to store the users.
