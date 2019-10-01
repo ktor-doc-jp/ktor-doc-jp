@@ -1,6 +1,6 @@
 ---
-title: Call Logging
-caption: Log the client requests
+title: Callロギング
+caption: クライアントのリクエストをログ出力
 category: servers
 permalink: /servers/features/call-logging.html
 feature:
@@ -11,24 +11,24 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-You might want to log client requests: and the Call Logging feature does just that.
-It uses the `ApplicationEnvironment.log` (`LoggerFactory.getLogger("Application")`)
-that uses slf4j so you can easily configure the output. For more information
-on logging in Ktor, please check the [logging in the ktor](/servers/logging.html) page.
+クライアントリクエストをログ出力したいことがあるかもしれません。CallLogging Featureはそれを実現してくれます。
+Featureはこれはslf4jを使った`ApplicationEnvironment.log` (`LoggerFactory.getLogger("Application")`)を利用しており、
+簡単に出力内容を設定することができます。
+Ktorでのロギングについてのより詳細な情報は、[ktor内でのロギング](/servers/logging.html)ページをご覧ください。
 
 {% include feature.html %}
 
-## Basic usage
+## 基本的な使い方
 
-The basic unconfigured feature logs every request using the level TRACE: 
+Featureを未設定の場合、すべてのリクエストに対しTRACEレベルでログ出力します:
 
 ```kotlin
 install(CallLogging)
 ```
 
-## Configuring
+## 設定
 
-This feature allows you to configure the log level and filtering the requests that are being logged:
+このFeatureはログレベルとログ出力が行われるリクエストのフィルタリングの設定ができます:
 
 ```kotlin
 install(CallLogging) {
@@ -39,21 +39,22 @@ install(CallLogging) {
 }
 ```
 
-The filter method keeps a whitelist list of filters. If no filters are defined,
-everything is logged. And if there are filters, if any of them returns true,
-the call will be logged.
+filterメソッドはホワイトリストとしてフィルター一覧を保持しています。
+もしフィルターが定義されていないなら、すべてがログ出力されます。
+もしフィルターがあるなら、フィルターのうちいずれかがtrueをreturnする場合にログ出力されます。
 
-In the example, it will log both: `/section1/*` and `/section2/*` requests.
+この例では、`/section1/*`と`/section2/*`リクエストの両方で出力されます。
 
 ## MDC
 {: #mdc }
 
+`CallLogging` Featureはslf4jの`MDC` (Mapped Diagnostic Context)をサポートしており、リクエストの一部として情報を紐付けられます。
 The `CallLogging` feature supports `MDC` (Mapped Diagnostic Context) from slf4j
 to associate information as part of the request.
 
-When installing the CallLogging, you can configure a parameter to associate to the request with the `mdc` method.
-This method requires a key name, and a function provider. The context would be associated
-(and the providers will be called) as part of the `Monitoring` pipeline phase.
+CallLoggingをインスタンス化するとき、`mdc`メソッドを使ってリクエストに紐付けるパラメータを設定できます。
+このメソッドはkey名と関数のProviderを必要とします。
+コンテキストは`Monitoring`パイプラインフェーズの一部として紐付けられ（そして関数provider群が呼び出され）ます。
 
 ```kotlin
 install(CallLogging) {
@@ -64,7 +65,6 @@ install(CallLogging) {
 }
 ```
 
-MDC works by using ThreadLocals, while Ktor uses coroutines that are not bound to a specific Thread.
-This feature uses internally the `kotlinx.coroutines` [ThreadContextElement](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.experimental/-thread-context-element/index.html){: target="_blank"}
-to address it.
+MDCはThreadLocalsを使って動作しており、Ktorは指定したThreadに紐付かないcoroutinesを利用しています。
+このFeatureはその問題に対処するため内部的に`kotlinx.coroutines` [ThreadContextElement](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.experimental/-thread-context-element/index.html){: target="_blank"}を利用しています。
 {: .note }
