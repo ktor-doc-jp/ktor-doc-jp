@@ -102,14 +102,13 @@ fun Application.module() {
 
 ## 静的ファイルの配信: styles, scripts, images...
 
-In addition to templates, you will want to serve static content.
-Static content will serve faster, and is compatible with other features like Partial Content that allows
-you to resume downloads or partially download files.
+テンプレートに加えて、静的コンテンツも配信したいでしょう。
+静的コンテンツはKtorにより高速に配信され、また途中でやめたダウンロードを再開したり、部分的にファイルをダウンロードしたりできるようになるPartial Contentなどの他のFeatureと互換性があります。
 
-For now, we are going to serve a simple `styles.css` file to apply styles to our simple page.
+それでは、簡単な`style.css`ファイルを先ほど作成したページにstyleを適用するために配信してみましょう。
 
-Serving static files doesn't require installing any features, but it is a plain Route handler.
-To serve static files at the `/static` url, from `/resources/static`, you would write the following code:
+静的ファイルを配信するために新しいFeatureをインストール必要はなく、簡単なRoute handlerで実現できます。
+`/resources/static`に置かれた静的ファイルを`/static` urlで配信するためには、次のようなコードを書けばよいでしょう:
 
 ```kotlin
 routing {
@@ -120,7 +119,7 @@ routing {
 }
 ```
 
-Now let's create the `resources/static/styles.css` file with the following content:
+次に以下の内容の`resources/static/style.css`を作りましょう:
 
 ```css
 body {
@@ -128,7 +127,7 @@ body {
 }
 ```
 
-In addition to this, we will have to update our template to include the `style.css` file:
+これに加えて、`style.css`ファイルを含むために先ほどのtemplateファイルを更新する必要があります:
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
 <html>
@@ -141,13 +140,13 @@ In addition to this, we will have to update our template to include the `style.c
 </html>
 ```
 
-And the result:
+最終的にこうなります:
 
 ![](/quickstart/guides/website/website2.png){:.rounded-shadow}
 
-Now we have a colorful website from 1990!
+1990年来のカラフルなWebサイトができましたね!
 
-Static files are not only text files! Try to add an image (what about a fancy animated blinking gif file? 👩🏻‍🎨) to the `static` folder, and include a `<img src="...">` tag to the HTML template.
+静的ファイルはテキストファイルだけではありません! 画像(派手なアニメーションで点滅してるようなgifファイルなんかどうですか? 👩🏻‍🎨)を`static`フォルダに追加してから、HTMLテンプレートに`<img src="...">`タグを追記してみましょう!
 {: .note.exercise}
 
 ## Enabling partial content: large files and videos
