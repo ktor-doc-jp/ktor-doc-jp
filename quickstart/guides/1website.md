@@ -149,13 +149,12 @@ body {
 静的ファイルはテキストファイルだけではありません! 画像(派手なアニメーションで点滅してるようなgifファイルなんかどうですか? 👩🏻‍🎨)を`static`フォルダに追加してから、HTMLテンプレートに`<img src="...">`タグを追記してみましょう!
 {: .note.exercise}
 
-## Enabling partial content: large files and videos
+## コンテンツの分割を可能にする: 大きなファイルや動画など
 
-Though not really needed for this specific case, if you enable partial content support, people will be able
-to resume larger static files on connections with frequent problems, or allow seeking support when
-serving and watching videos.
+今回のケースでは必要ありませんが、もしコンテンツの分割配信のサポートを有効にすると、
+頻繁に問題が発生するネットの接続状況において大きな静的ファイルの配信を再開したり、動画の提供や視聴をすることができます。
 
-Enabling partial content is straightforward:
+コンテンツの分割配信の有効化は簡単です:
 
 ```kotlin
 install(PartialContent) {
