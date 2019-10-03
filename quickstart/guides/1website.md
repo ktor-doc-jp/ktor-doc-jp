@@ -161,12 +161,11 @@ install(PartialContent) {
 }
 ```
 
-## Creating a form
+## form画面の作成 
 
-Now we are going to create a fake login form. To make it simple, we are going to accept users with the same password,
-and we are not going to implement a registration form.
+次にニセのログインフォームを作成していきます。単純にするためにすべてのユーザーがusernameと同じパスワードでログインできるようにし、またユーザー登録画面については実装しません。
 
-Create a `resources/templates/login.ftl`:
+`resources/templates/login.ftl`を以下の内容で作成してください:
 
 ```kotlin
 <html>
@@ -188,7 +187,8 @@ Create a `resources/templates/login.ftl`:
 </html>
 ```
 
-In addition to the template, we need to add some logic to it. In this case we are going to handle GET and POST methods in different blocks of code:
+
+テンプレートに加えて,いくつかロジックを追加する必要があります。今回のケースではGETとPOSTメソッドをいくつかのコード片として処理していきます。
 
 ```kotlin
 route("/login") {
@@ -206,9 +206,8 @@ route("/login") {
 }
 ```
 
-As we said, we are accepting `username` with the same `password`, but we are not accepting null values.
-If the login is valid, we respond with a single OK for now, while we reuse the template if the login fails
-to display the same form but with an error.
+既に書いたとおり、任意の`username`に対してユーザーネームと同じ`password`でログインできるようにしますが、nullについては受け入れないようにします。
+もしログインに成功すれば、今のところただの`OK`の文字列で応答します。一方もしログインに失敗すればエラーと共にログインの時と同じフォームを再利用します。
 
 ## Redirections
 
