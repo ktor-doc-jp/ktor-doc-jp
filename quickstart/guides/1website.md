@@ -211,7 +211,7 @@ route("/login") {
 
 ## リダイレクション 
 
-ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに、一時的にhomeページにリダイレクトしたいです。
+ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトしたいです:
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -227,10 +227,9 @@ call.respondRedirect("/", permanent = false)
 
 </td></tr></tbody></table>
 
-## Using the Form authentication
+## Form認証を使用する 
 
-To illustrate how to receive POST parameters we have handled the login manually, but we can also use the authentication
-feature with a form provider:
+POSTパラメータを受け取る方法を説明するために、ログインを手動で処理しましたが、authentication featureをform providerで使うこともできます:
 
 ```kotlin
 install(Authentication) {
