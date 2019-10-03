@@ -209,10 +209,9 @@ route("/login") {
 既に書いたとおり、任意の`username`に対してユーザーネームと同じ`password`でログインできるようにしますが、nullについては受け入れないようにします。
 もしログインに成功すれば、今のところただの`OK`の文字列で応答します。一方もしログインに失敗すればエラーと共にログインの時と同じフォームを再利用します。
 
-## Redirections
+## リダイレクション 
 
-In some cases, like route refactoring or forms, we will want to perform redirections (either temporary or permanent).
-In this case, we want to temporarily redirect to the homepage upon successful login, instead of replying with plain text.
+ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに、一時的にhomeページにリダイレクトしたいです。
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
