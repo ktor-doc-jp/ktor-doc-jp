@@ -253,10 +253,9 @@ route("/login") {
 }
 ```
 
-## Sessions
+## Sessions 
 
-To prevent having to authenticate all the pages, we are going to store the user in a session, and that session will
-be propagated to all the pages using a session cookie.
+すべてのページにおいて認証させることを避けるために、user情報をsessionで格納していきます。またsessionで得たuser情報はcookieを利用してすべてのページに伝搬されていきます。
 
 ```kotlin
 data class MySession(val username: String)
@@ -277,6 +276,7 @@ fun Application.module() {
 } 
 ```
 
+ページの内部では、sessionを得ようとしてそれぞれの場合において違う結果を返すようにしています。
 Inside our pages, we can try to get the session and produce different results:
 
 ```kotlin
