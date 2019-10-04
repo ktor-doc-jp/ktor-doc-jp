@@ -8,9 +8,9 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持するKtor上でHTMLがレンダリングされた簡単なWebサイトを作っていきます。
+本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされた簡単なWebサイトを作っていきます。
 
-これから、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]について学んでいきます。
+Webサイトをつくっていくうえで、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]を使用していきます。
 
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
@@ -27,7 +27,7 @@ ktor_version_review: 1.0.0
 
 ## プロジェクトの作成 
 
-まずはじめにプロジェクトのセットアップから行います。[Quick Start](/quickstart/index.html) のページにしたがって作成するか、下記のKtor Project Generatorを使ってプロジェクトを作成してください。
+まずはじめにプロジェクトのセットアップから行います。[Quick Start](/quickstart/index.html) のページにしたがって作成するか、下記のKtor Project Generatorを使ってプロジェクトを作成してください:
 
 {% include preconfigured-form.html hash="dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" %}
 
@@ -56,7 +56,7 @@ fun Application.module() {
 Apache FreeMarkerはJVMのためのテンプレートエンジンです。したがってKotlinにおいても使うことができます。
 Ktor においては最初からFeatureとしてサポートされています。
 
-ここでは、 `templates`フォルダ以下にリソースの一部として埋め込まれたテンプレートを保存します。
+ここでは、`resources/templates`フォルダ以下にテンプレートを保存していきます。
 
 新しく`resources/templates/index.ftl`ファイルを作成して, リストを表示する以下のHTMLを記述してください:
 
@@ -94,7 +94,7 @@ fun Application.module() {
 }
 ```
 
-サーバーを起動して、<http://127.0.0.1:8080/html-freemarker>ページをブラウザで確認すれば、リストが表示されていることを確認できるでしょう:
+サーバーを起動して、<http://127.0.0.1:8080/html-freemarker>ページをブラウザで確認してみましょう:
 
 ![](/quickstart/guides/website/website1.png){:.rounded-shadow}
 
@@ -102,8 +102,8 @@ fun Application.module() {
 
 ## 静的ファイルの配信: styles, scripts, images...
 
-テンプレートに加えて、静的コンテンツも配信したいでしょう。
-静的コンテンツはKtorにより高速に配信され、また途中でやめたダウンロードを再開したり、部分的にファイルをダウンロードしたりできるようになるPartial Contentなどの他のFeatureと互換性があります。
+テンプレートに加えて、静的コンテンツを配信したい場合もあると思います。
+静的コンテンツはKtorにより高速に配信でき、また途中でやめたダウンロードを再開したり、部分的にファイルをダウンロードしたりできるようになるPartial Contentなどの他のFeatureと互換性があります。
 
 それでは、簡単な`style.css`ファイルを先ほど作成したページにstyleを適用するために配信してみましょう。
 
@@ -127,7 +127,7 @@ body {
 }
 ```
 
-これに加えて、`style.css`ファイルを含むために先ほどのtemplateファイルを更新する必要があります:
+これに加えて、`style.css`ファイルを含めるために先ほどのtemplateファイルを更新する必要があります:
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
 <html>
@@ -140,7 +140,7 @@ body {
 </html>
 ```
 
-最終的にこうなります:
+ブラウザで確認してみましょう:
 
 ![](/quickstart/guides/website/website2.png){:.rounded-shadow}
 
@@ -211,7 +211,7 @@ route("/login") {
 
 ## リダイレクション 
 
-ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトしたいです:
+ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトさせたいです:
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -276,8 +276,7 @@ fun Application.module() {
 } 
 ```
 
-ページの内部では、sessionを得ようとしてそれぞれの場合において違う結果を返すようにしています。
-Inside our pages, we can try to get the session and produce different results:
+ページの内部では、sessionから情報を得られたかどうかで別の結果を返すようにしています。
 
 ```kotlin
 fun Application.module() {
@@ -296,11 +295,8 @@ fun Application.module() {
 ## FreeMarkerの代わりにHTML DSLを使用する
 
 テンプレートエンジンを使用する代わりにコードからHTMLを直接生成する方法を選ぶこともできます。
-そのための手段としてHTML DSLが用意されています。 このDSLは追加でインストールする必要はありませんが、追加のアーティファクトが必要となります(詳しくは[HTML DSL]の項目を参照)。
+そのための手段としてHTML DSLが用意されています。このDSLは追加でインストールする必要はありませんが、追加のアーティファクトが必要となります(詳しくは[HTML DSL]の項目を参照)。
 このアーティファクトはHTMLブロックを返すためのextensionを提供しています。
-You can choose to generate HTML directly from the code instead of using a Template Engine.
-For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact (see [HTML DSL] for details).
-This artifact provides an extension to respond with HTML blocks:
 
 ```kotlin
 get("/") { 
@@ -320,7 +316,7 @@ get("/") {
 }
 ```
 HTML DSLを利用する主なメリットとしては変数に完全に静的に型指定されたアクセス権限があり,かつ徹底的にコードベースで統合されている点があります。
-これの欠点としてはHTMLを変更するたびにリコンパイルする必要があり、完全なHTMLブロックを検索できない点が挙げられます。しかしながらテンプレートと比較し非常に高速であり、[autoreload feature](https://jp.ktor.work/servers/autoreload.html)を利用することでコードの変更時に再コンパイルして関連するJVMクラスを再リロードすることができます。
+これの欠点としてはHTMLを変更するたびにリコンパイルする必要があり、完全なHTMLブロックを検索できない点が挙げられます。しかしながらテンプレートと比較し非常に高速であり、[autoreload feature](https://jp.ktor.work/servers/autoreload.html)を利用することでコードの変更時に再コンパイルして関連するJVMクラスをリロードすることができます。
 
 ## 発展課題
 
