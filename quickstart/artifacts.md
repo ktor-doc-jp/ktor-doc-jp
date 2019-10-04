@@ -8,6 +8,7 @@ redirect_from:
 ktor_version_review: 1.0.1
 ---
 
+
 Ktor is divided into modules to allow fine-grained inclusion of dependencies based on the functionality required. 
 The typical Ktor application would require `ktor-server-core` and a corresponding engine depending on whether it's self-hosted
  or using an Application Server. 
