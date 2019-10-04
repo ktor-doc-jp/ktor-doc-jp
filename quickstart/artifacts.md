@@ -9,11 +9,11 @@ ktor_version_review: 1.0.1
 ---
 
 Ktor はいくつかのモジュールに分割されており、必要な機能だけ依存関係に追加することができます。
-典型的な Ktor アプリケーションは `ktor-server-core` を必要とし、自己ホスト型か別途アプリケーションサーバを用いるかによって、
-対応するエンジンを依存関係に指定します。
+典型的な Ktor アプリケーションは `ktor-server-core` を必要とし、自己ホスト型とするか別途アプリケーションサーバを用いるかによって、
+必要なモジュールが変わります。
 
-Ktor のすべての artifact は `io.ktor` パッケージに属し、 JCenter と Maven Central から取得可能です。
-プレリリース版は [Bintray](https://bintray.com/kotlin/ktor) に公開されています。
+Ktor のすべての artifact は `io.ktor` パッケージ配下に属し、 JCenter と Maven Central から取得可能です。
+プレリリース版は [Bintray](https://bintray.com/kotlin/ktor) から取得可能です。
 
 [![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}})](https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}})
     
@@ -22,10 +22,10 @@ Ktor のモジュールはいくつかのグループに分類されます。
 * `ktor-server` は、 Netty 、 Jetty 、 Tomcat 、および汎用サーブレットといった複数のエンジン上で Ktor アプリケーションが動作するためのモジュール群です。
 また、実サーバを起動させることなくアプリケーションのテストが可能な TestEngine も含んでいます。
   * `ktor-server-core` : ほとんどすべてのアプリケーションで必要な API と実装を持つコアパッケージ
-  * `ktor-server-jetty` : Jetty サーバ用、または Jetty を内包
-  * `ktor-server-netty` : Netty を内包
+  * `ktor-server-jetty` : Jetty サーバ用、または Jetty 内包アプリケーション用
+  * `ktor-server-netty` : Netty 内包アプリケーション用
   * `ktor-server-tomcat` : Tomcat サーバ用
-  * `ktor-server-servlet` : Jetty と Tomcat で用いられており、また汎用サーブレットコンテナにも利用可能
+  * `ktor-server-servlet` : Jetty と Tomcat でも用いられている、汎用サーブレットコンテナ用
   * `ktor-server-test-host` : 実アプリケーションの起動不要な、テスト実行環境用
 * `ktor-features` : 一部のアプリケーションで必要とされる、追加機能のモジュール群
   * `ktor-auth` : Basic 認証、 Digest 認証、 Forms 認証、 OAuth 1a, OAuth 2 といった、様々な [認証システム](/servers/features/authentication.html) を提供
