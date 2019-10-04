@@ -20,7 +20,7 @@ ktor_version_review: 1.0.0
 [FreeMarker]: /servers/features/templates/freemarker.html
 [HTML DSL]: /servers/features/templates/html-dsl.html
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
@@ -293,8 +293,11 @@ fun Application.module() {
 }
 ```
 
-## Using HTML DSL instead of FreeMarker
+## FreeMarkerの代わりにHTML DSLを使用する
 
+テンプレートエンジンを使用する代わりにコードからHTMLを直接生成する方法を選ぶこともできます。
+そのための手段としてHTML DSLが用意されています。 このDSLは追加でインストールする必要はありませんが、追加のアーティファクトが必要となります(詳しくは[HTML DSL]の項目を参照)。
+このアーティファクトはHTMLブロックを返すためのextensionを提供しています。
 You can choose to generate HTML directly from the code instead of using a Template Engine.
 For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact (see [HTML DSL] for details).
 This artifact provides an extension to respond with HTML blocks:
@@ -316,22 +319,15 @@ get("/") {
     }
 }
 ```
+HTML DSLを利用する主なメリットとしては変数に完全に静的に型指定されたアクセス権限があり,かつ徹底的にコードベースで統合されている点があります。
+これの欠点としてはHTMLを変更するたびにリコンパイルする必要があり、完全なHTMLブロックを検索できない点が挙げられます。しかしながらテンプレートと比較し非常に高速であり、[autoreload feature](https://jp.ktor.work/servers/autoreload.html)を利用することでコードの変更時に再コンパイルして関連するJVMクラスを再リロードすることができます。
 
-The main benefits of an HTML DSL is that you have full statically typed access to variables and it is thoroughly integrated
-with the code base.
+## 発展課題
 
-The downside of all this is that you have to recompile to change the HTML, and you can't search complete HTML blocks.
-But it is lightning fast, and you can use the [autoreload feature](https://jp.ktor.work/servers/autoreload.html) to recompile
-on change and reload the relevant JVM classes.
+### 発展課題1
 
-## Exercises
-
-### Exercise 1
-
-Make a registration page and store the user/password datasource in memory in a hashmap.
 登録ページを作成して、hashmapにuserとpasswordを格納してみましょう。
 
-### Exercise 2
+### 発展課題2
 
 ユーザーを格納するためにデータベースを使用してみましょう。
-Use a database to store the users.
