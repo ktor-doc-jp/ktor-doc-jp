@@ -8,7 +8,7 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされた簡単なWebサイトを作っていきます。
+本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされる簡単なWebサイトを作っていきます。
 
 Webサイトをつくっていくうえで、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]を使用していきます。
 
