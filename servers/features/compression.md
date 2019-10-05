@@ -1,6 +1,6 @@
 ---
-title: Compression
-caption: Enable HTTP Compression Facilities
+title: 圧縮
+caption: HTTP Compression機能の有効化
 category: servers
 permalink: /servers/features/compression.html
 feature:
@@ -11,8 +11,8 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Compression feature adds the ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce the
-size of the response.
+Compression Featureは送信するコンテンツをgzipやdeflateやカスタムエンコーダを使い圧縮する機能を提供し、
+それを使うことでレスポンスサイズを減らすことができます。
 
 ```kotlin
 install(Compression)
@@ -20,16 +20,16 @@ install(Compression)
 
 {% include feature.html %}
 
-## Configuration
+## 設定
 
-When the configuration block is omitted, the default configuration is used. It includes
- the following encoders:
+設定処理を行うブロックが省略された場合、デフォルトの設定が利用されます。
+設定には以下のエンコーダが含まれています:
  
  * gzip
  * deflate
  * identity
- 
-If you want to select specific encoders you need to provide a configuration block:
+
+特定のエンコーダを選択したい場合は、設定処理を行うブロックで指定する必要があります:
 
 ```kotlin
 install(Compression) {
@@ -37,7 +37,7 @@ install(Compression) {
 }
 ```
 
-Each encoder can be configured with a priority and some conditions: 
+各エンコーダーは、priorityとその他条件を設定することができます:
 
 ```kotlin
 install(Compression) {
@@ -51,19 +51,19 @@ install(Compression) {
 }
 ```
 
-Encoders are sorted by specified quality in an `Accept-Encoding` header in the HTTP request, and
-then by specified priority. First encoder that satisfies all conditions wins.
+エンコーダーはHTTPリクエストの`Accept-Encoding`で指定されたqualityと、指定されたpriorityでソートされます。
+すべての条件を満たすエンコーダーのうち初めに定義されたものが選択されます。
 
-In the example above when `Accept-Encoding` doesn't specify quality, `gzip` will be selected for all contents 
-less than 1K in size, and all the rest will be encoded with `deflate` encoder. 
+上の例において`Accept-Encoding`がqualityを指定しなかった場合、サイズが1K未満のものについては`gzip`が選択され、
+それ以外のものについては`deflare`エンコーダーが利用されます。
 
-Some typical conditions are readily available:
+いくつかの典型的な条件が簡単に利用できるようになっています:
 
-* `minimumSize` – minimum size of the response to compress
-* `matchContentType` – one or more content types that should be compressed
-* `excludeContentType` – do not compress these content types
+* `minimumSize` – 圧縮可能な最小レスポンスサイズ
+* `matchContentType` – 圧縮すべきコンテントタイプ
+* `excludeContentType` – 圧縮しないコンテントタイプ
 
-You can also use a custom condition by providing a predicate:
+lambdaを指定することでカスタムの条件を使うこともできます:
 
 ```kotlin
 gzip {
@@ -73,19 +73,18 @@ gzip {
 }
 ```
 
-## Security with HTTPS
+## HTTPSによるセキュリティ
 
-HTTPS with any kind of compression is vulnerable to the [BREACH](https://en.wikipedia.org/wiki/BREACH){:target="_blank"} attack.
-This kind of attack allows a malicious attacker to guess a secret (like a session, an auth token, a password,
-or a credit card) from an encrypted HTTPS page in less than a minute.
+HTTPSで圧縮を使った場合は[BREACH](https://en.wikipedia.org/wiki/BREACH){:target="_blank"}攻撃に対し脆弱です。
+この攻撃は、悪意ある攻撃者が暗号化されたHTTPSページから1分に満たない時間で秘密情報（セッション・認証トークン・パスワード・クレジットカードなど）を推測するものです。
 
-You can mitigate this attack by:
+この攻撃は以下のようにして軽減できます:
 
-* Completely turn off HTTP compression (which might affect performance).
-* Not placing user input (GET, POST or Header/Cookies parameters) as part of the response (either Headers or Bodies) mixed with secrets (including a `Set-Cookie` with a session_id).
-* Add a random amount of bytes to the output for example in an html page, you can just add `<!-- 100~500 random_bytes !-->` making it much harder to guess the secret for an attacker in a reasonable time.
-* Ensure that your website is **completely HTTPS and has HSTS enabled**, and adding a conditional header checking the Referrer page. (If you have a single page without HTTPS, the malicious attacker can use that page to inject code using the same domain as Referrer).
-* Adding [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} protection to your pages.
+* HTTP圧縮機能を完全にOFFにする（パフォーマンスに影響は出るかもしれません）
+* ユーザの入力情報（GET, POSTリクエスト内容やHeader/Cookieパラメータ）を秘密情報（`Set-Cookie`のセッションIDなども含む）を含むレスポンス（HeaderやBody）の一部に入れない
+* ランダムな量のバイト列を追加する。例えばHTMLページに単に`<!-- 100~500 random_bytes !-->`を追加することで、現実的な時間で秘密情報を推測することが攻撃者にとって難しくなります。
+* ウェブサイトが **完全にHTTPSでありHSTSが有効化されている** ことを保証し、Referrerページをチェックするためconditional headerを追加する（もしHTTPSを使わないシングルページだった場合は、悪意ある攻撃者はReferrerとして同じドメインを使いページにコードを挿入することができます）
+* [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"}防御をページに導入する
 
 ```kotlin
 application.install(Compression) {
@@ -109,8 +108,8 @@ that are forced to be done by your browser with either the javascript or image r
 {: .note.security }
 
 
-## Extensibility
+## 拡張
 
-You can provide your own encoder by implementing the `CompressionEncoder` interface and providing a configuration function. 
-Since content can be provided as a `ReadChannel` or `WriteChannel`, it should be able to compress in both ways. 
-See `GzipEncoder` as an example of an encoder. 
+カスタムのエンコーダーを作りたい場合は、`CompressionEncoder`インターフェースを実装し、設定を行う関数を作ればよいです。
+コンテンツは`ReadChannel`か`WriteChannel`として渡されるので、これらを圧縮することができます。
+`GzipEncoder`をエンコーダーの例としてご参照ください。
