@@ -1,6 +1,6 @@
 ---
-title: Auto Head Response
-caption: Enable Automatic HEAD Responses
+title: Headリクエスト自動応答
+caption: 自動HEADレスポンス機能の有効化
 category: servers
 permalink: /servers/features/autoheadresponse.html
 feature:
@@ -11,14 +11,13 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor can automatically provide responses to `HEAD` requests for existing routes that have the `GET` verb defined. 
+Ktorは自動的に、GETで定義されたルーティングに対する`HEAD`リクエストに対してレスポンスを返すことができます。
 
 {% include feature.html %}
 
-## Usage
+## 使い方
 
-To enable automatic `HEAD` responses, install the `AutoHeadResponse` feature
-
+自動で`HEAD`レスポンスを返す設定を有効化するには、`AutoHeadResponse` Featureをインストールしてください。
 
 ```kotlin
 fun Application.main() {
@@ -28,12 +27,11 @@ fun Application.main() {
 }
 ```
 
-## Configuration options
+## 設定オプション
 
-None.
+ありません。
 
-## Under the covers
+## 内部的な隠蔽されている挙動
 
-This feature automatically responds to `HEAD` requests by routing as if it were `GET` response and discarding 
-the body. Since any `FinalContent` produced by the system has lazy content semantics, it does not incur in any performance
-costs for processing a `GET` request with a body. 
+この機能は自動的に`HEAD`リクエストに対し、まるで`GET`レスポンスにルーティングされたうえでbody部分を破棄したかのようにレスポンスを返します。
+システムによって生成される`FinalContent`は遅延評価されるので、ボディー付きの`GET`リクエストを処理する上でパフォーマンスのコストがかかりません。

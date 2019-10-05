@@ -9,9 +9,10 @@ feature:
 ktor_version_review: 1.0.0
 ---
 
-The CallId feature allows to identify a request/call and can work along the [CallLogging](/servers/features/call-logging.html) feature.
+CallId Featureを使うと、リクエスト/コールを識別ができるようになり、
+[CallLogging](/servers/features/call-logging.html) Featureと一緒に動作させることができます。
 
-## Generating Call IDs 
+## Call IDの生成 
 
 ```kotlin
 install(CallId) {
@@ -45,11 +46,11 @@ install(CallId) {
 }
 ```
 
-## Extending [CallLogging](/servers/features/call-logging.html)
+## [CallLogging](/servers/features/call-logging.html)の拡張
 {: #call-logging-interop }
 
-The CallId feature includes a `callIdMdc` extension method to be used when configuring the CallLogging.
-It allows to associate the `callId` to the specified key to be put in the MDC context. 
+CallId Featureは`callIdMdc`拡張関数を含んでおり、この関数はCallLoggingの設定を行う際に利用されます。
+この関数は`callId`を指定したキーに紐付けMDCコンテキストにputします。
 
 ```kotlin
 install(CallLogging) {

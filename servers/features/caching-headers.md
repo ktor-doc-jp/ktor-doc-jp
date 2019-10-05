@@ -1,6 +1,6 @@
 ---
-title: Caching Headers
-caption: Controlling cache headers
+title: キャッシュヘッダー
+caption: キャッシュヘッダーの操作
 category: servers
 permalink: /servers/features/caching-headers.html
 feature:
@@ -11,13 +11,14 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-The CachingOptions feature adds the ability to send the headers `Cache-Control` and `Expires`
-used by clients and proxies to cache requests in an easy way.
+CachingOptions機能を使うと、`Cache-Control`と`Expires`ヘッダーを送信し、
+クライアントやプロキシにリクエストを簡単にキャッシュさせることができます。
 
 {% include feature.html %}
 
-The basic feature is installed just like many others, but for it to do something, you have to define
-`options` blocks transforming outputContent to CachingOptions using for example:
+その他多くのFeatureと同じように、基本的な機能は初めからインストールされます。
+しかし何かしらを行おうと思った場合は、
+以下の例のようにoutputContentをCachingOptionsに変換する`options`ブロックを定義する必要があります:
 
 ```kotlin
 install(CachingHeaders) {
@@ -30,14 +31,13 @@ install(CachingHeaders) {
 }
 ```
 
-The options configuration method, allows you to define code to optionally select a `CachingOptions`
-from a provided `outgoingContent: OutgoingContent`.
-You can, for example, use the `Content-Type` of the outgoing message to determine which Cache-Control to use.
+`options`設定メソッドを使うと、引数として与えられた`outgoingContent: OutgoingContent`から、
+オプショナルで`CachingOptions`を指定するコードを定義できます。
+例えば、送信メッセージの`Content-Type`を使い、どのCache-Controlが使われるのかを決めることができます。
 
-## CachingOptions and CacheControl
+## CachingOptions, CacheControl
 
-The `options` high order function requires you to return a `CachingOption` that describes a `CacheControl`
-plus an optional expiring time:
+`options`高階関数を使うとき`CachingOption`を返すことで、`CacheControl`とあとオプションとして有効期限も示す必要があります:
 
 ```kotlin
 data class CachingOptions(val cacheControl: CacheControl? = null, val expires: ZonedDateTime? = null)
@@ -51,4 +51,4 @@ sealed class CacheControl(val visibility: Visibility?) {
 }
 ```
 
-If you have several options, that would append several `Cache-Control` headers per each matching option.
+いくつかのOptionがある場合、マッチしたOptionごとに`Cache-Control`ヘッダーを付与します。
