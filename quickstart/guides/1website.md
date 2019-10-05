@@ -1,6 +1,6 @@
 ---
 title: Website
-caption: "Guides: How to create a plain website using ktor"
+caption: "Guides: ktorを用いた簡単なWebサイトの作り方"
 category: quickstart
 permalink: /quickstart/guides/website.html
 ktor_version_review: 1.0.0
@@ -8,12 +8,9 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-In this guide you will learn how to create an HTML Website using Ktor.
-We are going to create a simple website with HTML rendered at the back-end with users, a login form,
-and keeping a persistent session.
+本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされる簡単なWebサイトを作っていきます。
 
-To achieve this, we are going to use the [Routing], [StatusPages], [Authentication], [Sessions], [StaticContent],
-[FreeMarker], and [HTML DSL] features.
+Webサイトをつくっていくうえで、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]を使用していきます。
 
 [Routing]: /servers/features/routing.html
 [StatusPages]: /servers/features/status-pages.html
@@ -23,25 +20,26 @@ To achieve this, we are going to use the [Routing], [StatusPages], [Authenticati
 [FreeMarker]: /servers/features/templates/freemarker.html
 [HTML DSL]: /servers/features/templates/html-dsl.html
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Setting up the project
+## プロジェクトの作成 
 
-The first step is to set up a project. You can follow the [Quick Start](/quickstart/index.html) guide, or use the following form to create one:
+まずはじめにプロジェクトのセットアップから行います。[Quick Start](/quickstart/index.html) のページにしたがって作成するか、下記のKtor Project Generatorを使ってプロジェクトを作成してください:
 
 {% include preconfigured-form.html hash="dependency=html-dsl&dependency=css-dsl&dependency=freemarker&dependency=static-content&dependency=auth&dependency=ktor-sessions&dependency=status-pages&dependency=routing&artifact-name=website-example" %}
 
-## Simple routing
+## シンプルなルーティング 
 
-First of all, we are going to use the routing feature. This feature is part of the Ktor's core, so you won't need
-to include any additional artifacts.
+まずはじめに、 [Routing Feature](/servers/features/routing.html) を使っていきます。
+Ktor では様々な機能を Feature という形で提供し、その Feature をインストールすることで利用可能になりますが、
+Routing Feature は Ktor のコア機能の一つなので、新たに Feature を追加する必要はありません。
 
-This feature is installed automatically when using the `routing { }` block.
+Routing Feature の DSL ブロックのひとつである `routing { }` ブロックを用いることで、自動的にインストールされます。
 
-Let's start creating a simple GET route that responds with 'OK':
+`routing` ブロックとその内部で利用できる `get` メソッドを用いて、`OK`を返却するシンプルなGET APIを作成してみましょう:
 
 ```kotlin
 fun Application.module() {
@@ -53,14 +51,14 @@ fun Application.module() {
 }
 ```
 
-## Serving HTML with FreeMarker
+## FreeMarkerを用いたHTMLの生成
 
-Apache FreeMarker is a template engine for the JVM, and thus you can use it with Kotlin.
-There is a Ktor feature supporting it.
+Apache FreeMarkerはJVMのためのテンプレートエンジンです。したがってKotlinにおいても使うことができます。
+Ktor においては最初からFeatureとしてサポートされています。
 
-For now, we are going to store the templates embedded as part of the resources in a `templates` folder.
+ここでは、`resources/templates`フォルダ以下にテンプレートを保存していきます。
 
-Create a file called `resources/templates/index.ftl` and put in the following content to create a simple HTML list:
+新しく`resources/templates/index.ftl`ファイルを作成して, リストを表示する以下のHTMLを記述してください:
 
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
@@ -75,10 +73,10 @@ Create a file called `resources/templates/index.ftl` and put in the following co
 </html>
 ```
 
-IntelliJ IDEA Ultimate has FreeMarker support with autocompletion and variable hinting.
+IntelliJ IDEA Ultimate はFreeMarkerのオートコンプリートと変数のHintingをサポートしています。
 {:.note}
 
-Now, let's install the FreeMarker feature and then create a route serving this template and passing a set of values to it:
+次に、 FreeMarker Featureをインストールして、テンプレートに値を渡すroutingを作成しましょう:
 
 ```kotlin
 data class IndexData(val items: List<Int>)
@@ -96,22 +94,21 @@ fun Application.module() {
 }
 ```
 
-Now you can run the server and open a browser pointing to <http://127.0.0.1:8080/html-freemarker>{:target="_blank"} to see the results:
+サーバーを起動して、<http://127.0.0.1:8080/html-freemarker>ページをブラウザで確認してみましょう:
 
 ![](/quickstart/guides/website/website1.png){:.rounded-shadow}
 
-Nice!
+いいね!
 
-## Serving static files: styles, scripts, images... 
+## 静的ファイルの配信: styles, scripts, images...
 
-In addition to templates, you will want to serve static content.
-Static content will serve faster, and is compatible with other features like Partial Content that allows
-you to resume downloads or partially download files.
+テンプレートに加えて、静的コンテンツを配信したい場合もあると思います。
+静的コンテンツはKtorにより高速に配信でき、また途中でやめたダウンロードを再開したり、部分的にファイルをダウンロードしたりできるようになるPartial Contentなどの他のFeatureと互換性があります。
 
-For now, we are going to serve a simple `styles.css` file to apply styles to our simple page.
+それでは、簡単な`style.css`ファイルを先ほど作成したページにstyleを適用するために配信してみましょう。
 
-Serving static files doesn't require installing any features, but it is a plain Route handler.
-To serve static files at the `/static` url, from `/resources/static`, you would write the following code:
+静的ファイルを配信するために新しいFeatureをインストール必要はなく、簡単なRoute handlerで実現できます。
+`/resources/static`に置かれた静的ファイルを`/static` urlで配信するためには、次のようなコードを書けばよいでしょう:
 
 ```kotlin
 routing {
@@ -122,7 +119,7 @@ routing {
 }
 ```
 
-Now let's create the `resources/static/styles.css` file with the following content:
+次に以下の内容の`resources/static/style.css`を作りましょう:
 
 ```css
 body {
@@ -130,7 +127,7 @@ body {
 }
 ```
 
-In addition to this, we will have to update our template to include the `style.css` file:
+これに加えて、`style.css`ファイルを含めるために先ほどのtemplateファイルを更新する必要があります:
 ```freemarker
 <#-- @ftlvariable name="data" type="com.example.IndexData" -->
 <html>
@@ -143,34 +140,32 @@ In addition to this, we will have to update our template to include the `style.c
 </html>
 ```
 
-And the result:
+ブラウザで確認してみましょう:
 
 ![](/quickstart/guides/website/website2.png){:.rounded-shadow}
 
-Now we have a colorful website from 1990!
+1990年来のカラフルなWebサイトができましたね!
 
-Static files are not only text files! Try to add an image (what about a fancy animated blinking gif file? 👩🏻‍🎨) to the `static` folder, and include a `<img src="...">` tag to the HTML template.
+静的ファイルはテキストファイルだけではありません! 画像(派手なアニメーションで点滅してるようなgifファイルなんかどうですか? 👩🏻‍🎨)を`static`フォルダに追加してから、HTMLテンプレートに`<img src="...">`タグを追記してみましょう!
 {: .note.exercise}
 
-## Enabling partial content: large files and videos
+## コンテンツの分割を可能にする: 大きなファイルや動画など
 
-Though not really needed for this specific case, if you enable partial content support, people will be able
-to resume larger static files on connections with frequent problems, or allow seeking support when
-serving and watching videos.
+今回のケースでは必要ありませんが、もしコンテンツの分割配信のサポートを有効にすると、
+頻繁に問題が発生するネットの接続状況において大きな静的ファイルの配信を再開したり、動画の提供や視聴をすることができます。
 
-Enabling partial content is straightforward:
+コンテンツの分割配信の有効化は簡単です:
 
 ```kotlin
 install(PartialContent) {
 }
 ```
 
-## Creating a form
+## form画面の作成 
 
-Now we are going to create a fake login form. To make it simple, we are going to accept users with the same password,
-and we are not going to implement a registration form.
+次にニセのログインフォームを作成していきます。単純にするためにすべてのユーザーがusernameと同じパスワードでログインできるようにし、またユーザー登録画面については実装しません。
 
-Create a `resources/templates/login.ftl`:
+`resources/templates/login.ftl`を以下の内容で作成してください:
 
 ```kotlin
 <html>
@@ -192,7 +187,8 @@ Create a `resources/templates/login.ftl`:
 </html>
 ```
 
-In addition to the template, we need to add some logic to it. In this case we are going to handle GET and POST methods in different blocks of code:
+
+テンプレートに加えて,いくつかロジックを追加する必要があります。今回のケースではGETとPOSTメソッドをいくつかのコード片として処理していきます。
 
 ```kotlin
 route("/login") {
@@ -210,14 +206,12 @@ route("/login") {
 }
 ```
 
-As we said, we are accepting `username` with the same `password`, but we are not accepting null values.
-If the login is valid, we respond with a single OK for now, while we reuse the template if the login fails
-to display the same form but with an error.
+既に書いたとおり、任意の`username`に対してユーザーネームと同じ`password`でログインできるようにしますが、nullについては受け入れないようにします。
+もしログインに成功すれば、今のところただの`OK`の文字列で応答します。一方もしログインに失敗すればエラーと共にログインの時と同じフォームを再利用します。
 
-## Redirections
+## リダイレクション 
 
-In some cases, like route refactoring or forms, we will want to perform redirections (either temporary or permanent).
-In this case, we want to temporarily redirect to the homepage upon successful login, instead of replying with plain text.
+ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトさせたいです:
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -233,10 +227,9 @@ call.respondRedirect("/", permanent = false)
 
 </td></tr></tbody></table>
 
-## Using the Form authentication
+## Form認証を使用する 
 
-To illustrate how to receive POST parameters we have handled the login manually, but we can also use the authentication
-feature with a form provider:
+POSTパラメータを受け取る方法を説明するために、ログインを手動で処理しましたが、authentication featureをform providerで使うこともできます:
 
 ```kotlin
 install(Authentication) {
@@ -260,10 +253,9 @@ route("/login") {
 }
 ```
 
-## Sessions
+## Sessions 
 
-To prevent having to authenticate all the pages, we are going to store the user in a session, and that session will
-be propagated to all the pages using a session cookie.
+すべてのページにおいて認証させることを避けるために、user情報をsessionで格納していきます。またsessionで得たuser情報はcookieを利用してすべてのページに伝搬されていきます。
 
 ```kotlin
 data class MySession(val username: String)
@@ -284,7 +276,7 @@ fun Application.module() {
 } 
 ```
 
-Inside our pages, we can try to get the session and produce different results:
+ページの内部では、sessionから情報を得られたかどうかで別の結果を返すようにしています。
 
 ```kotlin
 fun Application.module() {
@@ -300,11 +292,11 @@ fun Application.module() {
 }
 ```
 
-## Using HTML DSL instead of FreeMarker
+## FreeMarkerの代わりにHTML DSLを使用する
 
-You can choose to generate HTML directly from the code instead of using a Template Engine.
-For that you can use the HTML DSL. This DSL doesn't require installation, but requires an additional artifact (see [HTML DSL] for details).
-This artifact provides an extension to respond with HTML blocks:
+テンプレートエンジンを使用する代わりにコードからHTMLを直接生成する方法を選ぶこともできます。
+そのための手段としてHTML DSLが用意されています。このDSLは追加でインストールする必要はありませんが、追加のArtifactが必要となります(詳しくは[HTML DSL]の項目を参照)。
+このArtifactはHTMLブロックを返すためのextensionを提供しています。
 
 ```kotlin
 get("/") { 
@@ -323,20 +315,15 @@ get("/") {
     }
 }
 ```
+HTML DSLを利用する主なメリットとしては変数に完全に静的に型指定されたアクセス権限があり,かつ徹底的にコードベースで統合されている点があります。
+これの欠点としてはHTMLを変更するたびにリコンパイルする必要があり、完全なHTMLブロックを検索できない点が挙げられます。しかしながらテンプレートと比較し非常に高速であり、[autoreload feature](https://jp.ktor.work/servers/autoreload.html)を利用することでコードの変更時に再コンパイルして関連するJVMクラスをリロードすることができます。
 
-The main benefits of an HTML DSL is that you have full statically typed access to variables and it is thoroughly integrated
-with the code base.
+## 発展課題
 
-The downside of all this is that you have to recompile to change the HTML, and you can't search complete HTML blocks.
-But it is lightning fast, and you can use the [autoreload feature](https://jp.ktor.work/servers/autoreload.html) to recompile
-on change and reload the relevant JVM classes.
+### 発展課題1
 
-## Exercises
+登録ページを作成して、hashmapにuserとpasswordを格納してみましょう。
 
-### Exercise 1
+### 発展課題2
 
-Make a registration page and store the user/password datasource in memory in a hashmap.
-
-### Exercise 2
-
-Use a database to store the users.
+ユーザーを格納するためにデータベースを使用してみましょう。
