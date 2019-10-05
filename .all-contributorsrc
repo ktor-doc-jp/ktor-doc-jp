@@ -20,7 +20,10 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/2967161?v=4",
       "profile": "https://github.com/lasta",
       "contributions": [
-        "doc", "doc", "doc", "doc"
+        "doc",
+        "doc",
+        "doc",
+        "doc"
       ]
     },
     {
@@ -29,7 +32,18 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/43880251?v=4",
       "profile": "https://prolab.club",
       "contributions": [
-        "doc", "doc", "doc"
+        "doc",
+        "doc",
+        "doc"
+      ]
+    },
+    {
+      "login": "pokotsun",
+      "name": "pokotsun",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/22976888?v=4",
+      "profile": "https://github.com/pokotsun",
+      "contributions": [
+        "doc"
       ]
     }
   ],
