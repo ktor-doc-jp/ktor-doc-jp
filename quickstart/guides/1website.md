@@ -73,7 +73,7 @@ Ktor においては最初からFeatureとしてサポートされています�
 </html>
 ```
 
-IntelliJ IDEA Ultimate はFreeMarkerのオートコンプリートと変数のHintingをサポートしています。
+IntelliJ IDEA Ultimate はFreeMarkerのオートコンプリートと変数ヒント機能をサポートしています。
 {:.note}
 
 次に、 FreeMarker Featureをインストールして、テンプレートに値を渡すroutingを作成しましょう:
