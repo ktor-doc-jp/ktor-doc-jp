@@ -1,6 +1,6 @@
 ---
-title: Running
-caption: Running Server Application 
+title: 起動
+caption: サーバアプリケーションの起動
 category: servers
 permalink: /servers/engine.html
 ---
