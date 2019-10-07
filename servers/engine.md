@@ -6,7 +6,7 @@ permalink: /servers/engine.html
 ---
 
 Ktor のアプリケーションは Apache Tomcat などのアプリケーションサーバにデプロイしたり、 Jetty 等を内包し自己ホストすることもできます。
-このセクションでは、外部で Ktor アプリケーションをホストする方法を説明します。
+このセクションでは、外部サーバ等で Ktor アプリケーションを起動する方法を説明します。
 
 **目次**
 
@@ -15,7 +15,7 @@ Ktor のアプリケーションは Apache Tomcat などのアプリケーショ
 
 ## 外部ホスト上でのアプリケーションの起動
 
-独立して管理されているホストアプリケーション (Tomcat など) 上で Ktor を実行する場合は、
+Apache Tomcat などのように独立して管理されるホストアプリケーション上で Ktor アプリケーションを起動する場合は、
 アプリケーションの起動方法を Ktor に伝えるために、 `application.conf` ファイルが必要になります。
 
 ### 設定方法
@@ -47,24 +47,17 @@ IntelliJ IDEA のような開発環境上でのアプリケーションの起動
 
 #### IntelliJ IDEA 
 
-1. Create a new Run Configuration using "Application" as a template
-2. For the main class use one of the following engines
-  * Netty: use `io.ktor.server.netty.EngineMain` 
-  * Jetty: use `io.ktor.server.jetty.EngineMain` 
-3. Specify the Module to be used
-4. Save the Configuration by giving it a name
-
-Once the configuration is saved, you can now run your application for development/debug purposes from inside IntelliJ IDEA, without having to deploy to a container or setup 
-any application servers.
-
-See also: [Configuration](configuration)
-
 1. "Application" テンプレートを用いて Run Configuration を新規作成
 2. 使用したいエンジンに対応したクラスを Main クラスとして指定
   * Netty: `io.ktor.server.netty.EngineMain` 
   * Jetty: `io.ktor.server.jetty.EngineMain` 
 3. 使用するモジュールを指定
 4. 名前をつけて Configuration を保存
+
+設定を保存したら、外部のアプリケーションサーバの構築やコンテナへのデプロイをせずとも、IntelliJ IDEA 上で開発やデバッグ目的で
+あなたのアプリケーションを起動できるようになります。
+
+[Configuration](configuration) も参照してください。
 
 ## 自動リロードの使用
 
