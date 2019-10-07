@@ -5,21 +5,22 @@ category: servers
 permalink: /servers/engine.html
 ---
 
-Ktor applications can be self-hosted or hosted on an Application Server. This section shows you how to host Ktor applications externally.
+Ktor のアプリケーションは Apache Tomcat などのアプリケーションサーバにデプロイしたり、 Jetty 等を内包し自己ホストすることもできます。
+このセクションでは、外部で Ktor アプリケーションをホストする方法を説明します。
 
-**Table of contents:**
+**目次**
 
-* TOC
+* 目次
 {:toc}
 
-## Running an application in an external host
+## 外部ホスト上でのアプリケーションの起動
 
-When you need to run a Ktor application in an independently maintained host (for instance Tomcat), you will need an `application.conf` file
-to tell Ktor how to start your application. 
+独立して管理されているホストアプリケーション (Tomcat など) 上で Ktor を実行する場合は、
+アプリケーションの起動方法を Ktor に伝えるために、 `application.conf` ファイルが必要になります。
 
-### Defining the configuration
+### 設定方法
 
-In the resources folder, create a file named `application.conf` with the following contents
+リソースディレクトリ内に `application.conf` を作成し、下記を記載します。
 
 ```kotlin
 ktor {
@@ -33,16 +34,16 @@ ktor {
 }
 ```
 
-Replace `my.company.MyApplication` with your application's package, and `ApplicationKt` with the name of the
-file your `Application.main` function is contained in.
+`my.company.MyApplication` をあなたのアプリケーションのパッケージに置換し、
+`ApplicationKt` を `Application.main` 関数を持つファイル名に置換してください。
 
-### Deploying the hosted application
+### ホストアプリケーションへのデプロイ方法
 
 // TODO 
 
-## Running the application from inside the IDE
+## IDE 上でアプリケーションを実行
 
-Running applications in a development environment such as IntelliJ IDEA, is supported by using development engines. 
+IntelliJ IDEA のような開発環境上でのアプリケーションの起動する場合は、開発用エンジンを用います。
 
 #### IntelliJ IDEA 
 
@@ -58,10 +59,17 @@ any application servers.
 
 See also: [Configuration](configuration)
 
-## Use automatic reloading
+1. "Application" テンプレートを用いて Run Configuration を新規作成
+2. 使用したいエンジンに対応したクラスを Main クラスとして指定
+  * Netty: `io.ktor.server.netty.EngineMain` 
+  * Jetty: `io.ktor.server.jetty.EngineMain` 
+3. 使用するモジュールを指定
+4. 名前をつけて Configuration を保存
 
-Ktor can automatically reload the application when changes to the class files are detected, i.e. when you build the Application.
-Enable this feature by adding `watch` configuration to `application.conf`:
+## 自動リロードの使用
+
+Ktor はクラスファイルへの変更が検出されたとき、すなわちアプリケーションをビルドしたときに、アプリケーションを自動的にリロードできます。
+`application.conf` に `watch` の設定を追加することで、有効化できます。
 
 ```groovy
 ktor {
@@ -74,4 +82,4 @@ ktor {
 }
 ```
 
-Check [Automatic Reloading](/servers/autoreload.html) article for more details.
+[Automatic Reloading](/servers/autoreload.html) に詳細な情報があります。
