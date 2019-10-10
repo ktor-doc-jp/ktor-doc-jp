@@ -1,12 +1,12 @@
 ---
-title: Hosting
-caption: Hosting
+title: ホスティング
+caption: ホスティング
 category: servers
 permalink: /servers/deploy/hosting.html
 children: /servers/deploy/hosting/
 ktor_version_review: 1.0.0
 ---
 
-**Table of contents:**
+**目次:**
 
 {% include list-children.html %}
