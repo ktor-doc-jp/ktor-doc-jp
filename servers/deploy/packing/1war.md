@@ -1,16 +1,17 @@
 ---
 title: WAR
-caption: WAR (Servlet Container)
+caption: WAR (サーブレットコンテナ)
 category: servers
 permalink: /servers/deploy/packing/war.html
 ktor_version_review: 1.0.0
 ---
 
-A WAR archive allows you to easily deploy your application inside your web container / servlet container,
-by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: Jetty and Tomcat.
-It also serves when deploying to [google app engine](https://cloud.google.com/appengine/).
+WARアーカイブを使うと、`webapps`フォルダにコピーするだけで簡単にWebコンテナ/サーブレットコンテナ内にアプリケーションをデプロイできます。
+KtorはJetty、Tomcatという2つの人気のあるサーブレットコンテナをサポートしています。
+[google app engine](https://cloud.google.com/appengine/)にデプロイする際にも提供されます。
 
-To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` which looks like this:
+WARファイルを作成するために、gretty gradleプラグインを利用できます。
+以下のような`WEB-INF/web.xml`も必要とします。
 
 {% capture web-xml %}
 ```xml
@@ -108,12 +109,11 @@ afterEvaluate {
     tab2-title="build.gradle" tab2-content=build-gradle
 %}
 
-This gradle buildscript defines [several tasks](http://akhikhl.github.io/gretty-doc/Gretty-tasks) that
-you can use to run your application.
+このgradleのbuildscriptはアプリケーションを実行するための[いくつかのgradleタスク](http://akhikhl.github.io/gretty-doc/Gretty-tasks)を定義しています。
 
-In the case where you only need to generate a war file, there is a `war` task defined in the war plugin.<br />
-Just run `./gradlew war` and it will generate a `/build/libs/projectname.war` file.
+warファイルを作成したいだけのときは、`war`タスクがwarプラグインに定義されています。
+単純に`./gradlew war`を実行することで、`/build/libs/projectname.war`ファイルが生成されます。
 {: .note #generate-war-file }
 
-For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
+完全な例: <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
 {: .note.example}
