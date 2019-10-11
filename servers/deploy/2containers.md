@@ -9,13 +9,17 @@ ktor_version_review: 1.0.0
 ## Docker
 {: #docker}
 
-Docker is a container engine: it allows you to pack and run applications, in a sandboxed layered
-lightweight environment, with its own isolated filesystem, operating system, and resources.
+Docker はコンテナエンジンです。
+レイヤー化された軽量な環境で、独立分離されたファイルシステム、OS、およびリソースを使用して、アプリケーションを
+コンテナ化および実行ができます。
 
-You usually have to create a `Dockerfile` for monolithic services, and a `docker-compose.yml` 
-when your container needs to interact with other services, like for example a database or a redis. 
+モノリシックなサービスの場合は `Dockerfile` を作成し、コンテナ間でやり取りが必要な場合 (データベースや redis など) は
+`docker-compose.yml` を作成します。
 
 First you have to create a [fat-jar file](/servers/deploy/packing/fatjar) with your application. And a `Dockerfile`, which looks like this:
+
+まずは、あなたのアプリケーションの [fat-jar ファイル](/servers/deploy/packing/fatjar) を作成します。
+次に、下記のような `Dockerfile` を作成します。
 
 {% capture docker-file %}{% include docker-sample.md %}{% endcapture %}
 
@@ -24,7 +28,7 @@ First you have to create a [fat-jar file](/servers/deploy/packing/fatjar) with y
     no-height="true"
 %}
 
-For deploying to Docker simply you can check out the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
+Docker へデプロイするには、 [docker quickstart](/quickstart/quickstart/docker.html) を確認してください。
 
 ### Nginx
 {: #nginx}
