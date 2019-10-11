@@ -1,6 +1,6 @@
 ---
-title: コンテナ
-caption: コンテナ
+title: Containers
+caption: Containers
 category: servers
 permalink: /servers/deploy/containers.html
 ktor_version_review: 1.0.0
@@ -9,15 +9,13 @@ ktor_version_review: 1.0.0
 ## Docker
 {: #docker}
 
-Dockerはコンテナエンジンです。
-Dockerを使うことで、サンドボックス化された軽量な環境で、独立したファイルシステム・OS・リソースのもと、
-アプリケーションをパッケージジング・実行することができます。
+Docker is a container engine: it allows you to pack and run applications, in a sandboxed layered
+lightweight environment, with its own isolated filesystem, operating system, and resources.
 
-通常、モノリシックなサービスごとに`Dockerfile`を作る必要があります。
-また、コンテナが他のサービス（例えばDBやRedis）と連携する必要があるとき`docker-compose.yml`が使えます。
+You usually have to create a `Dockerfile` for monolithic services, and a `docker-compose.yml` 
+when your container needs to interact with other services, like for example a database or a redis. 
 
-まず初めにアプリケーションについて[fat-jar file](/servers/deploy/packing/fatjar)を作成する必要があります。
-そして以下のように`Dockerfile`も作成する必要があります。
+First you have to create a [fat-jar file](/servers/deploy/packing/fatjar) with your application. And a `Dockerfile`, which looks like this:
 
 {% capture docker-file %}{% include docker-sample.md %}{% endcapture %}
 
@@ -26,17 +24,19 @@ Dockerを使うことで、サンドボックス化された軽量な環境で�
     no-height="true"
 %}
 
-Dockerをシンプルな形でデプロイするため、[dockerクイックスタート](/quickstart/quickstart/docker.html)を読むとよいでしょう。
+For deploying to Docker simply you can check out the [docker quickstart](/quickstart/quickstart/docker.html) page for full details.
 
 ### Nginx
 {: #nginx}
 
-Dockerを複数ドメインで利用する場合、
-[nginx-proxy](https://github.com/jwilder/nginx-proxy)イメージと
-[letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion)イメージを
-使うことで、単一のマシン/ip内で複数ドメイン/サブドメインを利用し、Let's Encryptを利用して自動的にHTTPSを使ったりしたくなるかもしれません。
+When using Docker with multiple domains, you might want to use the 
+[nginx-proxy](https://github.com/jwilder/nginx-proxy) image and the 
+[letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion) image
+to serve multiple domains/subdomains in a single machine/ip and to automatically provide HTTPS,
+using let's encrypt.
 
-nginx-proxyとletsencrypt-nginx-proxy-companionの設定後、docker-compose.ymlファイルは（その他別のサービスがない場合）例えば以下のようになります:
+After configuring the nginx-proxy and letsencrypt-nginx-proxy-companion, your docker-compose.yml file
+(without additional services) might look like this:
 
 {% capture docker-compose-yml %}
 ```yaml
@@ -70,28 +70,28 @@ networks:
     no-height="true"
 %}
 
-`docker-compose up -d`で起動することができ、
-サービスが失敗するかシステム再起動後にはコンテナは再起動されます。
+You can start it with `docker-compose up -d` and it will be restarted if the service fails or
+after a system reboot.
 
-指定したドメインのDNSがあなたのサーバーを指しており、nginx-proxyとletsencrypt-nginx-proxy-companionが正常に設定されているならば、
-letsencrypt companionはletsencryptにアクセスし、証明書を自動的に取得・設定します。
-そうすることで、HTTP onlyのサービスにhttps://mydomain.com/経由でアクセスできるようになります。
-nginxがSSL証明書をハンドリングするため、サーバーにプレーンなHTTP経由でアクセスできます。
+If the DNS for the specified domain is pointing to your server and you have configured the nginx-proxy and its companion correctly,
+the letsencrypt companion will contact with letsencrypt and will grab and configure the certificate automatically
+for you. So you will be able to access your http-only service via: https://mydomain.com/ nginx will handle the SSL certificates
+and will contact your server via plain HTTP.
 
 ## Tomcat
 {: #tomcat}
 
-[warファイル](/servers/deploy/packing/war)を生成する必要があり、Tomcatの`webapps`フォルダ内に配置する必要があります。
+You have to generate a [war file](/servers/deploy/packing/war) and put it in the Tomcat `webapps` folder.
 
-完全な例:
+For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/tomcat-war>
 {: .note.example}
 
 ## Jetty
 {: #jetty}
 
-[warファイル](/servers/deploy/packing/war)を生成する必要があり、Jettyの`webapps`フォルダ内に配置する必要があります。
+You have to generate a [war file](/servers/deploy/packing/war) and put it in the Jetty `webapps` folder.
 
-完全な例:
+For a complete example, check:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
 {: .note.example}
