@@ -6,7 +6,7 @@ permalink: /servers/deploy/packing/war.html
 ktor_version_review: 1.0.0
 ---
 
-WAR アーカイブを利用すると、 `webapps` ディレクトリに war ファイルを配置するだけで、ウェブコンテナ / サーブレットコンテナ上で動作する
+WAR アーカイブを利用するとで、 `webapps` ディレクトリに war ファイルを配置するだけで、ウェブコンテナ / サーブレットコンテナ上で動作する
 アプリケーションを簡単にデプロイできるようになります。
 さらに、 [Google App Engine](https://cloud.google.com/appengine/) へのデプロイも可能です。
 
