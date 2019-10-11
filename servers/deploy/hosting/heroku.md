@@ -6,23 +6,23 @@ permalink: /servers/deploy/hosting/heroku.html
 ktor_version_review: 1.0.0
 ---
 
-There is a quickstart repository for Heroku: <https://github.com/orangy/ktor-heroku-start>
+Heroku用のクイックスタートリポジトリがあります: <https://github.com/orangy/ktor-heroku-start>
 {: .note.example}
 
-## Preparing
+## 準備
 
-For using Heroku, you will need Java, Maven/Gradle and the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+Herokuを使うため、Java、Maven/Gradle、[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)が必要です。
 
-You will also need to configure your public key in the Heroku configuration.
+Heroku設定でpublic keyを設定する必要もあります。
 
-You can try the `heroku --version` command to see if you have the command line installed:
+`heroku --version`コマンドを試し、コマンドラインがインストールされているか確認できます。:
 
 ```
 > heroku --version
 heroku-cli/6.15.36 (darwin-x64) node-v9.9.0
 ```
 
-You will also need an `app.json` file describing your projects and your dependencies:
+プロジェクトと依存関係を定義するため、`app.json`ファイルも必要とします:
 ```json
 {
   "name": "Start on Heroku: Kotlin",
@@ -32,34 +32,34 @@ You will also need an `app.json` file describing your projects and your dependen
 }
 ```
 
-You will also need a `Procfile` describing what to execute:
+何を実行するかを定義するため`Procfile`も必要とします:
 ```
 web:    java -jar target/helloworld.jar
 ```
 
-And a `system.properties` file describing your java version:
+javaバージョンを定義するため`system.properties`ファイルも必要とします:
 
 ```
 java.runtime.version=1.8
 ```
 
-## Running locally
+## ローカル実行
 
-And a file called `.env` along with the other files(required for development).
-This will contain environment variables that Heroku will pass to the application.
-For example, for the quickstart:
+`.env`という名前のファイルやその他（開発用に必要な）ファイルもあります。
+これらのファイルはHerokuがアプリケーションに渡す環境変数を含んでいます。
+例えば、クイックスタートとしては以下のようになります:
 
 ```properties
 PORT=8080
 JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
 ```
 
-If your local installation of postgresql has a user/password, you have to change the jdbc url too:
+ローカルへインストールしたpostgresqlはuser/passwordを持つため、jdbc urlを以下のように変更する必要があります:
 ```properties
 JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name?user=user&password=password
 ```
 
-You will also first need to create the database:
+まず初めにdatabaseを作成する必要があります:
 
 ```
 > psql -c "CREATE DATABASE java_database_name;"
@@ -67,16 +67,16 @@ You will also first need to create the database:
 CREATE DATABASE
 ```
 
-With these files, you can use Gradle or Maven to create a [fat-jar](/servers/deploy/packing/fatjar) and adjust the `Procfile`
-to point to the right file.
+これらのファイル群とともに、GradleやMavenで[fat-jar](/servers/deploy/packing/fatjar)を作成し、
+`Procfile`が正しいファイルを指定するように調整します。
 
-After building the jar, in Unix systems you can use `heroku local:start` to start your server.
+jarのビルド後、Unixシステムだと`heroku local:start`を使うことでサーバーを起動できます。
 
-## Deploying
+## デプロイ
 
-You first have to create an app or set the git remote. `heroku create` will create an app
-with a random available name and it will set a git remote of the repo.
-After calling `heroku create`, you should see something like this:
+最初にHerokuアプリケーションの作成またはgit remoteの設定が必要です。
+`heroku create`コマンドはアプリケーションをランダムな名前で作成し、レポジトリに対するgit remoteを設定します。
+`heroku create`実行すると、以下のような内容ができます:
 
 ```
 > heroku create
@@ -84,7 +84,7 @@ Creating app... done, ⬢ demo-demo-12345
 https://demo-demo-12345.herokuapp.com/ | https://git.heroku.com/demo-demo-12345.git
 ```
 
-This effectively adds a `heroku` remote to your git clone:
+このコマンドは`heroku` remoteをあなたのgit cloneに追加します:
 
 ```
 > cat .git/config
@@ -94,7 +94,8 @@ This effectively adds a `heroku` remote to your git clone:
 	fetch = +refs/heads/*:refs/remotes/heroku/*
 ```
 
-After that, you have to push your git changes to the `heroku` remote. And it does a build on push:
+その後、`heroku` remoteにgit changeをpushする必要があります。
+push時にビルドが実行されます:
 
 ```
 > git push heroku master
@@ -130,19 +131,18 @@ To https://git.heroku.com/demo-demo-12345.git
  * [new branch]      master -> master
 ```
 
-Now you can execute `heroku open` to open your application in your browser:
+`heroku open`を実行し、アプリケーションをあなたのブラウザ上で開くこともできます:
 
 ```
 heroku open
 ```
 
-In this case, it will open: https://demo-demo-12345.herokuapp.com/
+この場合、https://demo-demo-12345.herokuapp.com/ が開かれます。
 
-Remember that Heroku sets an environment variable called `PORT` which you have to bind to instead of
-a fixed port.<br/>
+Herokuは特定のポートの代わりに`PORT`という環境変数をセットすることでポート指定する必要があることを覚えておいてください。<br/>
+組み込みサーバ利用時には`System.getenv`を使う必要がありますが、
+`application.conf`を使う場合は`ktor.deployment.port = ${PORT}`をセットする必要があります。<br/>
 When using embeddedServer you will have to use `System.getenv`, while when using `application.conf` you will
 have to set `ktor.deployment.port = ${PORT}`.<br/>
-Check out the page about
-[using environment variables in the configuration](http://127.0.0.1:4000/servers/configuration.html#environment-variables)
-for more information.
+[設定内で環境変数を利用](/servers/configuration.html#environment-variables)ページをご参照ください。
 {: .note}

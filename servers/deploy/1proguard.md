@@ -6,10 +6,11 @@ permalink: /servers/deploy/proguard.html
 ktor_version_review: 1.0.0
 ---
 
-If you have some restrictions on your JAR size (for example when deploying a free application to [heroku](/servers/deploy/hosting/heroku)),
-you can use proguard to shrink it. If you are using gradle, it is pretty straightforward to use the
-`proguard-gradle` plugin. You only have to remember to keep: your main module method, the EngineMain
-class, and the Kotlin reflect classes. You can then fine-tune it as required:
+JARのサイズに制限があるとき（例えば[heroku](/servers/deploy/hosting/heroku)に無料でアプリケーションをデプロイするとき）、
+proguardを使ってサイズを小さくすることができます。
+gradleを使っているなら、`proguard-gradle`を使うのがよいでしょう。
+main moduleメソッド、EngineMainクラス、Kotlin reflectクラスを保持しておくことだけは覚えておく必要があります。
+その他必要に応じて微調整することもできます。
 
 {% capture build-gradle %}
 ```groovy
@@ -53,5 +54,5 @@ task minimizedJar(type: proguard.gradle.ProGuardTask, dependsOn: shadowJar) {
 
 &nbsp;
 
-You have a full example on: <https://github.com/ktorio/ktor-samples/tree/master/other/proguard> 
+完全な例はこちらにあります: <https://github.com/ktorio/ktor-samples/tree/master/other/proguard> 
 {: .note.example}
