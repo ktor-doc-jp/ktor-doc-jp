@@ -38,6 +38,8 @@ Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.hero
 
 ```
 💻: Committer
+📦: 4page
+📓: 2page
 📖: 1page
 🐛: typo
 ```
