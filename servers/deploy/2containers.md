@@ -26,7 +26,7 @@ Docker はコンテナエンジンです。
     no-height="true"
 %}
 
-Docker コンテナをデプロイするには、 [docker quickstart](/quickstart/quickstart/docker.html) を確認してください。
+Docker コンテナをデプロイするには、 [Docker コンテナの作成](/quickstart/quickstart/docker.html) を参照してください。
 
 ### Nginx
 {: #nginx}
