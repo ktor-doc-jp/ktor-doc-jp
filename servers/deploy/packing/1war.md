@@ -1,16 +1,17 @@
 ---
 title: WAR
-caption: WAR (Servlet Container)
+caption: WAR (サーブレットコンテナ)
 category: servers
 permalink: /servers/deploy/packing/war.html
 ktor_version_review: 1.0.0
 ---
 
-A WAR archive allows you to easily deploy your application inside your web container / servlet container,
-by just copying it to its `webapps` folder. Ktor supports two popular servlet containers: Jetty and Tomcat.
-It also serves when deploying to [google app engine](https://cloud.google.com/appengine/).
+WAR アーカイブを利用すると、 `webapps` ディレクトリに war ファイルを配置するだけで、ウェブコンテナ / サーブレットコンテナ上で動作する
+アプリケーションを簡単にデプロイできるようになります。
+さらに、 [Google App Engine](https://cloud.google.com/appengine/) へのデプロイも可能です。
 
-To generate a war file, you can use the gretty gradle plugin. You also need a `WEB-INF/web.xml` which looks like this:
+war ファイルを作成するために、 Gradle プラグイン gretty を利用します。
+また、下記のような `WEB-INF/web.xml` が必要になります。
 
 {% capture web-xml %}
 ```xml
@@ -20,8 +21,8 @@ To generate a war file, you can use the gretty gradle plugin. You also need a `W
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-    <!-- path to application.conf file, required -->
-    <!-- note that this file is always loaded as an absolute path from the classpath -->
+    <!-- (必須) application.conf のパスの指定 -->
+    <!-- クラスパスからの絶対パスとして読み込まれることに注意してください  -->
     <context-param>
         <param-name>io.ktor.ktor.config</param-name>
         <param-value>application.conf</param-value>
@@ -32,10 +33,10 @@ To generate a war file, you can use the gretty gradle plugin. You also need a `W
         <servlet-name>KtorServlet</servlet-name>
         <servlet-class>io.ktor.server.servlet.ServletApplicationEngine</servlet-class>
 
-        <!-- required! -->
+        <!-- 必須! -->
         <async-supported>true</async-supported>
 
-        <!-- 100mb max file upload, optional -->
+        <!-- (任意) 最大100MB のファイルのアップロード-->
         <multipart-config>
             <max-file-size>304857600</max-file-size>
             <max-request-size>304857600</max-request-size>
@@ -108,12 +109,12 @@ afterEvaluate {
     tab2-title="build.gradle" tab2-content=build-gradle
 %}
 
-This gradle buildscript defines [several tasks](http://akhikhl.github.io/gretty-doc/Gretty-tasks) that
-you can use to run your application.
+この Gradle ビルドスクリプトにはアプリケーションを起動するために必要な [タスク](http://akhikhl.github.io/gretty-doc/Gretty-tasks)
+が定義されています。
 
-In the case where you only need to generate a war file, there is a `war` task defined in the war plugin.<br />
-Just run `./gradlew war` and it will generate a `/build/libs/projectname.war` file.
+WARファイルを生成したいだけの場合、 war プラグインで定義された `war` タスクを使用します。
+`./gradlew war` を実行するだけで、 `/build/libs/projectname.war` が生成されます。
 {: .note #generate-war-file }
 
-For a full example: <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
+コード全体 (例) : <https://github.com/ktorio/ktor-samples/tree/master/deployment/jetty-war>
 {: .note.example}
