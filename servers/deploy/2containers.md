@@ -75,7 +75,7 @@ networks:
 自動的にサービスが再起動されます。
 
 指定されたドメインの DNS があなたのサーバと紐付いていて、 `nginx-proxy` 等が正しく設定されているならば、
-letsencrypt コンパニオンは letsencrypt と通信し、証明書を自動的に取得して設定します。
+letsencrypt-nginx-proxy-companionは letsencrypt と通信し、証明書を自動的に取得して設定します。
 https://mydomain.com/ のようにアクセスすると、 nginx が SSL 証明書を処理して プレーンな HTTP を経由してあなたのサーバへ
 アクセスするので、 HTTP 通信だけサービスに HTTPS からアクセスできるようになります。
 
