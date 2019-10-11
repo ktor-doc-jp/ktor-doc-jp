@@ -6,16 +6,18 @@ permalink: /servers/deploy/hosting/google-app-engine.html
 ktor_version_review: 1.0.0
 ---
 
-You can check out a full google appengine sample, here:
+GoogleAppEngineのフルのサンプルはここで見れます:
 <https://github.com/ktorio/ktor-samples/tree/master/deployment/google-appengine-standard>
 {: .note.example}
 
-## Preparing
+## 準備
 
-You first need to install the `gcloud` cli. You can grab it from here:
-<https://cloud.google.com/sdk/docs/> and follow the described steps to install it.
+初めに`gcloud`CLIをインストールする必要があります。
+ここから使うことができます:
+<https://cloud.google.com/sdk/docs/>
+そしてインストールのためには記載されているステップに従ってください。
 
-For example, a macOS setup might look something like this:
+例えば、macOSにおけるセットアップは以下のようになります:
 
 ```
 > wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-194.0.0-darwin-x86_64.tar.gz
@@ -94,7 +96,7 @@ For more information on how to get started, please visit:
 ```
 {: .compact}
 
-After that, you can start a new shell, and you should have access to the `gcloud` cli. For example:
+その後、新しいshellが起動でき、`gcloud`CLIにアクセスできます。例えば:
 
 ```
 > gcloud --version
@@ -104,7 +106,7 @@ core 2018.03.16
 gsutil 4.29
 ```
 
-You will also need to install some components with the cli (`gcloud components install app-engine-java`):
+CLIでいくつかのコンポーネントもインストールする必要があります。（`gcloud components install app-engine-java`）:
 
 ```
 > gcloud components install app-engine-java
@@ -149,7 +151,8 @@ Update done!
 ```
 {: .compact }
 
-For your project, you can use gradle and the official `appengine-gradle-plugin`. So a `build.gradle` would look like this:
+gradleとオフィシャルプラグインである`appengine-gradle-plugin`を使うこともできます。
+その場合`build.gradle`は以下のようになります:
 
 {% capture build-gradle %}
 ```groovy
@@ -201,19 +204,20 @@ task run(dependsOn: appengineRun)
     no-height="true"
 %}
 
-Once everything is configured, you can now run the application locally, using the gradle task `appengineRun`:
+一旦すべて設定されたら、`appengineRun` gradle taskを使うことで、アプリケーションをローカルで起動することができます:
 
-In this case, these commands are executed in the root of the ktor-samples repository <https://github.com/ktorio/ktor-samples/>:  
+この場合、ktorのサンプルリポジトリ<https://github.com/ktorio/ktor-samples/>のルートにおいてこれらのコマンドが実行できます:  
 
 ```
 ./gradlew :google-appengine-standard:appengineRun
 ```
 
-It should start the server in <http://localhost:8080/> and the admin in <http://localhost:8080/_ah/admin>.
+サーバーを<http://localhost:8080/>で起動し、adminを<http://localhost:8080/_ah/admin>で起動することができます。
 
-## Deploying
+## デプロイ
 
-First, we need to create a project `gcloud projects create demo-demo-123456 --set-as-default`:
+初めに、プロジェクトを作成する必要があります。
+`gcloud projects create demo-demo-123456 --set-as-default`
 
 ```
 > gcloud projects create demo-demo-123456 --set-as-default
@@ -222,7 +226,7 @@ Waiting for [operations/pc.7618150612308930095] to finish...done.
 Updated property [core/project] to [demo-demo-123456].
 ```
 
-And then we need to create an application using `gcloud app create`:
+そして、`gcloud app create`を使い、アプリケーションを作成する必要があります:
 
 ```
 > gcloud app create
@@ -252,7 +256,7 @@ Creating App Engine application in project [demo-demo-123456] and region [europe
 Success! The app is now created. Please use `gcloud app deploy` to deploy your first app.
 ```
 
-Now we can deploy the application using `gradle appengineDeploy`:
+これで、`gradle appengineDeploy`を使ってアプリケーションをデプロイすることができます:
 
 ```
 > gradle :google-appengine-standard:appengineDeploy
@@ -302,5 +306,6 @@ BUILD SUCCESSFUL in 42s
 ```
 {: .compact }
 
-Now you can view your application in your browser with `gcloud app browse`. It will open
-the application. In this case: https://demo-demo-123456.appspot.com
+これで`gcloud app browse`コマンドで、ブラウザであなたのアプリケーションを見ることができます。
+このコマンドはアプリケーションを開きます。
+この場合、https://demo-demo-123456.appspot.comです。
