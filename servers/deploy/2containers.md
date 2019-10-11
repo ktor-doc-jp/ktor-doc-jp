@@ -1,6 +1,6 @@
 ---
-title: Containers
-caption: Containers
+title: コンテナ
+caption: コンテナ
 category: servers
 permalink: /servers/deploy/containers.html
 ktor_version_review: 1.0.0
