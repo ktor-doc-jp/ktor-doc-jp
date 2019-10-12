@@ -1,6 +1,6 @@
 ---
-title: フィーチャー
-caption: フィーチャー
+title: Feature
+caption: Feature
 category: samples
 permalink: /samples/feature.html
 children: /samples/feature/

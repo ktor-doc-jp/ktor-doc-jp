@@ -96,6 +96,6 @@ fun main(args: Array<String>) {
 サーバーとしてのKtorについて学ぶために以下が推奨されます:
 
 * [アプリケーションとは何か？](/servers/application.html)
-* [フィーチャー](/features)
+* [Feature](/features)
 * [アプリケーション構造](/servers/structure.html)
 * [テスト](/servers/testing.html)
