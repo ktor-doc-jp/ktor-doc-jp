@@ -49,8 +49,6 @@ filterメソッドはホワイトリストとしてフィルター一覧を保�
 {: #mdc }
 
 `CallLogging` Featureはslf4jの`MDC` (Mapped Diagnostic Context)をサポートしており、リクエストの一部として情報を紐付けられます。
-The `CallLogging` feature supports `MDC` (Mapped Diagnostic Context) from slf4j
-to associate information as part of the request.
 
 CallLoggingをインスタンス化するとき、`mdc`メソッドを使ってリクエストに紐付けるパラメータを設定できます。
 このメソッドはkey名と関数のProviderを必要とします。
