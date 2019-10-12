@@ -1,6 +1,6 @@
 ---
 title: HTTP API
-caption: "Guides: ktor を用いた API の作り方"
+caption: "ガイド: ktorを用いたAPIの作り方"
 category: quickstart
 permalink: /quickstart/guides/api.html
 ktor_version_review: 1.0.0

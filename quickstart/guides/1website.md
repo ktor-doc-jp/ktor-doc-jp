@@ -1,6 +1,6 @@
 ---
 title: Website
-caption: "Guides: ktorを用いた簡単なWebサイトの作り方"
+caption: "ガイド: ktorを用いた簡単なWebサイトの作り方"
 category: quickstart
 permalink: /quickstart/guides/website.html
 ktor_version_review: 1.0.0
