@@ -1,6 +1,6 @@
 ---
 title: Website
-caption: "ガイド: ktorを用いた簡単なWebサイトの作り方"
+caption: "ガイド: Ktorを用いた簡単なWebサイトの作り方"
 category: quickstart
 permalink: /quickstart/guides/website.html
 ktor_version_review: 1.0.0
@@ -8,7 +8,7 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-本ページでは, Ktorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされる簡単なWebサイトを作っていきます。
+本ページではKtorを用いた簡単なWebサイトの作り方を学びます。ユーザー、ログインフォーム、及び永続的なセッションを維持する、バックエンド上でHTMLがレンダリングされる簡単なWebサイトを作っていきます。
 
 Webサイトをつくっていくうえで、[Routing]、[StatusPages]、[Authentication]、[Sessions]、[StaticContent]、[FreeMarker]、[HTML DSL]を使用していきます。
 
@@ -188,7 +188,7 @@ install(PartialContent) {
 ```
 
 
-テンプレートに加えて,いくつかロジックを追加する必要があります。今回のケースではGETとPOSTメソッドをいくつかのコード片として処理していきます。
+テンプレートに加えていくつかロジックを追加する必要があります。今回のケースではGETとPOSTメソッドを別のブロックにして処理していきます。
 
 ```kotlin
 route("/login") {
@@ -211,7 +211,7 @@ route("/login") {
 
 ## リダイレクション 
 
-ルートリファクタリングやフォームのようないくつかのケースでは、レダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトさせたいです:
+ルートリファクタリングやフォームのようないくつかのケースでは、リダイレクションを行いたいことがあります(一時的、永続的問わず)。今回のケースではログインに成功した場合、平文を返す代わりに一時的にhomeページにリダイレクトさせたいです:
 
 <table class="compare-table"><thead><tr><th>Original:</th><th>Change:</th></tr></thead><tbody><tr><td markdown="1">
 
@@ -296,7 +296,7 @@ fun Application.module() {
 
 テンプレートエンジンを使用する代わりにコードからHTMLを直接生成する方法を選ぶこともできます。
 そのための手段としてHTML DSLが用意されています。このDSLは追加でインストールする必要はありませんが、追加のアーティファクトが必要となります(詳しくは[HTML DSL]の項目を参照)。
-このArtifactはHTMLブロックを返すためのextensionを提供しています。
+このアーティファクトはHTMLブロックを返すためのextensionを提供しています。
 
 ```kotlin
 get("/") { 
