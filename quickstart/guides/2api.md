@@ -1,6 +1,6 @@
 ---
 title: HTTP API
-caption: "ガイド: ktorを用いたAPIの作り方"
+caption: "ガイド: Ktorを用いたAPIの作り方"
 category: quickstart
 permalink: /quickstart/guides/api.html
 ktor_version_review: 1.0.0
@@ -8,7 +8,7 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-本ページでは、 ktor を用いた API の作り方を学びます。
+本ページでは、Ktorを用いたAPIの作り方を学びます。
 簡易版 pastebin API のような、単純なテキストスニペットを保存する API を作っていきます。
 
 これから [Routing], [StatusPages], [Authentication], [JWT Authentication], [CORS], [ContentNegotiation], [Jackson] について学んでいきます。
@@ -220,14 +220,14 @@ curl \
 
 ![](/quickstart/guides/api/snippets_get_new.png){:.rounded-shadow}
 
-Nice!
+いいね!
 
 ## ルーティングのグループ化
 
 同じパスで HTTP メソッドだけが異なる場合、ルーティングの定義を重複して定義したくないですよね。
 
 prefix が同じルーティングは、 `route(path) { }` ブロックを用いることでグループ化できます。
-複数の HTTP メソッドに対し、ルーティングの葉ノードを共有するかのごとく、同一のパスをオーバーロードできます。
+複数の HTTP メソッドに対し、ルーティングのリーフノードを共有するかのごとく、同一のパスをオーバーロードできます。
 
 ```kotlin
 routing {
@@ -493,7 +493,7 @@ curl -v \
 {% endcomment %}
 
 
-Awesome!
+素晴らしい!
 
 ## ステータスページ
 
