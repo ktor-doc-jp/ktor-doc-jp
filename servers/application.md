@@ -6,9 +6,11 @@ caption: Applicationとは?
 ktor_version_review: 1.2.1
 ---
 
-Ktorサーバーアプリケーションは、HTTP/S 1.x/2.x、WebSocketリクエストを処理するための
+Ktorサーバーアプリケーションは、サーバーエンジンを設定することで1つ以上のポートをリッスンするカスタムプログラムです。
+アプリケーションロジックを含むモジュール群で構成されており、
+HTTP/S 1.x/2.x、WebSocketリクエストを処理するために
 [ルーティング](/servers/features/routing.html)、[セッション](/servers/features/sessions.html)、[圧縮](/servers/features/compression.html)などの
-[Features](#features)をインストールするロジックを備えた[モジュール](#modules)で構成されるサーバーエンジンを使用して、1つ以上のポートをリッスンするカスタムプログラムです。
+[Feature](#features)をインストールすることができます。
 
 Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)も提供しますが、アプリケーションおよびそのパイプラインの一部としては提供しません。
 {: .note}
@@ -24,28 +26,29 @@ Ktorは、[生のソケットを処理する機能](/servers/raw-sockets.html)�
 リクエストを受信すると(リクエストはHTTP、HTTP/2、またはWebSocketの場合があります)、`ApplicationCall`に変換され、`Application`が所有するパイプラインを通過します。
 パイプラインは、以前にインストールされた1つ以上のインターセプターで構成され、リクエストの処理を終了するルーティング、圧縮などの特定の機能を提供します。
 
-通常、Ktorプログラムは、[Features](#features)をインストールおよび構成する[modules](#modules)を介してアプリケーションパイプラインを構成します。
+通常、Ktorプログラムは、[Feature](#features)をインストール・設定した[module](#modules)を介してアプリケーションパイプラインを構成します。
 
 [ライフサイクル](/servers/lifecycle.html)セクションで、パイプラインに関する詳細情報を読むことができます。
 {: .note}
 
-## アプリケーションコール
+## ApplicationCall
 
-[アプリケーションコール](/servers/calls.html)に関するページをご覧ください。
+[ApplicationCall](/servers/calls.html)に関するページをご覧ください。
 
-## Features
+## Feature
 
-Featuresは、パイプラインにインストールおよび構成できるシングルトン(通常はコンパニオンオブジェクト)です。
-Ktorにはいくつかの標準でFeatureが含まれていますが、独自のFeatureを追加したりコミュニティから他のFeatureを追加したりできます。
-アプリケーション自体や特定のルートなど、任意のパイプラインに機能をインストールできます。
+Featureは、パイプラインにインストール・設定することができるシングルトン(通常はコンパニオンオブジェクト)です。
+Ktorにはいくつかの標準Featureが含まれていますが、独自のFeatureを追加したりコミュニティから他のFeatureを追加したりできます。
+アプリケーション自体に対してや特定のルートに対してなど、任意のパイプラインに機能をインストールできます。
 
-[Features](/servers/features.html)の詳細については、専用ページをご覧ください。
+[Feature](/servers/features.html)の詳細については、専用ページをご覧ください。
 {: .note}
 
-## モジュール
+## module
 {: #modules}
 
-Ktorモジュールは、サーバーパイプラインの構成、Featuresのインストール、ルートの登録、リクエストの処理などを担当するApplicationクラスを受け取るユーザー定義関数です。
+Ktorモジュールはユーザが定義した関数であり、Applicationクラスを受け取ります。
+Applicationクラスはサーバーパイプラインの設定・Featureのインストール・ルートの登録・リクエストの処理等の責務を持ちます。
 
 サーバーの起動時にロードするモジュールを[`application.conf`ファイル](/servers/configuration.html#hocon-file)で指定する必要があります。
 
@@ -87,7 +90,7 @@ Kotlinはトップレベル関数として定義されているため、`Kt`サ�
 
 ## 関連項目
 
-- [アプリケーションコール](/servers/calls.html)
+- [ApplicationCall](/servers/calls.html)
 - [ライフサイクル](/servers/lifecycle.html)
 - [アプリケーション設定](/servers/configuration.html)
 - [パイプライン](/advanced/pipeline)
