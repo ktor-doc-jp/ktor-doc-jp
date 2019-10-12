@@ -1,6 +1,6 @@
 ---
-title: Guides
-caption: Guides
+title: ガイド
+caption: ガイド
 category: quickstart
 permalink: /quickstart/guides.html
 children: /quickstart/guides/
