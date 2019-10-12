@@ -1,17 +1,18 @@
 ---
-title: Uploads
-caption: Handling HTTP Uploads  
+title: アップロード
+caption: HTTPアップロードのハンドリング
 category: servers
 keywords: multipart receiving reading files
 permalink: /servers/uploads.html
 ---
 
-Ktor supports handling HTTP Uploads. As well as [receiving any other kind of content](/servers/calls/requests.html).
+KtorはHTTPによるアップロードをサポートします。
+[他の種類のコンテンツを受け取る場合](/servers/calls/requests.html)同様に動作します。
 
-You can check out the [Youkube example](/samples/app/youkube.html) for a full example of this in action.
+[Youkubeサンプル](/samples/app/youkube.html)を見ればこの機能についてのフルのサンプルが確認できます。
 {: .note.example }
 
-## Receiving files using multipart
+## multipartを使ったファイル受信
 
 ```kotlin
 val multipart = call.receiveMultipart()
