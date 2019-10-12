@@ -99,7 +99,7 @@ route("/foo") {
 #### パラメータ
 
 パスは _パラメータ_　を含めることができます。
-パラメータは特定のパスセグメントにに一致し、その値をapplication callの`parameters`プロパティへとキャプチャします。:
+パラメータは特定のパスセグメントに一致し、その値をapplication callの`parameters`プロパティへとキャプチャします。:
 
 ```kotlin
 get("/user/{login}") {
@@ -113,7 +113,6 @@ get("/user/{login}") {
 #### オプショナル、ワイルドカード、テイルカード
 
 パラメータとパスセグメントは、オプショナルになるか、URIの残り全体をキャプチャするかのどちらかになります。
-Parameters and path segments can be optional or capture entire remainder of URI.
 
 * `{param?}` – オプショナルなパスセグメントです。もし存在した場合はパラメータにキャプチャされます
 * `*` – ワイルドカードです。任意のセグメントにマッチしますが、必ず値は存在する必要があります。
@@ -133,7 +132,6 @@ get("/resources/{path...}") { … }
 
 １つの例としては、`Accept`HTTPヘッダーに対するマッチングです。
 特定のプライオリティ（クオリティ）で複数の値を持ち得ます。
-One example is matching on the `Accept` HTTP header which can have multiple values with specified priority (quality).
 
 ```kotlin
 accept(ContentType.Text.Plain) { … }

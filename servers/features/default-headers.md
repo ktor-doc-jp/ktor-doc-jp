@@ -1,5 +1,5 @@
 ---
-title: Default Headers
+title: デフォルトヘッダー
 caption: ヘッダーを自動で送信
 category: servers
 permalink: /servers/features/default-headers.html
