@@ -26,14 +26,14 @@ ktor_version_review: 1.0.0
 ## class変更時のオートリロード
 {: #basics}
 
-[組み込みサーバー](#embedded-server)または[設定ファイル](#configuration-file)のどちらを利用する場合でも、監視する部分文字列のリストを提供する必要があります。
+[組み込みサーバー](#embedded-server)または[設定ファイル](#configuration-file)のどちらを利用する場合でも、
+監視したいクラスローダーにマッチする監視対象の部分文字列リストを提供する必要があります。
 
-これは監視したいクラスローダーと一致します。
+例えばgradleを使用する場合の典型的なクラスローダーは次のようになります:
 
-したがって、例えばgradleを使用する場合の典型的なクラスローダーは次のようになります。
 `/Users/user/projects/ktor-exercises/solutions/exercise4/build/classes/kotlin/main`
 
-この場合、 `solutions/exercise4` が`exercise4`に一致するため、監視対象のクラスローダーになります。.
+この場合、`solutions/exercise4`や`exercise4`を使うことでクラスローダーにマッチします。
 
 ## 組み込みサーバーを使う場合
 {: #embedded-server}
@@ -117,7 +117,7 @@ fun Application.mymodule() {
 ## `application.conf`を使う場合
 {: #configuration-file}
 
-設定ファイルを使用する場合、例えば[`EngineMain`](/servers/engine.html)を使用して、またはコマンドラインから実行する場合はサーバーコンテナ内でホストされます。
+設定ファイルを使用する場合: 例えば[`EngineMain`](/servers/engine.html)を使用し、コマンドラインから実行する場合やホストされているサーバーコンテナ内から実行する場合を考えてみます。
 
 この機能を有効にするには`watch`キーを`ktor.deployment`設定に追加します。
 
