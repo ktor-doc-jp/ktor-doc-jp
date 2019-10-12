@@ -142,7 +142,5 @@ heroku open
 Herokuは特定のポートの代わりに`PORT`という環境変数をセットすることでポート指定する必要があることを覚えておいてください。<br/>
 組み込みサーバ利用時には`System.getenv`を使う必要がありますが、
 `application.conf`を使う場合は`ktor.deployment.port = ${PORT}`をセットする必要があります。<br/>
-When using embeddedServer you will have to use `System.getenv`, while when using `application.conf` you will
-have to set `ktor.deployment.port = ${PORT}`.<br/>
 [設定内で環境変数を利用](/servers/configuration.html#environment-variables)ページをご参照ください。
 {: .note}
