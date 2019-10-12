@@ -19,14 +19,14 @@ Ktorアプリケーションは[Maven](/quickstart/quickstart/maven.html)や[Gra
 ## 正しい依存性を設定
 {: #dependencies }
 
-Ktorはいくつかの成果物に別れています。
+Ktorはいくつかのアーティファクトに別れています。
 そのため必要な機能だけを利用することができます。
 それにより全コードを含んだfat-jarのサイズを減らし、起動時間を短縮できます。
 
-以下のケースでは、`ktor-server-netty`の成果物のみ利用します。
-利用可能な成果物一覧は[Artifacts](/quickstart/artifacts.html)ページをご覧ください。
+以下のケースでは、`ktor-server-netty`のアーティファクトのみ利用します。
+利用可能なアーティファクト一覧は[Artifacts](/quickstart/artifacts.html)ページをご覧ください。
 
-リリースバージョンのそれら成果物は、jcenter、maven centralリポジトリにあります。
+リリースバージョンのそれらアーティファクトは、jcenter、maven centralリポジトリにあります。
 プレリリースのものは[Bintray kotlin/ktor](https://bintray.com/kotlin/ktor)にあります。
 
 ビルドファイルについてのより詳細なガイドは以下をご参照ください:

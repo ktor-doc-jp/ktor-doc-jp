@@ -101,7 +101,7 @@ Mavenは`pom.xml`ファイルからプロジェクトの設定を読み取りま
 ## Ktorへの依存追加とビルド設定
 {: #ktor-dependencies}
 
-Ktorの成果物はbintrayの特定のレポジトリに配置されています。
+Ktorのアーティファクトはbintrayの特定のレポジトリに配置されています。
 そしてその核となる部分は`jcenter`にある`kotlinx.coroutines`ライブラリに依存しています。
 
 そのためその両方を`pom.xml`ファイルの`repositories`ブロックに追加してやる必要があります。
@@ -118,7 +118,7 @@ Ktorの成果物はbintrayの特定のレポジトリに配置されています
 [Bintray](https://bintray.com/kotlin/ktor/ktor)サイトを見て、Ktorの最新バージョンを見つけてください。
 この場合それは `{{site.ktor_version}}`です.
 
-Ktorの成果物リファレンスからバージョンを指定する必要があり、重複を避けるためそのバージョンを`properties`ブロック内でextraプロパティとして指定する必要があります。
+Ktorのアーティファクトリファレンスからバージョンを指定する必要があり、重複を避けるためそのバージョンを`properties`ブロック内でextraプロパティとして指定する必要があります。
 
 ```xml
 <properties>
@@ -126,7 +126,7 @@ Ktorの成果物リファレンスからバージョンを指定する必要が�
 </properties>
 ```
 
-`ktor-server-core`の成果物を追加し、あなたが決めた`ktor.version`を指定します:
+`ktor-server-core`のアーティファクトを追加し、あなたが決めた`ktor.version`を指定します:
  
 ```xml
 <dependency>

@@ -15,7 +15,7 @@ ktor_version_review: 1.2.0
 HTTPサーバーに加えて、Ktorには柔軟な非同期HTTPクライアントも含まれています。
 このクライアントは、いくつかの構成可能なエンジンをサポートし、独自の[機能](/clients/http-client/features.html)セットを備えています。
 
-主な機能は、`io.ktor:ktor-client-core:$ktor_version`アーティファクトを介して利用できます。 また、各エンジンは、[個別の成果物](/clients/http-client/engines.html)で提供されます。
+主な機能は、`io.ktor:ktor-client-core:$ktor_version`アーティファクトを介して利用できます。 また、各エンジンは、[個別のアーティファクト](/clients/http-client/engines.html)で提供されます。
 {: .note.artifact }
 
 **Table of contents:**

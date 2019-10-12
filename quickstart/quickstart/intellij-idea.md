@@ -22,7 +22,7 @@ redirect_from:
 1) 初めのステップとして、プロジェクトの設定とインストールする機能の選択を行います
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png)
 
-2) 次のステップとして、プロジェクトの成果物の設定をします
+2) 次のステップとして、プロジェクトのアーティファクトの設定をします
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png)
 
 ## プラグインのインストール

@@ -64,7 +64,7 @@ dependencies {
 ## Ktorへの依存の追加とビルド設定
 {: #ktor-dependencies}
 
-Ktorの成果物はbintrayのレポジトリに配置されています。
+Ktorのアーティファクトはbintrayのレポジトリに配置されています。
 そしてそのコアの部分は`kotlinx.coroutines`ライブラリに依存しており、それは`jcenter`リポジトリ内にあります。
 
 そのため両方のリポジトリを`build.gradle`ファイルの`repositories`ブロックに追加する必要があります:
@@ -73,7 +73,7 @@ Ktorの成果物はbintrayのレポジトリに配置されています。
 jcenter()
 ```
 
-Ktorの成果物の参照ごとにバージョンを指定する必要があります。
+Ktorのアーティファクトの参照ごとにバージョンを指定する必要があります。
 重複を避けるため、`buildscript`ブロック内のextraプロパティ（または`gradle.properties`ファイル内）にバージョンを指定するとそれを後で使うことができます。
 
 ```groovy
@@ -110,7 +110,7 @@ Ktorは様々な環境で動作します。
 例えばNetty、Jetty、その他Servlet互換のアプリケーションコンテナ（例：Tomcat）などです。
 
 以下の例はNettyベースでKtorを設定する方法です。
-その他のエンジンについては[成果物](/quickstart/artifacts.html)をご覧ください。
+その他のエンジンについては[アーティファクト](/quickstart/artifacts.html)をご覧ください。
 
 `ktor-server-netty`への依存を追加し、前に定義した`ktor_version`プロパティを指定します。
 このモジュールはNettyによるWebサーバと、その上でKtorが動く上で必要なコードを提供します。
@@ -213,7 +213,7 @@ IntelliJ IDEAのメインメニューで以下の場所からチェックでき�
 
     ![Ktor IntelliJ: Project Structure](/quickstart/intellij-idea/project-structure.png)
 
-6.  `build.gradle`ファイルの成果物やリポジトリ設定を更新します:
+6.  `build.gradle`ファイルのアーティファクトやリポジトリ設定を更新します:
     * `compile("io.ktor:ktor-server-netty:$ktor_version")`を`build.gradle`の`dependencies`ブロックに追加
     * `jcenter()`を`repositories`ブロックに追加
 
@@ -321,16 +321,16 @@ dependencies {
 Text version:
 {% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
-Ktorが1.0になる前、カスタムのMavenリポジトリをearly previewの成果物を配布するために用意していました。
+Ktorが1.0になる前、カスタムのMavenリポジトリをearly previewのアーティファクトを配布するために用意していました。
 以下に示すようないくつかのリポジトリを指定することでそれらを参照することができるようになります。
 
-もちろん、実際の成果物を含めることも忘れてはいけません。
+もちろん、実際のアーティファクトを含めることも忘れてはいけません。
 Quickstartのページでは、`ktor-server-netty`を使いました。
-その成果物はKtorのコア部分、Netty、KtorとNettyとのコネクタを推移的依存として含んでいます。
+そのアーティファクトはKtorのコア部分、Netty、KtorとNettyとのコネクタを推移的依存として含んでいます。
 もちろんその他の依存を好きに追加することができあｍす。
 
-Ktorはモジュール化した設計になっているため、追加で他のリポジトリにある成果物から特定の機能を追加することもできます。
-必要な成果物（およびそれを配布するリポジトリ）を機能ごとに探す必要があります。
+Ktorはモジュール化した設計になっているため、追加で他のリポジトリにあるアーティファクトから特定の機能を追加することもできます。
+必要なアーティファクト（およびそれを配布するリポジトリ）を機能ごとに探す必要があります。
 {:.note}
 
 ## IntelliJ: アプリケーションの作成

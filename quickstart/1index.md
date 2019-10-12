@@ -32,7 +32,7 @@ Ktorを使えばWebアプリケーション、HTTPサービス、モバイルア
 ### 1) 最初のステップとして、プロジェクトを作成するための設定をし、インストールする機能を選択します
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png){: width="100%" }
 
-### 2) 次のステップとして、プロジェクトの成果物の設定をします
+### 2) 次のステップとして、プロジェクトのアーティファクトの設定をします
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-2.png){: width="100%" }
 
 それで終わりです。新しいプロジェクトが作成され、IDEにより開かれます。
