@@ -374,7 +374,7 @@ fun main(args: Array<String>) {
 ![Ktor IntelliJ: Program](/quickstart/intellij-idea/program.png)
 
 これで'`blog.BlogAppKt`'を起動できるようになりました。
-the **🐞**{: style="transform:rotate(90deg);display:inline-block;"}がついているアイコンを押し、`Debug 'blog.BlogAppKt'`を選択します。
+**🐞**{: style="transform:rotate(90deg);display:inline-block;"}がついているアイコンを押し、`Debug 'blog.BlogAppKt'`を選択します。
 
 ![Ktor IntelliJ: Program Run](/quickstart/intellij-idea/program-run.png)
 
@@ -387,10 +387,10 @@ the **🐞**{: style="transform:rotate(90deg);display:inline-block;"}がつい�
 
 ![Ktor IntelliJ: Website](/quickstart/intellij-idea/website.png)
 
-## IntelliJ: アプリケーションオブジェクトを使うことで改善
+## IntelliJ: Application objectを使うことで改善
 
-上で行ったせて地はたくさんのネストブロックが発生するため、アプリケーションに機能を追加していく上で理想的ではない状況です。
-そこでApplicationオブジェクトを使いそれをmain関数内のembeddedServerから参照することで、その点を改善することができます。
+上で行った設定はたくさんのネストブロックが発生するため、アプリケーションに機能を追加していく上では理想的でないです。
+そこでApplication objectを使いそれをmain関数内のembeddedServerから参照することで、その点を改善することができます。
 
 BlogApp.kt内のコードを以下のように変更し試してみてください:
 
