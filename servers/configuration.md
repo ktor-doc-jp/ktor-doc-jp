@@ -262,7 +262,6 @@ embeddedServer(Jetty, configure = {
 {:.no_toc}
 
 CIO(Coroutine I/O)をエンジンとして使うとき、共通のプロパティに加え、`connectionIdleTimeoutSeconds`プロパティも設定できます:
-When using CIO (Coroutine I/O) as the engine, in addition to common properties, you can configure the `connectionIdleTimeoutSeconds` property.
 
 ```kotlin
 embeddedServer(CIO, configure = {
