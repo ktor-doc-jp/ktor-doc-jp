@@ -142,7 +142,7 @@ Ktorのアーティファクトリファレンスからバージョンを指定�
 Ktorは様々な環境で動作します。例えばNetty、Jetty、そのたServlet互換のあるアプリケーションコンテナ（例：Tomcat）などでです。
 
 以下の例はKtorをNettyで動作させる例です。
-その他のエンジンについては[artifacts](/quickstart/artifacts.html)をご覧ください。
+その他のエンジンについては[アーティファクト](/quickstart/artifacts.html)をご覧ください。
 
 `ktor-server-netty`への依存を追加し`ktor.version`プロパティを指定します。
 このモジュールはNettyを提供し、Ktorアプリケーションがその上で動作するうえでWebサーバとして動作できるようにします。

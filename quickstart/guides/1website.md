@@ -295,7 +295,7 @@ fun Application.module() {
 ## FreeMarkerの代わりにHTML DSLを使用する
 
 テンプレートエンジンを使用する代わりにコードからHTMLを直接生成する方法を選ぶこともできます。
-そのための手段としてHTML DSLが用意されています。このDSLは追加でインストールする必要はありませんが、追加のArtifactが必要となります(詳しくは[HTML DSL]の項目を参照)。
+そのための手段としてHTML DSLが用意されています。このDSLは追加でインストールする必要はありませんが、追加のアーティファクトが必要となります(詳しくは[HTML DSL]の項目を参照)。
 このArtifactはHTMLブロックを返すためのextensionを提供しています。
 
 ```kotlin

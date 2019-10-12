@@ -24,7 +24,7 @@ Ktorはいくつかのアーティファクトに別れています。
 それにより全コードを含んだfat-jarのサイズを減らし、起動時間を短縮できます。
 
 以下のケースでは、`ktor-server-netty`のアーティファクトのみ利用します。
-利用可能なアーティファクト一覧は[Artifacts](/quickstart/artifacts.html)ページをご覧ください。
+利用可能なアーティファクト一覧は[アーティファクト](/quickstart/artifacts.html)ページをご覧ください。
 
 リリースバージョンのそれらアーティファクトは、jcenter、maven centralリポジトリにあります。
 プレリリースのものは[Bintray kotlin/ktor](https://bintray.com/kotlin/ktor)にあります。
