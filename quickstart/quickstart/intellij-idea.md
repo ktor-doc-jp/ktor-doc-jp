@@ -17,7 +17,7 @@ redirect_from:
 このウェブサイトが行っていること同様、プラグインはKtorプロジェクトの作成を助けてくれますが、
 それ以上のサポートとしてIDEと完全に統合された形で自動でセットアップしてくれます。
 
-プロジェクトの作成は`Ktor`セクションを御覧ください。
+プロジェクトの作成を行うと`Ktor`セクションがあるのが確認できるかと思います。
 
 1) 初めのステップとして、プロジェクトの設定とインストールする機能の選択を行います
 ![](/quickstart/quickstart/intellij-idea/plugin/ktor-plugin-1.png)
@@ -29,7 +29,7 @@ redirect_from:
 
 プラグインは以下から入手できます:
 
-* Pluginウェブサイト: <https://plugins.jetbrains.com/plugin/10823-ktor>{:target="_blank"}
+* プラグインウェブサイト: <https://plugins.jetbrains.com/plugin/10823-ktor>{:target="_blank"}
 * IntelliJから: `IntelliJ IDEA` → `Preferences...` → `Plugins` → `Install JetBrains Plugin...` → `Ktor` → `Install`
 * IntelliJのWelcome Screenから: `Configure` → `Plugins` → `Install JetBrains Plugin...` → `Ktor` → `Install`
 
