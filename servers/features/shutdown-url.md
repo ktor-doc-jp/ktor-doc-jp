@@ -1,6 +1,6 @@
 ---
-title: Shutdown URL
-caption: Add an URL for shutting down the server
+title: シャットダウンURL
+caption: サーバシャットダウン用のURLの追加
 category: servers
 permalink: /servers/features/shutdown-url.html
 feature:
@@ -11,17 +11,17 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature enables a URL that when accessed, shutdowns the server.
+この機能は、アクセスした際にサーバをシャットダウンさせるURLを有効にする機能です。
 
-There are two ways to use it: [Automatically using HOCON](#hocon) and [Installing the feature](#install)
+[HOCONを使って自動設定する方法](#hocon)と[Featureをインストールする方法](#install)の2つの方法があります。
 
 {% include feature.html %}
 
-## Automatically using HOCON
+## HOCONを使って自動設定
 {: #hocon}
 
-You can configure a shutdown URL using HOCON with the 
-[ktor.deployment.shutdown.url](/servers/configuration.html#general) property.
+HOCONファイルの[ktor.deployment.shutdown.url](/servers/configuration.html#general)プロパティを使って、
+シャットダウンURLを設定することができます。
 
 ```kotlin
 ktor {
@@ -31,10 +31,11 @@ ktor {
 }
 ```
 
-## Installing the feature
+## 機能のインストール
 {: #install}
 
-You can manually install the feature, with `ShutDownUrl.ApplicationCallFeature` and set the `shutDownUrl` and an `exitCodeSupplier`:
+`ShutDownUrl.ApplicationCallFeature`を使い、`shutDownUrl`と`exitCodeSupplier`をセットすることで、
+Featureを手動でインストールすることができます。
 
 ```kotlin
 install(ShutDownUrl.ApplicationCallFeature) {
