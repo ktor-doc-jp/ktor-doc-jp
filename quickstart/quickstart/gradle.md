@@ -321,9 +321,6 @@ dependencies {
 Text version:
 {% include gradle.html gradle-kotlin=gradle-kotlin-build gradle-groovy=gradle-groovy-build %}
 
-Ktorが1.0になる前、カスタムのMavenリポジトリをearly previewのアーティファクトを配布するために用意していました。
-以下に示すようないくつかのリポジトリを指定することでそれらを参照することができるようになります。
-
 もちろん、実際のアーティファクトを含めることも忘れてはいけません。
 Quickstartのページでは、`ktor-server-netty`を使いました。
 そのアーティファクトはKtorのコア部分、Netty、KtorとNettyとのコネクタを推移的依存として含んでいます。
