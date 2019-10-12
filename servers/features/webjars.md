@@ -1,6 +1,6 @@
 ---
-title: Webjars
-caption: Webjars support
+title: Webjar
+caption: Webjarのサポート
 category: servers
 permalink: /servers/features/webjars.html
 feature:
@@ -11,10 +11,10 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature enable serving static content provided by [webjars](https://www.webjars.org/). It allows you to package your assets such
-as javascript libraries and css as part of your uber-jar.
+この機能は[webjar](https://www.webjars.org/)によって提供されている静的コンテンツの配信を有効化する機能です。
+これを使うことでjavascriptライブラリやcssをあなたのjarファイルの一部としてパッケージすることができます。
 
-## Installing the feature
+## 機能のインストール
 
 {: #installing }
 
@@ -25,16 +25,20 @@ as javascript libraries and css as part of your uber-jar.
     }
 ```
 
-This configures the feature to serve any webjars assets on the `/assets/` path. The `zone` argument configures the correct time zone to
-be used with the `Last-Modified` header to support caching (only if [Conditional Headers](/servers/features/conditional-headers.html) feature is also installed).
+このコードは`/assets/`パスの任意のwebjarアセットを配信するよう設定しています。
+`zone`引数は正とするタイムゾーンを設定しており、
+これは([Conditional Header](/servers/features/conditional-headers.html) Featureもインストールされている場合は)`Last-Modified`ヘッダーに使われ、
+キャッシュ機能のサポートするのに使われます。
 
 {% include feature.html %}
 
-## Versioning support
+## バージョニングのサポート
 
-Webjars allow developers to change the versions of the dependencies without requiring a change on the path used to load them on your templates.
+Webjarを使うことで開発者は依存ライブラリについて、
+テンプレート内でのロードパスを変更する必要無しにバージョンを変更することができます。
 
-Let's assume you have imported `org.webjars:jquery:3.2.1`, you can use the following html code to import it:
+`org.webjars:jquery:3.2.1`をインポートしている場合を想定してください。
+次のHTMLコードをインポートするために利用できます。
 
 ```html
 <head>
@@ -42,4 +46,4 @@ Let's assume you have imported `org.webjars:jquery:3.2.1`, you can use the follo
 </head>  
 ```
 
-You don't need to specify a version, should you choose to update your dependencies you don't need to modify your templates.
+バージョンを指定する必要はありません。そのため依存ライブラリのバージョンを更新する選択をした場合、テンプレートの変更の必要はありません。
