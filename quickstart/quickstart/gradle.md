@@ -65,7 +65,7 @@ dependencies {
 {: #ktor-dependencies}
 
 Ktorの成果物はbintrayのレポジトリに配置されています。
-そしてその核の部分は`kotlinx.coroutines`ライブラリに依存しており、それは`jcenter`リポジトリ内にあります。
+そしてそのコアの部分は`kotlinx.coroutines`ライブラリに依存しており、それは`jcenter`リポジトリ内にあります。
 
 そのため両方のリポジトリを`build.gradle`ファイルの`repositories`ブロックに追加する必要があります:
 
