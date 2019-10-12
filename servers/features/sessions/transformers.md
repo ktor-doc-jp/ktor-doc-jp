@@ -39,8 +39,6 @@ cookie<TestUserSession>(cookieName) {
 これはバックエンドをシンプルにしますが、このモードで動く場合セキュリティ面で何が問題となるのかを知っておく必要があります。
 
 このモードにおいては、`header`または`cookie`メソッドを`install(Sessions)`ブロック内で、cookieまたはheaderの名前を１つ引数として渡してやり呼び出すだけでいいです。
-In this mode you just call `header` or `cookie` methods inside the `install(Sessions)` block with a single argument
-with the name of the cookie or the header.
 
 `header`、`cookie`ブロック内で、`transform`メソッドを呼ぶかどうかの選択ができます。
 呼ぶことで、送信される値を変換し、例えば認証したり暗号化したりすることができます。
@@ -131,7 +129,7 @@ cookie<MySession>("NAME") {
 ```
 
 `SessionTransportTransformer`はセッション値を変換することができ、リクエストとともに送信されます。
-構成可能な場合、入力としてトランスポートされた値またはその変換のいずれかを持つことができます。
+入力としてトランスポートされた値またはその変換のいずれかを持つことができます。
 2つのメソッドから構成されており、１つは変換を適用する`transformWrite`と、もう１つはその変換を解除する`transformRead`です。
 入力も出力も両方とも文字列です。
 通常`transformWrite`は常に動作しますが、`transformRead`は入力が不正だった場合にはnullをreturnして失敗します。

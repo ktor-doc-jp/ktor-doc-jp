@@ -37,7 +37,7 @@ application.install(Sessions) {
 } 
 ```
 
-Cookieメソッドはブラウザセッションを想定しています。
+cookieメソッドはブラウザセッションを想定しています。
 標準的な[`Set-Cookie` header](https://developer.mozilla.org/es/docs/Web/HTTP/Headers/Set-Cookie)が使われます。
 cookieブロック内では、`Set-Cookie`ヘッダーを設定するような`cookie`プロパティにアクセスすることができます。
 例えばcookieの`path`や有効期限やドメインやhttpsに関わることなどを設定できます。
