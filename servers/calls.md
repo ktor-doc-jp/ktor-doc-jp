@@ -37,5 +37,5 @@ ApplicationCallsの処理のメカニズムの詳細については、高度な�
 ## 関連項目
 
 - [Applicationライフサイクル](https://jp.ktor.work/servers/lifecycle.html)
-- [Application configuration](https://jp.ktor.work/servers/configuration.html)
+- [Application設定](https://jp.ktor.work/servers/configuration.html)
 - [Pipeline](/advanced/pipeline)

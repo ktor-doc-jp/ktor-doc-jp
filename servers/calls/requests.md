@@ -9,7 +9,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-ルーティングを行うときや直接パイプラインをインターセプトするときには、[ApplicationCall](/servers/calls.html)とともにcontextを取得します。
+ルーティングを行うときや直接パイプラインをインターセプトするときには、[ApplicationCall](/servers/calls.html)から実行時のコンテキスト情報を取得します。
 `call`は`request`というプロパティを持っており、これはリクエストに関する情報を保持しています。
 
 また、`call`自体もリクエストに関係するいくつかの有益なプロパティやメソッドを持っています。
@@ -44,7 +44,7 @@ intercept(ApplicationCallPipeline.Call) {
 ## リクエスト情報
 {: #info }
 
-`request`の一部として、内部contextにアクセスできます。
+`request`の一部として、内部のコンテキスト情報にアクセスできます。
 
 ```kotlin
 val call: ApplicationCall = request.call
@@ -74,10 +74,10 @@ val remoteHost: String = request.origin.remoteHost // The IP address of the clie
 また、リバースプロキシはHTTPSでレスポンスを返す一方、あなたのサーバへはHTTP経由でリクエストします。
 多くのリバースプロキシは`X-Forwarded-`ヘッダーをこの情報にアクセスするために送信します。
 
-リバースプロキシ配下で配下で動作するためには、[`XForwardedHeaderSupport` feature](/servers/features/forward-headers.html)をインストールする必要がある点にご注意ください。
+リバースプロキシ配下で配下で動作するためには、[`XForwardedHeaderSupport` Feature](/servers/features/forward-headers.html)をインストールする必要がある点にご注意ください。
 {: .note}
 
-リクエストオブジェクトの一部として、`local`と`origin`という2つのプロパティがあり、それを使うことでオリジナルのリクエストやlocal/プロキシのリクエストの情報を取得できます。
+リクエストオブジェクトの一部として、`local`と`origin`という2つのプロパティがあり、それを使うことでオリジナルのリクエストやlocal・プロキシのリクエストの情報を取得できます。
 
 ```kotlin
 val local : RequestConnectionPoint = request.local // Local information 
