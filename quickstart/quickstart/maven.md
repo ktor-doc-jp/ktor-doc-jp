@@ -102,7 +102,7 @@ Mavenは`pom.xml`ファイルからプロジェクトの設定を読み取りま
 {: #ktor-dependencies}
 
 Ktorのアーティファクトはbintrayの特定のレポジトリに配置されています。
-そしてその核となる部分は`jcenter`にある`kotlinx.coroutines`ライブラリに依存しています。
+そしてそのコアとなる部分は`jcenter`にある`kotlinx.coroutines`ライブラリに依存しています。
 
 そのためその両方を`pom.xml`ファイルの`repositories`ブロックに追加してやる必要があります。
 

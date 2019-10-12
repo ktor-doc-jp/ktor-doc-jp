@@ -1,6 +1,6 @@
 ---
-title: Artifacts
-caption: Artifacts 一覧
+title: アーティファクト
+caption: アーティファクト一覧
 permalink: /quickstart/artifacts.html
 category: quickstart
 redirect_from:
@@ -8,19 +8,19 @@ redirect_from:
 ktor_version_review: 1.0.1
 ---
 
-Ktor はいくつかのモジュールに分割されており、必要な機能だけ依存関係に追加することができます。
-典型的な Ktor アプリケーションは `ktor-server-core` を必要とし、自己ホスト型とするか別途アプリケーションサーバを用いるかによって、
+Ktorはいくつかのモジュールに分割されており、必要な機能だけ依存関係に追加することができます。
+典型的なKtorアプリケーションは `ktor-server-core` を必要とし、自己ホスト型とするか別途アプリケーションサーバを用いるかによって、
 必要なモジュールが変わります。
 
-Ktor のすべての artifact は `io.ktor` パッケージ配下に属し、 JCenter と Maven Central から取得可能です。
-プレリリース版は [Bintray](https://bintray.com/kotlin/ktor) から取得可能です。
+Ktorのすべてのアーティファクトは `io.ktor` パッケージ配下に属し、JCenterとMaven Centralから取得可能です。
+プレリリース版は[Bintray](https://bintray.com/kotlin/ktor)から取得可能です。
 
 [![Download](https://api.bintray.com/packages/kotlin/ktor/ktor/images/download.svg?version={{site.ktor_version}})](https://bintray.com/kotlin/ktor/ktor/{{site.ktor_version}})
     
-Ktor のモジュールはいくつかのグループに分類されます。
+Ktorのモジュールはいくつかのグループに分類されます。
 
-* `ktor-server` は、 Netty 、 Jetty 、 Tomcat 、および汎用サーブレットといった複数のエンジン上で Ktor アプリケーションが動作するためのモジュール群です。
-また、実サーバを起動させることなくアプリケーションのテストが可能な TestEngine も含んでいます。
+* `ktor-server` は、Netty、Jetty、Tomcat、および汎用サーブレットといった複数のエンジン上でKtorアプリケーションが動作するためのモジュール群です。
+また、実サーバを起動させることなくアプリケーションのテストが可能なTestEngineも含んでいます。
   * `ktor-server-core` : ほとんどすべてのアプリケーションで必要な API と実装を持つコアパッケージ
   * `ktor-server-jetty` : Jetty サーバ用、または Jetty 内包アプリケーション用
   * `ktor-server-netty` : Netty 内包アプリケーション用
