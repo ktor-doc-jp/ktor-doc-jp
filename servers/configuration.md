@@ -298,11 +298,11 @@ embeddedServer(Tomcat, configure = {
 
 コマンドラインまたはHOCONファイルから渡すことで、Ktorが追加設定なく利用可能なプロパティ一覧があります。
 
-**Switch**はアプリケーションにわたすコマンドライン引数を参照します。例えばbindされているportを変更するには:
+アプリケーションにわたすコマンドライン引数を**Switch**と呼びます。例えばbindされているportを変更するには:
 
 `java -jar myapp-fatjar.jar -port=8080`
 
-**Parameter paths** は`application.conf`内のpathです:
+`application.conf`内のpathを**Parameter paths**と呼びます:
 
 ```
 ktor.deployment.port = 8080
