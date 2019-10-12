@@ -5,7 +5,7 @@ category: servers
 permalink: /servers/engine.html
 ---
 
-Ktor のアプリケーションは Apache Tomcat などのアプリケーションサーバにデプロイしたり、 Jetty 等を内包し自己ホストすることもできます。
+Ktor のアプリケーションは Apache Tomcat などのアプリケーションサーバにデプロイしたり、Jetty等を内包した上でセルフホスティングすることもできます。
 このセクションでは、外部サーバ等で Ktor アプリケーションを起動する方法を説明します。
 
 **目次**
@@ -57,7 +57,7 @@ IntelliJ IDEA のような開発環境上でのアプリケーションの起動
 設定を保存したら、外部のアプリケーションサーバの構築やコンテナへのデプロイをせずとも、IntelliJ IDEA 上で開発やデバッグ目的で
 あなたのアプリケーションを起動できるようになります。
 
-[Configuration](configuration) も参照してください。
+[設定](configuration)ページも参照してください。
 
 ## オートリロードの使用
 
@@ -75,4 +75,4 @@ ktor {
 }
 ```
 
-[Automatic Reloading](/servers/autoreload.html) に詳細な情報があります。
+[オートリロード](/servers/autoreload.html)ページに詳細な情報があります。
