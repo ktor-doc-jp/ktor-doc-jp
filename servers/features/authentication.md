@@ -38,8 +38,8 @@ Ktorはcredentialとprincipalという2つの概念を定義しています。
 * principalは認証されている何かを指します。ユーザやコンピュータやグループなどが例です。
 * credentialは、principalを認証するサーバーに提示するプロパティのセットです。user/password、APIキー、authenticated payload signatureなどが例です。
 
-インスタンスするたえには、`application.install(Authentication)`を呼び出す必要があります。
-applicationに対し直接インストールする必要があり、`Route`のような別の`ApplicationCallPipeline`内ではうごきません。
+インストールするためには、`application.install(Authentication)`を呼び出す必要があります。
+applicationに対し直接インストールする必要があり、`Route`のような別の`ApplicationCallPipeline`内では動きません。
 
 Routeの内側でインストールするコードを実行することができますが、適用されるのはapplicationそのものに対してです。
 {: .note}
