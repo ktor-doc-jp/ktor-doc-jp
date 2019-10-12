@@ -1,6 +1,6 @@
 ---
-title: Code Style
-caption: Code Style
+title: コードスタイル
+caption: コードスタイル
 category: quickstart
 permalink: /quickstart/code-style.html
 toc: false
@@ -9,9 +9,9 @@ ktor_version_review: 1.0.0
 
 ## 公式コーディング規約
 
-Ktor は他の公式の Kotlin ライブラリと同様に [Kotlin 公式コーディング規約](https://kotlinlang.org/docs/reference/coding-conventions.html) に従います。
+Ktorは他の公式のKotlinライブラリと同様に[Kotlin 公式コーディング規約](https://kotlinlang.org/docs/reference/coding-conventions.html)に従います。
 
-`gradle.properties` に `kotlin.code.style=official` を追加することで、公式のコーディング規約を使用できます。
+`gradle.properties`に`kotlin.code.style=official`を追加することで、公式のコーディング規約を使用できます。
 
 ## オンデマンドインポート (`*`)
 
