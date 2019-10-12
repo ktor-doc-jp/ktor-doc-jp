@@ -10,7 +10,7 @@ ktor_version_review: 1.0.0
 ---
 
 ルーティングのハンドリングまたは直接パイプラインをインターセプトする際に、
-[ApplicationCall](/servers/calls.html)からcontextを取得できます。
+[ApplicationCall](/servers/calls.html)から実行時のコンテキスト情報を取得できます。
 `call`は`response`と呼ばれるプロパティを持っており、それを使うことでレスポンスの送信を行うことができます。
 
 また、`call`自体もレスポンスを操作するような便利なプロパティやメソッドをいくつか持っています。
@@ -20,7 +20,7 @@ ktor_version_review: 1.0.0
 * TOC
 {:toc}
 
-## Context
+## コンテキスト情報
 {: #context}
 
 [Routing](/servers/features/routing.html)機能を利用する際には、
