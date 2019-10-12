@@ -31,7 +31,7 @@ Ktorアプリケーションをいくつかの方法で起動することがで�
 **[`ApplicationEngineEnvironment`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-host-common/jvm/src/io/ktor/server/engine/ApplicationEngineEnvironment.kt):**
 
 起動するためにはイミュータブルな環境を構築する必要があります。
-クラスローダー、ロガー、[設定](/servers/configuration.html)、
+クラスローダー、ロガー、[設定ファイル](/servers/configuration.html)、
 アプリケーションイベントのイベントバスとして起動するmonitor、
 コネクター群、モジュール群を設定し、それらがアプリケーションや[watchPath](/servers/autoreload.html)を形成します。
 
@@ -101,19 +101,19 @@ val ApplicationStopping = EventDefinition<Application>()
 val ApplicationStopped = EventDefinition<Application>()
 ```
 
-## [Pipelines](https://github.com/ktorio/ktor/blob/master/ktor-utils/common/src/io/ktor/util/pipeline/Pipeline.kt)
+## [Pipeline](https://github.com/ktorio/ktor/blob/master/ktor-utils/common/src/io/ktor/util/pipeline/Pipeline.kt)
 
 Ktorは非同期で拡張可能な処理を行うためのパイプラインを定義します。
 パイプラインはKtor全体で利用されています。
 
-すべてのパイプラインは**subject**の型、**context**の型、**インターセプタ**が関連付けられている**phase**のリストに関連づけられます。
-As well as, **attributes** that act as a small typed object container.
+すべてのパイプラインは**subject**の型、**context**の型、**インターセプタ**が関連付けられている**phase**のリストを持ちます。
+また、**attribute**というオブジェクトコンテナとして動作する型も持ちます。
 
 フェーズは順序付けられており、どのPhaseよりも先なのか後なのかあるいは最後なのかといった実行順序について定義されています。
 
 各パイプラインは順序付けられたPhaseのリストを持っており、さらに各Phaseごとにinterceptorのセットを持っています。
 
-For example:
+例:
 
 * Pipeline
     * Phase1
@@ -149,7 +149,7 @@ val Call = PipelinePhase("Call") // Phase for processing a call and sending a re
 val Fallback = PipelinePhase("Fallback") // Phase for handling unprocessed calls
 ```
 
-## [Features](/advanced/features)
+## [Feature](/advanced/features)
 
 Ktorは[`ApplicationFeature`](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/application/ApplicationFeature.kt) クラスでアプリケーションの機能を定義しています。
 Featureは指定のパイプラインに`install`可能なものです。
@@ -179,5 +179,5 @@ Routingはツリーとして定義されます。
 ## 関連記事
 
 - [Application calls](/servers/calls.html)
-- [Application configuration](/servers/configuration.html)
+- [Application設定](/servers/configuration.html)
 - [Pipelineについて](/advanced/pipeline)
