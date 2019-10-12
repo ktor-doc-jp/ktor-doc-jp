@@ -19,7 +19,7 @@ Ktorアプリケーションは[Maven](/quickstart/quickstart/maven.html)や[Gra
 ## 正しい依存性を設定
 {: #dependencies }
 
-Ktorはいくつかのアーティファクトに別れています。
+Ktorはいくつかのアーティファクトに分かれています。
 そのため必要な機能だけを利用することができます。
 それにより全コードを含んだfat-jarのサイズを減らし、起動時間を短縮できます。
 
