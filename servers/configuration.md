@@ -1,5 +1,5 @@
 ---
-title: Configuration
+title: 設定
 caption: サーバーの設定
 keywords: hocon json config DevelopmentEngine EngineMain embeddedServer switches cli command line environment variables ports application modules ssl host bind application.conf mainClassName jetty netty tomcat cio
 category: servers
