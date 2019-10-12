@@ -1,6 +1,6 @@
 ---
-title: Generator
-caption: Generate a Ktor project 
+title: ジェネレータ
+caption: Ktorプロジェクトの生成
 category: quickstart
 permalink: /quickstart/generator.html
 skip_pdf: true
@@ -11,7 +11,7 @@ ktor_version_review: 1.0.0
 
 <!--<https://jp.ktor.work/start>-->
 
-**NOTE: You can also use the [Ktor IntelliJ plugin](/quickstart/quickstart/intellij-idea.html) instead.** This page can also be accessed at [start.ktor.io](https://start.ktor.io/).
+**NOTE: [Ktor IntelliJ plugin](/quickstart/quickstart/intellij-idea.html)を変わりに使うこともできます。** このページは[start.ktor.io](https://start.ktor.io/)にもアクセスしています。
 
 <div id="generator_id"></div>
 
