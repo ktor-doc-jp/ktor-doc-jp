@@ -1,6 +1,6 @@
 ---
-title: Headリクエスト自動応答
-caption: 自動HEADレスポンス機能の有効化
+title: オートHeadレスポンス
+caption: オートHEADレスポンス機能の有効化
 category: servers
 permalink: /servers/features/autoheadresponse.html
 feature:
