@@ -34,7 +34,7 @@ ApplicationCallで使用できるほとんどの関数（上記のrespondTextな
 
 ApplicationCallsの処理のメカニズムの詳細については、高度なトピック[Pipeline](/advanced/pipeline)を参照してください。
 
-## What's next
+## 関連項目
 
 - [Applicationライフサイクル](https://jp.ktor.work/servers/lifecycle.html)
 - [Application configuration](https://jp.ktor.work/servers/configuration.html)
