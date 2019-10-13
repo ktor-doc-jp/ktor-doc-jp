@@ -10,7 +10,12 @@ ktor_version_review: 1.2.0
 
 This feature adds multiplatform logging for HTTP calls.
 
-{% include feature.html %}
+{% include 
+    mpp_feature.html
+    targets="common,jvm,native,js"
+    base="ktor-client-logging"
+    classifiers=",-jvm,-native,-js"
+%}
 
 ## Installation
 

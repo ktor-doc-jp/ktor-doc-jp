@@ -4,8 +4,8 @@ category: clients
 caption: Cookie
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
-  class: io.ktor.client.features.DefaultRequest
-  method: io.ktor.client.features.defaultRequest
+  class: io.ktor.client.features.Cookies
+  method: io.ktor.client.features.cookies
 ktor_version_review: 1.2.0
 ---
 

@@ -13,7 +13,12 @@ ktor_version_review: 1.2.0
 
 Ktorクライアントは、標準のプラグイン可能な機能として、すぐに使用できる認証をサポートしています。
 
-{% include feature.html %}
+{% include 
+    mpp_feature.html
+    targets="common,jvm,native,js"
+    base="ktor-client-auth"
+    classifiers=",-jvm,-native,-js"
+%}
 
 ## Installation
 

@@ -1,0 +1,102 @@
+{% assign targets = include.targets | split: "," %}
+{% assign name = include.base %}
+{% assign classifiers = include.classifiers | split: "," %}
+
+{% assign class = page.feature.class %}
+{% assign method = page.feature.method  %}
+{% assign package = page.feature.package  %}
+{% assign artifact = page.feature.artifact %}
+
+{% case artifact %}
+{% when 'io.ktor:ktor-server-core:$ktor_version' %}
+{% assign artifact_required = false %}
+{% when 'io.ktor:ktor-client-core:$ktor_version' %}
+{% assign artifact_required = false %}
+{% else %}
+{% assign artifact_required = true %}
+{% endcase %}
+
+<div class="note artifact artifact-small exclude-anchor">
+    {% if include.hideDescription %}
+    {% else %}
+    <div class="note-inner" id="artifact-{{ name }}">
+        {% if include.kind %}
+        This {{ include.kind }} is defined
+        {% else %}
+        This feature is defined
+        {% endif %}
+
+        {% if method %}
+        in the method <code class="highlighter-rouge">{{ method }}</code>
+        {% elsif package %}
+        in the package <code class="highlighter-rouge">{{ package }}</code>
+        {% else %}
+        in the class <code class="highlighter-rouge">{{ class }}</code>
+        {% endif %}
+        {% if artifact_required %}
+        in the artifact <code class="highlighter-rouge">{{ artifact }}</code>.
+        {% else %}
+        and no additional artifacts are required.
+        {% endif %}
+
+        {% if include.transitive %}
+        It includes the <code class="highlighter-rouge">{{ include.transitive }}</code> transitive dependency.
+        {% else %}
+        <!-- It does not include any additional transitive dependencies. -->
+        {% endif %}
+    </div>
+    {%endif%}
+    <ul class="nav nav-tabs artifact-tabs">
+        {% for target in targets %}
+        <li role="presentation" class="{% if forloop.index == 1 %} active {% endif %}">
+            <a href="#artifact-{{name}}-{{ target }}" class="artifact">{{ target | capitalize }}</a>
+        </li>
+        {% endfor %}
+
+        <li role="presentation" class="dropdown pull-right">
+            <a class="current-language dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+               aria-haspopup="true" aria-expanded="false">
+                Kotlin<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="scriptlang" href="#">Kotlin</a></li>
+                <li><a class="scriptlang" href="#">Maven</a></li>
+                <li><a class="scriptlang" href="#">Groovy</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="tab-content artifact-tab-content"
+         style="background:white; padding: 0.5em 1em; border: 1px solid #ddd; border-top: none;">
+        {% for target in targets %}
+        {% assign index = forloop.index | minus: 1 %}
+
+        <div id="artifact-{{name}}-{{ target }}" class="tab-pane fade in {% if forloop.index == 1 %} active {% endif %}">
+            <div class="groovy">
+                <code style="white-space: pre; font-size: 0.9em">dependencies {
+                    implementation "io.ktor:{{ name }}{{ classifiers[index] }}:$ktor-version"
+                    }</code>
+            </div>
+            <div class="kts">
+                <code style="white-space: pre; font-size: 0.9em">dependencies {
+                    implementation("io.ktor:{{ name }}{{ classifiers[index] }}:$ktor-version")
+                    }</code>
+            </div>
+            <div class="maven">
+                <code style="white-space: pre;font-size: 0.9em">&lt;project&gt;
+                    ...
+                    &lt;dependencies&gt;
+                    &lt;dependency&gt;
+                    &lt;groupId&gt;io.ktor&lt;/groupId&gt;
+                    &lt;artifactId&gt;{{ name }}{{ classifiers[index] }}&lt;/artifactId&gt;
+                    &lt;version&gt;${ktor.version}&lt;/version&gt;
+                    &lt;scope&gt;compile&lt;/scope&gt;
+                    &lt;/dependency&gt;
+                    &lt;/dependencies&gt;
+                    &lt;/project&gt;
+                </code>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     function toggleSelection(e) {
         $(e).toggleClass('expand');
         const compact = $(e).find('.compact_open');
@@ -71,10 +71,8 @@ $(document).ready(function() {
 
     var InstantSearch = {
 
-        "highlight": function (container, highlightText)
-        {
-            var internalHighlighter = function (options)
-                {
+        "highlight": function (container, highlightText) {
+            var internalHighlighter = function (options) {
 
                     var id = {
                             container: "container",
@@ -89,16 +87,14 @@ $(document).ready(function() {
                         allSensitiveSearch = options[id.all][id.sensitiveSearch];
 
 
-                    function checkAndReplace(node, tokenArr, classNameAll, sensitiveSearchAll)
-                    {
+                    function checkAndReplace(node, tokenArr, classNameAll, sensitiveSearchAll) {
                         var nodeVal = node.nodeValue, parentNode = node.parentNode,
                             i, j, curToken, myToken, myClassName, mySensitiveSearch,
                             finalClassName, finalSensitiveSearch,
                             foundIndex, begin, matched, end,
                             textNode, span, isFirst;
 
-                        for (i = 0, j = tokenArr.length; i < j; i++)
-                        {
+                        for (i = 0, j = tokenArr.length; i < j; i++) {
                             curToken = tokenArr[i];
                             myToken = curToken[id.token];
                             myClassName = curToken[id.className];
@@ -109,20 +105,17 @@ $(document).ready(function() {
                             finalSensitiveSearch = (typeof sensitiveSearchAll !== "undefined" ? sensitiveSearchAll : mySensitiveSearch);
 
                             isFirst = true;
-                            while (true)
-                            {
+                            while (true) {
                                 if (finalSensitiveSearch)
                                     foundIndex = nodeVal.indexOf(myToken);
                                 else
                                     foundIndex = nodeVal.toLowerCase().indexOf(myToken.toLowerCase());
 
-                                if (foundIndex < 0)
-                                {
+                                if (foundIndex < 0) {
                                     if (isFirst)
                                         break;
 
-                                    if (nodeVal)
-                                    {
+                                    if (nodeVal) {
                                         textNode = document.createTextNode(nodeVal);
                                         parentNode.insertBefore(textNode, node);
                                     } // End if (nodeVal)
@@ -137,8 +130,7 @@ $(document).ready(function() {
                                 begin = nodeVal.substring(0, foundIndex);
                                 matched = nodeVal.substr(foundIndex, myToken.length);
 
-                                if (begin)
-                                {
+                                if (begin) {
                                     textNode = document.createTextNode(begin);
                                     parentNode.insertBefore(textNode, node);
                                 } // End if (begin)
@@ -154,23 +146,18 @@ $(document).ready(function() {
                         } // Next i
                     }; // End Function checkAndReplace
 
-                    function iterator(p)
-                    {
+                    function iterator(p) {
                         if (p === null) return;
 
                         var children = Array.prototype.slice.call(p.childNodes), i, cur;
 
-                        if (children.length)
-                        {
-                            for (i = 0; i < children.length; i++)
-                            {
+                        if (children.length) {
+                            for (i = 0; i < children.length; i++) {
                                 cur = children[i];
-                                if (cur.nodeType === 3)
-                                {
+                                if (cur.nodeType === 3) {
                                     checkAndReplace(cur, tokens, allClassName, allSensitiveSearch);
                                 }
-                                else if (cur.nodeType === 1)
-                                {
+                                else if (cur.nodeType === 1) {
                                     iterator(cur);
                                 }
                             }
@@ -217,17 +204,17 @@ $(document).ready(function() {
             $('<div />').addClass("compact_open").text('+')
                 .attr('title', 'Click here, or double click the content to expand and select or to compact')
                 .on("click", () => {
-                    toggleSelection(element);
-                })
-        )
-    });
+                toggleSelection(element);
+})
+)
+});
 
-    $(".compact").on('dblclick', function(e) {
+    $(".compact").on('dblclick', function (e) {
         window.event.preventDefault();
         toggleSelection(this);
     });
 
-    $(".doc-content").find("h1,h2,h3,h4,h5,h6").filter("[id]").each(function() {
+    $(".doc-content").find("h1,h2,h3,h4,h5,h6").filter("[id]").each(function () {
         const heading = $(this);
 
         heading.html($('<a />')
@@ -237,10 +224,10 @@ $(document).ready(function() {
         );
     });
     $(".note,.note-inner").filter("[id]").not(".exclude-anchor")
-        .each(function() {
+        .each(function () {
             $(this).addClass('anchored-note')
         })
-        .click(function() {
+        .click(function () {
             document.location.hash = $(this).attr('id');
         })
     ;
@@ -249,7 +236,7 @@ $(document).ready(function() {
     //$('#search-input').on('keypress', function(e) {
     //    console.log('keypress', e);
     //});
-    $('#search-input').on('keydown', function(e) {
+    $('#search-input').on('keydown', function (e) {
         const search_container = $('.search-results');
         let active = search_container.find('li.active');
         //console.log(active);
@@ -309,12 +296,12 @@ $(document).ready(function() {
                 break;
         }
     });
-    $(document).on('keypress', function(e) {
+    $(document).on('keypress', function (e) {
         // Capture events just in when come from the document.body
         //if (e.target === document.body) {
         if ($(e.target).attr('id') !== 'search-input') {
             // 's' for search, and 't' as an alias compatible with github search in repo
-                if (e.key === 's' || e.key === 't') {
+            if (e.key === 's' || e.key === 't') {
                 $('#search-input').focus();
                 e.preventDefault();
             }
@@ -327,14 +314,14 @@ $(document).ready(function() {
         }
     });
     var hideTimeout = 0;
-    $('#search-input').on('focus', function() {
+    $('#search-input').on('focus', function () {
         clearTimeout(hideTimeout);
         $('.search-results-inline-container').css('display', 'block');
         $(this).attr('placeholder', $(this).attr('data-placeholder-focus'));
         $(this).select();
-    }).on('blur', function() {
+    }).on('blur', function () {
         clearTimeout(hideTimeout);
-        hideTimeout = setTimeout(function() {
+        hideTimeout = setTimeout(function () {
             $('.search-results-inline-container').css('display', 'none');
         }, 250);
         $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
@@ -361,7 +348,7 @@ $(document).ready(function() {
         return await fetchSearchPromise;
     }
 
-// Prefetch
+    // Prefetch
     fetchSearchOnce();
 
     //const arrow = "↬⇒";
@@ -388,15 +375,15 @@ $(document).ready(function() {
         let results = await fetchSearchOnce();
         let lines = [];
         let filteredResultsAll = results
-            .sorted(composeComparers(
-                comparerBy((it) => sectionPriority(it.category)),
-                comparerBy((it) => it.priority || 0),
-                comparerBy((it) => String(it.search))
-            ))
-            .filter((it) => String(it.search).match(querySearch))
-            .sorted(composeComparers(
-                comparerBy((it) => it.search.length >= 0 ? String(it.search).regexIndexOf(querySearch) : 0)
-            ))
+                .sorted(composeComparers(
+                    comparerBy((it) => sectionPriority(it.category)),
+                    comparerBy((it) => it.priority || 0),
+            comparerBy((it) => String(it.search))
+    ))
+    .filter((it) => String(it.search).match(querySearch))
+    .sorted(composeComparers(
+            comparerBy((it) => it.search.length >= 0 ? String(it.search).regexIndexOf(querySearch) : 0)
+        ))
         ;
 
         let filteredResults = filteredResultsAll.slice(0, 10);
@@ -421,7 +408,7 @@ $(document).ready(function() {
             lines.push(`<small style="color:#999;">And ${invisibleLinks} more...</small>`);
         }
         if (query !== '' && !containsHash) {
-            lines.push(`<a href="https://www.google.com/search?q=site:jp.ktor.work+-site:*.jp.ktor.work+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:jp.ktor.work</a>`)
+            lines.push(`<a href="https://www.google.com/search?q=site:ktor.io+-site:*.ktor.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ktor.io</a>`)
         }
         let outLines = [];
         for (let n = 0; n < lines.length; n++) {
@@ -443,14 +430,14 @@ $(document).ready(function() {
         }
     }
 
-    $('#search-input').on('focus', function() {
+    $('#search-input').on('focus', function () {
         //console.log('focus');
         //search-results-container
         updateSearchResults();
-    }).on('change', function() {
+    }).on('change', function () {
         //console.log('change');
         updateSearchResults();
-    }).on('keyup', function(e) {
+    }).on('keyup', function (e) {
         //console.log('keyup');
         if ([13, 16, 20, 37, 38, 39, 40, 91].indexOf(e.which) < 0) {
             updateSearchResults();
@@ -470,18 +457,50 @@ $(document).ready(function() {
     };
     hashChanged();
 
-    $('.artifact-tabs a, .gradle-tabs a').click(function (e) {
+    $('.artifact-tabs a.artifact, .gradle-tabs a.artifact').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
+    })
+
+    function selectScriptLanguage(language) {
+        $('.current-language').html(language + '<span class="caret"></span>');
+
+        switch (language) {
+            case 'Maven':
+                $(".kts").hide();
+                $(".groovy").hide();
+                $(".maven").show();
+                break;
+            case 'Groovy':
+                $(".kts").hide();
+                $(".groovy").show();
+                $(".maven").hide();
+                break;
+            case 'Kotlin':
+            default:
+                $(".kts").show();
+                $(".groovy").hide();
+                $(".maven").hide();
+                break;
+        }
+    }
+
+    selectScriptLanguage("Kotlin");
+
+    $('.artifact-tabs a.scriptlang, .gradle-tabs a.scriptlang').click(function (e) {
+        e.preventDefault();
+
+        var language = this.innerText;
+        selectScriptLanguage(language);
     })
 });
 
 
-String.prototype.normalizeForSearch = function() {
+String.prototype.normalizeForSearch = function () {
     return this.toLowerCase().replace(/[\s\/,.;\-]+/g, '');
 };
 
-String.prototype.escapeHTML = function() {
+String.prototype.escapeHTML = function () {
     return String(this)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -490,14 +509,14 @@ String.prototype.escapeHTML = function() {
         .replace(/'/g, "&#039;");
 };
 
-Array.prototype.sorted = function(method) {
+Array.prototype.sorted = function (method) {
     let out = this.slice();
     out.sort(method);
     return out;
 };
 
 function comparerBy(selector) {
-    return function(a, b) {
+    return function (a, b) {
         let ra = selector(a), rb = selector(b);
         if (ra < rb) return -1;
         if (ra > rb) return +1;
@@ -506,7 +525,7 @@ function comparerBy(selector) {
 }
 
 function composeComparers(...comparers) {
-    return function(a, b) {
+    return function (a, b) {
         for (const comparer of comparers) {
             const result = comparer(a, b);
             if (result !== 0) return result;
@@ -528,22 +547,22 @@ function sectionPriority(category) {
     return 7;
 }
 
-String.prototype.regexIndexOf = function(regex, startpos) {
+String.prototype.regexIndexOf = function (regex, startpos) {
     var indexOf = this.substring(startpos || 0).search(regex);
     return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
 };
 
-String.prototype.regexLastIndexOf = function(regex, startpos) {
+String.prototype.regexLastIndexOf = function (regex, startpos) {
     regex = (regex.global) ? regex : new RegExp(regex.source, "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : ""));
-    if(typeof (startpos) == "undefined") {
+    if (typeof (startpos) == "undefined") {
         startpos = this.length;
-    } else if(startpos < 0) {
+    } else if (startpos < 0) {
         startpos = 0;
     }
     var stringToWorkWith = this.substring(0, startpos + 1);
     var lastIndexOf = -1;
     var nextStop = 0;
-    while((result = regex.exec(stringToWorkWith)) != null) {
+    while ((result = regex.exec(stringToWorkWith)) != null) {
         lastIndexOf = result.index;
         regex.lastIndex = ++nextStop;
     }
