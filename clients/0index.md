@@ -4,6 +4,8 @@ category: clients
 permalink: /clients/index.html
 caption: クライアント
 ktor_version_review: 1.2.0
+redirect_from:
+  - /clients/http-client.html
 ---
 
 サーバーアプリケーションに加え、Ktorは他サービスに接続する非同期クライアントをサポートしています。

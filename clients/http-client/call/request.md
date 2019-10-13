@@ -177,7 +177,7 @@ val data: List<PartData> = formData {
     append("hello", "world")
     append("number", 10)
     append("ba", byteArrayOf(1, 2, 3, 4))
-    append("input", inputStream.asInput())
+    appendInput("input", size = knownSize.orNull()) { openInputStream().asInput() }
     // Allow to set headers to the part:
     append("hello", "world", headersOf("X-My-Header" to "MyValue"))
 }
