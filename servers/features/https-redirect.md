@@ -50,7 +50,7 @@ fun Application.main() {
 ## テスト
 {: #testing }
 
-このFeatureを適用することで、 [テスティング](/servers/testing.html)の動作が変わります。
+このFeatureを適用することで、 [テスト](/servers/testing.html)の動作が変わります。
 このFeatureの適用後、`handleRequest`を実行する度に、リダイレクトレスポンスになります。
 例え振る舞いがすでにテスト済みだったとしても、おそらく大抵の場合これは求めている挙動ではないです。
 

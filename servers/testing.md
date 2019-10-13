@@ -1,58 +1,59 @@
 ---
-title: Testing 
+title: テスト 
 category: servers
 permalink: /servers/testing.html
-caption: Testing Server Applications 
+caption: サーバアプリケーションのテスト
 redirect_from:
   - /application/testing.html
 ---
 
-Ktor is designed to allow the creation of applications that are easily testable. And of course,
-Ktor infrastructure itself is well tested with unit, integration, and stress tests.
-In this section, you will learn how to test your applications. 
+Ktorはテスタブルなアプリケーションの作成ができるように設計されています。
+そしてもちろん、Ktorインフラストラクチャ自体がunitテスト、integrationテスト、stressテストによって念入りにテストされています。
+このセクションでは、どのようにあなたのアプリケーションをテストするかについて学びます。
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
 ## TestEngine
 
-Ktor has a special kind engine `TestEngine`, that doesn't create a web server, doesn't bind to sockets and doesn't do
-any real HTTP requests. Instead, it hooks directly into internal mechanisms and processes `ApplicationCall` directly. 
-This allows for fast test execution at the expense of maybe missing some HTTP processing details. 
-It's perfectly capable of testing application logic, but be sure to set up integration tests as well.
+Ktorは特殊な種類のエンジンとして`TestEngine`を持っています。
+このエンジンはwebサーバを作成せず、socketをbindせず、本物のHTTPリクエストは行わないものです。
+代わりに、このエンジンは内部的なメカニズムに直接フックし、`ApplicationCall`を直接処理します。
+これによりHTTPの詳細部分の処理時間が無くなり、素早いテストの実行ができます。
+アプリケーションロジックのテストは問題なく行うことができ、また同様にintegrationテストのセットアップも行うことができます。
 
-A quick walkthrough:  
+簡単に全体像を見てみましょう:
 
-* Add `ktor-server-test-host` dependency to the `test` scope 
-* Create a JUnit test class and a test function
-* Use `withTestApplication` function to setup a test environment for your Application
-* Use the `handleRequest` function to send requests to your application and verify the results
+* `ktor-server-test-host`への依存を`test`スコープに追加します
+* JUnitテストクラスとテスト関数を作成します
+* `withTestApplication`を使い、アプリケーションのテスト環境をセットアップします
+* `handleRequest`関数を使い、アプリケーションにリクエストの送信をしその結果の検証を行います
 
-## Building post/put bodies
+## post/putボディーの構築
 
 ### `application/x-www-form-urlencoded`
 
-When building the request, you have to add a `Content-Type` header:
+リクエストを構築するには、`Content-Type`ヘッダーを追加する必要があります:
 
 ```kotlin
 addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
 ```
 
-And then set the `bodyChannel`, for example, by calling the `setBody` method:
+そして例えば`setBody`メソッドを呼び出すことによって、`bodyChannel`をセットします:
 
 ```kotlin
 setBody("name1=value1&name2=value%202")
 ```
 
-Ktor provides an extension method to build a form urlencoded out of a `List` of key/value pairs:
+Ktorはkey/valueのペア`List`からform urlencodedを構築する拡張関数を提供しています:
 
 ```kotlin
 fun List<Pair<String, String>>.formUrlEncode(): String
 ```
 
-So a complete example to build a post request urlencoded could be:
+以上より、urlencodedのPOSTリクエストを構築するための完全な例は例えば以下のようになります:
 
 ```kotlin
 val call = handleRequest(HttpMethod.Post, "/route") {
@@ -63,9 +64,10 @@ val call = handleRequest(HttpMethod.Post, "/route") {
 
 ### `multipart/form-data`
 
-When uploading big files, it is common to use the multipart encoding, which allows sending
-complete files without preprocessing. Ktor's test host provides a `setBody` extension method
-to build this kind of payload. For example:
+巨大なファイルをアップロードするときには、multipartエンコードを通常利用します。
+これを使うことで、処理することなしにファイル全体を送信することができます。
+Ktorのテストホストは`setBody`拡張関数を提供しており、この種類のペイロードを構築することができます。
+例えば:
 
 ```kotlin
 val call = handleRequest(HttpMethod.Post, "/upload") {
@@ -90,10 +92,9 @@ val call = handleRequest(HttpMethod.Post, "/upload") {
 }
 ```
 
-## Defining configuration properties in tests
+## テストにおいて、設定プロパティを定義
 
-In tests, instead of using an `application.conf` to define configuration properties,
-you can use the `MapApplicationConfig.put` method:
+テストにおいて、`application.conf`を使う代わりに、`MapApplicationConfig.put`メソッドを利用して設定プロパティを定義します:
 
 ```kotlin
 withTestApplication({
@@ -106,19 +107,19 @@ withTestApplication({
 })
 ```
 
-## HttpsRedirect feature
+## HttpsRedirect Feature
 
-The HttpsRedirect changes how testing is performed.
-Check the [testing section of the HttpsRedirect feature](/servers/features/https-redirect.html#testing) for more information.
+HttpsRedirectはテストの挙動を変更します。
+[HttpsRedirect Featureのテストセクション](/servers/features/https-redirect.html#testing)を確認してください。
 
-## Testing several requests preserving sessions/cookies
+## session/cookieを保持する連続するリクエストのテスト
 {: #preserving-cookies }
 
-You can easily test several requests in a row keeping the `Cookie` information among them. By using the `cookiesSession` method.
-This method defines a session context that will hold cookies, and exposes a `CookieTrackerTestApplicationEngine.handleRequest`
-extension method to perform requests in that context.
+`Cookie`情報を保持する連続するリクエストのテストも、`cookiesSession`メソッドを利用することで簡単に行なえます。
+このメソッドはCookieを保持するセッションコンテキストを定義し、
+`CookieTrackerTestApplicationEngine.handleRequest`拡張関数をコンテキストのもとリクエスト実行するために利用可能にします。
 
-For example:
+例:
 
 ```kotlin
 @Test
@@ -144,7 +145,7 @@ fun testLoginSuccessWithTracker() = testApp {
 }
 ```
 
-Note: `cookiesSession` is not included in Ktor itself, but you can add this boilerplate to use it:
+Note: `cookiesSession`はKtor自身には含まれていませんが、以下のボイラープレートを追加することで利用できます:
 
 ```kotlin
 fun TestApplicationEngine.cookiesSession(
@@ -175,15 +176,15 @@ fun CookieTrackerTestApplicationEngine.handleRequest(
 ```
 
 
-## Example with dependencies
+## 依存関係に関する例
 
-See full example of application testing in [ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable).
-Also, most [`ktor-samples`](https://github.com/ktorio/ktor-samples) modules provide
-examples of how to test specific functionalities.
+[ktor-samples-testable](https://github.com/ktorio/ktor-samples/tree/master/feature/testable)にある
+アプリケーションテストの完全な例を参考にしてください。
+また、ほとんどの[`ktor-samples`](https://github.com/ktorio/ktor-samples)モジュールは特定の機能をどのようにテストするのかの例を提供してくれます。
 
-In some cases we will need some services and dependencies. Instead of storing them globally, we suggest you
-to create a separate function receiving the service dependencies. This allows you to pass different
-(potentially mocked) dependencies in your tests: 
+いくつかのケースにおいては、サービスや依存ライブラリを必要とします。
+グローバルにそれらを保存する代わりに、サービスへの依存を受け取る別々の関数を作成することをおすすめします。
+そうすることで、異なる依存関係（モックされているかもしれない）をテストにおいて渡すことができます。
 
 {% capture build-gradle %}
 ```groovy
