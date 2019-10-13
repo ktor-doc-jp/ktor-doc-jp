@@ -1,6 +1,6 @@
 ---
 title: CORS
-caption: Enable Cross-Origin Resource Sharing (CORS)
+caption: Cross-Origin Resource Sharing (CORS)の有効化
 category: servers
 permalink: /servers/features/cors.html
 feature:
@@ -11,16 +11,16 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS).
+KtorはデフォルトでCross-Origin Resource Sharing (CORS)の適切な実装をサポートするインターセプタを提供しています。
 
-> Cross-Origin Resource Sharing (CORS) is a specification that enables truly open access across domain-boundaries. If you serve public content, please consider using CORS to open it up for universal JavaScript / browser access. 
-*From [enable-cors.org](http://enable-cors.org/)*
+> Cross-Origin Resource Sharing (CORS)はドメイン境界をまたぐアクセスを有効にする仕様です。パブリックなコンテンツを配信する場合、Javascriptやブラウザアクセスから普遍的にアクセス可能にできるようにするためCORSを検討してください。 
+*参考: [enable-cors.org](http://enable-cors.org/)*
 
 {% include feature.html %}
 
-## Basic
+## 基本
 
-First of all, install the CORS feature into your application.
+まず初めに、CORS Featureをアプリケーションにインストールします。
 
 ```kotlin
 fun Application.main() {
@@ -30,7 +30,7 @@ fun Application.main() {
 }
 ```
 
-The default configuration to the CORS feature handles only `GET`, `POST` and `HEAD` HTTP methods and the following headers:
+CORS Featureのデフォルトの設定は`GET`、`POST`、`HEAD`HTTPメソッドと以下のヘッダーのみ扱えます:
 
 ```kotlin
   HttpHeaders.Accept
@@ -39,12 +39,12 @@ The default configuration to the CORS feature handles only `GET`, `POST` and `HE
   HttpHeaders.ContentType
 ```
 
-## Advanced
+## 発展的内容
 
- - [source code](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/features/CORS.kt)
- - [tests](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tests/test/io/ktor/tests/http/CORSTest.kt)
+ - [ソースコード](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/features/CORS.kt)
+ - [テスト](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tests/test/io/ktor/tests/http/CORSTest.kt)
 
-Here is an advanced example that demonstrates most of CORS-related API functions
+以下はCORSを有効にしているAPI関数を表す発展的な例です。
 
 ```kotlin
 fun Application.main() {
@@ -66,15 +66,15 @@ fun Application.main() {
 }
 ```
 
-## Configuration
+## 設定
 
-- `method("HTTP_METHOD")` : Includes this method to the white list of Http methods to use CORS.
-- `header("header-name")` : Includes this header to the white list of headers to use CORS.
-- `exposeHeader("header-name")` : Exposes this header in the response.
-- `exposeXHttpMethodOverride()` : Exposes `X-Http-Method-Override` header in the response
-- `anyHost()` : Allows any host to access the resources
-- `host("hostname")` : Allows only the specified host to use CORS, it can have the port number, a list of subDomains or the supported schemes.
-- `allowCredentials` : Includes `Access-Control-Allow-Credentials` header in the response
-- `allowNonSimpleContentTypes`: Inclues `Content-Type` request header to the white list for values other than [simple content types](https://www.w3.org/TR/cors/#simple-header).
-- `maxAge`: Includes `Access-Control-Max-Age` header in the response with the given max age
+- `method("HTTP_METHOD")` : 設定したHTTPメソッドを、CORSを利用するHTTPメソッド群ホワイトリストに追加します。
+- `header("header-name")` : 設定したHeaderをCORSを利用するヘッダー群ホワイトリストに追加します。
+- `exposeHeader("header-name")` : レスポンス内にこのヘッダーを追加します。
+- `exposeXHttpMethodOverride()` : レスポンス内に`X-Http-Method-Override`ヘッダーを追加します。
+- `anyHost()` : リソースに任意のホストからアクセスすることを許可します。
+- `host("hostname")` : 指定したホストのみCORSを使えるようにします。port番号やサブドメイン一覧やschemaを指定することもできます。
+- `allowCredentials` : `Access-Control-Allow-Credentials`ヘッダーをレスポンスに含めます。
+- `allowNonSimpleContentTypes`: `Content-Type`リクエストヘッダーを、[simple content type](https://www.w3.org/TR/cors/#simple-header)以外のホワイトリスト値として追加することができます。   
+- `maxAge`: 指定したmaxAgedで`Access-Control-Max-Age`ヘッダーをレスポンスに含めます。
 
