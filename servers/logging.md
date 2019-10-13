@@ -1,18 +1,17 @@
 ---
-title: Logging
-caption: Logging in Ktor
+title: ロギング
+caption: Ktorにおけるロギング
 category: servers
 permalink: /servers/logging.html
 keywords: SLF4J logback log4j
 ---
 
-Ktor uses [SLF4J](https://www.slf4j.org/) for logging.
+Ktorは[SLF4J](https://www.slf4j.org/)をロギングに利用しています。
 
-## SLF4J Providers
+## SLF4Jプロバイダー
 {: #providers }
 
-If you don't add a logging provider, you will see the
-following message when you run your application:
+ロギングプロバイダーを追加しない場合、アプリケーション起動時に以下のようなメッセージが出ます。
 
 ```
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
@@ -20,26 +19,24 @@ SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 ```
 
-We can set up logging to remove these warning messages and get
-a better idea of what is happening with the app by adding a provider.
+これらのwarningメッセージを取り除き、また何がアプリケーションで起きているかをより理解するため、
+プロバイダーを追加することでロギングのセットアップをすることができます。
 
-Providers use Java's [ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html) mechanism,
-and so are discovered and added automatically without having to do anything
-else by code.
+プロバイダーはJavaの[ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html)メカニズムを使っています。
+そのためコード内で何かしらをすることなしに、自動で発見され追加されます。
 {: .note.tip }
 
-### Logback provider
+### Logbackプロバイダー
 {: #providers-logback }
 
-You can use [logback](https://logback.qos.ch/),
-which is the successor of log4j, as a SLF4J provider:
+SLF4Jプロバイダーとして、log4jの後継である[logback](https://logback.qos.ch/)を使うことができます。
 
-Gradle's `build.gradle` or `build.gradle.kts`:
+Gradleの`build.gradle`または`build.gradle.kts`は以下のようになります:
 ```groovy
 compile("ch.qos.logback:logback-classic:1.2.3")
 ```
 
-Mavens's `pom.xml`:
+Mavensの`pom.xml`:
 ```xml
 <dependency>
     <groupId>ch.qos.logback</groupId>
@@ -48,15 +45,15 @@ Mavens's `pom.xml`:
 </dependency>
 ```
 
-Once added, run the app, and you should now see the logging messages
-in the Run pane of IDEA. However, these logging messages are not as
-helpful as they could be.
+追加し、アプリケーションを起動すると、IntelliJ IDEAのRunページにてロギングメッセージを見ることができることができます。
+しかし、これらのロギングメッセージはさらに有益にする余地が残っています。
 
-### Configuring the Logback provider
+### Logbackプロバイダーの設定
 {: #providers-logback-config }
 
-If the default logging is not enough, you can put a `logback.xml` or `logback-test.xml` (that has higher priority) file in your `src/main/resources` folder
-to adjust the logging if it is not useful to you. For example:
+デフォルトのロギングで十分ではない場合、`logback.xml`か`logback-test.xml`（プライオリティはこちらのほうが高いです）ファイルを
+`src/main/resources`フォルダに置き、ロギングの調整を行うことができます。
+例えば:
 
 {% capture logback-xml %}
 ```xml
@@ -82,22 +79,20 @@ to adjust the logging if it is not useful to you. For example:
     no-height="true"
 %}
 
-After it is added, if you stop your app, and run it again, after going
-to localhost:8080 in your browser, 
-you should see a log message now in the IDEA run pane, something like:
+これを追加した後に、アプリケーションを停止し再度起動しブラウザでlocalhost:8080を見ると、
+IDEAのrunページで以下のようなログメッセージを見ることができるはずです:
 
 ```
 2017-05-29 23:08:12.926 [nettyCallPool-4-1] TRACE ktor.application - 200 OK: GET - /
 ```
 
-You can install the [Call Logging](/servers/features/call-logging.html) feature to catch and log requests.
+リクエストのログを出力するには[Call Logging](/servers/features/call-logging.html) Featureをインストールすればよいです。
 {: .note}
 
-To understand how to change the `logback.xml` configuration file
-and change the logging, see the [logback manual](https://logback.qos.ch/manual/index.html).
+どのように`logback.xml`ファイルを変更しログ出力形式を変更すればよいかを理解するには、[logbackマニュアル](https://logback.qos.ch/manual/index.html)を見てください。
 
-## Accessing the main logger
+## メインロガーへのアクセス
 {: #main-logger }
 
-The `ApplicationEnvironment` interface has a `log` property.
-You can access it inside an `ApplicationCall` with `call.application.environment.log`.
+`ApplicationEnvironment`インターフェースは`log`プロパティを持っています。
+`ApplicationCall`において`call.application.environment.log`を使ってアクセスすることができます。
