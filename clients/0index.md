@@ -1,41 +1,41 @@
 ---
-title: Http Client
+title: Httpクライアント
 category: clients
 permalink: /clients/index.html
 children: /clients/http-client/
-caption: Http Client
+caption: Httpクライアント
 ktor_version_review: 1.2.3
 ---
 
 {::options toc_levels="1..2" /}
 
-In addition to HTTP serving, Ktor also includes a flexible asynchronous HTTP client.
-This client supports several [configurable engines](/clients/http-client/engines.html), and has its own set of [features](/clients/http-client/features.html).
+HTTPによる配信機能に加え、Ktorは非同期で柔軟なHTTPクライアント機能も含んでいます。
+このクライアント機能はいくつかの[設定可能なengine](/clients/http-client/engines.html)をサポートしています。
+またいくつかの[Feature](/clients/http-client/features.html)もサポートしています。
 
-The main functionality is available through the `io.ktor:ktor-client-core:$ktor_version` artifact.
-And each engine, is provided in [separate artifacts](/clients/http-client/engines.html).
+メイン機能は`io.ktor:ktor-client-core:$ktor_version`アーティファクトを通じて利用可能です。
+各engineは、[アーティファクトとして分離された上で](/clients/http-client/engines.html)提供されています。
 {: .note.artifact }
 
-**Table of contents:**
+**目次:**
 
 * TOC
 {:toc}
 
-## Calls: Requests and Responses
+## Call: リクエストとレスポンス
 
 {: #requests-responses }
 
-You can check [how to make requests](/clients/http-client/call/requests.html),
-and [how to receive responses](/clients/http-client/call/responses.html) in their respective sections.
+[リクエストの作り方](/clients/http-client/call/requests.html)を確認してください。
+また、[レスポンスの受け取り方](/clients/http-client/call/responses.html)も確認してください。
 
-## Concurrency
+## 並行性
 
-Remember that requests are asynchronous, but when performing requests, the API suspends further requests
-and your function will be suspended until done. If you want to perform several requests at once
-in the same block, you can use `launch` or `async` functions and later get the results.
-For example:
+リクエストは非同期ですが、リクエスト実行時にAPIは別の追加のリクエストを行わず、実行終了するまで関数は停止することを覚えておいてください。
+いくつかのリクエストを同じブロック内で一度に実行したい場合は、`launch`か`async`関数を使い結果を遅延で受け取れば良いです。
+例えば:
 
-### Sequential requests
+### シーケンシャルなリクエスト
 
 ```kotlin
 suspend fun sequentialRequests() {
@@ -51,7 +51,7 @@ suspend fun sequentialRequests() {
 }
 ```
 
-### Parallel requests
+### 並列リクエスト
 
 ```kotlin
 suspend fun parallelRequests() = coroutineScope<Unit> {
@@ -70,12 +70,12 @@ suspend fun parallelRequests() = coroutineScope<Unit> {
 }
 ```
 
-## Examples
+## サンプル
 {: #examples }
 
-For more information, check the [examples page](/clients/http-client/examples.html) with some examples.
+[サンプルページ](/clients/http-client/examples.html)にいくつかの例があります。
 
 ## Features
 {: #features}
 
-For more information, check the [features page](/clients/http-client/features.html) with all the available features.
+[Featureページ](/clients/http-client/features.html)に利用可能なすべての機能があります。
