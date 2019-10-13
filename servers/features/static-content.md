@@ -1,6 +1,6 @@
 ---
-title: Static Content
-caption: Serving Static Content
+title: 静的コンテンツ
+caption: 静的コンテンツの配信
 category: servers
 permalink: /servers/features/static-content.html
 feature:
@@ -11,14 +11,16 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor has built-in support for serving static content. This can come in useful when you want to serve style sheets, scripts, images, etc. 
+Ktorはビルトインで静的コンテンツ配信をサポートしています。
+スタイルシートやスクリプトや画像等を配信したいときに便利な機能です:
 
 {% include feature.html %}
 
-## Specifying Files and Folders
+## ファイルとフォルダの指定
 
-Using the `static` function, we can tell Ktor that we want certain URIs to be treated as static content and also define where the content resides. All content is relative to the current working directory. 
-See [Defining a custom root folder](#defining-a-custom-root-folder) to set a different root. 
+`static`関数を使い、Ktorに特定URIを静的コンテンツのように扱うよう指定し、そのファイルがどこにあるのかも定義することができます。
+すべてのコンテンツは現在のworkingディレクトリからの相対パスで扱われます。
+異なるルートフォルダを設定するには[カスタムルートフォルダの定義](#defining-a-custom-root-folder)をご覧ください。
       
 ```kotlin
 routing {
@@ -28,15 +30,14 @@ routing {
 }
 ```
 
-The example above tells `ktor` that any request to the URI `/static` is to be treated as static content. The `files("css")` defines the folder under which these files
- are located - anything that is in the folder `css` will be served. In essence, this means that a request such as
- 
+上の例は`/static`のURIに来た任意のリクエストを静的コンテンツのように扱うよう`ktor`に伝えます。
+`files("css")`はそれらのファイルが配置されているフォルダを定義します。
+つまり`css`フォルダ配下の任意のファイルが配信されます。
+つまり、**`/static/styles.css`**といったリクエストは**`css/styles.css`**ファイルを配信します。
 
-**`/static/styles.css`** will serve the file **`css/styles.css`**. 
+フォルダに加え、`file`を使うことで指定したファイルを含めることもできます。
+実際の物理的なファイル名とURIのパス名が違った場合には、オプショナルの第二引数に実際の物理的なファイル名を指定することもできます。
 
-In addition to folders, we can also include specific files using `file`, which can optionally take a second parameter that maps to the actual physical filename, if it is different.
-
- 
 ```kotlin
 routing {
     static("static") {
@@ -49,13 +50,15 @@ routing {
 }
 ```
 
-We can also have default files that can be served using `default`. For instance, on calling
+`default`を使うことで、配信するデフォルトのファイルを指定することもできます。
+例えば
 
-**`/static`** with no filename,  **`index.html`** will be served.
+**`/static`** をファイル名無しで呼び出した場合,  **`index.html`**が配信されるようにすることができます。
 
-## Defining a custom root folder
+## カスタムのルートフォルダの定義
 
-To specify a different root folder, one other than the working directory, we set the value of `staticRootFolder` which expects a type `File`.
+workingディレクトリ以外の異なるルートフォルダを指定するためには、
+`staticRootFolder`に`File`型で値を指定します。
 
 ```kotlin
 static("custom") {
@@ -64,9 +67,10 @@ static("custom") {
 }
 ```
 
-## Defining subroutes
+## サブルートの定義
 
-We can also define sub-routes, i.e. `/static/themes` for instance
+サブルートの定義もできます。
+例えば`/static/themes`などです。
 
 ```kotlin
 static("static") {
@@ -77,10 +81,10 @@ static("static") {
 }
 ```
 
-## Serving embedded resources
+## 組み込みリソースの配信
 
-If you embed your static content as resources into your application, you can serve them right from there using the `resource` and `resources` 
-functions:
+静的コンテンツをリソースとしてアプリケーションに組み込む場合は、
+`resource`、`resources`関数を使ってリソースから配信することができます:
 
 ```kotlin
 static("static") {
@@ -89,34 +93,37 @@ static("static") {
 }
 ```
 
-There is also `defaultResource` similar to `default` for serving a default page for a folder, 
-and `staticBasePackage` similar to `staticRootFolder` for specifying a base resource package for static content. 
+`default`に似た`defaultResource`というものもあり、フォルダに対し配信するデフォルトページの指定することができます。
+`staticRootFolder`に似た`staticBasePackage`というものもあり、静的コンテンツのベースリソースパッケージを指定することができます。
 
-## Handling Errors
+## エラーハンドリング
 
-If the requested content is not found, a `FileNotFoundException` is thrown. It should be handled in `StatusPages` with the `exception` handler 
-to produce a corresponding `404 Not Found`, otherwise it propagates to the engine and causes a 500 Internal Server Error. 
+リクエストされたコンテンツが見つからない場合、`FileNotFoundException`が投げられます。
+これは`StatusPages`の`exception`ハンドラでハンドリングされ`404 Not Found`を生成するか、
+あるいはengineまで伝播し500 Internal Server Errorを発生させるかします。
 
-## Customising Content Types
+## コンテントタイプのカスタマイズ
 
-When files are served, the content type is determined from the file extension, using `ContentType.defaultForFile(file)`. The data corresponding
-to each file type is obtained from the `mimelist.csv` resource file which is located in `ktor-server-core`. 
+ファイルが配信されるとき、コンテントタイプは`ContentType.defaultForFile(file)`を使ってファイル拡張子から決定されます。
+各ファイルタイプに対応するデータは`ktor-server-core`に配置された`mimelist.csv`リソースファイルから取得されます。
 
-## Under the covers
+## 内部実装
 
-The function `static` is defined as
+`static`関数は以下のように定義されています。
 
 ```kotlin
 fun Route.static(remotePath: String, configure: Route.() -> Unit) = route(remotePath, configure)
 ````
 
-which is essentially just another route definition. 
+これは本質的にはただすこし違った形でルート定義しているだけです。
 
-## Handling HEAD requests in static content
+## 静的コンテンツに対するHEADリクエストを扱う
 {: #head-requests }
 
-Ktor do not handle `HEAD` requests by default, thus the static content feature do not handle `HEAD` requests either.
-To automatically handle `HEAD` requests for each `GET` route you can install the [`AutoHeadResponse` feature](/servers/features/autoheadresponse.html).
+Ktorは`HEAD`リクエストをデフォルトでは扱うことができません。
+それゆえに静的コンテンツ機能も`HEAD`リクエストを扱うことができません。
+自動的に`HEAD`リクエストを各`GET`ルートごとに扱えるようにするには、
+[`AutoHeadResponse` Feature](/servers/features/autoheadresponse.html)をインストールしてください。
 
 ```kotlin
 fun Application.main() {
@@ -126,6 +133,7 @@ fun Application.main() {
 }
 ```
 
-Not handling HEAD requests by default, means that if you use `curl -I` or its `curl --head` alias to a GET route
-of your Ktor backend without installing the AutoHeadResponse feature,
-[it would return a 404 Not Found](/quickstart/faq.html#curl-head-not-found).
+デフォルトではHEADリクエストをハンドリングできないということは、
+もしAutoHeadResponse Featureをインストールせず`curl -I`か`curl --head`をGETルートに対して使った場合、
+[404 Not Foundが返ることになります](/quickstart/faq.html#curl-head-not-found)。
+
