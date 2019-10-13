@@ -20,6 +20,9 @@ You have a [full example using JSON](/clients/http-client/examples.html#example-
 
 {% include feature.html %}
 
+To use this feature with Kotlin/JS, you need to include the `io.ktor:ktor-client-json-js` artifact.
+{: .note.artifact }
+
 ## Serializers
 
 The `JsonFeature` has a default serializer(implicitly obtained or by calling `defaultSerializer()`)

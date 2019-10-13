@@ -133,7 +133,7 @@ those property names in your classes for the internal routes. For example:
 
 ```kotlin
 @Location("/type/{name}") data class Type(val name: String) {
-    @Location("/edit") data class TypeEdit(val type: Type)
-    @Location("/list/{page}") data class TypeList(val type: Type, val page: Int)
+    @Location("/edit") data class Edit(val type: Type)
+    @Location("/list/{page}") data class List(val type: Type, val page: Int)
 }
 ```
