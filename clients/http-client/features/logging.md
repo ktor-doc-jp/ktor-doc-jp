@@ -22,3 +22,6 @@ val client = HttpClient() {
     }
 }
 ```
+
+To use this feature, you need to include `io.ktor:ktor-client-logging-jvm` artifact on the JVM and `ktor-client-logging-native` on iOS.
+{: .note.artifact }

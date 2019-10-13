@@ -5,7 +5,7 @@ category: servers
 permalink: /servers/features/metrics-micrometer.html
 feature:
   artifact: io.ktor:ktor-metrics-micrometer:$ktor_version
-  class: io.ktor.metrics.DropwizardMetrics
+  class: io.ktor.metrics.MicrometerMetrics
 redirect_from:
 - /features/metrics.html
 ktor_version_review: 1.0.0
