@@ -1,6 +1,6 @@
 ---
-title: HttpsRedirect
-caption: Redirect HTTP requests to HTTPS
+title: Httpsリダイレクト
+caption: HTTPリクエストをHTTPSにリダイレクト
 category: servers
 permalink: /servers/features/https-redirect.html
 keywords: https ssl
@@ -12,15 +12,14 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature will make all the affected HTTP calls perform a redirect to its
-HTTPS counterpart before processing the call.
+このFeatureはHTTPコールを、処理を行う前に、対応するHTTPSロケーションへとリダイレクトする機能です。
 
-By default the redirection is a `301 Moved Permanently`,
-but it can be configured to be a `302 Found` redirect.
+デフォルトでは、リダイレクトは`301 Moved Permanently`ですが、
+`302 Found`リダイレクトに設定することもできます。
 
 {% include feature.html %}
 
-## Usage
+## 使い方
 
 ```kotlin
 fun Application.main() {
@@ -29,13 +28,13 @@ fun Application.main() {
 }
 ```
 
-The code above installs the HttpsRedirect feature with the default configuration.
+上のコードはHttpsRedirect Featureをデフォルト設定でインストールします。
 
-When behind a reverse-proxy, you will need to install the `ForwardedHeaderSupport` or the `XForwardedHeaderSupport`
-feature, for the `HttpsRedirect` feature to properly detect HTTPS requests.
+reverse-proxy背後にある場合、`ForwardedHeaderSupport`か`XForwardedHeaderSupport` Featureをインストールする必要があります。
+`HttpsRedirect` Featureが適切にHTTPSリクエストを検知することができるようにするためです。
 {: .note}
 
-## Configuration
+## 設定
 
 ```kotlin
 fun Application.main() {
@@ -48,18 +47,18 @@ fun Application.main() {
 }
 ```
 
-## Testing
+## テスト
 {: #testing }
 
-Applying this feature changes how [testing](/servers/testing.html) works.
-After applying this feature, each `handleRequest` you perform, results in a redirection response.
-And probably this is not what you want in most cases, since that behaviour is already tested.
+このFeatureを適用することで、 [テスティング](/servers/testing.html)の動作が変わります。
+このFeatureの適用後、`handleRequest`を実行する度に、リダイレクトレスポンスになります。
+例え振る舞いがすでにテスト済みだったとしても、おそらく大抵の場合これは求めている挙動ではないです。
 
 ### XForwardedHeaderSupport trick
 
-As shown [in this test](https://github.com/ktorio/ktor/blob/bb0765ce00e5746c954fea70270cf7d802a40648/ktor-server/ktor-server-tests/test/io/ktor/tests/server/features/HttpsRedirectFeatureTest.kt#L31-L49){: target="_blank"},
-you can install the `XForwardedHeaderSupport` feature and add a `addHeader(HttpHeaders.XForwardedProto, "https")`
-header to the request.
+[このテスト](https://github.com/ktorio/ktor/blob/bb0765ce00e5746c954fea70270cf7d802a40648/ktor-server/ktor-server-tests/test/io/ktor/tests/server/features/HttpsRedirectFeatureTest.kt#L31-L49){: target="_blank"}
+で示されているように、
+`XForwardedHeaderSupport`をインストールし、`addHeader(HttpHeaders.XForwardedProto, "https")`ヘッダーをリクエストに追加することができます。
 
 ```kotlin
 @Test
@@ -83,15 +82,15 @@ fun testRedirectHttps() {
 }
 ```
 
-### Do not install the feature when testing or uninstall it
+### テスト時にFeatureをインストールしないか、あるいはアンインストールする
 
-Uninstalling it:
+アンインストール:
 
 ```kotlin
 application.uninstall(HttpsRedirect)
 ```
 
-Prevent installation in the first place:
+インストールを防ぐ方法:
 
 ```kotlin
 // The function referenced in the application.conf
@@ -112,10 +111,10 @@ fun Application.mymoduleConfigured(installHttpsRedirect: Boolean = true) {
 }
 ```
 
-In this case, you can also have a separate test that calls `mymodule` instead of `mymoduleForTesting` to verify
-that the `HttpsRedirect` feature is installed and other things that you are not doing in tests.
+このケースにおいては、`mymoduleForTesting`の代わりに`mymodule`を呼び出す別のテストを作成することもできます。
+それによって`HttpsRedirect`機能がインストールされることと、テストにおいて行えないことの検証も行うことができます。
 
-### I get an infinite redirect when using this feature
+### この機能を使ったとき無限リダイレクトになる場合
 
-Have you installed the `XForwardedHeaderSupport` or the `ForwardedHeaderSupport` feature?
-Check [this FAQ entry](/quickstart/faq.html#infinite-redirect) for more details.
+`XForwardedHeaderSupport`か`ForwardedHeaderSupport`をインストール済みですか？
+[このFAQエントリ](/quickstart/faq.html#infinite-redirect)をチェックしてみてください。
