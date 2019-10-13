@@ -28,6 +28,11 @@ Kotlin製WebFrameworkである[Ktor](https://ktor.io)の[日本語ドキュメ�
 
 `./develop.sh` を実行後 `localhost:4000` で修正中のドキュメントが閲覧できます。
 
+## 反映済み
+
+元ドキュメントの以下コミットまでは反映済み。
+https://github.com/ktorio/ktorio.github.io/commit/6576021ee89cb90d1a77b7fe705394b0970154e7
+
 ## 議論・質問 💬
 
 Issueか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.herokuapp.com/)の`ktor`チャンネルでお待ちしてます。
