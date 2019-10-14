@@ -88,14 +88,14 @@ routing {
 }
 ```
 
-Some of these generic methods with one type parameter, defined in the `io.ktor.locations`,
-have the same name as other methods defined in the `io.ktor.routing` package.
-If you import the routing package before the locations one,
-the IDE might suggest you generalize those methods instead of importing the right package.
-You can manually add `import io.ktor.locations.*` if that happens to you.
-Remember this API is experimental. This issue is already [reported at github](https://github.com/ktorio/ktor/issues/368).
+`io.ktor.locations` にて型パラメータを1つ持つジェネリックなメソッドが複数定義されています。
+`io.ktor.routing` にも定義されている関数とほぼ同一のインタフェースで実装されています。
+`locations` パッケージの前に `routing` パッケージをインポートすると、これらのパッケージをインポートする代わりに、
+これらのメソッドを一般化するよう IDE が提案することがあります。
+`import io.ktor.locations.*` を手動で追加するとこれが発生します。
+`Locations` API はまだ試験的な機能です。
+この問題はすでに [GitHub で報告](https://github.com/ktorio/ktor/issues/368) されています。
 {: .note}
-
 
 ## Building URLs
 {: #building-urls }
