@@ -13,36 +13,37 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-Ktor provides a mechanism to create routes in a typed way, for both:
-constructing URLs and reading the parameters.
+Ktor は URL の構築とリクエストパラメータの両方に対し、型安全にルーティングする機構を提供しています。
 
-Locations are an experimental feature.
+Locations は試験的な機能 (experimental feature) です。
 {: .note.experimental}
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
 {% include feature.html %}
 
-## Installing the feature
+## Location feature のインストール
 {: #installing }
 
-The Locations feature doesn't require any special configuration:
+特別な設定をすることなく Location feature を利用することができます。
 
 ```kotlin
 install(Locations)
 ```
 
-## Defining route classes
+## Route クラスの定義
 {: #route-classes }
 
-For each typed route you want to handle, you need to create a class (usually a data class)
-containing the parameters that you want to handle.
+型付きルーティングごとに、ルーティング内のパラメータを持つクラス (通常は data class) を作成します。
 
 The parameters must be of any type supported by the [Data Conversion](/servers/features/data-conversion.html) feature.
 By default, you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, enums and `Iterable` as parameters.
+
+パラメータの型は [Data Conversion](/servers/features/data-conversion.html) feature でサポートされている型でなければなりません。
+デフォルトでは、 `Int` 、 `Long` 、 `Float` 、 `Double` 、 `Boolean` 、 `String` 、 `Enum` 、 `Iterable` を指定できます。
 
 ### URL parameters
 {: #parameters-url }
