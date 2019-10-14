@@ -97,29 +97,29 @@ routing {
 この問題はすでに [GitHub で報告](https://github.com/ktorio/ktor/issues/368) されています。
 {: .note}
 
-## Building URLs
+## URL の構築
 {: #building-urls }
 
-You can construct URLs to your routes by calling `application.locations.href` with
-an instance of a class annotated with `@Location`:
+`@Location` アノテーションが付与されたクラスのインスタンスを `application.locations.href` の引数に渡すことで、
+そのルーティングへのURLが構築されます。
 
 ```kotlin
 val path = application.locations.href(Listing(name = "movies", page = 10, count = 20))
 ```
 
-So for this class, `path` would be `"/list/movies?page=10&count=20""`.
+この例では、変数 `path` は文字列 `"/list/movies?page=10&count=20"` になります。
 
 ```kotlin
 @Location("/list/{name}") data class Listing(val name: String, val page: Int, val count: Int)
 ```
 
-If you construct the URLs like this, and you decide to change the format of the URL,
-you will just have to update the `@Location` path, which is really convenient.
+この方式で URL を生成するようにすることで、もし URL を変更しようとした際は `@Location` パスを更新するだけで済むので非常に便利です。
 
-## Subroutes with parameters
+## パラメータを伴うネストしたルーティング
 {: #subroutes }
 
-You have to create classes referencing to another class annotated with `@Location` like this, and register them normally:
+パラメータを伴うルーティングをネストさせる場合、 `@Location` が付与された上位のクラス (`Type`) をプロパティ (`val type: Type`) に持つ
+`@Location` が付与された内部クラス (`Edit` や `List`) を作成し、下記のようにルーティングに登録します。
 
 ```kotlin
 routing {
@@ -132,9 +132,6 @@ routing {
 }
 ```
  
-To obtain parameters defined in the superior locations, you just have to include
-those property names in your classes for the internal routes. For example:
-
 ```kotlin
 @Location("/type/{name}") data class Type(val name: String) {
     @Location("/edit") data class Edit(val type: Type)
