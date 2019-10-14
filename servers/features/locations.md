@@ -1,6 +1,6 @@
 ---
 title: Locations
-caption: Type-safe Routing
+caption: 型安全なルーティング
 category: servers
 permalink: /servers/features/locations.html
 feature:
