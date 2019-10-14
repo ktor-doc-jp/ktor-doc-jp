@@ -28,11 +28,16 @@ Locations は試験的な機能 (experimental feature) です。
 ## Location feature のインストール
 {: #installing }
 
-特別な設定をすることなく Location feature を利用することができます。
+Location feature の利用には特別な設定は不要です。
+単に `Location` feature をインストールするだけで利用可能です。
 
 ```kotlin
 install(Locations)
 ```
+
+`Locations` は試験的な機能です。
+`@KtorExperimentalLocationsAPI` アノテーションを付与することで Warning を抑制できます。
+{: .note.experimental}
 
 ## Route クラスの定義
 {: #route-classes }
@@ -45,10 +50,8 @@ install(Locations)
 ### URL パラメータ
 {: #parameters-url }
 
-The names between the curly braces must match the properties of the class.
-
-ルーティング用のクラスは `@Location` アノテーションを付与し、 `{` と `}` で囲まれたプレースホルダー (`{propertyName}` など) の名称と
-同じ変数名を定義します。
+ルーティング用のクラスに `@Location` アノテーションを付与し、 `{` と `}` で囲まれたプレースホルダー (`{propertyName}` など)
+と同名のプロパティを定義します。
 
 ```kotlin
 @Location("/list/{name}/page/{page}")
@@ -92,7 +95,7 @@ routing {
 `io.ktor.routing` にも定義されている関数とほぼ同一のインタフェースで実装されています。
 `locations` パッケージの前に `routing` パッケージをインポートすると、これらのパッケージをインポートする代わりに、
 これらのメソッドを一般化するよう IDE が提案することがあります。
-`import io.ktor.locations.*` を手動で追加するとこれが発生します。
+(`import io.ktor.locations.*` を手動で追加すると発生します。)
 `Locations` API はまだ試験的な機能です。
 この問題はすでに [GitHub で報告](https://github.com/ktorio/ktor/issues/368) されています。
 {: .note}
