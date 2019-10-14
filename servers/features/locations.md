@@ -58,26 +58,27 @@ data class Listing(val name: String, val page: Int)
 * `/list/movies/page/10` にマッチする
 * `Listing(name = "movies", page = 10)` が生成される
 
-### GET parameters
+### GET パラメータ
 {: #parameters-get }
 
-If you provide additional class properties that are not part of the path of the `@Location`,
-those parameters will be obtained from the GET's query string or POST parameters:
+`@Location` アノテーション内のプレースホルダーに無いプロパティを定義した場合、
+GET クエリまたは POST パラメータで指定された値が格納されます。
 
 ```kotlin
 @Location("/list/{name}")
 data class Listing(val name: String, val page: Int, val count: Int)
 ```
 
-* Will match: `/list/movies?page=10&count=20`
-* Will construct: `Listing(name = "movies", page = 10, count = 20)`
+* `/list/movies?page=10&count=20` にマッチする
+* `Listing(name = "movies", page = 10, count = 20)` が生成される
 
-## Defining route handlers
+## ルーティングハンドラの定義
 {: #route-handlers }
 
-Once you have [defined the classes](#route-classes) annotated with `@Location`,
-this feature artifact exposes new typed methods for defining route handlers:
-`get`, `options`, `header`, `post`, `put`, `delete` and `patch`.
+`@Location` アノテーションを付与した [Route クラス](#route-classes) を定義すると、
+Location feature はその型の `get` 、 `options` 、 `header` 、 `post` 、 `put` 、 `delete` 、 `patch` ルーティングハンドラを
+生成します。
+
 
 ```kotlin
 routing {
@@ -87,7 +88,11 @@ routing {
 }
 ```
 
-Some of these generic methods with one type parameter, defined in the `io.ktor.locations`, have the same name as other methods defined in the `io.ktor.routing` package. If you import the routing package before the locations one, the IDE might suggest you generalize those methods instead of importing the right package. You can manually add `import io.ktor.locations.*` if that happens to you.
+Some of these generic methods with one type parameter, defined in the `io.ktor.locations`,
+have the same name as other methods defined in the `io.ktor.routing` package.
+If you import the routing package before the locations one,
+the IDE might suggest you generalize those methods instead of importing the right package.
+You can manually add `import io.ktor.locations.*` if that happens to you.
 Remember this API is experimental. This issue is already [reported at github](https://github.com/ktorio/ktor/issues/368).
 {: .note}
 
