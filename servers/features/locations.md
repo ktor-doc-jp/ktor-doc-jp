@@ -1,6 +1,6 @@
 ---
 title: Locations
-caption: Type-safe Routing
+caption: 型安全なルーティング
 category: servers
 permalink: /servers/features/locations.html
 feature:
@@ -13,72 +13,75 @@ ktor_version_review: 1.0.0
 
 {::options toc_levels="1..2" /}
 
-Ktor provides a mechanism to create routes in a typed way, for both:
-constructing URLs and reading the parameters.
+Ktor は URL の構築とリクエストパラメータの両方に対し、型安全にルーティングする機構を提供しています。
 
-Locations are an experimental feature.
+Locations は試験的な機能 (experimental feature) です。
 {: .note.experimental}
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
 {% include feature.html %}
 
-## Installing the feature
+## Location feature のインストール
 {: #installing }
 
-The Locations feature doesn't require any special configuration:
+Location feature の利用には特別な設定は不要です。
+単に `Location` feature をインストールするだけで利用可能です。
 
 ```kotlin
 install(Locations)
 ```
 
-## Defining route classes
+`Locations` は試験的な機能です。
+`@KtorExperimentalLocationsAPI` アノテーションを付与することで Warning を抑制できます。
+{: .note.experimental}
+
+## Route クラスの定義
 {: #route-classes }
 
-For each typed route you want to handle, you need to create a class (usually a data class)
-containing the parameters that you want to handle.
+型付きルーティングごとに、ルーティング内のパラメータを持つクラス (通常は data class) を作成します。
 
-The parameters must be of any type supported by the [Data Conversion](/servers/features/data-conversion.html) feature.
-By default, you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, enums and `Iterable` as parameters.
+パラメータの型は [Data Conversion](/servers/features/data-conversion.html) feature でサポートされている型でなければなりません。
+デフォルトでは、 `Int` 、 `Long` 、 `Float` 、 `Double` 、 `Boolean` 、 `String` 、 `Enum` 、 `Iterable` を指定できます。
 
-### URL parameters
+### URL パラメータ
 {: #parameters-url }
 
-That class must be annotated with `@Location` specifying
-a path to match with placeholders between curly brackets `{` and `}`. For example: `{propertyName}`.
-The names between the curly braces must match the properties of the class.
+ルーティング用のクラスに `@Location` アノテーションを付与し、 `{` と `}` で囲まれたプレースホルダー (`{propertyName}` など)
+と同名のプロパティを定義します。
 
 ```kotlin
 @Location("/list/{name}/page/{page}")
 data class Listing(val name: String, val page: Int)
 ```
 
-* Will match: `/list/movies/page/10`
-* Will construct: `Listing(name = "movies", page = 10)`
+* `/list/movies/page/10` にマッチする
+* `Listing(name = "movies", page = 10)` が生成される
 
-### GET parameters
+### GET パラメータ
 {: #parameters-get }
 
-If you provide additional class properties that are not part of the path of the `@Location`,
-those parameters will be obtained from the GET's query string or POST parameters:
+`@Location` アノテーション内のプレースホルダーに無いプロパティを定義した場合、
+GET クエリまたは POST パラメータで指定された値が格納されます。
 
 ```kotlin
 @Location("/list/{name}")
 data class Listing(val name: String, val page: Int, val count: Int)
 ```
 
-* Will match: `/list/movies?page=10&count=20`
-* Will construct: `Listing(name = "movies", page = 10, count = 20)`
+* `/list/movies?page=10&count=20` にマッチする
+* `Listing(name = "movies", page = 10, count = 20)` が生成される
 
-## Defining route handlers
+## ルーティングハンドラの定義
 {: #route-handlers }
 
-Once you have [defined the classes](#route-classes) annotated with `@Location`,
-this feature artifact exposes new typed methods for defining route handlers:
-`get`, `options`, `header`, `post`, `put`, `delete` and `patch`.
+`@Location` アノテーションを付与した [Route クラス](#route-classes) を定義すると、
+Location feature はその型の `get` 、 `options` 、 `header` 、 `post` 、 `put` 、 `delete` 、 `patch` ルーティングハンドラを
+生成します。
+
 
 ```kotlin
 routing {
@@ -88,34 +91,38 @@ routing {
 }
 ```
 
-Some of these generic methods with one type parameter, defined in the `io.ktor.locations`, have the same name as other methods defined in the `io.ktor.routing` package. If you import the routing package before the locations one, the IDE might suggest you generalize those methods instead of importing the right package. You can manually add `import io.ktor.locations.*` if that happens to you.
-Remember this API is experimental. This issue is already [reported at github](https://github.com/ktorio/ktor/issues/368).
+`io.ktor.locations` にて型パラメータを1つ持つジェネリックなメソッドが複数定義されています。
+`io.ktor.routing` にも定義されている関数とほぼ同一のインタフェースで実装されています。
+`locations` パッケージの前に `routing` パッケージをインポートすると、これらのパッケージをインポートする代わりに、
+これらのメソッドを一般化するよう IDE が提案することがあります。
+(`import io.ktor.locations.*` を手動で追加すると発生します。)
+`Locations` API はまだ試験的な機能です。
+この問題はすでに [GitHub で報告](https://github.com/ktorio/ktor/issues/368) されています。
 {: .note}
 
-
-## Building URLs
+## URL の構築
 {: #building-urls }
 
-You can construct URLs to your routes by calling `application.locations.href` with
-an instance of a class annotated with `@Location`:
+`@Location` アノテーションが付与されたクラスのインスタンスを `application.locations.href` の引数に渡すことで、
+そのルーティングへのURLが構築されます。
 
 ```kotlin
 val path = application.locations.href(Listing(name = "movies", page = 10, count = 20))
 ```
 
-So for this class, `path` would be `"/list/movies?page=10&count=20""`.
+この例では、変数 `path` は文字列 `"/list/movies?page=10&count=20"` になります。
 
 ```kotlin
 @Location("/list/{name}") data class Listing(val name: String, val page: Int, val count: Int)
 ```
 
-If you construct the URLs like this, and you decide to change the format of the URL,
-you will just have to update the `@Location` path, which is really convenient.
+この方式で URL を生成するようにすることで、もし URL を変更しようとした際は `@Location` パスを更新するだけで済むので非常に便利です。
 
-## Subroutes with parameters
+## パラメータを伴うネストしたルーティング
 {: #subroutes }
 
-You have to create classes referencing to another class annotated with `@Location` like this, and register them normally:
+パラメータを伴うルーティングをネストさせる場合、 `@Location` が付与された上位のクラス (`Type`) をプロパティ (`val type: Type`) に持つ
+`@Location` が付与された内部クラス (`Edit` や `List`) を作成し、下記のようにルーティングに登録します。
 
 ```kotlin
 routing {
@@ -128,9 +135,6 @@ routing {
 }
 ```
  
-To obtain parameters defined in the superior locations, you just have to include
-those property names in your classes for the internal routes. For example:
-
 ```kotlin
 @Location("/type/{name}") data class Type(val name: String) {
     @Location("/edit") data class Edit(val type: Type)
