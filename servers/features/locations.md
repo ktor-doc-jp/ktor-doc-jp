@@ -39,26 +39,24 @@ install(Locations)
 
 型付きルーティングごとに、ルーティング内のパラメータを持つクラス (通常は data class) を作成します。
 
-The parameters must be of any type supported by the [Data Conversion](/servers/features/data-conversion.html) feature.
-By default, you can use `Int`, `Long`, `Float`, `Double`, `Boolean`, `String`, enums and `Iterable` as parameters.
-
 パラメータの型は [Data Conversion](/servers/features/data-conversion.html) feature でサポートされている型でなければなりません。
 デフォルトでは、 `Int` 、 `Long` 、 `Float` 、 `Double` 、 `Boolean` 、 `String` 、 `Enum` 、 `Iterable` を指定できます。
 
-### URL parameters
+### URL パラメータ
 {: #parameters-url }
 
-That class must be annotated with `@Location` specifying
-a path to match with placeholders between curly brackets `{` and `}`. For example: `{propertyName}`.
 The names between the curly braces must match the properties of the class.
+
+ルーティング用のクラスは `@Location` アノテーションを付与し、 `{` と `}` で囲まれたプレースホルダー (`{propertyName}` など) の名称と
+同じ変数名を定義します。
 
 ```kotlin
 @Location("/list/{name}/page/{page}")
 data class Listing(val name: String, val page: Int)
 ```
 
-* Will match: `/list/movies/page/10`
-* Will construct: `Listing(name = "movies", page = 10)`
+* `/list/movies/page/10` にマッチする
+* `Listing(name = "movies", page = 10)` が生成される
 
 ### GET parameters
 {: #parameters-get }
