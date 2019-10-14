@@ -8,7 +8,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor makes heavy use of Kotlin 1.3 stable coroutines.
+Ktor は Kotlin 1.3 で stable になった Coroutine を多用しています。
 
 Coroutines are a basic Kotlin mechanism (also called `suspend` functions), that among other things allows to do asynchronous programming that is linearly written like plain code
 instead of the traditional callback-based approach.
