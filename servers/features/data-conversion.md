@@ -105,16 +105,16 @@ enum class LocationEnum {
 }
 ```
 
-## Accessing the Service
+## Service の参照
 {: #service }
 
-You can easily access the DataConversion service, from any call with:
+下記のように、 DataConversion service は簡単に参照できます。
 
 ```kotlin
 val dataConversion = call.conversionService
 ```
 
-## The ConversionService Interface
+## ConversionService のインタフェース
 {: #interface }
 
 ```kotlin
