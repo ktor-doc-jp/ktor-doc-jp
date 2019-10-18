@@ -1,6 +1,6 @@
 ---
-title: Metrics with Micrometer metrics
-caption: Metrics with Micrometer metrics
+title: Micrometer metrics を用いたメトリクス収集
+caption: Micrometer metrics を用いたメトリクス収集
 category: servers
 permalink: /servers/features/metrics-micrometer.html
 feature:
@@ -11,42 +11,38 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-The Metrics feature allows you to configure the [Metrics](https://micrometer.io/)
-to get useful information about the server and incoming requests. This implementation 
-uses Micrometer Metrics which requires a JRE 8 or higher. 
+Metrics feature を用いると [Metrics](https://micrometer.io/) を構成してサーバとリクエストに関する
+情報を取得できます。
+この実装は JRE 8 以降と Micrometer Metrics を使用しています。
 
 {% include feature.html %}
 
-## Exposed Metrics
+## メトリクスの出力
 
-Depending on your backing timeline database, the names of this metrics my [vary](
-https://micrometer.io/docs/concepts#_naming_meters) to follow the naming conventions.
+利用したい時系列データベースによりますが、ここでは [vary](https://micrometer.io/docs/concepts#_naming_meters) の
+命名規則に従います。
 
 ### `ktor.http.server.requests.active`
-The active [gauge](https://micrometer.io/docs/concepts#_gauges) counts the amount
-of concurrent http requests to the server. There are no tags for this metric.
+アクティブ [gauge](https://micrometer.io/docs/concepts#_gauges) は、
+サーバへの同時HTTPリクエスト数をカウントします。
+このメトリクスにはタグはありません。
 
 ### `ktor.http.server.requests`
-This [timer](https://micrometer.io/docs/concepts#_timers) measures the time of 
-each request. This feature provides the follwing tags for this timer:
-- `address`: `<host>:<port>` of the url requested by the client
-- `method`: the http methog (e.g. `GET` or `POST`)
-- `route`: the ktor route handling the requests path (e.g. 
-           `/vehicles/{id}/tires/{tire}` for the path 
-           `/vehicles/23847/tires/frontright`).
-- `status`: The http status code of the response sent to the client (e.g. `200` 
-            or `404`).
-- `exception`: When the handler throws an `Exception` or `Throwable` before 
-               responding to the client, the class name of the exception or 
-               `n/a` otherwise. Exceptions that are thrown by the handler after
-               responding to the client are not recognized by this feature.
+[timer](https://micrometer.io/docs/concepts#_timers) は各リクエストのレスポンスタイムを測定します。
+この feature は、次のタグを提供します。
 
-## Installing
+- `address`: リクエスト元のクライアントの `<host>:<port>`
+- `method`: HTTP メソッド (`GET` や `POST` など)
+- `route`: ktor がハンドリングするリクエストパス (`/vehicles/23847/tires/frontright` のパス `/vehicles/{id}/tires/{tire}` など)
+- `status`: クライアントへ送出した HTTP ステータスコード (`200` や `404` など)
+- `exception`: ハンドラがクライアントへ応答する前に Exception や Throwable をスローした場合、例外の名前または `n/a`  
+  クライアントへの応答後にスローされた例外は記録されません。
 
-The Metrics feature requires you to specify a `MeterRegistry` at installation. 
-For test purposes you can use the `SimpleMeterRegistry`, for more productive 
-environments you can choose [any registry depending on your timeline database 
-vendor](https://micrometer.io/docs).
+## インストール
+Metrics feature を利用する場合は、利用したい `MeterRegistry` を指定する必要があります。
+テスト利用の場合は `SimpleMeterRegistry` を利用します。
+より実践的なものを利用する場合は、 [any registry depending on your timeline database vendor](https://micrometer.io/docs) から
+選択してください。
 
 ```kotlin
 install(MicrometerMetrics) {
@@ -56,10 +52,11 @@ install(MicrometerMetrics) {
 
 ### Meter Binders
 
-Micrometer provides some low level metrics. These are provided via `MeterBinder`s.
-By default this feature installs a list of Metrics but you can add your own or 
-provide an empty list if you don't want to install this feature install any 
-`MeterBinder`.
+Micromerter は低レイヤのメトリクスも収集します。
+このメトリクスは `MeterBinder` から提供されます。
+デフォルトではこれらのメトリクスを収集しますが、これらのメトリクスを収集したくない場合や他のメトリクスを収集したい場合は、
+`meterBinders` を再定義します。
+(メトリクスを収集したくない場合は空リストを指定します)
 
 ```kotlin
 install(MicrometerMetrics) {
@@ -75,22 +72,17 @@ install(MicrometerMetrics) {
 }
 ```
 
-### Distribution Statistic Configuration
+### 分布統計の設定
+Micrometer はいろいろなヒストグラムの表現方法を提供します。
+クライアントサイドにてパーセンタイルやヒストグラムカウンタで表現できます。
+(時系列データベースはサーバサイドでパーセンタイルを計算します。)
+パーセンタイルはすべてのバックエンドでサポートされていますが、 [メモリ効率が悪い](https://micrometer.io/docs/concepts#_memory_footprint_estimation)
+ため多次元での集計ができません。
+ヒストグラムでは対応できますが、全てのバックエンドでサポートされているとは限りません。
+詳細は[こちら](https://micrometer.io/docs/concepts#_histograms_and_percentiles)を参照してください。
 
-Micrometer provides various ways to configure and expose histograms. You can
-expose either (client side) percentile  or the histogram counters (and the 
-timeline database 
-calculates the percentile on the server side). While percentile are supported
-by all backends, they are more expensive in [memory footprint](
-https://micrometer.io/docs/concepts#_memory_footprint_estimation)) and cannot be 
-aggregated over several dimensions. Histogram counters can be aggregated but 
-not all backends support them. The full documentation can be found [here](
-    https://micrometer.io/docs/concepts#_histograms_and_percentiles).
-
-By default the timers provided by this feature expose the 50%, 90%, 95% and 
-99% percentile. To change this configuration you can configure a 
-`DistributionStatisticConfig` that is applied to all timers of this feature. 
-
+デフォルトでは、タイマーは50%、90%、95%、99%パーセンタイルを提供します。
+`DistributionStatisticConfig` feature をタイマーに適用することで、独自の設定が可能になります。
 
 ```kotlin
 install(MicrometerMetrics) {
@@ -107,11 +99,11 @@ install(MicrometerMetrics) {
 }
 ```
 
-### Customizing Timers
-To customize the tags for each timer, you can configure a lamda that is called
-for each request and can extend the builder for the timer. Note, each unique 
-combination of tag values results in an own metric. Therefore it is not recommended
-to put properties with high cardinality (e.g. resource ids) into tags.
+### タイマーのカスタマイズ
+各タイマーのタグをカスタマイズするには、各リクエストごとに呼び出されるラムダ関数を作成し、
+タイマーのビルダーを用いて適用します。
+タグの値の組み合わせごとに独自のメトリクスが生成されることに注意してください。
+そのため、カーディナリティの高い値 (リソースIDなど) をタグに指定することは非推奨です。
 
 ```kotlin
 install(MicrometerMetrics) {
