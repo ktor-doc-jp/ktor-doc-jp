@@ -11,7 +11,7 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-`DataConversion` is a feature that allows to serialize and deserialize a list of values.
+`DataConversion` feature は値のリストをシリアライズおよびデシリアライズすることができます。
 
 By default, it handles primitive types and enums, but it can also be configured to handle additional types. 
 
