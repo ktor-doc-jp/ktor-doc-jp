@@ -29,7 +29,7 @@ Metrics feature を用いると [Metrics](https://micrometer.io/) を構成し�
 
 ### `ktor.http.server.requests`
 [timer](https://micrometer.io/docs/concepts#_timers) は各リクエストのレスポンスタイムを測定します。
-この機能は、次のタグを提供します。
+この feature は、次のタグを提供します。
 
 - `address`: リクエスト元のクライアントの `<host>:<port>`
 - `method`: HTTP メソッド (`GET` や `POST` など)
@@ -72,7 +72,7 @@ install(MicrometerMetrics) {
 }
 ```
 
-### 統計分布の設定
+### 分布統計の設定
 Micrometer はいろいろなヒストグラムの表現方法を提供します。
 クライアントサイドにてパーセンタイルやヒストグラムカウンタで表現できます。
 (時系列データベースはサーバサイドでパーセンタイルを計算します。)
