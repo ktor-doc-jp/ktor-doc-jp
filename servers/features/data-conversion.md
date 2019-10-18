@@ -11,46 +11,50 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-`DataConversion` is a feature that allows to serialize and deserialize a list of values.
+`DataConversion` feature を用いると値のリストのシリアライズ方法およびデシリアライズ方法を定義することができます。
 
-By default, it handles primitive types and enums, but it can also be configured to handle additional types. 
+プリミティブ型や列挙型の変換は予め定義されていますが、 `DataConversion` を用いることで、他の型も処理できるようになります。
 
-If you are using the [Locations feature](/servers/features/locations.html) and want to support
-custom types as part of its parameters, you can add new custom converters with this
-service.
+[Locations feature](/servers/features/locations.html) を使用していて、かつパラメータの一部をプリミティブ型や列挙型以外の
+型に変換したい場合、この feature を用いて自作のコンバータを作成することができます。
 
-**Table of contents:**
 
-* TOC
+**目次:**
+
+* 目次
 {:toc}
 
 {% include feature.html %}
 
-## Basic Installation
+## インストール
 {: #basic-installation }
 
-Installing the DataConversion is pretty easy, and it should be cover primitive types:
+DataConversion のインストールは簡単です。
+プリミティブ型の変換はデフォルトで対応済です。
 
 ```kotlin
 install(DataConversion)
 ```
 
-## Adding Converters
+## コンバータの追加
 {: #adding-converters }
 
-The DataConversion configuration, provide a `convert<T>` method to define
-type conversions. Inside, you have to provide a decoder and an encoder
-with the `decode` and `encode` methods accepting callbacks.
+DataConversion は、型変換を定義するためのメソッド `convert<T>` を提供します。
+このメソッド内で、デコード処理を行う `decode` コールバック関数と
+エンコード処理を行う `encode` コールバック関数を定義します。
 
-* decode callback: `converter: (values: List<String>, type: Type) -> Any?`
-  Accepts `values`, a list of strings) representing repeated values in the URL, for example, `a=1&a=2`,
-  and accepts the `type` to convert to. It should return the decoded value.
-* encode callback: `converter: (value: Any?) -> List<String>` 
-  Accepts an arbitrary value, and should return a list of strings representing the value.
-  When returning a list of a single element, it will be serialized as `key=item1`. For multiple values,
-  it will be serialized in the query string as: `samekey=item1&samekey=item2`.
+* デコードコールバック : `converter: (values: List<String>, type: Type) -> Any?`  
+  String 型のリスト `values` と Type 型の `type` を引数に取ります。  
+  `values` は URL 内で繰り返し使用されうるキーの値です。 (例 : `a=1&a=b`)  
+  `type` はコンバート先の型を指定します。  
+  この関数はデコードした値を返却する必要があります。
+* エンコードコールバック : `converter: (value: Any?) -> List<String>`  
+  任意の値を引数に取り、文字列のリストを返します。  
+  要素数が1のリストを返す場合は `key=item1` のようにシリアライズされます。  
+  複数の要素がある場合は、 `samekey=item1&samekey=item2` のようなクエリ文字列にシリアライズされます。
+  
 
-For example:
+例:
 
 ```kotlin
 install(DataConversion) {
@@ -72,9 +76,9 @@ install(DataConversion) {
 }
 ```
 
-Another potential use is to customize how a specific enum is serialized. By default enums are serialized and de-serialized
-using its `.name` in a case-sensitive fashion. But you can for example serialize them as lower case and deserialize
-them in a case-insensitive fashion: 
+他の用途の一つとして、列挙型の変換方法を独自定義することが挙げられます。
+デフォルトでは大文字と小文字は区別され、 `.name` を用いてシリアライズ / デシリアライズされます。
+一方で、例えばシリアライズ時は小文字で出力し、デシリアライズ時は大文字と小文字を区別したくない場合は、下記のように実装します。
 
 ```kotlin
 enum class LocationEnum {
@@ -101,16 +105,16 @@ enum class LocationEnum {
 }
 ```
 
-## Accessing the Service
+## Service の参照
 {: #service }
 
-You can easily access the DataConversion service, from any call with:
+下記のように、 DataConversion service は簡単に参照できます。
 
 ```kotlin
 val dataConversion = call.conversionService
 ```
 
-## The ConversionService Interface
+## ConversionService のインタフェース
 {: #interface }
 
 ```kotlin
