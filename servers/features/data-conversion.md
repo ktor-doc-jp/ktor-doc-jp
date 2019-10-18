@@ -11,9 +11,9 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-`DataConversion` feature は値のリストをシリアライズおよびデシリアライズすることができます。
+`DataConversion` feature を用いると値のリストのシリアライズ方法およびデシリアライズ方法を定義することができます。
 
-プリミティブ型や列挙型はデフォルトで処理できますが、 `DataConversion` を用いることで、他の型も処理できるようになります。
+プリミティブ型や列挙型の変換は予め定義されていますが、 `DataConversion` を用いることで、他の型も処理できるようになります。
 
 [Locations feature](/servers/features/locations.html) を使用していて、かつパラメータの一部をプリミティブ型や列挙型以外の
 型に変換したい場合、この feature を用いて自作のコンバータを作成することができます。
@@ -39,18 +39,18 @@ install(DataConversion)
 ## コンバータの追加
 {: #adding-converters }
 
-DataConversion は、型変換を定義するための `convert<T>` メソッドを提供します。
+DataConversion は、型変換を定義するためのメソッド `convert<T>` を提供します。
 このメソッド内で、デコード処理を行う `decode` コールバック関数と
 エンコード処理を行う `encode` コールバック関数を定義します。
 
-* デコードコールバック : `converter: (values: List<String>, type: Type) -> Any?`
-  String 型のリスト `values` と Type 型の `type` を引数に取ります。
-  `values` は URL 内で繰り返し使用されうる値です。 (例 : `a=1&a=b`)
-  `type` はコンバート先の型を指定します。
+* デコードコールバック : `converter: (values: List<String>, type: Type) -> Any?`  
+  String 型のリスト `values` と Type 型の `type` を引数に取ります。  
+  `values` は URL 内で繰り返し使用されうるキーの値です。 (例 : `a=1&a=b`)  
+  `type` はコンバート先の型を指定します。  
   この関数はデコードした値を返却する必要があります。
-* エンコードコールバック : `converter: (value: Any?) -> List<String>`
-  任意の値を引数に取り、文字列のリストを返します。
-  要素数が1のリストを返す場合は `key=item1` のようにシリアライズされます。
+* エンコードコールバック : `converter: (value: Any?) -> List<String>`  
+  任意の値を引数に取り、文字列のリストを返します。  
+  要素数が1のリストを返す場合は `key=item1` のようにシリアライズされます。  
   複数の要素がある場合は、 `samekey=item1&samekey=item2` のようなクエリ文字列にシリアライズされます。
   
 
@@ -76,7 +76,7 @@ install(DataConversion) {
 }
 ```
 
-他の用途の一つとして、列挙型へのシリアライズ化の方法を独自定義することが挙げられます。
+他の用途の一つとして、列挙型の変換方法を独自定義することが挙げられます。
 デフォルトでは大文字と小文字は区別され、 `.name` を用いてシリアライズ / デシリアライズされます。
 一方で、例えばシリアライズ時は小文字で出力し、デシリアライズ時は大文字と小文字を区別したくない場合は、下記のように実装します。
 
