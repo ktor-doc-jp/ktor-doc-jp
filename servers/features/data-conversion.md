@@ -36,22 +36,25 @@ DataConversion のインストールは簡単です。
 install(DataConversion)
 ```
 
-## Adding Converters
+## コンバータの追加
 {: #adding-converters }
 
-The DataConversion configuration, provide a `convert<T>` method to define
-type conversions. Inside, you have to provide a decoder and an encoder
-with the `decode` and `encode` methods accepting callbacks.
+DataConversion は、型変換を定義するための `convert<T>` メソッドを提供します。
+このメソッド内で、デコード処理を行う `decode` コールバック関数と
+エンコード処理を行う `encode` コールバック関数を定義します。
 
-* decode callback: `converter: (values: List<String>, type: Type) -> Any?`
-  Accepts `values`, a list of strings) representing repeated values in the URL, for example, `a=1&a=2`,
-  and accepts the `type` to convert to. It should return the decoded value.
-* encode callback: `converter: (value: Any?) -> List<String>` 
-  Accepts an arbitrary value, and should return a list of strings representing the value.
-  When returning a list of a single element, it will be serialized as `key=item1`. For multiple values,
-  it will be serialized in the query string as: `samekey=item1&samekey=item2`.
+* デコードコールバック : `converter: (values: List<String>, type: Type) -> Any?`
+  String 型のリスト `values` と Type 型の `type` を引数に取ります。
+  `values` は URL 内で繰り返し使用されうる値です。 (例 : `a=1&a=b`)
+  `type` はコンバート先の型を指定します。
+  この関数はデコードした値を返却する必要があります。
+* エンコードコールバック : `converter: (value: Any?) -> List<String>`
+  任意の値を引数に取り、文字列のリストを返します。
+  要素数が1のリストを返す場合は `key=item1` のようにシリアライズされます。
+  複数の要素がある場合は、 `samekey=item1&samekey=item2` のようなクエリ文字列にシリアライズされます。
+  
 
-For example:
+例:
 
 ```kotlin
 install(DataConversion) {
@@ -73,9 +76,9 @@ install(DataConversion) {
 }
 ```
 
-Another potential use is to customize how a specific enum is serialized. By default enums are serialized and de-serialized
-using its `.name` in a case-sensitive fashion. But you can for example serialize them as lower case and deserialize
-them in a case-insensitive fashion: 
+他の用途の一つとして、列挙型へのシリアライズ化の方法を独自定義することが挙げられます。
+デフォルトでは大文字と小文字は区別され、 `.name` を用いてシリアライズ / デシリアライズされます。
+一方で、例えばシリアライズ時は小文字で出力し、デシリアライズ時は大文字と小文字を区別したくない場合は、下記のように実装します。
 
 ```kotlin
 enum class LocationEnum {
