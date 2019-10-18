@@ -13,23 +13,24 @@ ktor_version_review: 1.0.0
 
 `DataConversion` feature は値のリストをシリアライズおよびデシリアライズすることができます。
 
-By default, it handles primitive types and enums, but it can also be configured to handle additional types. 
+プリミティブ型や列挙型はデフォルトで処理できますが、 `DataConversion` を用いることで、他の型も処理できるようになります。
 
-If you are using the [Locations feature](/servers/features/locations.html) and want to support
-custom types as part of its parameters, you can add new custom converters with this
-service.
+[Locations feature](/servers/features/locations.html) を使用していて、かつパラメータの一部をプリミティブ型や列挙型以外の
+型に変換したい場合、この feature を用いて自作のコンバータを作成することができます。
 
-**Table of contents:**
 
-* TOC
+**目次:**
+
+* 目次
 {:toc}
 
 {% include feature.html %}
 
-## Basic Installation
+## インストール
 {: #basic-installation }
 
-Installing the DataConversion is pretty easy, and it should be cover primitive types:
+DataConversion のインストールは簡単です。
+プリミティブ型の変換はデフォルトで対応済です。
 
 ```kotlin
 install(DataConversion)
