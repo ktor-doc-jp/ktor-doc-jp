@@ -1,6 +1,6 @@
 ---
-title: Metrics with Micrometer metrics
-caption: Metrics with Micrometer metrics
+title: Micrometer metrics を用いたメトリクス収集
+caption: Micrometer metrics を用いたメトリクス収集
 category: servers
 permalink: /servers/features/metrics-micrometer.html
 feature:
