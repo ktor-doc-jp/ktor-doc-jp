@@ -1,6 +1,6 @@
 ---
-title: Metrics with Dropwizard metrics
-caption: Metrics with Dropwizard metrics
+title: Dropwizard metrics を用いたメトリクスの収集
+caption: Dropwizard metrics を用いたメトリクスの収集
 category: servers
 permalink: /servers/features/metrics.html
 feature:
@@ -11,20 +11,18 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-The Metrics feature allows you to configure the [Metrics](http://metrics.dropwizard.io/4.0.0/)
-to get useful information about the server and incoming requests.
+Metrics feature を用いると [Metrics](http://metrics.dropwizard.io/4.0.0/) を構成してサーバとリクエストに関する 情報を取得できます。
 
 {% include feature.html %}
 
-## Installing
+## インストール
 
-The Metrics feature exposes a `registry` property, that can be used to build and start
-metric reporters.
+Metrics feature はメトリクスレポーターの構築と送出のための `registry` プロパティを生成します。
 
 ### JMX Reporter
 
-The JMX Reporter allows you to expose all the metrics to JMX,
-allowing you to view those metrics with `jconsole` or `jvisualvm` with the MBeans plugin.
+JMX Reporter はすべてのメトリクスを JMX に公開し、 `jconsole` や MBeans plugin を適用した `jvisualvm` で
+メトリクスの閲覧ができるようになります。
 
 ```kotlin
 install(DropwizardMetrics) {
@@ -40,8 +38,8 @@ install(DropwizardMetrics) {
 
 ### SLF4J Reporter
 
-The SLF4J Reporter allows you to periodically emit reports to any output supported by SLF4J.
-For example, to output the metrics every 10 seconds, you would:
+SLF4J Reporter を使用すると、 SLF4J でサポートしている形式のレポートを定期的に送出できるようになります。
+例えば、10秒ごとにメトリクスを出力したい場合は下記のように設定します。
 
 ```kotlin
 install(DropwizardMetrics) {
@@ -56,34 +54,34 @@ install(DropwizardMetrics) {
 
 ![Ktor Metrics: SLF4J](/servers/features/metrics/slf4j.png)
 
-### Other reporters
+### その他のレポーター
 
-You can use any of the available [Metric reporters](http://metrics.dropwizard.io/4.0.0/).
+メトリクスレポーターの一覧は [Metric reporters](http://metrics.dropwizard.io/4.0.0/) に記載されています。
 
 ## Exposed reports
 
-This feature exposes many JVM properties relating to memory usage and thread behavior.
+この feature はメモリの使用量やスレッドの動作等、多くの JVM のメトリクスを送出します。
 
-### Global:
+### 全体:
 
-Specifically to Ktor, it exposes:
+Ktor 全体として、下記のものを送出します。
 
-* `ktor.calls.active`:`Count` - The number of unfinished active requests
-* `ktor.calls.duration` - Information about the duration of the calls
-* `ktor.calls.exceptions` - Information about the number of exceptions
-* `ktor.calls.status.NNN` - Information about the number of times that happened a specific HTTP Status Code NNN
+* `ktor.calls.active`:`Count` - 処理中のリクエスト数
+* `ktor.calls.duration` - レスポンスタイム
+* `ktor.calls.exceptions` - 例外の発生件数
+* `ktor.calls.status.NNN` - 各 HTTP ステータスコードごとの件数
 
 ### Per endpoint:
 
-* `"/uri(method:VERB).NNN"` - Information about the number of times that happened a specific HTTP Status Code NNN, for this path, for this verb 
-* `"/uri(method:VERB).meter"` - Information about the number of calls for this path, for this verb
-* `"/uri(method:VERB).timer"` - Information about the durations for this endpoint
+* `"/uri(method:VERB).NNN"` - 各リクエストパス、HTTP メソッド、HTTP ステータスコードごとの件数
+* `"/uri(method:VERB).meter"` - 各リクエストパス、HTTP メソッドごとの件数
+* `"/uri(method:VERB).timer"` - 各エンドポイントごとの処理時間
 
-## Information per report
+## レポートごとの情報
 
-### Durations
+### 期間
 
-`"/uri(method:VERB).timer"` and `ktor.calls.duration` are durations and expose:
+`"/uri(method:VERB).timer"` と `ktor.calls.duration` は下記の情報を持ちます。
 
 * 50thPercentile
 * 75thPercentile
@@ -103,9 +101,9 @@ Specifically to Ktor, it exposes:
 * RateUnit
 * StdDev
 
-### Counts
+### 件数
 
-The other properties are exposed as counts:
+他のプロパティは件数を集計します。
 
 * Count
 * FifteenMinuteRate
