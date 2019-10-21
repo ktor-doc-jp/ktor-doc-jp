@@ -11,11 +11,11 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-Ktor で WebSocket を扱う場合、この feature を追加します。
-WebSocket はサーバとクライアント間にて順序付けられた双方向通信をし続けるためのメカニズムです。
-チャンネルでの各メッセージはフレームと呼ばれます。
-フレームの種類はテキスト、バイナリ、クローズ (接続断)、 ping および pong メッセージがあります。
-フレームは final または incomplete マークを付与できます。
+Ktor で WebSocket 通信を行う場合、 WebSocket feature を利用します。
+WebSocket はサーバとクライアント間にて順序付き双方向通信をし続けるためのメカニズムです。
+チャンネルでの各メッセージは Frame と呼ばれます。
+Frame の種類はテキストメッセージ、バイナリメッセージ、クローズ (接続断)、 ping 、 pong です。
+Frame には final または incomplete マークを付与できます。
 
 {% include feature.html %}
 
@@ -39,7 +39,9 @@ install(WebSockets)
 install(WebSockets) {
     pingPeriod = Duration.ofSeconds(60) // デフォルトでは disable (null)
     timeout = Duration.ofSeconds(15)
-    maxFrameSize = Long.MAX_VALUE // disable する場合は最大値 Long.MAX_VALUE を指定; frame がこのサイズを超えるとコネクションが切断されます
+    // disable する場合は最大値 Long.MAX_VALUE を指定
+    // frame がこのサイズを超えるとコネクションが切断される
+    maxFrameSize = Long.MAX_VALUE 
     masking = false
 }
 ```
@@ -47,10 +49,10 @@ install(WebSockets) {
 ## 使い方
 {: #usage}
 
-インストールすると、 [routing](/servers/features/routing.html) feature に `webSocket` 用のルーティングを追加できるようになります。
+インストールすると、 [routing](/servers/features/routing.html) feature に WebSocket 用のルーティング `webSocket` を追加できるようになります。
 
 通常のルーティングハンドラは短命なオブジェクトであることに対し、 WebSocket 用のハンドラは長命なオブジェクトになります。
-また、 WebSocket 用のハンドラに関連する WebSocket のメソッドが一時中断されるため、メッセージの送受信はノンブロッキングな方法で中断します。
+また、 WebSocket 用のハンドラに関与する WebSocket のメソッドは一時中断されるため、メッセージの送受信をブロックしないよう中断されます。
 
 `webSocket` メソッドは引数に [WebSocketSession](#WebSocketSession) のインスタンスを受け取る関数を取ります。
 このインタフェースは `ReceiveChannel` 型の `incoming` と `SendChannel` 型の `outgoing` の2つのプロパティや `close` メソッドが定義されています。
@@ -236,9 +238,9 @@ class MyAppTest {
 ### 標準的なイベント : `onConnect` 、 `onMessage` 、 `onClose` 、 `onError`
 {: #standard-events}
 
-Ktor では[WebSocket API における標準的なイベント](https://developer.mozilla.org/ja/docs/Web/API/WebSockets_API)はいつ発生しますか?
+Ktor において [WebSocket API における標準的なイベント](https://developer.mozilla.org/ja/docs/Web/API/WebSockets_API) はどのように対応付けられていますか?
 
-* `onConnect` : ブロックの最初に発生
+* `onConnect` : `webSocket` ブロックの最初に発生
 * `onMessage` : メッセージの読み取り (`incoming.receive()` など) に成功した場合、または `for (frame in incoming)` にて中断関数がイテレーションされた後に発生
 * `onClose` : `incoming` チャンネルがクローズされた際に発生  
 中断関数のイテレーションが完了した後か、メッセージを受信しようとした際に `ClosedReceiveChannelException` が発生した場合がそれに相当する
