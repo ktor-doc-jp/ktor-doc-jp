@@ -1,6 +1,6 @@
 ---
-title: Metrics with Dropwizard metrics
-caption: Metrics with Dropwizard metrics
+title: Dropwizard metrics を用いたメトリクスの収集
+caption: Dropwizard metrics を用いたメトリクスの収集
 category: servers
 permalink: /servers/features/metrics.html
 feature:
