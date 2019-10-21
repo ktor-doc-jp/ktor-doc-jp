@@ -11,53 +11,55 @@ redirect_from:
 ktor_version_review: 1.0.0
 ---
 
-This feature adds WebSockets support to Ktor.
-WebSockets are a mechanism to keep a bi-directional real-time ordered connection between
-the server and the client.
-Each message from this channel is called Frame: a frame can be a text or binary message,
-or a close or ping/pong message. Frames can be marked as incomplete or final.
+Ktor で WebSocket 通信を行う場合、 WebSocket feature を利用します。
+WebSocket はサーバとクライアント間にて順序付き双方向通信をし続けるためのメカニズムです。
+チャンネルでの各メッセージは Frame と呼ばれます。
+Frame の種類はテキストメッセージ、バイナリメッセージ、クローズ (接続断)、 ping 、 pong です。
+Frame には final または incomplete マークを付与できます。
 
 {% include feature.html %}
 
-**Table of contents:**
+**目次:**
 
-* TOC
+* 目次
 {:toc}
 
-## Installing
+## インストール
 {: #installing}
 
-In order to use the WebSockets functionality you first have to install it: 
+WebSocket feature をインストールすることで WebSocket 通信ができるようになります。
 
 ```kotlin
 install(WebSockets)
 ```
 
-You can adjust a few parameters when installing if required:
+必要に応じて、インストール時にパラメータを指定します。
 
 ```kotlin
 install(WebSockets) {
-    pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
+    pingPeriod = Duration.ofSeconds(60) // デフォルトでは disable (null)
     timeout = Duration.ofSeconds(15)
-    maxFrameSize = Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length. 
+    // disable する場合は最大値 Long.MAX_VALUE を指定
+    // frame がこのサイズを超えるとコネクションが切断される
+    maxFrameSize = Long.MAX_VALUE 
     masking = false
 }
 ```
 
-## Usage
+## 使い方
 {: #usage}
 
-Once installed, you can define the `webSocket` routes for the [routing](/servers/features/routing.html) feature:
+インストールすると、 [routing](/servers/features/routing.html) feature に WebSocket 用のルーティング `webSocket` を追加できるようになります。
 
-Instead of the short-lived normal route handlers, webSocket handlers are meant to be long-lived.
-And all the relevant WebSocket methods are suspended so that the function will be suspended in
-a non-blocking way while receiving or sending messages.
+通常のルーティングハンドラは短命なオブジェクトであることに対し、 WebSocket 用のハンドラは長命なオブジェクトになります。
+また、 WebSocket 用のハンドラに関与する WebSocket のメソッドは一時中断されるため、メッセージの送受信をブロックしないよう中断されます。
 
-`webSocket` methods receive a callback with a [WebSocketSession](#WebSocketSession)
-instance as the receiver. That interface defines an `incoming` (ReceiveChannel) property and an `outgoing` (SendChannel)
-property, as well as a `close` method. Check the full [WebSocketSession](#WebSocketSession) for more information.
+`webSocket` メソッドは引数に [WebSocketSession](#WebSocketSession) のインスタンスを受け取る関数を取ります。
+このインタフェースは `ReceiveChannel` 型の `incoming` と `SendChannel` 型の `outgoing` の2つのプロパティや `close` メソッドが定義されています。
+詳細は [WebSocketSession](#WebSocketSession) を参照してください。
 
-### Usage as an suspend actor
+
+### suspend actor としての使い方
 {: #actor}
 
 ```kotlin
@@ -78,15 +80,14 @@ routing {
 }
 ```
 
-An exception will be thrown while receiving a Frame if the client closes the connection
-explicitly or the TCP socket is closed. So even with a `while (true)` loop, this shouldn't be
-a leak.
+クライアントが明示的に接続をクローズした場合、または TCP ソケット通信がクローズされた場合、 Frame の受信中に例外が投げられます。
+そのため、 `while (true)` で無限ループしても、リソースリークは発生しません。
 {: .note}
 
-### Usage as a Channel
+### チャンネルの使い方
 {: #channel}
 
-Since the `incoming` property is a ReceiveChannel, you can use it with its stream-like interface:
+`incoming` プロパティは `ReceiveChannel` 型なので、 stream インターフェイスのような扱い方ができます。
 
 ```kotlin
 routing {
@@ -102,14 +103,16 @@ routing {
 }
 ``` 
 
-## Interface
+## インタフェース
 {: #interface}
 
-### The WebSocketSession interface
+### WebSocketSession インタフェース
 {: #WebSocketSession}
 
 You receive a WebSocketSession as the receiver (this), giving you direct access
 to these members inside your webSocket handler.
+
+`webSocket` ハンドラ内では、 WebSocketSession を `this` として受け取り、各メンバ変数や関数に直接アクセスすることができます。
 
 ```kotlin
 interface WebSocketSession {
@@ -118,38 +121,46 @@ interface WebSocketSession {
     val outgoing: SendChannel<Frame> // Outgoing frames channel
     fun close(reason: CloseReason)
 
-    // Convenience method equivalent to `outgoing.send(frame)`
-    suspend fun send(frame: Frame) // Enqueue frame, may suspend if the outgoing queue is full. May throw an exception if the outgoing channel is already closed, so it is impossible to transfer any message.
+    // `outgoing.send(frame)` と等価の関数
+    // outgoing キューがいっぱいになると中断される、 enqueue frame
+    // outgoing チャンネルがクローズ済の場合は例外が送出されるため、メッセージを転送する用途には利用できない
+    suspend fun send(frame: Frame)
 
-    // The call and the context
+    // 呼び出しとコンテキスト
     val call: ApplicationCall
     val application: Application
 
-    // Modifiable properties for this request. Their initial value comes from the feature configuration.
+    // リクエストごとのプロパティで、変更可能
+    // 初期値は feature の設定から指定される
     var pingInterval: Duration?
     var timeout: Duration
-    var masking: Boolean // Enable or disable masking output messages by a random xor mask.
-    var maxFrameSize: Long // Specifies frame size limit. The connection will be closed if violated
+    var masking: Boolean // Random XOR Mask による出力メッセージのマスキングの有効化/無効化
+    var maxFrameSize: Long // フレームサイズの上限値; 上限を超えた場合は接続がクローズされる
     
-    // Advanced
+    // 発展的なプロパティ
     val closeReason: Deferred<CloseReason?>
-    suspend fun flush() // Flush all outstanding messages and suspend until all earlier sent messages will be written. Could be called at any time even after close. May return immediately if connection is already terminated.
-    fun terminate() // Initiate connection termination immediately. Termination may complete asynchronously.
+    // すべての未処理のメッセージをフラッシュし、これまでに送信されたメッセージがすべて書き出されるまで中断する
+    // この関数はいつでも呼び出し可能 (クローズ後でも可能)
+    // 接続がクローズされている場合は、この関数はすぐに return される
+    suspend fun flush()
+    // すぐに接続をクローズする
+    // クローズ処理の完了は非同期で実行される
+    fun terminate()
 }
 ```
 
-If you need information about the connection. For example the client ip, you have access
-to the call property. So you can do things like `call.request.origin.host` inside
-your websocket block.
+クライアントの IP など接続に関する情報が必要な場合は、 `call` プロパティを参照します。
+例えば、 `websocket` ブロック内で `call.request.origin.host` のように参照します。
 {: .note}
 
-### The Frame interface
+### Frame インタフェース
 {: #Frame}
 
-A frame is each packet sent and received at the WebSocket protocol level.
-There are two message types: TEXT and BINARY. And three control packets: CLOSE, PING, and PONG.
-Each packet has a payload `buffer`. And for Text or Close messages, you can
-call the `readText` or `readReason` to interpret that buffer.
+Frame は WebSocket プロトコルで送受信されるパケットです。
+TEXT と BINARY の2種類のメッセージタイプがあります。
+また、 CLOSE 、 PING 、 PONG の3種類の制御用パケットがあります。
+各パケットは `buffer` というペイロードを持ちます。
+また、 TEXT や CLOSE では `readText` や `readReason` メソッドを用いることでその `buffer` 内のメッセージを取得できます。
 
 ```kotlin
 enum class FrameType { TEXT, BINARY, CLOSE, PING, PONG }
@@ -157,9 +168,9 @@ enum class FrameType { TEXT, BINARY, CLOSE, PING, PONG }
 
 ```kotlin
 sealed class Frame {
-    val fin: Boolean // Is this frame a final frame?
-    val frameType: FrameType // The Type of the frame
-    val buffer: ByteBuffer // Payload
+    val fin: Boolean // この Frame が final かどうか
+    val frameType: FrameType // この Frame の種別
+    val buffer: ByteBuffer // ペイロード
     val disposableHandle: DisposableHandle
 
     class Binary : Frame
@@ -174,11 +185,10 @@ sealed class Frame {
 }
 ```
 
-## Testing
+## テスト
 {: #testing}
 
-You can test WebSocket conversations by using the `handleWebSocketConversation`
-method inside a `withTestApplication` block.
+WebSocket 通信は `withTestApplication` ブロック内にて `handleWebSocketConversation` メソッドを用いることでテストできます。
 
 {% capture test-kt %}
 ```kotlin
@@ -225,19 +235,20 @@ class MyAppTest {
 
 ## FAQ
 
-### Standard Events: `onConnect`, `onMessage`, `onClose` and `onError`
+### 標準的なイベント : `onConnect` 、 `onMessage` 、 `onClose` 、 `onError`
 {: #standard-events}
 
-How do the [standard events from the WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) maps to Ktor?
+Ktor において [WebSocket API における標準的なイベント](https://developer.mozilla.org/ja/docs/Web/API/WebSockets_API) はどのように対応付けられていますか?
 
-* `onConnect` happens at the start of the block.
-* `onMessage` happens after successfully reading a message (for example with `incoming.receive()`) or using suspended iteration with `for(frame in incoming)`.
-* `onClose` happens when the `incoming` channel is closed. That would complete the suspended iteration, or throw a `ClosedReceiveChannelException` when trying to receive a message`.
-* `onError` is equivalent to other other exceptions.
+* `onConnect` : `webSocket` ブロックの最初に発生
+* `onMessage` : メッセージの読み取り (`incoming.receive()` など) に成功した場合、または `for (frame in incoming)` にて中断関数がイテレーションされた後に発生
+* `onClose` : `incoming` チャンネルがクローズされた際に発生  
+中断関数のイテレーションが完了した後か、メッセージを受信しようとした際に `ClosedReceiveChannelException` が発生した場合がそれに相当する
+* `onError` : 他の例外と同じ
 
-In both `onClose` and `onError`, the [`closeReason` property](https://api.ktor.io/1.0.0-beta-1/io.ktor.http.cio.websocket/-default-web-socket-session/close-reason.html) is set.
+`onClose` と `onError` はともに、 [`closeReason` プロパティ](https://api.ktor.io/1.0.0-beta-1/io.ktor.http.cio.websocket/-default-web-socket-session/close-reason.html)がセットされます。
 
-To illustrate this:
+具体的には下記のようになります。
 
 ```kotlin
 webSocket("/echo") {
@@ -258,4 +269,4 @@ webSocket("/echo") {
 }
 ```
 
-In this sample, the infinite loop is only exited with an exception is risen: either a `ClosedReceiveChannelException` or another exception.
+このサンプルでは、 `ClosedReceiveChannelException` または他の例外が発生した場合のみ、無限ループが発生します。
