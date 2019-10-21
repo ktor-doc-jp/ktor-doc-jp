@@ -56,11 +56,9 @@ install(DropwizardMetrics) {
 
 ### その他のレポーター
 
-利用可能なメトリクスレポーターの一覧は [Metric reporters](http://metrics.dropwizard.io/4.0.0/) に記載されています。
+メトリクスレポーターの一覧は [Metric reporters](http://metrics.dropwizard.io/4.0.0/) に記載されています。
 
 ## Exposed reports
-
-This feature exposes many JVM properties relating to memory usage and thread behavior.
 
 この feature はメモリの使用量やスレッドの動作等、多くの JVM のメトリクスを送出します。
 
@@ -83,7 +81,7 @@ Ktor 全体として、下記のものを送出します。
 
 ### 期間
 
-`"/uri(method:VERB).timer"` と `ktor.calls.duration` は下記のものを集計できます。
+`"/uri(method:VERB).timer"` と `ktor.calls.duration` は下記の情報を持ちます。
 
 * 50thPercentile
 * 75thPercentile
