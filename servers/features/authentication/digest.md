@@ -13,13 +13,17 @@ basic/form認証とは異なる動作をします:
 ```kotlin
 authentication {
     digest {
-        val p = "Circle Of Life"
+        val password = "Circle Of Life"
         digester = MessageDigest.getInstance("MD5")
         realm = "testrealm@host.com"
         userNameRealmPasswordDigestProvider = { userName, realm ->
             when (userName) {
                 "missing" -> null
-                else -> digest(digester, "$userName:$realm:$p")
+                else -> {
+                    digester.reset()
+                    digester.update("$userName:$realm:$password".toByteArray())
+                    digester.digest()
+                }
             }
         }
     }

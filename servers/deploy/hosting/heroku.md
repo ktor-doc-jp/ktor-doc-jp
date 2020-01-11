@@ -139,6 +139,22 @@ heroku open
 
 この場合、https://demo-demo-12345.herokuapp.com/ が開かれます。
 
+ちなみに以下のようなログが出たならば
+```
+remote:  !     ERROR: Failed to run Gradle!
+remote:        It looks like your project does not contain a 'stage' task, which Heroku needs in order
+remote:        to build your app.
+```
+
+おそらくHeroku側でどのようにビルドすればよいのかわかっていないことを示しているため、あなたが手動で指定する必要があります。
+例えば[shadowJar](https://github.com/johnrengelman/shadow)を使っていた場合は、以下のように設定する必要があります。
+
+```
+> heroku config:set GRADLE_TASK="shadowJar"
+Setting GRADLE_TASK and restarting ⬢ demo-demo-12345... done, v4
+GRADLE_TASK: shadowJar
+```
+
 Herokuは特定のポートの代わりに`PORT`という環境変数をセットすることでポート指定する必要があることを覚えておいてください。<br/>
 組み込みサーバ利用時には`System.getenv`を使う必要がありますが、
 `application.conf`を使う場合は`ktor.deployment.port = ${PORT}`をセットする必要があります。<br/>

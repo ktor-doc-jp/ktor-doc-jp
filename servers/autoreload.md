@@ -151,12 +151,15 @@ ktor {
 
 IntelliJ IDEAを実行中に、`Build -> Build Project`で実行できます。
 
-ただし、gradleを使用してソースの変更を自動的に検出し、自動的にコンパイルすることもできます。プロジェクトフォルダー内の別のターミナルで`gradle -t build`を実行するだけです。
+ただし、gradleを使用してソースの変更を自動的に検出し、自動的にコンパイルすることもできます。プロジェクトフォルダー内の別のターミナルで`gradle -t installDist`を実行するだけです。
 
 これはアプリケーションをコンパイルし、その後追加のソース変更を監視し、必要に応じて再コンパイルします。したがってオートリロードをトリガーします。
 
 その後、別のターミナルを使用して`gradle run`でアプリケーションを実行できます。
 
+もしIntelliJ IDEAを使ってアプリケーションを起動している場合は、[compilation output locations](https://www.jetbrains.com/help/idea/specifying-compilation-settings.html)を適切に設定する必要があります。
+なぜならIntelliJはgradleが利用している出力場所とは異なる場所を利用するからです。
+ 
 ## 例
 {: #example}
 

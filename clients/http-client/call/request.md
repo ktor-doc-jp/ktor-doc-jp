@@ -149,7 +149,7 @@ The `submitForm` method:
 
 ```kotlin
 client.submitForm(
-    formData: Parameters = Parameters.Empty,
+    formParameters: Parameters = Parameters.Empty,
     encodeInQuery: Boolean = false,
     block: HttpRequestBuilder.() -> Unit = {}
 )

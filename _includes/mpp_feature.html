@@ -74,12 +74,12 @@
         <div id="artifact-{{name}}-{{ target }}" class="tab-pane fade in {% if forloop.index == 1 %} active {% endif %}">
             <div class="groovy">
                 <code style="white-space: pre; font-size: 0.9em">dependencies {
-                    implementation "io.ktor:{{ name }}{{ classifiers[index] }}:$ktor-version"
+                    implementation "io.ktor:{{ name }}{{ classifiers[index] }}:$ktor_version"
                     }</code>
             </div>
             <div class="kts">
                 <code style="white-space: pre; font-size: 0.9em">dependencies {
-                    implementation("io.ktor:{{ name }}{{ classifiers[index] }}:$ktor-version")
+                    implementation("io.ktor:{{ name }}{{ classifiers[index] }}:$ktor_version")
                     }</code>
             </div>
             <div class="maven">

@@ -205,8 +205,8 @@ fun Application.testableModule() {
 }
 
 fun Application.testableModuleWithDependencies(random: Random) {
-    intercept(ApplicationCallPipeline.Call) { call ->
-        if (call.request.uri == "/") {
+    routing {
+        get("/") {
             call.respondText("Random: ${random.nextInt(100)}")
         }
     }
@@ -217,18 +217,18 @@ fun Application.testableModuleWithDependencies(random: Random) {
 {% capture test-kt %}
 ```kotlin
 class ApplicationTest {
-    class ConstantRandom(val value: Int) {
+    class ConstantRandom(val value: Int) : Random() {
         override fun next(bits: Int): Int = value
     }
 
     @Test fun testRequest() = withTestApplication({
-        testableModule(
+        testableModuleWithDependencies(
             random = ConstantRandom(7)
         )
     }) {
         with(handleRequest(HttpMethod.Get, "/")) {
             assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals("Test 7", response.content)
+            assertEquals("Random: 7", response.content)
         }
         with(handleRequest(HttpMethod.Get, "/index.html")) {
             assertFalse(requestHandled)

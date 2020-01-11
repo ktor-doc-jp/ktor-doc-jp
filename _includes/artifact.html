@@ -69,7 +69,8 @@
         <div id="artifact-gradle-kotlin-{{ autoid }}" class="tab-pane fade in">
             {% if include.test %}
             <div><code style="white-space: pre;font-size: 0.9em">dependencies {
-    testCompile("{{ include.artifact }}")
+                {% for artifact in artifacts %}    testImplementation("{{ artifact }}")
+                {% endfor -%}
 }
 </code></div>
             {% else %}

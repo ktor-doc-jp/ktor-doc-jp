@@ -42,7 +42,7 @@ CORS Featureのデフォルトの設定は`GET`、`POST`、`HEAD`HTTPメソッ�
 ## 発展的内容
 
  - [ソースコード](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-core/jvm/src/io/ktor/features/CORS.kt)
- - [テスト](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tests/test/io/ktor/tests/http/CORSTest.kt)
+ - [テスト](https://github.com/ktorio/ktor/blob/master/ktor-server/ktor-server-tests/jvm/test/io/ktor/tests/server/features/CORSTest.kt)
 
 以下はCORSを有効にしているAPI関数を表す発展的な例です。
 

@@ -52,7 +52,7 @@ Every engine config has some common properties that can be set:
 ```kotlin
 val client = HttpClient(MyHttpEngine) {
     engine {
-        threadCount = 4
+        threadsCount = 4
         pipelining = true
     }
 }
