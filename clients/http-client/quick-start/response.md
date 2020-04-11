@@ -1,10 +1,10 @@
 ---
 title: レスポンス
-caption: HTTPクライアントレスポンス
+caption: レスポンスの読み込み
 category: clients
-permalink: /clients/http-client/call/responses.html
+permalink: /clients/http-client/quick-start/responses.html
 redirect_from:
-- /clients/http-client/calls/responses.html
+- /clients/http-client/call/responses.html
 ktor_version_review: 1.2.0
 ---
 

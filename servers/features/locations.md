@@ -137,7 +137,8 @@ routing {
  
 ```kotlin
 @Location("/type/{name}") data class Type(val name: String) {
-    @Location("/edit") data class Edit(val type: Type)
-    @Location("/list/{page}") data class List(val type: Type, val page: Int)
+    // In these classes we have to include the `name` property matching the parent.
+    @Location("/list/{page}") data class List(val type: Type, val page: Int)		@Location("/edit") data class Edit(val parent: Type)
+    @Location("/list/{page}") data class List(val parent: Type, val page: Int)
 }
 ```

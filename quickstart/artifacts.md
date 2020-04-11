@@ -40,7 +40,7 @@ Ktorのモジュールはいくつかのグループに分類されます。
   * `ktor-metrics` : サーバの [メトリクス](/servers/features/metrics.html) を取得するための機能を提供
   * `ktor-server-sessions` : [サーバに保存された Stateful Session](/servers/features/sessions.html) を利用するための機能を提供
   * `ktor-websockets` : [Websockets](/servers/features/websockets.html) 用の機能を提供
-* `ktor-client` : [HTTP クライアント](/clients/http-client.html) モジュール群
+* `ktor-client` : [HTTP クライアント](/clients/index.html) モジュール群
   * `ktor-client-core` : ほとんどすべての HTTP クライアント API で必要とさせるモジュール
   * `ktor-client-apache` : Apache asynchronous HttpClient を提供
   * `ktor-client-cio` : Kotlin Coroutine ベースの非同期 I/O を行う HttpClient を提供

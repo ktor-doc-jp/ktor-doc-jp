@@ -22,7 +22,7 @@ val client = HttpClient() {
         storage = AcceptAllCookiesStorage()
 
         // Will ignore Set-Cookie and will send the specified cookies.
-        storage = ConstantCookieStorage(Cookie("mycookie1", "value"), Cookie("mycookie2", "value"))
+        storage = ConstantCookiesStorage(Cookie("mycookie1", "value"), Cookie("mycookie2", "value"))
     }
 }
 

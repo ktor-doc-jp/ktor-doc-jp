@@ -10,7 +10,8 @@ ktor_version_review: 1.0.0
 開発中は、フィードバックループのサイクルを高速にすることが重要です。
 多くの場合、サーバーの再起動には時間がかかることがあるため、Ktorには、アプリケーションクラスをリロードする基本的なオートリロード機能が用意されています。
 
-オートリロードは[Java 9では機能しません](https://github.com/ktorio/ktor/issues/359)。現在のところ使用したい場合はJDK 8を使用してください。
+オートリロードはJava 9以上ではexperimentalな機能です。
+もし動作しなかった場合はお気軽に[こちらからIssueを立て](https://github.com/ktorio/ktor/issues/new/choose)、その場合はJDK 8を使用してください。
 {: .note }
 {: #java9 }
 

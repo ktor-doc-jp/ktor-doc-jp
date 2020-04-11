@@ -26,8 +26,8 @@ HTTPによる配信機能に加え、Ktorは非同期で柔軟なHTTPクライ�
 
 {: #requests-responses }
 
-[リクエストの作り方](/clients/http-client/call/requests.html)を確認してください。
-また、[レスポンスの受け取り方](/clients/http-client/call/responses.html)も確認してください。
+[リクエストの作り方](/clients/http-client/quick-start/requests.html)を確認してください。
+また、[レスポンスの受け取り方](/clients/http-client/quick-start/responses.html)も確認してください。
 
 ## 並行性
 

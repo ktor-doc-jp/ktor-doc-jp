@@ -13,7 +13,7 @@ abstract class SimplifiedSessionStorage : SessionStorage {
     }
 
     override suspend fun write(id: String, provider: suspend (ByteWriteChannel) -> Unit) {
-        return provider(reader(coroutineContext, autoFlush = true) {
+        return provider(CoroutineScope(Dispatchers.IO).reader(coroutineContext, autoFlush = true) {
             write(id, channel.readAvailable())
         }.channel)
     }

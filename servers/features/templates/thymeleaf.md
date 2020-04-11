@@ -16,13 +16,13 @@ Ktorは[Thymeleaf](https://www.thymeleaf.org/)テンプレートをThymeleaf Fea
 [ClassLoaderTemplateResolver](https://www.thymeleaf.org/apidocs/thymeleaf/3.0.1.RELEASE/org/thymeleaf/templateresolver/ClassLoaderTemplateResolver.html)とともにThymeleaf Featureを初期化します:
 
 ```kotlin
-    install(Thymeleaf) {
-        setTemplateResolver(ClassLoaderTemplateResolver().apply { 
-            prefix = "templates/"
-            suffix = ".html"
-            characterEncoding = "utf-8"
-        })
-    }
+install(Thymeleaf) {
+    setTemplateResolver(ClassLoaderTemplateResolver().apply { 
+        prefix = "templates/"
+        suffix = ".html"
+        characterEncoding = "utf-8"
+    })
+}
 ```
 
 このTemplateLoaderは、Thymeleafがテンプレートファイルをクラスパス上で現在のクラスパスからの相対パスとして"templates"パッケージ内で見つけられるようにセットアップします。
@@ -33,12 +33,9 @@ Ktorは[Thymeleaf](https://www.thymeleaf.org/)テンプレートをThymeleaf Fea
 ```html
 <!DOCTYPE html >
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
 <body>
-<span th:text="${user.name}"></span>
+<h2 th:text="'Hello ' + ${user.name} + '!'"></h2>
+<p>Your email address is <span th:text="${user.email}"></span></p>
 </body>
 </html>
 ```
@@ -46,7 +43,9 @@ Ktorは[Thymeleaf](https://www.thymeleaf.org/)テンプレートをThymeleaf Fea
 アプリケーション内のどこででも`call.respond()`メソッドを利用することで、この`resources/templates`のテンプレートにアクセスできます。
 
 ```kotlin
-    get("/") {
-        call.respond(ThymeleafContent("index", mapOf("user" to User(1, "user1"))))
-    }
+data class User(val name: String, val email: String)
+get("/") {
+    val user = User("user name", "user@example.com")
+    call.respond(ThymeleafContent("hello", mapOf("user" to user)))
+}
 ```
