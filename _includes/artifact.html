@@ -86,7 +86,7 @@
     ...
     &lt;dependencies&gt;
 {%- for artifact in artifacts -%}
-    {%- assign artifact_parts = include.artifact | split: ':' -%}
+    {%- assign artifact_parts = artifact | split: ':' -%}
     {%- assign artifact_group = artifact_parts[0] -%}
     {%- assign artifact_name = artifact_parts[1] -%}
     {%- assign artifact_version = artifact_parts[2] %}

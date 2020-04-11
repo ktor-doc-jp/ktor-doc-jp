@@ -56,12 +56,20 @@ val jwtRealm = environment.config.property("jwt.realm").getString()
 install(Authentication) {
     jwt {
         realm = jwtRealm
-        verifier(makeJwtVerifier(jwtIssuer), jwtIssuer)
+        verifier(makeJwtVerifier(jwtIssuer, jwtIssuer))
         validate { credential ->
             if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
         }
     }
 }
+
+private val algorithm = Algorithm.HMAC256("secret")
+private fun makeJwtVerifier(issuer: String, audience: String): JWTVerifier = JWT
+        .require(algorithm)
+        .withAudience(audience)
+        .withIssuer(issuer)
+        .build()
+
 ```
 
 ## JWKプロバイダの利用:

@@ -23,15 +23,9 @@ Ktorは[Velocity](http://velocity.apache.org/)テンプレートをVelocity Feat
 Velocityをインストールし、`VelocityEngine`を設定します:
 
 ```kotlin
-install(Velocity) { // this: VelocityEngine
-    setProperty("resource.loader", "string");
-    addProperty("string.resource.loader.class", StringResourceLoader::class.java.name)
-    addProperty("string.resource.loader.repository.static", "false")
-    init() // need to call `init` before trying to retrieve string repository
-    
-    (getApplicationAttribute(StringResourceLoader.REPOSITORY_NAME_DEFAULT) as StringResourceRepository).apply {
-        putStringResource("test.vl", "<p>Hello, \$id</p><h1>\$title</h1>")
-    }
+install(Velocity) {
+    setProperty("resource.loader", "classpath")
+    setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
 }
 ```
 
@@ -41,11 +35,10 @@ install(Velocity) { // this: VelocityEngine
 Velocityが設定されていたら、`call.respond`を`VelocityContent`インスタンスとともに呼び出します: 
 
 ```kotlin
-routing {
-    val model = mapOf("id" to 1, "title" to "Hello, World!")
+data class User(val name: String, val email: String)
 
-    get("/") {
-        call.respond(VelocityContent("test.vl", model, "e"))
-    }
+get("/") {
+	 val user = User("user name", "user@example.com")
+    call.respond(VelocityContent("templates/hello.vl", user))
 }
 ```
