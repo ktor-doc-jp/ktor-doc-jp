@@ -18,7 +18,8 @@ Pull Request絶賛お待ちしています！
 （ドキュメントという性質上、コミット権限を持つ人は多いほうがいいのではないかと思っています）
 
 またドメイン費用や打ち上げ費用を援助してくださるSponsorも募集しています。🍺
-ご連絡は`kenta.koyama.biz+ktor-doc-jp@gmail.com`にてお待ちしております。
+
+（連絡先：`kenta.koyama.biz+ktor-doc-jp@gmail.com`）
 
 ## 議論・質問 💬
 
