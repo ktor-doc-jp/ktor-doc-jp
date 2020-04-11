@@ -18,12 +18,14 @@ Pull Request絶賛お待ちしています！
 （ドキュメントという性質上、コミット権限を持つ人は多いほうがいいのではないかと思っています）
 
 またドメイン費用や打ち上げ費用を援助してくださるSponsorも募集しています。🍺
+ご連絡は`kenta.koyama.biz+ktor-doc-jp@gmail.com`にてお待ちしております。
 
 ## 議論・質問 💬
 
-Issueや[日本KotlinユーザグループのSlack](http://kotlinlang-jp.herokuapp.com/)の`ktor`チャンネルでお待ちしてます。
-興味本位の質問でも大丈夫ですので気軽に質問ください。
-その他個別の連絡はGithubに公開しているEmail宛にください。
+Issueに投稿するか、[日本KotlinユーザグループのSlack](http://kotlinlang-jp.herokuapp.com/)の`ktor`チャンネルでお待ちしてます。
+興味本位の質問でも大丈夫ですのでお気軽に質問ください。
+
+その他込み入った話については、`kenta.koyama.biz+ktor-doc-jp@gmail.com`宛にください。
 
 ## 開発方法 💻
 
