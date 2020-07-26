@@ -98,9 +98,7 @@ static("static") {
 
 ## エラーハンドリング
 
-リクエストされたコンテンツが見つからない場合、`FileNotFoundException`が投げられます。
-これは`StatusPages`の`exception`ハンドラでハンドリングされ`404 Not Found`を生成するか、
-あるいはengineまで伝播し500 Internal Server Errorを発生させるかします。
+リクエストされたコンテンツが見つからない場合、`404 Not Found`が返されます。
 
 ## コンテントタイプのカスタマイズ
 
