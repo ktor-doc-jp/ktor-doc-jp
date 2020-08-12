@@ -96,7 +96,7 @@ try {
 Ktor の `HttpClient` は `CoroutineScope` のライフサイクルに従います。
 詳しくは [Coroutines guide](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/) を参照してください。
 
-## Client configuration
+## クライアントの設定
 
 クライアントのコンストラクタの関数パラメータでクライアントの設定を行うことができます。
 クライアントは [HttpClientEngineConfig](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.engine/-http-client-engine-config/index.html) で設定されます。
