@@ -1,6 +1,6 @@
 ---
-title: Streaming
-caption: Handling streaming data
+title: ストリーミング
+caption: ストリーミングデータを扱う
 category: clients
 permalink: /clients/http-client/quick-start/streaming.html
 redirect_from:
@@ -9,22 +9,24 @@ ktor_version_review: 1.3.0
 ---
 
 
-Most of the response types are complete in memory. But you can also fetch streaming data as well.
+ほとんどのレスポンスデータはメモリ上に完全な状態で保持されます。
+一方で、ストリーミングデータとしてフェッチすることもできます。
 
-## Scoped streaming
+## スコープ付きストリーミング
 
-There are multiple ways of doing streaming. The safest way is using [HttpStatement](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-statement/) with scoped `execute` block:
+ストリーミングを行うためには複数の方法がありますが、最も安全な方法はスコープ付きの `execute` ブロックで
+[HttpStatement](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-statement/) を用いる方法です。
 
 ```kotlin
 client.get<HttpStatement>.execute { response: HttpResponse ->
-    // Response is not downloaded here.
+    // レスポンスはこの時点ではダウンロードされない
     val channel = response.receive<ByteReadChannel>()
 }
 ```
 
-After `execute` block is finished, network resources is released.
+`execute` ブロックを抜けると、ネットワークリソースは開放されます。
 
-You can also point different type for `execute` method:
+`execute` メソッドに別の型を指定することもできます。
 
 ```kotlin
 client.get<HttpStatement>.execute<ByteReadChannel> { channel: ByteReadChannel ->
