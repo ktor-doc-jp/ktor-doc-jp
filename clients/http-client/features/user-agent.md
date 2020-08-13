@@ -8,11 +8,11 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-This feature adds a User-Agent header to requests.
+User-Agent をリクエストヘッダに追加する機能を提供しています。
 
 {% include feature.html %}
 
-## Install
+## インストール
 
 ```kotlin
 val client = HttpClient() {

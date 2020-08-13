@@ -1,14 +1,14 @@
 ---
-title: Logging
+title: ロギング
 category: clients
-caption: Logging
+caption: ロギング
 feature:
   artifact: io.ktor:ktor-client-logging:$ktor_version
   class: io.ktor.client.features.logging.Logging
 ktor_version_review: 1.2.0
 ---
 
-This feature adds multiplatform logging for HTTP calls.
+マルチプラットフォーム対応済の、HTTP リクエスト時のログ出力処理機能を追加できます。
 
 {% include 
     mpp_feature.html
@@ -17,7 +17,7 @@ This feature adds multiplatform logging for HTTP calls.
     classifiers=",-jvm,-native,-js"
 %}
 
-## Installation
+## インストール
 
 ```kotlin
 val client = HttpClient() {
@@ -28,5 +28,5 @@ val client = HttpClient() {
 }
 ```
 
-To use this feature, you need to include `io.ktor:ktor-client-logging-jvm` artifact on the JVM and `ktor-client-logging-native` on iOS.
+この機能を使う場合、 JVM ならば `io.ktor:ktor-client-logging-jvm` 、 iOS ならば `ktor-client-logging-native` を依存ライブラリとして追加する必要があります。
 {: .note.artifact }

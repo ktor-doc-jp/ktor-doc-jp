@@ -1,6 +1,6 @@
 ---
-title: Request
-caption: Preparing the request
+title: リクエスト
+caption: リクエストの準備
 category: clients
 permalink: /clients/http-client/quick-start/requests.html
 redirect_from:
@@ -8,44 +8,45 @@ redirect_from:
 ktor_version_review: 1.3.0
 ---
 
-## Making request
+## リクエストの作成
 
-After client configuration we're ready to perform our first request.
-Most of the simple requests are made with pattern
+クライアントの設定が完了したので、次はリクエストの実行の準備をしましょう。
+ほとんどの単純なリクエストは、下記のパターンになります。
 
-```
+```kotlin
 val response = client.'http-method'<'ResponseType'>("url-string")
 ```
 
-or even simpler form(due to kotlin generic type inference):
+Kotlin のジェネリクス型の型推論を用いると、さらにシンプルになります。
 
 ```
 val response: ResponseType = client.'http-method'("url-string")
 ```
 
-For example to perform a `GET` request fully reading a `String`:
+例えば レスポンスすべてを `String` 型で受け取るために `GET` リクエストするには下記のように記述します。
 
 ```kotlin
 val htmlContent = client.get<String>("https://en.wikipedia.org/wiki/Main_Page")
-// same as
+// 下記と同じ
 val content: String = client.get("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-And in the case you are interested in the raw bits, you can read a `ByteArray`:
+生のビット列に興味がある場合は、 `ByteArray` 型で受け取ります。
 
 ```kotlin
 val channel: ByteArray = client.get("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-Or get full [HttpResponse](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-response/index.html):
+完全な [HttpResponse](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-response/index.html) が必要な場合は `HttpResponse` 型で受け取ります。
 
 ```kotlin
 val response: HttpResponse = client.get("https://en.wikipedia.org/wiki/Main_Page")
 ```
 
-The [HttpResponse](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-response/index.html) is downloaded in memory by default. To learn how to download response partially or work with a stream data consult with the [Streaming](/clients/http-client/quick-start/streaming.html) section.
+デフォルトでは、 [HttpResponse](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.statement/-http-response/index.html) はすべてメモリ上にダウンロードされます。
+レスポンスを部分的にダウンロードする方法やストリームデータを扱う方法については、 [ストリーミング](/clients/http-client/quick-start/streaming.html) 章を参照してください。
 
-And even your data class using [Json](/clients/http-client/features/json-feature.html) feature:
+そして、 [Json](/clients/http-client/features/json-feature.html) feature を用いることで、自作のデータクラスに格納できます。
 
 ```kotlin
 @Serializable
@@ -54,25 +55,25 @@ data class User(val id: Int)
 val response: User = client.get("https://myapi.com/user?id=1")
 ```
 
-Please note that some of response types are `Closeable` and can hold resources.
+いくつかのレスポンス型は `Closeable` を実装している場合があり、その場合はリソースを保持し続けることに注意してください。
 
-## Customizing requests
+## リクエストのカスタマイズ
 
-We cannot live only on *get* requests, Ktor allows you to build complex requests with any of the HTTP verbs, with the flexibility to process responses in many ways.
+我々は *GET* リクエストだけでは生きていけません。
+Ktor には、どの HTTP メソッドも利用可能で、複雑なリクエストを作成でき、様々な方法でレスポンスを処理することが可能な柔軟性があります。
 
-### Default http methods
+### デフォルトの HTTP メソッド
 
 {: #shortcut-methods }
 
-Similar to `request`, there are several extension methods to perform requests
-with the most common HTTP verbs: `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD` and `OPTIONS`.
+`request` と同様に、一般的な HTTP メソッド (`GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, `OPTIONS`) でリクエストを実行するための拡張関数があります。
+
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/")
 ```
 
-When calling request methods, you can provide a lambda to build the request
-parameters like the URL, the HTTP method(verb), the body, or the headers:
+リクエストメソッドを呼ぶ際に、ラムダ式で URL 、 HTTP メソッド、リクエストボディ、ヘッダなどのリクエストパラメータを指定することができます。
 
 ```kotlin
 val text = client.post<String>("http://127.0.0.1:8080/") {
@@ -80,7 +81,7 @@ val text = client.post<String>("http://127.0.0.1:8080/") {
 }
 ```
 
-The [HttpRequestBuilder](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request/-http-request-builder/) looks like this:
+[HttpRequestBuilder](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request/-http-request-builder/) は下記のようになっています。
 
 ```kotlin
 class HttpRequestBuilder : HttpMessageBuilder {
@@ -101,14 +102,14 @@ class HttpRequestBuilder : HttpMessageBuilder {
 }
 ```
 
-The `HttpClient` class only offers some basic functionality, and all the methods for building requests are exposed as extensions.\\
-You can check the standard available [HttpClient build extension methods](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request/).
+`HttpClient` クラスはいくつかの基本的な機能のみ提供しており、リクエストを構築するためのメソッドは拡張関数として提供されます。
 
-### Customize method
+[`HttpClient` ビルダー拡張関数](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request/) に記載があります。
 
-In addition to call, there is a `request` method for performing a typed request,
-[receiving a specific type](/clients/http-client/quick-start/responses.html#receive) like String, HttpResponse, or an arbitrary class.
-You have to specify the URL and the method when building the request.
+### メソッドのカスタマイズ
+
+呼び出しに加えて、型付きのリクエストとして振る舞う `request` メソッドがあり、 `String` 、 `HttpResponse` 、または任意の型を指定可能です。
+リクエストを作成する際に、 URL と HTTP メソッドを指定する必要があります。
 
 ```kotlin
 val call = client.request<String> {
@@ -117,14 +118,14 @@ val call = client.request<String> {
 }
 ```
 
-### Posting forms
+### form の POST (送信)
 
 {: #submit-form }
 
-There are a couple of convenience extension methods for submitting form information.
-The detailed refrence is listed [here](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request.forms/).
+form の情報を送信するのに便利な拡張関数がいくつか用意されています。
+詳細は [こちら](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.request.forms/) に記載があります。
 
-The `submitForm` method:
+`submitForm` メソッド
 
 ```kotlin
 client.submitForm(
@@ -134,9 +135,9 @@ client.submitForm(
 )
 ```
 
-It allows requesting with the `Parameters` encoded in the query string(`GET` by default) or requesting with the `Parameters` encoded as multipart(`POST` by default) depending on the `encodeInQuery` parameter.
+クエリ文字列にエンコードされた `Parameters` でリクエストする (`GET` ではデフォルト) か、 `encodeInQuery` パラメータに応じて multipart としてエンコードされた `Parameters` でリクエストする (`POST` ではデフォルト) ことができます。
 
-The `submitFormWithBinaryData` method:
+`submitFormWithBinaryData` メソッド
 
 ```kotlin
 client.submitFormWithBinaryData(
@@ -145,44 +146,46 @@ client.submitFormWithBinaryData(
 ): T
 ```
 
-It allows to generate a multipart POST request from a list of `PartData`.
-`PartData` can be `PartData.FormItem`, `PartData.BinaryItem` or `PartData.FileItem`.
+`PartData` のリストから、 multipart の POST リクエストをを生成できます。
+`PartData` は `PartData.FormItem` か、 `PartData.BinaryItem` または `PartData.FileItem` です。
 
-To build a list of `PartData`, you can use the `formData` builder:
+`PartData` のリクエストを生成するために、 `formData` ビルダを利用することができます。
 
 ```kotlin
 val data: List<PartData> = formData {
-    // Can append: String, Number, ByteArray and Input.
+    // append 可能な型 : String, Number, ByteArray, Input
     append("hello", "world")
     append("number", 10)
     append("ba", byteArrayOf(1, 2, 3, 4))
     appendInput("input", size = knownSize.orNull()) { openInputStream().asInput() }
-    // Allow to set headers to the part:
+    // ヘッダも指定可能
     append("hello", "world", headersOf("X-My-Header" to "MyValue"))
 }
 ```
 
-### Specifying custom headers
+### カスタムヘッダの指定
 
 {: #custom-headers}
 
-When building requests with `HttpRequestBuilder`, you can set custom headers.
-There is a final property `val headers: HeadersBuilder` that inherits from `StringValuesBuilder`.
+`HttpRequestBuilder` でリクエストを構築する際に、カスタムヘッダを指定することができます。
+`StringValuesBuilder` を継承した `val headers: HeadersBuilder` を用います。
 You can add or remove headers using it, or with the `header` convenience methods.
+`headers` を用いることでヘッダ情報の追加および削除が可能です。
+`header` という便利メソッドもあります。
 
 ```kotlin
 // this : HttpMessageBuilder
 
-// Convenience method to add a header
+// ヘッダを追加する便利メソッド
 header("My-Custom-Header", "HeaderValue")
 
-// Calls methods from the headers: HeadersBuilder to manipulate the headers
+// headers: HeadersBuilder のメソッド呼び出しでヘッダを構築する例
 headers.clear()
 headers.append("My-Custom-Header", "HeaderValue")
 headers.appendAll("My-Custom-Header", listOf("HeaderValue1", "HeaderValue2"))
 headers.remove("My-Custom-Header")
 
-// Applies the headers with the `headers` convenience method
+// `headers` 便利ビルダー関数を用いたヘッダ情報の構築
 headers { // this: HeadersBuilder
     clear()
     append("My-Custom-Header", "HeaderValue")
@@ -191,11 +194,11 @@ headers { // this: HeadersBuilder
 }
 ```
 
-Complete `HeadersBuilder` API is listed [here](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.http/-headers-builder/).
+`HeaderBuilder` API の全容は [こちら](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.http/-headers-builder/) にあります。
 
 ## Specifying a body for requests
 
-For `POST` and `PUT` requests, you can set the `body` property:
+`POST` や `PUT` リクエストでは、 `body` プロパティの指定か可能です。
 
 ```kotlin
 client.post<Unit> {
@@ -204,7 +207,7 @@ client.post<Unit> {
 }
 ```
 
-The `HttpRequestBuilder.body` property can be a subtype of `OutgoingContent` as well as a `String` instance:
+`HttpRequestBuilder.body` プロパティには `OutgoingContent` 型 (およびそのサブタイプ型) または `String` 型のインスタンスを指定することができます。
 
 * `body = "HELLO WORLD!"`
 * `body = TextContent("HELLO WORLD!", ContentType.Text.Plain)`
@@ -213,8 +216,8 @@ The `HttpRequestBuilder.body` property can be a subtype of `OutgoingContent` as 
 * `body = JarFileContent(File("myjar.jar"), "test.txt", ContentType.fromFileExtension("txt").first())`
 * `body = URIFileContent("https://en.wikipedia.org/wiki/Main_Page")`
 
-If you install the *JsonFeature*, and set the content type to `application/json`
-you can use arbitrary instances as the `body`, and they will be serialized as JSON:
+**JsonFeature** をインストール済で content type に `application/json` を指定している場合、
+`body` に任意の型のインスタンスを指定することで、自動的に JSON にシリアライズされます。
 
 ```kotlin
 data class HelloWorld(val hello: String)
@@ -222,7 +225,7 @@ data class HelloWorld(val hello: String)
 val client = HttpClient(Apache) {
     install(JsonFeature) {
         serializer = GsonSerializer {
-            // Configurable .GsonBuilder
+            // GsonBuilder の設定
             serializeNulls()
             disableHtmlEscaping()
         }
@@ -235,17 +238,18 @@ client.post<Unit> {
 }
 ```
 
-Alternatively (using the integrated `JsonSerializer`):
+別法 (組み込みの `JsonSerializer` を利用)
 
 ```kotlin
 val json = io.ktor.client.features.json.defaultSerializer()
 client.post<Unit>() {
     url("http://127.0.0.1:8080/")
-    body = json.write(HelloWorld(hello = "world")) // Generates an OutgoingContent
+    body = json.write(HelloWorld(hello = "world")) // OutgoingContent が生成される
 }
 ```
 
-Or using Jackson (JVM only):
+別法 (Jackson を利用 (JVM のみ))
+
 
 ```kotlin
 val json = jacksonObjectMapper()
@@ -255,20 +259,20 @@ client.post<Unit> {
 }
 ```
 
-Remember that your classes must be *top-level* to be recognized by `Gson`. \\
-If you try to send a class that is inside a function, the feature will send a *null*.
+**トップレベルではない** クラスを `Gson` が認識しないことに注意してください。 \\
+関数内にあるクラスを送信しようとすると、 **`null`** が送信されます。
 {: .note}
 
-## Uploading multipart/form-data
+## multipart/form-data のアップロード
 
 {: #multipart-form-data }
 
-Ktor HTTP Client has support for making MultiPart requests.
-The idea is to use the `MultiPartFormDataContent(parts: List<PartData>)` as `OutgoingContent` for the body of the request.
+Ktor HTTP クライアントは MultiPart リクエストの生成をサポートしています。
+リクエストの body にて `MultiPartFormDataContent(parts: List<PartData>)` を `OutgoingContent` として利用することで実現できます。
 
-The easiest way is to use the [`submitFormWithBinaryData` method](#submit-form).
+最も簡単な使用方法は [`submitFormWithBinaryData` メソッド](#submit-form) を参照してください。
 
-Alternatively, you can set the body directly:
+あるいは、 body に直接指定することもできます。
 
 ```kotlin
 val request = client.request {

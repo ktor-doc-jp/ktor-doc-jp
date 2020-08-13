@@ -1,7 +1,7 @@
 ---
-title: Response Validation
+title: レスポンスの検証
 category: clients
-caption: Response Validation
+caption: レスポンスの検証
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.HttpCallValidator
@@ -10,13 +10,13 @@ redirect_from:
 ktor_version_review: 1.2.0
 ---
 
-This feature allows to validate HTTP response and handle transformation exceptions from engine and pipelines.
+HTTP レスポンスを検証し、エンジンやパイプラインからの変換例外を捕捉する機能を提供しています。
 
 {% include feature.html %}
 
-## Configuration
+## 設定
 
-To configure response validation feature use `validateResponse` and `handleResponseException` methods:
+レスポンス検証機能の設定では、 `validateResponse` と `handleResponseException` メソッドを使用します。
 
 ```kotlin
 HttpResponseValidator {
@@ -30,11 +30,12 @@ HttpResponseValidator {
 }
 ```
 
-This feature could be configured multiple times; all validators and handlers are saved and called in order of install.
+この機能は複数個設定することができます。
+すべてのバリデータとハンドラは保持され、定義された順番で呼び出されます。
 
-## Expect success
+## 成功の期待
 
-The `ExpectSuccess` feature implemented using response validation:
+`ExpectSuccess` 機能は、レスポンスのバリデーションを利用して実装されます。
 
 ```kotlin
 HttpResponseValidator {
@@ -53,7 +54,7 @@ HttpResponseValidator {
 }
 ```
 
-The feature is installed by default, but could be disabled in the client configuration:
+この機能はデフォルトでインストールされていますが、クライアントの設定で無効化することができます。
 
 ```kotlin
 val client = HttpClient() {

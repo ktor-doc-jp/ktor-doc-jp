@@ -1,6 +1,6 @@
 ---
-title: Client
-caption: Configuring the client
+title: クライアント
+caption: クライアントの設定
 category: clients
 permalink: /clients/http-client/quick-start/client.html
 redirect_from:
@@ -8,17 +8,25 @@ redirect_from:
 ktor_version_review: 1.3.0
 ---
 
-## Adding an engine dependency
+## エンジンの選定と依存ライブラリの追加
 
-The first thing you need to do before using the client is to add a client engine dependency. Client engine is a request executor that performs requests from ktor API. There are many client engines for each platform available out of the box: [`Apache`](/clients/http-client/engines.html#apache),
-[`OkHttp`](/clients/http-client/engines.html#okhttp),
-[`Android`](/clients/http-client/engines.html#android),
-[`Ios`](/clients/http-client/engines.html#ios),
-[`Js`](/clients/http-client/engines.html#js-javascript),
-[`Jetty`](/clients/http-client/engines.html#jetty),
-[`CIO`](/clients/http-client/engines.html#cio) and [`Mock`](/clients/http-client/testing.html). You can read more in the [Multiplatform](/clients/http-client/multiplatform.html) section.
+クライアントを使用するためには、まずエンジンの選定と依存ライブラリの追加を行う必要があります。
+Ktor はクライアント API を提供しており、実際の HTTP リクエスト処理はエンジンに移譲します。
 
-For example you can add `CIO` engine dependency in `build.gradle` like this:
+各プラットフォームごとに、すぐに利用できるエンジンが多数用意されています。
+
+* [`Apache`](/clients/http-client/engines.html#apache)
+* [`OkHttp`](/clients/http-client/engines.html#okhttp)
+* [`Android`](/clients/http-client/engines.html#android)
+* [`Ios`](/clients/http-client/engines.html#ios)
+* [`Js`](/clients/http-client/engines.html#js-javascript)
+* [`Jetty`](/clients/http-client/engines.html#jetty)
+* [`CIO`](/clients/http-client/engines.html#cio)
+* [`Mock`](/clients/http-client/testing.html)
+
+[マルチプラットフォーム](/clients/http-client/multiplatform.html) の章により詳しく記載しています。
+
+例えば、 `CIO` を使用する場合は下記を `build.gradle` に記載します。
 
 ```kotlin
 dependencies {
@@ -26,35 +34,39 @@ dependencies {
 }
 ```
 
-## Creating client
+## クライアントの作成
 
-Next you can create client as here:
+クライアントを作成するには、下記のように書きます。
 
 ```kotlin
 val client = HttpClient(CIO)
 ```
 
-where `CIO` is engine class here. If you confused which engine class you should use consider using `CIO`.
+この `CIO` はエンジンクラスです。
+どのエンジンクラスを使用すべきか迷った場合は、 `CIO` の使用を検討してください。
 
-If you're using multiplatform, you can omit the engine:
+マルチプラットフォームの場合は、下記のようにエンジンの指定を省略することができます。
 
 ```kotlin
 val client = HttpClient()
 ```
 
-Ktor will choose an engine among the ones that are available from the included artifacts using a `ServiceLoader` on the JVM, or similar approach in the other platforms. If there are multiple engines in the dependencies Ktor chooses first in alphabetical order of engine name.
+JVM ならば `ServiceLoader` を使用し、それ以外のプラットフォームでも同様のアプローチによって、 Ktor はアーティファクト内の利用可能なエンジンを自動的に選択し使用します。
+依存ライブラリ内に複数のエンジンがある場合は、アルファベット順に解決します。
 
-It's safe to create multiple instance of client or use the same client for multiple requests.
+クライアントのインスタンスを複数作成しても、同一のクライアントを用いて複数のリクエストをしても、どちらでも問題ありません。
 
-## Releasing resources
+## リソースの開放
 
-Ktor client is holding resources: prepared threads, coroutines and connections. After you finish working with the client, you may wish to release it by calling `close`:
+Ktor クライアントは予めスレッド、 coroutine 、およびコネクションを確保します。
+クライアントを利用し終わった後は、 `close` を呼びリソースを開放したくなると思います。
 
 ```kotlin
 client.close()
 ```
 
-If you want to use a client to make only one request consider `use`-ing it. The client will be automatically closed once the passed block has been executed:
+1 リクエストごとにクライアントを生成する場合は、 `use` を使用することを検討してください。
+use ブロックを抜けた際に、自動的にリソースを開放します。
 
 ```kotlin
 val status = HttpClient().use { client ->
@@ -62,28 +74,34 @@ val status = HttpClient().use { client ->
 }
 ```
 
-The method `close` signals to stop executing new requests. It wouldn't block and allows all current requests to finish successfully and release resources. You can also wait for closing with the `join` method or halt any activity using the `cancel` method. For example:
+`close` メソッドは、新たなリクエストを停止するよう通知します。
+これは非同期に実行され、現在実行中のリクエストが正常終了してからリソースを開放することができます。
+
+また、 `join` メソッドですべてのリクエストが完了することを待ったり、 `cancel` メソッドでリクエストを停止することができます。
+
 
 ```kotlin
 try {
-    // Close and wait for 3 seconds.
+    // close 後最大3秒待機
     withTimeout(3000) {
         client.close()
         client.join()
     }
 } catch (timeout: TimeoutCancellationException) {
-    // Cancel after timeout
+    // タイムアウト後に中止
     client.cancel()
 }
 ```
 
-Ktor HttpClient follows `CoroutineScope` lifecycle. Check out [Coroutines guide](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/) to learn more.
+Ktor の `HttpClient` は `CoroutineScope` のライフサイクルに従います。
+詳しくは [Coroutines guide](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/) を参照してください。
 
-## Client configuration
+## クライアントの設定
 
-To configure the client you can pass additional functional parameter to client constructor. The client configured with [HttpClientEngineConfig](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.engine/-http-client-engine-config/index.html).
+クライアントのコンストラクタの関数パラメータでクライアントの設定を行うことができます。
+クライアントは [HttpClientEngineConfig](https://api.ktor.io/{{ site.ktor_version }}/io.ktor.client.engine/-http-client-engine-config/index.html) で設定されます。
 
-For example you can limit `threadCount` or setup [proxy](/clients/http-client/features/proxy.html):
+例えば `threadCount` や [プロキシ](/clients/http-client/features/proxy.html) の設定は下記のように行います。
 
 ```kotlin
 val client = HttpClient(CIO) {
@@ -91,16 +109,16 @@ val client = HttpClient(CIO) {
 }
 ```
 
-You also can configure engine using the `engine` method in block:
+エンジン自体の設定を行う場合は、ブロック内で `engine` メソッドを呼びます。
 
 ```kotlin
 val client = HttpClient(CIO) {
     engine {
-        // engine configuration
+        // エンジンの設定
     }
 }
 ```
 
-See [Engines](/clients/http-client/engines.html) section for additional details.
+詳細は [エンジン](/clients/http-client/engines.html) の章に記載されています。
 
-Proceed to [Preparing the request](/clients/http-client/quick-start/requests.html).
+次 : [リクエストの準備](/clients/http-client/quick-start/requests.html).
