@@ -1,37 +1,40 @@
 ---
-title: Timeout
+title: タイムアウト
 category: clients
-caption: Timeout
+caption: タイムアウト
 feature:
   artifact: io.ktor:ktor-client-core:$ktor_version
   class: io.ktor.client.features.HttpTimeout
 ktor_version_review: 1.4.0
 ---
 
-Timeout allows limiting the time of the request execution or execution steps such as a connection or a TCP packet awaiting. The following timeout types are available:
+リクエスト実行時間、コネクション確率までの時間、および TCP パケットの間隔の上限値 (タイムアウト) を設定することができます。
+下記のタイムアウトを設定することができます。
 
-* __request timeout__ — time-bound of the whole request processing,
-* __connect timeout__ — time-bound of the connection establishment,
-* __socket timeout__ — time-bound of the interval between any two subsequent packets (read/write timeout).
+* **request timeout** — リクエスト処理全体の時間制限
+* **connect timeout** — 接続確立までの時間制限
+* **socket timeout** — 後続の2パケットの間隔の時間制限 (読み取り / 書き込みのタイムアウト)
 
-By default all these timeouts are infinite and should be explicitly specified when needed. Timeouts could be specified for all requests of a particular client or for a single request.
+デフォルトでは、上記のタイムアウトはすべて無限となっているため、必要に応じて明示的に設定する必要があります。
+タイムアウト値は、特定のクライアントを用いた際のすべてのリクエストに対して設定することも、特定のリクエストに対して設定することもできます。
 
 {% include feature.html %}
 
-## Install
+## インストール
 
-Request, connect and socket timeouts could be specified for all requests of a particular client it the configuration specified during the feature installation:
+特定のクライアントを用いた際のすべてのリクエストに対するリクエストタイムアウト (request timeout) 、コネクションタイムアウト (connect timeout) 、ソケットタイムアウト (socket timeout) の設定は、 `HttpTimeout` をインストールする際に行います。
 
 ``` kotlin
 val client = HttpClient() {
     install(HttpTimeout) {
-        // timeout config
+        // タイムアウト設定
         requestTimeoutMillis = 1000
     }
 }
 ```
 
-Besides that, all timeouts could also be specified for a single request and so that override high-level values:
+クライアント全体で設定した場合でも、特定のクエリで設定を上書きすることができます。
+より大きな値を設定することも可能です。
 
 ``` kotlin
 val client = HttpClient() {
@@ -39,17 +42,27 @@ val client = HttpClient() {
 }
 client.get<String>(url) {
     timeout {
-        // timeout config
+        // タイムアウト設定
         requestTimeoutMillis = 5000
     }
 }
 ```
 
-Be aware that to assign per-request timeout it's still required to have timeout feature installed. In case per-request configuration is specified without installed feature an `IllegalArgumentException` will be thrown with message _"Consider install HttpTimeout feature because request requires it to be installed"_.
+リクエストごとにタイムアウトを設定する場合でも、タイムアウト機能のインストールが必要です。
+インストールされていないにも関わらずタイムアウト値を設定した場合、 *"Consider install HttpTimeout feature because request requires it to be installed"* (リクエストが `HttpTimeout` の機能を要求しているため、 `HttpTimeout` のインストールを検討してください) というメッセージと共に `IllegalArgumentException` が発生します。
 {: .note}
 
-In case of timeout an exception will be thrown. The type of exception depends on type of occured timeout: `HttpRequestTimeoutException` in case of request timeout, `HttpConnectTimeoutException` in case of connect timeout and `HttpSocketTimeoutException` in case of socket timeout.
+タイムアウトした場合、例外が発生します。
+例外の型は、発生したタイムアウトの種類によって異なります。
 
-## Platform-specific behaviour
+* `HttpRequestTimeoutException` : リクエストタイムアウト
+* `HttpConnectTimeoutException` : コネクションタイムアウト
+* `HttpSocketTimeoutException` : ソケットタイムアウト
 
-Not all client engines support all timeout types. `Curl` doesn't support socket timeout, `Ios` doesn't support connect timeout and `Js` supports only request timeout.
+## プラットフォーム固有の挙動
+
+すべてのクライアントエンジンがすべてのタイムアウトの種類をサポートしているわけではありません。
+
+* `Curl` : リクエストタイムアウトとコネクションタイムアウトのみサポート
+* `Ios` : リクエストタイムアウトとソケットタイムアウトのみサポート
+* `Js` : リクエストタイムアウトのみサポート
