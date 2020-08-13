@@ -2,39 +2,42 @@
 title: Engines
 category: clients
 permalink: /clients/http-client/engines.html
-caption: HTTP Client Engines
+caption: HTTP クライアント Engine
 ktor_version_review: 1.2.0
 ---
 
-Ktor HTTP Client has a common interface but allows to specify an engine that processes the network request. Different engines have different configurations, dependencies and supporting features.
+Ktor HTTP クライアントは共通のインタフェースであり、ネットワークリクエストを処理するためのエンジンを自由に指定することができます。
+エンジンが異なれば、構成、依存関係、サポートされる機能も異なります。
 
-**Table of contents:**
+**目次**
 
 * TOC
 {:toc}
 
-## Default engine
+## デフォルト エンジン
 
 {: #default}
 
-By calling to the `HttpClient` method without specifying an engine, it uses a default engine.
+エンジン の指定なしで `HttpClient` を生成した場合、デフォルトのエンジンを使用します。
 
 ```kotlin
 val client = HttpClient()
 ```
 
-In the case of the JVM, the default engine is resolved with a ServiceLoader, getting the first one available sorted in alphabetical order.
-Thus depends on the artifacts you have included.
+JVM の場合、 `ServiceLoader` を用いてデフォルトのエンジンを解決します。
+複数のエンジンが利用可能な場合は、アルファベット順で最初にヒットしたものを使用します。
+したがって、依存関係に追加したものによって異なります。
 
-For native, the engine detected during static linkage. Please provide one of the native engines in artifacts.
+Native の場合、静的リンク時に検出されたものが利用されます。
+成果物に native 用のエンジンを1つ含めるようにしてください。
 
-For js, it uses the predefined one.
+JavaScript の場合、予め定義されたものを1つ使用します。
 
-## Configuring engines
+## エンジン の設定
 
 {: #configuring}
 
-Ktor HttpClient lets you configure the parameters of each engine by calling:
+Ktor `HttpClient` では、以下を呼び出すことで各エンジンのパラメータを設定することができます。
 
 ```kotlin
 HttpClient(MyHttpEngine) {
@@ -44,10 +47,11 @@ HttpClient(MyHttpEngine) {
 }
 ```
 
-Every engine config has some common properties that can be set:
+すべてのエンジンで共通のプロパティがあり、それを設定することができます。
 
-* The `threadsCount` property is a recommendation to use by an engine. It can be ignored if an engine doesn't require such amount of threads.
-* The `pipelining` is experimental flag to enable [HTTP pipelining](https://en.wikipedia.org/wiki/HTTP_pipelining).
+* `threadsCount` プロパティはエンジンが使うスレッド数の推奨値
+    * エンジンがスレッド数を要求しない場合、この設定は無視される
+* `pipelining` プロパティは [HTTP pipelining](https://en.wikipedia.org/wiki/HTTP_pipelining) を有効化するための試験的なフラグ
 
 ```kotlin
 val client = HttpClient(MyHttpEngine) {
@@ -64,37 +68,44 @@ val client = HttpClient(MyHttpEngine) {
 
 {: #apache}
 
-Apache is the most configurable HTTP client about right now. It supports HTTP/1.1 and HTTP/2. It is the only one that supports following redirects and allows you to configure timeouts, proxies among other things it is supported by `org.apache.httpcomponents:httpasyncclient`.
+Apache は現時点では最も多くの設定ができる HTTP クライアントです。
+HTTP/1.1 と HTTP/2 に対応しています。
+以下のようなリダイレクトやタイムアウトの設定、さまざまなものへのプロキシ (`org.apache.httpcomponents:httpasyncclient` でサポートされているものの間) の設定が可能な唯一のクライアントです。
 
-A sample configuration would look like:
+
+サンプルの設定は以下のようになります。
 
 ```kotlin
 val client = HttpClient(Apache) {
     engine {
         /**
-         * Apache embedded http redirect, default = false. Obsolete by `HttpRedirect` feature.
-         * It uses the default number of redirects defined by Apache's HttpClient that is 50.
+         * Apache 備え付けの http リダイレクト; false がデフォルト値
+         * `HttpRedirect` の機能により廃止された
+         * Apache の HttpClient にて定義されているデフォルトのリダイレクト数 50 を使用する
          */
         followRedirects = true
 
         /**
-         * Timeouts.
-         * Use `0` to specify infinite.
-         * Negative value mean to use the system's default value.
+         * タイムアウト
+         * 0 は無限 (タイムアウトなし)
+         * 負の数の場合はシステムのデフォルト値を使用する
          */
 
         /**
-         * Max time between TCP packets - default 10 seconds.
+         * TCP ソケット通信のタイムアウト値
+         * デフォルトは 10 秒
          */
         socketTimeout = 10_000
 
         /**
-         * Max time to establish an HTTP connection - default 10 seconds.
+         * HTTP コネクションを確立するまでのタイムアウト値
+         * デフォルトは 10 秒
          */
         connectTimeout = 10_000
 
         /**
-         * Max time for the connection manager to start a request - 20 seconds.
+         * コネクションマネージャがリクエストを開始するまでのタイムアウト値
+         * デフォルトは 20 秒
          */
         connectionRequestTimeout = 20_000
 
@@ -102,10 +113,10 @@ val client = HttpClient(Apache) {
             // this: HttpAsyncClientBuilder
             setProxy(HttpHost("127.0.0.1", 8080))
 
-            // Maximum number of socket connections.
+            // ソケット通信のコネクション数の最大値
             setMaxConnTotal(1000)
 
-            // Maximum number of requests for a specific endpoint route.
+            // 特定のエンドポイントへのリクエスト数の最大値
             setMaxConnPerRoute(100)
 
             // ...
@@ -125,75 +136,75 @@ val client = HttpClient(Apache) {
 
 {: #cio}
 
-CIO (Coroutine-based I/O) is a Ktor implementation with no additional dependencies and is fully asynchronous.
-It only supports HTTP/1.x for now.
+CIO (Coroutine-based I/O) は Ktor によるエンジンで、依存ライブラリの追加が不要、そして非同期処理に対応しています。
+HTTP/1.x のみサポートしています。
 
-CIO provides `maxConnectionsCount` and a `endpointConfig` for configuring.
+CIO では `maxConnectionsCount` と `endpointConfig` の設定が可能です。
 
-A sample configuration would look like:
+設定例
 
 ```kotlin
 val client = HttpClient(CIO) {
     engine {
         /**
-         * Maximum number of socket connections.
+         * 最大コネクション数
          */
         maxConnectionsCount = 1000
 
         /**
-         * Endpoint specific settings.
+         * エンドポイント固有の設定
          */
         endpoint {
             /**
-             * Maximum number of requests for a specific endpoint route.
+             * 特定のエンドポイントに対するリクエストの最大数
              */
             maxConnectionsPerRoute = 100
 
             /**
-             * Max size of scheduled requests per connection(pipeline queue size).
+             * コネクションごとのスケジュール済リクエストの最大数 (パイプラインのキューのサイズ)
              */
             pipelineMaxSize = 20
 
             /**
-             * Max number of milliseconds to keep iddle connection alive.
+             * 接続のアイドル状態 (keep-alive) を維持する最大時間 (ミリ秒)
              */
             keepAliveTime = 5000
 
             /**
-             * Number of milliseconds to wait trying to connect to the server.
+             * サーバへの接続のタイムアウト値 (ミリ秒)
              */
             connectTimeout = 5000
 
             /**
-             * Maximum number of attempts for retrying a connection.
+             * 接続ごとのリトライの最大値
              */
             connectRetryAttempts = 5
         }
 
         /**
-         * Https specific settings.
+         * HTTPS 用の設定
          */
         https {
             /**
-            * Custom server name for TLS server name extension.
-             * See also: https://en.wikipedia.org/wiki/Server_Name_Indication
+             * SSL/TLS 用のホスト名 (SNI)
+             * cf. https://ja.wikipedia.org/wiki/Server_Name_Indication
              */
             serverName = "api.ktor.io"
 
             /**
-             * List of allowed [CipherSuite]s.
+             * 許可する暗号スイート (Cipher suite)
              */
             cipherSuites = CIOCipherSuites.SupportedSuites
 
             /**
-             * Custom [X509TrustManager] to verify server authority.
+             * サーバ認証を検証する X509TrustManager 型のインスタンス
              *
-             * Use system by default.
+             * デフォルトでは system を利用
              */
             trustManager = myCustomTrustManager
 
             /**
-             * [SecureRandom] to use in encryption.
+             * 暗号化の際に用いられる SecureRandom 型のインスタンス
              */
             random = mySecureRandom
         }
@@ -209,9 +220,10 @@ val client = HttpClient(CIO) {
 
 {: #jetty}
 
-Jetty provides an additional `sslContextFactory` for configuring. It only supports HTTP/2 for now.
+Jetty では `sslContextFactory` の設定が可能です。
+現時点では、 HTTP/2 のみ対応しています。
 
-A sample configuration would look like:
+設定例
 
 ```kotlin
 val client = HttpClient(Jetty) {
@@ -223,13 +235,13 @@ val client = HttpClient(Jetty) {
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.jetty.Jetty" artifact="io.ktor:ktor-client-jetty:$ktor_version" transitive="org.eclipse.jetty.http2:http2-client" %}
 
-## JVM and Android
+## JVM および Android
 
 ### OkHttp
 
 {: #okhttp }
 
-There is a engine based on OkHttp:
+OkHttp ベースのエンジン
 
 ```kotlin
 val client = HttpClient(OkHttp) {
@@ -246,7 +258,8 @@ val client = HttpClient(OkHttp) {
         addNetworkInterceptor(interceptor)
 
         /**
-         * Set okhttp client instance to use instead of creating one.
+         * 自前で用意した OkHttp クライアントのインスタンスを指定
+         * 設定しなかった場合、自動的にインスタンスが生成される
          */
         preconfigured = okHttpClientInstance
     }
@@ -260,8 +273,9 @@ val client = HttpClient(OkHttp) {
 
 {: #android }
 
-The Android engine doesn't have additional dependencies and uses a ThreadPool with a normal HttpURLConnection,
-to perform the requests. And can be configured like this:
+Android エンジンは依存ライブラリの追加が不要で、 `HttpURLConnection` と `ThreadPool` を使用してリクエストを実行します。
+
+設定例
 
 ```kotlin
 val client = HttpClient(Android) {
@@ -270,7 +284,7 @@ val client = HttpClient(Android) {
         socketTimeout = 100_000
 
         /**
-         * Proxy address to use.
+         * プロキシの設定
          */
         proxy = Proxy(Proxy.Type.HTTP, InetSocketAddress("localhost", serverPort))
     }
@@ -283,12 +297,13 @@ val client = HttpClient(Android) {
 
 {: #ios }
 
-The iOS engine uses the asynchronous `NSURLSession` internally. And have no additional configuration.
+iOS エンジンは非同期の `NSURLSession` を内部で使用します。
+追加の設定は不要です。
 
 ```kotlin
 val client = HttpClient(Ios) {
     /**
-     * Configure native NSUrlRequest.
+     * native の NSUrlRequest の設定
      */
     configureRequest { // this: NSMutableURLRequest
         setAllowsCellularAccess(true)
@@ -301,16 +316,17 @@ val client = HttpClient(Ios) {
 
 ## Js (JavaScript)
 
-The `Js` engine, uses the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API internally(and `node-fetch` for node.js runtime).
+`Js` エンジンは [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API を内部的に使用します。
+node.js 上では `node-fetch` を使用します。
 
-Js engine has no custom configuration.
+`Js` エンジンには追加の設定項目はありません。
 
 ```kotlin
 val client = HttpClient(Js) {
 }
 ```
 
-You can also call the `JsClient()` function to get the `Js` engine singleton.
+`JsClient()` 関数を呼ぶことで、 `Js` エンジンのシングルトンインスタンスを取得することもできます。
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.js.Js" artifact="io.ktor:ktor-client-js:$ktor_version" %}
 
@@ -318,16 +334,19 @@ You can also call the `JsClient()` function to get the `Js` engine singleton.
 
 {: #curl }
 
-There is an engine based on Curl:
+Curl ベースのエンジン
 
 ```kotlin
 val client = HttpClient(Curl)
 ```
 
-Supported platforms: linux_x64, macos_x64, mingw_x64. Please note that to use the engine you must have the installed curl library at least version 7.63
+サポートされるプラットフォーム : `linux_x64`, `macos_x64`, `mingw_x64`
+エンジンを使用するには、 バージョン 7.63 以上の `curl` ライブラリがインストールされている必要があります。
+
 
 {% include artifact.html kind="engine" class="io.ktor.client.engine.curl.Curl" artifact="io.ktor:ktor-client-curl:$ktor_version" %}
 
-### MockEngine
+## MockEngine
 
-The `MockEngine` is the common engine for testing. See also [MockEngine for testing](/clients/http-client/testing.html).
+`MockEngine` はテスト用のエンジンです。
+[MockEngine for testing](/clients/http-client/testing.html) を参照してください。
