@@ -9,8 +9,8 @@ feature:
 ktor_version_review: 1.2.0
 ---
 
-This feature enables bi-directional WebSocket connections with the server.
-You can read more about it in its [dedicated WebSockets page](/clients/websockets.html).
+WebSocket を用いてサーバ間と双方向通信を行う機能を提供しています。
+詳細は専用の [WebSocket](/clients/websockets.html) のページを参照してください。
 
 {% include 
     mpp_feature.html
