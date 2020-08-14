@@ -1,8 +1,8 @@
 ---
-title: Engines
+title: エンジン
 category: clients
 permalink: /clients/http-client/engines.html
-caption: HTTP クライアント Engine
+caption: HTTP クライアントエンジン
 ktor_version_review: 1.2.0
 ---
 
