@@ -54,7 +54,7 @@ install(Sessions) {
 ### Header
 
 Header関数はAPI用途を想定しています。
-JavaScript XHRリクエストと、サーバサイドからのリクエストの療法を想定しています。
+JavaScript XHRリクエストと、サーバサイドからのリクエストの両方を想定しています。
 APIクライアントにとっては、cookieを操作するよりも、カスタムのヘッダーを読み書きするほうが通常簡単です。
 
 ```kotlin
