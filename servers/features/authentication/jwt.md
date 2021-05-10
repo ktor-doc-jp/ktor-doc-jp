@@ -56,7 +56,7 @@ val jwtRealm = environment.config.property("jwt.realm").getString()
 install(Authentication) {
     jwt {
         realm = jwtRealm
-        verifier(makeJwtVerifier(jwtIssuer, jwtIssuer))
+        verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
         validate { credential ->
             if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
         }
